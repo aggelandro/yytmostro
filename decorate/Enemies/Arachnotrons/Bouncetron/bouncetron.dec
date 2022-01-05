@@ -1,0 +1,19 @@
+ACTOR BounceTron : Arachnotron2
+{
+	Translation "192:207=176:191", "80:111=48:79", "128:143=64:79", "144:151=72:79"
+	States
+	{
+	Missile:
+		BSPI A 20 Bright A_FaceTarget
+		BSPI G 3 Bright A_CustomMissile("BouncyBall")
+		BSPI H 3 Bright
+		BSPI H 1 Bright A_SpidRefire
+    	Goto Missile+1
+	}
+}
+ACTOR BouncyBall : ArachnotronPlasma
+{
+	BounceType Doom
+	BounceCount 5
+	-ALLOWBOUNCEONACTORS
+}	

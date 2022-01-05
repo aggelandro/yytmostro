@@ -1,0 +1,37 @@
+ACTOR RonWrench : Weapon
+{
+  Weapon.SelectionOrder 3700
+  Weapon.Kickback 100
+  Obituary "$OB_MPFIST"
+  Tag "$TAG_FIST"
+  +WEAPON.WIMPY_WEAPON
+  +WEAPON.MELEEWEAPON
+  States
+  {
+  Ready:
+    WREN A 1 A_WeaponReady
+    Loop
+  Deselect:
+    WREN A 1 A_Lower
+    Loop
+  Select:
+    WREN A 1 A_Raise
+    Loop
+  Fire:
+    WREN B 6
+    WREN C 6 A_CustomPunch(random(5,8))
+    WREN B 6
+	WREN A 6 
+    WREN A 0 A_ReFire
+    Goto Ready
+  Altfire:
+	WREN B 10
+    WREN C 4 A_CustomPunch(50,1)
+    WREN B 5
+    WREN A 4
+	Goto Ready
+  Error:
+	WREN A 0 A_PlaySound("ron/error")
+	Goto Ready
+  }
+}

@@ -1,0 +1,145 @@
+ACTOR zLayerUnique : DoomWeapon
+{
+  Scale 0.5
+  Weapon.SelectionOrder 3700
+  Weapon.Kickback 100
+  Weapon.AmmoType "CargaUnica"
+  Weapon.AmmoGive 1
+  Weapon.AmmoUse 1
+  Obituary ""
+  Tag "UNIQUE"
+  +WEAPON.WIMPY_WEAPON
+  +WEAPON.MELEEWEAPON
+  States
+  {
+  Ready:
+    PUNG A 1 A_WeaponReady
+    Loop
+  Deselect:
+    PUNG A 1 A_Lower
+    Loop
+  Select:
+    PUNG A 1 A_Raise
+    Loop
+  Fire:
+    PUNG B 4
+	PUNG C 0 A_FireCustomMissile("DronSpot")
+	PUNG C 0 A_SpawnItemEx("DronChico")
+	PUNG C 0 A_SpawnItemEx("DronChico")
+    PUNG C 4 A_SpawnItemEX("DronGrande")
+    PUNG D 5
+    PUNG C 4
+    PUNG B 5
+    Goto Ready
+  Spawn:
+	ULTR A -1
+	Stop
+  }
+}
+ACTOR DronSpot : SpecialSpot
+{
+	+INVISIBLE
+	States
+	{
+	Spawn:
+		TNT1 A 1 NoDelay A_Warp(AAPTR_TARGET,0,0,0)
+		Loop
+	}
+}
+ACTOR DronChico
+{ 
+  Scale 0.5
+  Health 1500
+  Radius 20
+  Height 24
+  Mass 100
+  Speed 20
+  PainChance 0
+  Monster
+  DamageFactor "Friendly", 0
+  DamageType "Friendly"
+  +FLOAT
+  +NOGRAVITY
+  -THRUACTORS
+  -SOLID
+  +NOBLOOD
+  +FRIENDLY
+  +NORADIUSDMG
+  +ALWAYSFAST
+  +PAINLESS
+  HitObituary "$OB_IMPHIT"
+  Obituary "$OB_IMP"
+  var int user_DuracionDisparos;
+  var int user_TiempoTeleport;
+  States
+  {
+  Spawn:
+	DRON A 1 A_Look
+    Loop
+  See:
+    DRON A 3 Fast A_Chase
+	DRON A 0 Fast A_SetUserVar("user_TiempoTeleport",user_TiempoTeleport+1)
+	DRON A 0 A_JumpIf(user_TiempoTeleport > 99,"Teleportar")
+    Loop
+  Teleportar:
+	DRON A 0 A_SetUserVar("user_TiempoTeleport",0)
+	DRON A 1 A_Teleport("See","DronSpot",None,0,0,0)
+	Goto See
+  Melee:
+  Missile:
+	DRON A 0 A_JumpIf(user_DuracionDisparos > 1500, "Death")
+    DRON A 1 A_FaceTarget
+	DRON A 0 A_PlaySound("weapons/chngun", CHAN_AUTO)
+	DRON A 0  A_SetUserVar("user_DuracionDisparos", user_DuracionDisparos+1)
+    DRON A 0 A_CustomBulletAttack(5,5,20,1,"BulletPuffF")
+	DRON BC 1 
+	DRON A 0 A_SpidRefire
+    Goto Missile
+  Death:
+    DRON D 4
+    DRON E 4 A_PlaySound("baby/death")
+    DRON F 4
+    DRON G 4 A_NoBlocking
+    Stop
+  }
+}
+ACTOR DronGrande : DronChico
+{
+	Health 4000
+	Scale 1.2
+	Radius 40
+	Height 48
+	Speed 5
+	States
+	{
+	See:
+		DRON A 3 Fast A_Chase
+		Loop
+	Missile:
+		DRON A 0 A_JumpIf(user_DuracionDisparos > 1500, "Death")
+		DRON A 1 A_FaceTarget
+		DRON A 0 A_PlaySound("agge/aflame", CHAN_AUTO)
+		DRON A 0  A_SetUserVar("user_DuracionDisparos", user_DuracionDisparos+1)
+		DRON A 0 A_CustomMissile("FlamethrowerFireS",0,-15)
+		DRON B 1 A_CustomMissile("FlamethrowerFireS",0,15)
+		DRON A 0 A_CustomMissile("PlasmaBallF",0,-15)
+		DRON C 1 A_CustomMissile("PlasmaBallF",0,15)
+		DRON BC 1 
+		DRON A 0 A_SpidRefire
+		Goto Missile
+	}
+}
+ACTOR FlamethrowerFireS : FlamethrowerFire
+{
+	States
+	{
+	Spawn:
+		FIRE A 1 Bright
+		FIRE A 0 Bright A_Explode(5*random(2,5),15)
+		FIRE B 1 Bright
+		FIRE A 0 Bright A_Explode(5*random(2,5),15)
+		FIRE C 1 Bright
+		FIRE A 0 Bright A_Explode(5*random(2,5),15)
+		Loop
+	}
+}

@@ -1,0 +1,46 @@
+ACTOR AggeFlameThrower : DoomWeapon
+{
+	Inventory.PickupMessage "You got the Flamethrower!"
+    Weapon.AmmoType "Cell"
+    Weapon.AmmoUse 2
+    Weapon.AmmoGive 40
+	Tag "Flamethrower"
+	States
+	{
+	Ready:
+		FLAM AB 3 A_WeaponReady
+    Loop
+	Deselect:
+		FLAM AB 1 A_Lower
+    Loop
+	Select:
+		FLAM AB 1 A_Raise
+    Loop
+	Fire:
+		FLAM A 2 
+		FLAM B 3
+		FLAM C 3
+		FLAM D 3 
+		FLAM E 0 A_GunFlash
+		FLAM E 3 A_FireCustomMissile("FlameThrowerFire",0,1)
+		//"FlameThrowerFire" is in "universtalstuff.dec" because I use it a lot of times
+		FLAM FG 5 A_ReFire
+		Goto Ready
+	Hold:
+	    FLAM D 3
+		FLAM E 0 A_GunFlash
+		FLAM E 3 A_FireCustomMissile("FlameThrowerFire",0,1)
+		FLAM FG 5 A_Refire
+		Goto Ready
+	Flash:
+		TNT1 A 4 Bright A_Light1
+		TNT1 A 0 A_PlaySound("agge/flamet",1,4.0)
+		Goto LightDone
+		TNT1 B 4 Bright A_Light1
+		TNT1 A 0 A_PlaySound("agge/flamet",1,4.0)
+		Goto LightDone
+	Spawn:
+		PLAS A -1
+		Stop
+	}
+}

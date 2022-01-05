@@ -1,0 +1,21 @@
+ACTOR FireElemental : PainElemental2
+{
+	Translation "64:168=192:207", "0:0=179:185", "1:15=207:207", "224:255=0:0", "0:0=0:0"
+	DamageFactor "AFire", 0
+	States
+	{
+	Missile:
+		PAIN D 5 A_FaceTarget
+		PAIN E 5 A_FaceTarget
+		PAIN F 5 BRIGHT A_FaceTarget
+		PAIN F 0 BRIGHT A_PainAttack("FireSoul")
+		Goto See
+	Death:
+		PAIN H 8 BRIGHT
+		PAIN I 8 BRIGHT A_Scream
+		PAIN JK 8 BRIGHT
+		PAIN L 8 BRIGHT A_PainDie("FireSoul")
+		PAIN M 8 BRIGHT
+		Stop
+	}
+}

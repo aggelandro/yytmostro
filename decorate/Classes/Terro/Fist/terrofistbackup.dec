@@ -1,0 +1,66 @@
+ACTOR TerroFist : Weapon
+{
+	States
+	{
+	Ready:
+		PERR A 0 A_JumpIfInventory("TerroFistFire",10,"Transform")
+		PERR A 0 A_JumpIfInventory("TerroFistDuration",1,"FireReady")
+		PERR A 1 A_WeaponReady
+		Loop
+	FireReady:
+		PERF A 0 A_TakeInventory("TerroFistDuration",1)
+		PERF A 0 A_JumpIfInventory("TerroFistDuration",1,1)
+		Goto TransformOff
+		PERF A 1 A_WeaponReady
+		Loop
+    Deselect:
+		PERR A 0 A_JumpIfInventory("TerroFistDuration",1,2)
+		PERR A 1 A_Lower
+		Loop
+		PERF A 1 A_Lower
+		Loop
+    Select:
+		PERR A 0 A_JumpIfInventory("TerroFistDuration",1,2)
+		PERR A 1 A_Raise
+		Loop
+		PERF A 1 A_Raise
+		Loop
+	Transform:
+		TERR A 0 A_TakeInventory("TerroFistFire",10)
+		TERF A 0 A_GiveInventory("TerroFistDuration",200)
+		TERR ZYXW 2
+		TERR V 8 A_PlaySound("grunt/pain",CHAN_AUTO)
+		TERF V 8
+		TERF WYXZ 2
+		Goto FireReady
+	TransformOff:
+		TERF ZYXW 2
+		TERF V 8 A_PlaySound("grunt/pain",CHAN_AUTO)
+		TERR V 8
+		TERR WYXZ 2
+		Goto Ready
+    Fire:
+		TERR A 0 A_JumpIfInventory("TerroFistDuration",1,"FirePunch") 
+		TERR MN 4
+		TERR O 4 A_CustomPunch(2 * random(1, 10), TRUE,0,"TerroFistPuff")
+		TERR N 4
+		TERR M 4 A_ReFire
+		Goto Ready
+	Altfire:
+		TERR A 0 A_JumpIfInventory("TerroFistDuration",1,"FireAltPunch") 
+		TERR B 4
+		TERR C 4 A_FireCustomMissile("PlasmaBall",0,0)
+		TERR D 5
+		TERR C 4
+		TERR B 5 A_ReFire
+		Goto Ready
+	FirePunch:
+		TERR A 1 A_Punch
+		TERR A 0 A_TakeInventory("TerroFistDuration",1)
+		Goto FireReady
+    FireAltPunch:
+		TERR A 1 A_FireCustomMissile("BFGBall",0,0)
+		TERR A 0 A_TakeInventory("TerroFistDuration",1)
+		Goto FireReady
+	}
+}

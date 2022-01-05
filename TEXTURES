@@ -1,0 +1,304 @@
+Sprite SHT2K0, 77, 43
+{
+	Patch SHT2E0, -124, -20
+}
+Sprite SHLLA0, 101, 63
+{
+	Patch SHT2E0, 0, 0
+}
+Sprite SGDLA0, 320, 200
+{
+	Patch SHT2A0, 84, 120
+	{
+		FlipX
+	}
+}
+
+Sprite SGDLB0, 320, 200
+{
+	Patch SHT2A0, 79, 128
+	{
+		FlipX
+	}
+	Patch SHT2I0, 80, 114
+	{
+		FlipX
+	}
+}
+
+Sprite SGDLC0, 320, 200
+{
+	Patch SHT2A0, 74, 136
+	{
+		FlipX
+	}
+	Patch SHT2J0, 71, 113
+	{
+		FlipX
+	}
+}
+
+Sprite SGDLD0, 320, 200
+{
+	Patch SHT2A0, 71, 140
+	{
+		FlipX
+	}
+}
+
+Sprite SGDLE0, 320, 200
+{
+	Patch SHT2A0, 74, 136
+	{
+		FlipX
+	}
+}
+
+Sprite SGDLF0, 320, 200
+{
+	Patch SHT2A0, 79, 128
+	{
+		FlipX
+	}
+}
+
+Sprite SGRLA0, 320, 200
+{
+	Patch SHT2D0, 25, 140
+}
+
+Sprite SGRLB0, 320, 200
+{
+	Patch SHT2D0, 10, 145
+}
+
+Sprite SGRLC0, 480, 200
+{
+	Offset 80, 0
+	Patch SHT2D0, 75, 140
+}
+
+Sprite SGRLD0, 480, 200
+{
+	Offset 80, 0
+	Patch SHT2D0, 65, 132
+}
+
+Sprite SGRLE0, 480, 200
+{
+	Offset 80, 0
+	Patch SHT2K0, 95, 140
+}
+
+Sprite SGRLF0, 480, 200
+{
+	Offset 80, 0
+	Patch SHT2K0, 105, 133
+}
+
+Sprite SGRLG0, 480, 200
+{
+	Offset 80, 0
+	Patch SHT2K0, 115, 129
+}
+
+Sprite SGRLH0, 480, 200
+{
+	Offset 80, 0
+	Patch SHT2K0, 122, 127
+}
+
+Sprite SGRLI0, 480, 200
+{
+	Offset 80, 0
+	Patch SHT2K0, 130, 126
+	Patch SHLLA0, 0, 125
+}
+
+Sprite SGRLJ0, 480, 200
+{
+	Offset 80, 0
+	Patch SHT2K0, 140, 127
+	Patch SHLLA0, 30, 115
+}
+
+Sprite SGRLK0, 480, 200
+{
+	Offset 80, 0
+	Patch SHT2K0, 148, 132
+	Patch SHLLA0, 65, 110
+}
+
+Sprite SGRLL0, 480, 200
+{
+	Offset 80, 0
+	Patch SHT2F0, 122, 118
+}
+
+Sprite SGRLM0, 320, 200
+{
+	Patch SHT2D0, 60, 130
+	Patch SHT2F0, 50, 150
+}
+
+Sprite SGDRA0, 320, 200
+{
+	Patch SGDLA0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGDRB0, 320, 200
+{
+	Patch SGDLB0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGDRC0, 320, 200
+{
+	Patch SGDLC0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGDRD0, 320, 200
+{
+	Patch SGDLD0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGDRE0, 320, 200
+{
+	Patch SGDLE0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGDRF0, 320, 200
+{
+	Patch SGDLF0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGRRA0, 320, 200
+{
+	Patch SGRLA0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGRRB0, 320, 200
+{
+	Patch SGRLB0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGRRC0, 480, 200
+{
+	Offset 80, 0
+	Patch SGRLC0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGRRD0, 480, 200
+{
+	Offset 80, 0
+	Patch SGRLD0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGRRE0, 480, 200
+{
+	Offset 80, 0
+	Patch SGRLE0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGRRF0, 480, 200
+{
+	Offset 80, 0
+	Patch SGRLF0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGRRG0, 480, 200
+{
+	Offset 80, 0
+	Patch SGRLG0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGRRH0, 480, 200
+{
+	Offset 80, 0
+	Patch SGRLH0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGRRI0, 480, 200
+{
+	Offset 80, 0
+	Patch SGRLI0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGRRJ0, 480, 200
+{
+	Offset 80, 0
+	Patch SGRLJ0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGRRK0, 480, 200
+{
+	Offset 80, 0
+	Patch SGRLK0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGRRL0, 480, 200
+{
+	Offset 80, 0
+	Patch SGRLL0, 0, 0
+	{
+		FlipX
+	}
+}
+
+Sprite SGRRM0, 320, 200
+{
+	Patch SGRLM0, 0, 0
+	{
+		FlipX
+	}
+}

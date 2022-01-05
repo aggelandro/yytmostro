@@ -1,0 +1,29 @@
+ACTOR LucianoPistol : Pistol
+ {
+	States
+	{
+		Fire:
+			PISG A 4
+			PISG B 6 A_FireCustomMissile("MiniRocket")
+			PISG C 4
+			PISG B 5 A_ReFire
+		Goto Ready
+	}
+}
+ACTOR MiniRocket : Rocket
+{
+	Scale 0.2
+	Radius 2
+	Height 2
+	Speed 20
+	Damage 5
+	-RANDOMIZE
+	States
+	{
+		Death:
+			MISL B 8 Bright A_Explode(15,20)
+			MISL C 6 Bright
+			MISL D 4 Bright
+			Stop
+	}
+}

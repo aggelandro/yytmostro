@@ -1,0 +1,50 @@
+ACTOR VacuumDemon : Demon
+{
+	Translation "16:47=224:231"
+	Health 200
+	Speed 20
+	PainChance 85
+	Obituary "%o was sucked in by a vacuum demon."
+	States
+	{
+		Melee:
+		SARG EF 2 Fast A_FaceTarget
+		SARG FG 1 Fast A_CustomMissile("VacuumBullet",32,0)
+		SARG G 0 Fast A_CustomMeleeAttack(1)
+		SARG G 0 Fast A_SpidRefire
+		Goto Melee+1
+		Pain.Lightning:
+			TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.5),0,0,0,0)
+			TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.5),0,0,0,0)
+			Goto Pain
+	}
+}
+
+Actor VacuumBullet : ArachnotronPlasma
+{
+	RenderStyle None
+	Speed 0
+	-MISSILE
+	-SOLID
+	States
+	{
+	Spawn:
+		APLS AB 1 Bright A_RadiusThrust(-1000,100,RTF_NOIMPACTDAMAGE, 1000)
+		Goto Death
+	Death:
+		APLS A 1
+		Stop
+	}	
+}
+ACTOR SpectreVacuum : VacuumDemon
+{
+	+SHADOW
+	RenderStyle OptFuzzy
+	Alpha 0.5
+	SeeSound "spectre/sight"
+	AttackSound "spectre/melee"
+	PainSound "spectre/pain"
+	DeathSound "spectre/death"
+	ActiveSound "spectre/active"
+	HitObituary "%o was sucked by a vacuum demon."
+}

@@ -1,0 +1,895 @@
+// =====================================INCLUDE SPAM STARTS HERE=====================================
+
+// code that is inherited by lots of other actors
+#include "decorate/Misc/universalstuff.dec"
+#include "decorate/Misc/casing.dec"
+
+//weapons from classes
+#include "decorate/Classes/Luciano/Pistol/pistol.dec"
+#include "decorate/Classes/Luciano/Shotgun/shotgun.dec"
+#include "decorate/Classes/Luciano/RocketLauncher/rocketlauncher.dec"
+#include "decorate/Classes/Luciano/Unique/unique.dec"
+
+#include "decorate/Classes/Ron/Pistol/pistol.dec"
+#include "decorate/Classes/Ron/PlasmaRifle/plasmarifle.dec"
+#include "decorate/Classes/Ron/Turret/turret.dec"
+#include "decorate/Classes/Ron/Wrench/wrench.dec"
+#include "decorate/Classes/Ron/SuperShotgun/supershotgun.dec"
+
+#include "decorate/Classes/Agge/SuperShotgun/supershotgun.dec"
+#include "decorate/Classes/Agge/Flamethrower/flamethrower.dec"
+#include "decorate/Classes/Agge/Unique/unique.dec"
+#include "decorate/Classes/Agge/Shield/shield.dec"
+#include "decorate/Classes/Agge/BuahWeapon/buahweapon.dec"
+#include "decorate/Classes/Agge/Pistol/pistol.dec"
+#include "decorate/Classes/Agge/RocketLauncher/rocketlauncher.dec"
+
+#include "decorate/Classes/zLayer/Pistol/pistol.dec"
+#include "decorate/Classes/zLayer/Chaingun/chaingun.dec"
+#include "decorate/Classes/zLayer/Sniper/sniper.dec"
+#include "decorate/Classes/zLayer/Unique/unique.dec"
+
+#include "decorate/Classes/Thanuris/SuperShotgun/supershotgun.dec"
+#include "decorate/Classes/Thanuris/PlasmaRifle/plasmarifle.dec"
+#include "decorate/Classes/Thanuris/Mina/mina.dec"
+#include "decorate/Classes/Thanuris/Pistol/pistol.dec"
+#include "decorate/Classes/Thanuris/BaseballBat/baseballbat.dec"
+
+#include "decorate/Classes/Terro/Dynamite/dynamite.dec"
+#include "decorate/Classes/Terro/Shotgun/shotgun.dec"
+#include "decorate/Classes/Terro/Pistol/pistol.dec"
+#include "decorate/Classes/Terro/Fist/fist.dec"
+#include "decorate/Classes/Terro/SuperShotgun/supershotgun.dec"
+
+//monsters
+#include "decorate/Enemies/Zombies/JetpackZombie/jetpackzombie.dec"
+#include "decorate/Enemies/Zombies/FlamethrowerGuy/flamethrowerguy.dec"
+
+#include "decorate/Enemies/Imps/SpiderImp/spiderimp.dec"
+
+#include "decorate/Enemies/Demons/VacuumDemon/vacuumdemon.dec"
+
+#include "decorate/Enemies/LostSoul/FireSoul/firesoul.dec"
+
+#include "decorate/Enemies/PainElemental/FireElemental/fireelemental.dec"
+
+#include "decorate/Enemies/Cacodemons/NeoCacodemon/neocacodemon.dec"
+
+#include "decorate/Enemies/Revenants/HoloRevenant/holorevenant.dec"
+#include "decorate/Enemies/Revenants/VayneAurelius/vayneaurelius.dec"
+
+#include "decorate/Enemies/Goats/MirrorKnight/mirrorknight.dec"
+#include "decorate/Enemies/Goats/AngryBaron/angrybaron.dec"
+
+#include "decorate/Enemies/Arachnotrons/Bouncetron/bouncetron.dec"
+
+#include "decorate/Enemies/Mancubus/FatsoRocket/fatsorocket.dec"
+
+#include "decorate/Enemies/Archviles/SpookyVile/spookyvile.dec"
+
+#include "decorate/Enemies/Cyberdemon/Council/council.dec"
+#include "decorate/Enemies/Cyberdemon/Cryocubus/cryocubus.dec"
+#include "decorate/Enemies/Cyberdemon/FlameCyber/flamecyber.dec"
+
+#include "decorate/Enemies/SpiderMastermind/RocketSpiderMastermind/rocketspidermastermind.dec"
+#include "decorate/Enemies/SpiderMastermind/SpiderLord/spiderlord.dec"
+
+// =====================================INCLUDE SPAM ENDS HERE=======================================
+
+actor LucianoID : Inventory
+{
+  inventory.pickupmessage ""
+  inventory.pickupsound "misc/p_pkup"
+  Inventory.MaxAmount 1
+  +INVENTORY.ALWAYSPICKUP
+  +INVENTORY.UNDROPPABLE
+  states
+  {
+  Spawn:
+    AWI3 A -1
+    stop
+  Pickup:
+    TNT1 A 0
+    stop
+  }
+}
+
+actor AggeID : LucianoID{}
+actor RonID : LucianoID{}
+actor zLayerID : LucianoID{}
+actor ThanuID : LucianoID{}
+actor TerroID : LucianoID{}
+
+ACTOR ZombieManSpawner : RandomSpawner replaces ZombieMan
+{
+	DropItem "Zombieman2", 255, 90
+	DropItem "JetpackZombie", 255, 10
+}
+ACTOR ChaingunGuySpawner : RandomSpawner replaces ChaingunGuy
+{
+	DropItem "ChainGunGuyMod", 255, 70
+	DropItem "FlamethrowerGuy", 255, 30
+}
+ACTOR ShotgunGuySpawner : RandomSpawner replaces ShotgunGuy
+{
+	DropItem "ShotgunGuyMod", 255, 100
+}
+ACTOR CacodemonSpawner : RandomSpawner replaces Cacodemon
+{
+	DropItem "Cacodemon2", 255, 75
+	DropItem "NeoCacodemon", 255, 25
+}
+ACTOR HellKnightSpawner : RandomSpawner replaces HellKnight
+{
+	DropItem "HellKnight2", 255, 80
+	DropItem "MirrorKnight", 255, 20
+}
+ACTOR PainElementalSpawner : RandomSpawner replaces PainElemental
+{
+	DropItem "PainElemental2", 255, 80
+	DropItem "FireElemental", 255, 20
+}
+ACTOR RevenantSpawner : RandomSpawner replaces Revenant
+{
+	DropItem "Revenant2", 255, 60
+	DropItem "HoloRevenant", 255, 30
+	DropItem "VayneAurelius", 255, 10
+}
+ACTOR FatsoSpawner : RandomSpawner replaces Fatso
+{
+	DropItem "Fatso2", 255, 70
+	DropItem "FatsoRocket", 255, 30
+}
+ACTOR DemonSpawner : RandomSpawner replaces Demon
+{
+	DropItem "Pinky2", 255,70
+	DropItem "VacuumDemon", 255, 30
+} 
+ACTOR SpectreSpawner : RandomSpawner replaces Spectre
+{
+	DropItem "Spectre2", 255, 85
+	DropItem "SpectreVacuum", 255, 15
+}
+ACTOR BaronSpawner : RandomSpawner replaces BaronOfHell
+{
+	DropItem "BaronOfHell2" 255, 50
+	DropItem "AngryBaron" 255, 50
+}
+ACTOR ImpSpawner : RandomSpawner replaces DoomImp
+{
+	DropItem "DoomImp2" 255, 75
+	DropItem "SpiderImp" 255, 25
+}
+ACTOR ArachnotronSpawner : RandomSpawner replaces Arachnotron
+{
+	DropItem "Arachnotron2" 255, 75
+	DropItem "BounceTron" 255, 25
+}
+ACTOR ArchvileSpawner : RandomSpawner replaces Archvile
+{
+	DropItem "ArchvileCustom" 255, 85
+	DropItem "SpookyVileSpawner" 255, 15
+}
+ACTOR SpiderMastermindSpawner : RandomSpawner replaces SpiderMastermind
+{
+	DropItem "RocketSpiderMastermind", 255, 30
+	DropItem "SpiderMastermind2" 255, 60
+	DropItem "SpiderLord" 255, 10
+}
+ACTOR CyberdemonSpawner : RandomSpawner replaces Cyberdemon
+{
+	DropItem "CouncilSpawner", 255,1
+	DropItem "Cryocubus", 255, 5
+	DropItem "FlameCyber" 255, 24
+	DropItem "Cyberdemon2" 255, 75
+}
+ACTOR IsItAlive : LucianoID{}
+ACTOR Lucianeto : DoomPlayer
+{
+	+NORADIUSDMG
+	Player.MaxHealth 50
+	Player.MugShotMaxHealth 50
+	Scale 0.9
+	Speed 1.5
+	Health 50
+	Radius 16
+	Height 56
+	Mass 100
+	PainChance 255
+	Species "Player"
+	DamageFactor "Friendly", 0
+	DamageFactor "AFireF",0
+	DamageFactor "Mina", 0
+	Player.DisplayName "Lucianeto"
+	Player.StartItem "LucianoPistol"
+	Player.StartItem "Fist"
+	Player.StartItem "Clip", 100
+	Player.StartItem "Shell", 20
+	Player.StartItem "LucianoID"
+	Player.StartItem "LucianoArmorBonus"
+	Player.WeaponSlot 2, LucianoPistol
+	Player.WeaponSlot 3, LucianoSG, SuperShotgun2
+	Player.WeaponSlot 4, ChainGun2
+	Player.WeaponSlot 5, LucianoRL
+	Player.WeaponSlot 6, PlasmaRifle2
+	Player.WeaponSlot 7, BFG9000
+	Player.WeaponSlot 8, LucianoBomba
+	States
+	{
+		Death:
+			PLAY H 0
+			PLAY H 10 A_CustomMissile("MegaExplosion",1)
+			// PLAY H 10 A_CustomMissile("MegaRocket",-1)
+			PLAY I 10 A_PlayerScream
+			PLAY J 10 A_NoBlocking
+			PLAY KLM 10
+			PLAY N -1
+			Stop
+		XDeath:
+			PLAY O 0
+			PLAY O 5 A_CustomMissile("MegaExplosion",1)
+			//PLAY O 5 A_CustomMissile("MegaRocket",-1)
+			PLAY P 5 A_XScream
+			PLAY Q 5 A_NoBlocking
+			PLAY RSTUV 5
+			PLAY W -1
+			Stop
+	}
+}
+ACTOR LucianoArmorBonus : ArmorBonus
+{
+	Armor.SaveAmount 50
+}
+ACTOR MegaExplosion : MiniExplosion
+{
+	Scale 2
+	SeeSound "weapons/rocklx"
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		MISL B 4 A_Explode(2500,300)
+		MISL C 4
+		MISL D 5
+		Stop
+	}
+}
+ACTOR UniversalPlayer : DoomPlayer
+{
+  Speed 1
+  Health 100
+  Radius 16
+  Height 56
+  Mass 100
+  PainChance 255
+  Species "Player"
+  DamageFactor "Friendly", 0
+  DamageFactor "AFireF", 0
+  DamageFactor "Mina", 0
+  Player.CrouchSprite "PLYC"
+  Player.StartItem "Fist"
+  Player.StartItem "Pistol"
+  Player.StartItem "Clip", 50
+  Player.WeaponSlot 1, Fist, Chainsaw
+  Player.WeaponSlot 2, Pistol
+  Player.WeaponSlot 3, Shotgun2, SuperShotgun2
+  Player.WeaponSlot 4, Chaingun2
+  Player.WeaponSlot 5, RocketLauncher2
+  Player.WeaponSlot 6, PlasmaRifle2
+  Player.WeaponSlot 7, BFG9000
+  Player.ColorRange 112, 127
+  Player.ColorSet 0, "Green",         0x70, 0x7F,  0x72
+  Player.ColorSet 1, "Gray",          0x60, 0x6F,  0x62 // Called "Indigo" originally so as to have a unique initial
+  Player.ColorSet 2, "Brown",         0x40, 0x4F,  0x42
+  Player.ColorSet 3, "Red",           0x20, 0x2F,  0x22
+  // Doom Legacy additions
+  Player.ColorSet 4, "Light Gray",    0x58, 0x67,  0x5A
+  Player.ColorSet 5, "Light Brown",   0x38, 0x47,  0x3A
+  Player.ColorSet 6, "Light Red",     0xB0, 0xBF,  0xB2
+  Player.ColorSet 7, "Light Blue",    0xC0, 0xCF,  0xC2
+
+  States
+  {
+  Spawn:
+    PLAY A -1
+    Loop
+  See:
+    PLAY ABCD 4 
+    Loop
+  Missile:
+    PLAY E 12
+    Goto Spawn
+  Melee:
+    PLAY F 6 BRIGHT
+    Goto Missile
+  Pain:
+    PLAY G 4 
+    PLAY G 4 A_Pain
+    Goto Spawn
+  Death:
+    PLAY H 0 A_PlayerSkinCheck("AltSkinDeath")
+  Death1:
+    PLAY H 10
+    PLAY I 10 A_PlayerScream
+    PLAY J 10 A_NoBlocking
+    PLAY KLM 10
+    PLAY N -1
+    Stop
+  XDeath:
+    PLAY O 0 A_PlayerSkinCheck("AltSkinXDeath")
+  XDeath1:
+    PLAY O 5
+    PLAY P 5 A_XScream
+    PLAY Q 5 A_NoBlocking
+    PLAY RSTUV 5
+    PLAY W -1
+    Stop
+  AltSkinDeath:
+    PLAY H 6
+    PLAY I 6 A_PlayerScream
+    PLAY JK 6
+    PLAY L 6 A_NoBlocking
+    PLAY MNO 6
+    PLAY P -1
+    Stop
+  AltSkinXDeath:
+    PLAY Q 5 A_PlayerScream
+    PLAY R 0 A_NoBlocking
+    PLAY R 5 A_SkullPop
+    PLAY STUVWX 5
+    PLAY Y -1
+    Stop
+  }
+}
+ACTOR Agge : DoomPlayer
+{
+  Speed 1
+  Health 100
+  Radius 16
+  Height 56
+  Mass 100
+  PainChance 255
+  Species "Player"
+  DamageFactor "Friendly", 0
+  DamageFactor "AFireF", 0
+  DamageFactor "Mina", 0
+  Player.DisplayName "Agge"
+  Player.CrouchSprite "PLYC"
+  Player.StartItem "AggePistol"
+  Player.StartItem "AggeShield"
+  Player.StartItem "Clip", 50
+  Player.StartItem "Shell", 5
+  Player.StartItem "EnergyShieldAmmo", 200
+  Player.StartItem "AggeID"
+  Player.WeaponSlot 1, AggeShield, Chainsaw
+  Player.WeaponSlot 2, AggePistol
+  Player.WeaponSlot 3, Shotgun2, AggeSSG
+  Player.WeaponSlot 4, BuahWeapon
+  Player.WeaponSlot 5, Motumbo
+  Player.WeaponSlot 6, AggeFlamethrower
+  Player.WeaponSlot 7, BFG9000
+  Player.WeaponSlot 8, AggeUnique
+  Player.ColorRange 112, 127
+  Player.ColorSet 0, "Green",         0x70, 0x7F,  0x72
+  Player.ColorSet 1, "Gray",          0x60, 0x6F,  0x62 // Called "Indigo" originally so as to have a unique initial
+  Player.ColorSet 2, "Brown",         0x40, 0x4F,  0x42
+  Player.ColorSet 3, "Red",           0x20, 0x2F,  0x22
+  // Doom Legacy additions
+  Player.ColorSet 4, "Light Gray",    0x58, 0x67,  0x5A
+  Player.ColorSet 5, "Light Brown",   0x38, 0x47,  0x3A
+  Player.ColorSet 6, "Light Red",     0xB0, 0xBF,  0xB2
+  Player.ColorSet 7, "Light Blue",    0xC0, 0xCF,  0xC2
+
+  States
+  {
+  Spawn:
+    PLAY A -1
+    Loop
+  See:
+    PLAY ABCD 4 
+    Loop
+  Missile:
+    PLAY E 12
+    Goto Spawn
+  Melee:
+    PLAY F 6 BRIGHT
+    Goto Missile
+  Pain:
+    PLAY G 4 
+    PLAY G 4 A_Pain
+    Goto Spawn
+  Death:
+    PLAY H 0 A_PlayerSkinCheck("AltSkinDeath")
+  Death1:
+    PLAY H 10
+    PLAY I 10 A_PlayerScream
+    PLAY J 10 A_NoBlocking
+    PLAY KLM 10
+    PLAY N -1
+    Stop
+  XDeath:
+    PLAY O 0 A_PlayerSkinCheck("AltSkinXDeath")
+  XDeath1:
+    PLAY O 5
+    PLAY P 5 A_XScream
+    PLAY Q 5 A_NoBlocking
+    PLAY RSTUV 5
+    PLAY W -1
+    Stop
+  AltSkinDeath:
+    PLAY H 6
+    PLAY I 6 A_PlayerScream
+    PLAY JK 6
+    PLAY L 6 A_NoBlocking
+    PLAY MNO 6
+    PLAY P -1
+    Stop
+  AltSkinXDeath:
+    PLAY Q 5 A_PlayerScream
+    PLAY R 0 A_NoBlocking
+    PLAY R 5 A_SkullPop
+    PLAY STUVWX 5
+    PLAY Y -1
+    Stop
+  }
+}
+ACTOR Ron : DoomPlayer
+{
+  Speed 1
+  Health 100
+  Player.MaxHealth 100
+  Player.MugShotMaxHealth 100
+  Radius 16
+  Height 56
+  Mass 100
+  PainChance 255
+  Species "Player"
+  DamageFactor "Friendly", 0
+  DamageFactor "AFireF", 0
+  DamageFactor "Mina", 0
+  Player.DisplayName "Steve"
+  Player.CrouchSprite "PLYC"
+  Player.StartItem "RonPistol"
+  Player.StartItem "RonWrench"
+  Player.StartItem "Clip", 50
+  Player.StartItem  "Shell", 5
+  Player.StartItem "RonID"
+  Player.StartItem "RonTurretItem", 3
+  Player.WeaponSlot 1, RonWrench, Chainsaw
+  Player.WeaponSlot 2, RonPistol
+  Player.WeaponSlot 3, Shotgun2, RonSSG
+  Player.WeaponSlot 4, Chaingun2
+  Player.WeaponSlot 5, RocketLauncher2
+  Player.WeaponSlot 6, RonPL
+  Player.WeaponSlot 7, BFG9000
+  Player.ColorRange 112, 127
+  Player.ColorSet 0, "Green",         0x70, 0x7F,  0x72
+  Player.ColorSet 1, "Gray",          0x60, 0x6F,  0x62 // Called "Indigo" originally so as to have a unique initial
+  Player.ColorSet 2, "Brown",         0x40, 0x4F,  0x42
+  Player.ColorSet 3, "Red",           0x20, 0x2F,  0x22
+  // Doom Legacy additions
+  Player.ColorSet 4, "Light Gray",    0x58, 0x67,  0x5A
+  Player.ColorSet 5, "Light Brown",   0x38, 0x47,  0x3A
+  Player.ColorSet 6, "Light Red",     0xB0, 0xBF,  0xB2
+  Player.ColorSet 7, "Light Blue",    0xC0, 0xCF,  0xC2
+
+  States
+  {
+  Spawn:
+    PLAY A -1
+    Loop
+  See:
+    PLAY ABCD 4 
+    Loop
+  Missile:
+    PLAY E 12
+    Goto Spawn
+  Melee:
+    PLAY F 6 BRIGHT
+    Goto Missile
+  Pain:
+    PLAY G 4 
+    PLAY G 4 A_Pain
+    Goto Spawn
+  Death:
+    PLAY H 0 A_PlayerSkinCheck("AltSkinDeath")
+  Death1:
+    PLAY H 10
+    PLAY I 10 A_PlayerScream
+    PLAY J 10 A_NoBlocking
+    PLAY KLM 10
+    PLAY N -1
+    Stop
+  XDeath:
+    PLAY O 0 A_PlayerSkinCheck("AltSkinXDeath")
+  XDeath1:
+    PLAY O 5
+    PLAY P 5 A_XScream
+    PLAY Q 5 A_NoBlocking
+    PLAY RSTUV 5
+    PLAY W -1
+    Stop
+  AltSkinDeath:
+    PLAY H 6
+    PLAY I 6 A_PlayerScream
+    PLAY JK 6
+    PLAY L 6 A_NoBlocking
+    PLAY MNO 6
+    PLAY P -1
+    Stop
+  AltSkinXDeath:
+    PLAY Q 5 A_PlayerScream
+    PLAY R 0 A_NoBlocking
+    PLAY R 5 A_SkullPop
+    PLAY STUVWX 5
+    PLAY Y -1
+    Stop
+  }
+}
+ACTOR zLayer : DoomPlayer
+{
+  Speed 1
+  Health 100
+  Player.MaxHealth 100
+  Player.MugShotMaxHealth 100
+  Radius 16
+  Height 56
+  Mass 100
+  PainChance 255
+  DamageFactor "Friendly", 0
+  DamageFactor "AFireF", 0
+  DamageFactor "Mina", 0
+  Player.DisplayName "zLayer"
+  Player.CrouchSprite "PLYC"
+  Player.StartItem "zLayerPistol"
+  Player.StartItem "Fist"
+  Player.StartItem "Clip", 50
+  Player.StartItem "zLayerID"
+  Player.StartItem "Backpack"
+  Player.WeaponSlot 1, Fist, Chainsaw
+  Player.WeaponSlot 2, zLayerPistol
+  Player.WeaponSlot 3, Shotgun2, SuperShotgun2
+  Player.WeaponSlot 4, zLayerCG
+  Player.WeaponSlot 5, zLayerRL
+  Player.WeaponSlot 6, PlasmaRifle2
+  Player.WeaponSlot 7, BFG9000
+  Player.WeaponSlot 8, zLayerUnique
+  Player.ColorRange 112, 127
+  Player.ColorSet 0, "Green",         0x70, 0x7F,  0x72
+  Player.ColorSet 1, "Gray",          0x60, 0x6F,  0x62 // Called "Indigo" originally so as to have a unique initial
+  Player.ColorSet 2, "Brown",         0x40, 0x4F,  0x42
+  Player.ColorSet 3, "Red",           0x20, 0x2F,  0x22
+  // Doom Legacy additions
+  Player.ColorSet 4, "Light Gray",    0x58, 0x67,  0x5A
+  Player.ColorSet 5, "Light Brown",   0x38, 0x47,  0x3A
+  Player.ColorSet 6, "Light Red",     0xB0, 0xBF,  0xB2
+  Player.ColorSet 7, "Light Blue",    0xC0, 0xCF,  0xC2
+
+  States
+  {
+  Spawn:
+    PLAY A -1
+    Loop
+  See:
+    PLAY ABCD 4 
+    Loop
+  Missile:
+    PLAY E 12
+    Goto Spawn
+  Melee:
+    PLAY F 6 BRIGHT
+    Goto Missile
+  Pain:
+    PLAY G 4 
+    PLAY G 4 A_Pain
+    Goto Spawn
+  Death:
+    PLAY H 0 A_PlayerSkinCheck("AltSkinDeath")
+  Death1:
+    PLAY H 10
+    PLAY I 10 A_PlayerScream
+    PLAY J 10 A_NoBlocking
+    PLAY KLM 10
+    PLAY N -1
+    Stop
+  XDeath:
+    PLAY O 0 A_PlayerSkinCheck("AltSkinXDeath")
+  XDeath1:
+    PLAY O 5
+    PLAY P 5 A_XScream
+    PLAY Q 5 A_NoBlocking
+    PLAY RSTUV 5
+    PLAY W -1
+    Stop
+  AltSkinDeath:
+    PLAY H 6
+    PLAY I 6 A_PlayerScream
+    PLAY JK 6
+    PLAY L 6 A_NoBlocking
+    PLAY MNO 6
+    PLAY P -1
+    Stop
+  AltSkinXDeath:
+    PLAY Q 5 A_PlayerScream
+    PLAY R 0 A_NoBlocking
+    PLAY R 5 A_SkullPop
+    PLAY STUVWX 5
+    PLAY Y -1
+    Stop
+  }
+}
+
+ACTOR Thanuris : UniversalPlayer
+{
+	Player.DisplayName "Thanuris"
+	Player.StartItem "ThanuPistol"
+	Player.StartItem "BaseballBat"
+	Player.StartItem "Clip", 50
+	Player.StartItem "ThanuID"
+	Player.Weaponslot 1, BaseballBat
+	Player.Weaponslot 2, ThanuPistol
+	Player.Weaponslot 5, ThanuRL
+	Player.WeaponSlot 6, ThanuPL
+	Player.WeaponSlot 3, Shotgun2,ReloadShotgun
+}
+ACTOR Terro : UniversalPlayer
+{
+    Player.DisplayName "Terro"
+	Player.StartItem "TerroPistol"
+	Player.StartItem "TerroFist"
+	Player.StartItem "Clip", 50
+	Player.StartItem "TerroID"
+	Player.WeaponSlot 1, TerroFist
+	Player.WeaponSlot 2, TerroPistol
+	Player.WeaponSlot 5, Dynamite
+	Player.WeaponSlot 3, TerroShotgun, PKDoubleShotguns
+}
+
+ACTOR Shotgun2 : Shotgun {}
+ACTOR ShotgunSpawner : CustomInventory replaces Shotgun
+{
+	Inventory.PickUpSound "$GOTSHOTGUN"
+	States
+	{
+		Spawn:
+			SHOT A -1
+			Stop
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("LucianoID",1,"PickupLuciano")
+			TNT1 A 0 A_JumpIfInventory("AggeID",1,"PickupAgge")
+			TNT1 A 0 A_JumpIfInventory("RonID",1,"PickupAgge")
+			TNT1 A 0 A_JumpIfInventory("zLayerID", 1, "PickupAgge")
+			TNT1 A 0 A_JumpIfInventory("ThanuID",1,"PickupAgge")
+			TNT1 A 0 A_JumpIfInventory("TerroID",1,"PickupTerro")
+			Stop
+		PickupLuciano:
+			TNT1 A 0 A_JumpIfInventory("LucianoSG",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("LucianoSG",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			// TNT1 A 0 A_SpawnItemEX("ShotgunSpawner")
+			Fail
+		PickupAgge:
+			TNT1 A 0 A_JumpIfInventory("Shotgun2",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("Shotgun2",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			// TNT1 A 0 A_SpawnItemEX("ShotgunSpawner")
+			Fail
+		PickupTerro:
+			TNT1 A 0 A_JumpIfInventory("TerroShotgun",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("TerroShotgun",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			Fail
+	}
+}
+ACTOR ChainGun2 : ChainGun {}
+ACTOR ChainGunSpawner : CustomInventory replaces ChainGun
+{
+	Inventory.PickUpSound "$GOTSHOTGUN"
+	States
+	{
+		Spawn:
+			MGUN A -1
+			Stop
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("LucianoID",1,"PickupAgge")
+			TNT1 A 0 A_JumpIfInventory("AggeID",1,"PickupAgge")
+			TNT1 A 0 A_JumpIfInventory("RonID",1,"PickupGeneric")
+			TNT1 A 0 A_JumpIfInventory("zLayerID", 1, "PickupzLayer")
+			TNT1 A 0 A_JumpIfInventory("ThanuID",1,"PickupGeneric")
+			TNT1 A 0 A_JumpIfInventory("TerroID",1,"PickupGeneric")
+			Stop
+		PickupzLayer:
+			TNT1 A 0 A_JumpIfInventory("zLayerCG",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("zLayerCG",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			// TNT1 A 0 A_SpawnItemEX("ShotgunSpawner")
+			Fail
+		PickupAgge:
+			TNT1 A 0 A_JumpIfInventory("BuahWeapon",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("BuahWeapon",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			// TNT1 A 0 A_SpawnItemEX("ShotgunSpawner")
+			Fail
+		PickupGeneric:
+			TNT1 A 0 A_JumpIfInventory("ChainGun2",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("ChainGun2",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			Fail
+	}
+}
+ACTOR RocketLauncher2 : RocketLauncher{}
+ACTOR RocketSpawner : CustomInventory replaces RocketLauncher
+{
+	Inventory.PickupMessage "$GOTLAUNCHER"
+	States
+	{
+		Spawn:
+			LAUN A -1
+			Stop
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("LucianoID",1,"PickupLuciano")
+			TNT1 A 0 A_JumpIfInventory("AggeID",1,"PickupAgge")
+			TNT1 A 0 A_JumpIfInventory("RonID",1,"PickupGeneric")
+			TNT1 A 0 A_JumpIfInventory("zLayerID", 1, "PickupZlayer")
+			TNT1 A 0 A_JumpIfInventory("ThanuID",1,"PickupThanu")
+			TNT1 A 0 A_JumpIfInventory("TerroID",1,"PickupTerro")
+			Stop
+		PickupLuciano:
+			TNT1 A 0 A_JumpIfInventory("LucianoRL",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("LucianoRL",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			// TNT1 A 0 A_SpawnItemEX("RocketSpawner")
+			Fail
+		PickupGeneric:
+			TNT1 A 0 A_JumpIfInventory("RocketLauncher2",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("RocketLauncher2",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			// TNT1 A 0 A_SpawnItemEx("RocketSpawner")
+			Fail
+		PickupZlayer:
+			TNT1 A 0 A_JumpIfInventory("zLayerRL",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("zLayerRL",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			Fail
+		PickupThanu:
+			TNT1 A 0 A_JumpIfInventory("ThanuRL",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("ThanuRL",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			Fail
+		PickupTerro:
+			TNT1 A 0 A_JumpIfInventory("Dynamite",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("Dynamite",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			Fail
+		PickupAgge:
+			TNT1 A 0 A_JumpIfInventory("Motumbo",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("Motumbo",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			// TNT1 A 0 A_SpawnItemEx("RocketSpawner")
+			Fail
+	}
+}
+ACTOR SuperShotgun2 : SuperShotgun{}
+ACTOR SSGSpawner : CustomInventory replaces SuperShotgun
+{
+	Inventory.PickupMessage "$GOTLAUNCHER"
+	States
+	{
+		Spawn:
+			SGN2 A -1
+			Stop
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("LucianoID",1,"PickupLuciano")
+			TNT1 A 0 A_JumpIfInventory("AggeID",1,"PickupAgge")
+			TNT1 A 0 A_JumpIfInventory("RonID",1,"PickupRon")
+			TNT1 A 0 A_JumpIfInventory("zLayerID", 1, "PickupLuciano")
+			TNT1 A 0 A_JumpIfInventory("ThanuID", 1, "PickupThanu")
+			TNT1 A 0 A_JumpIfInventory("TerroID",1,"PickupTerro")
+			Stop
+		PickupLuciano:
+			TNT1 A 0 A_JumpIfInventory("SuperShotgun2",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("SuperShotgun2",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			// TNT1 A 0 A_SpawnItemEX("SSGSpawner")
+			Fail
+		PickupThanu:
+			TNT1 A 0 A_JumpIfInventory("ReloadShotgun",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("ReloadShotgun",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			// TNT1 A 0 A_SpawnItemEX("SSGSpawner")
+			Fail
+		PickupAgge:
+			TNT1 A 0 A_JumpIfInventory("AggeSSG",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("AggeSSG",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			// TNT1 A 0 A_SpawnItemEx("SSGSpawner")
+			Fail
+		PickupRon:
+			TNT1 A 0 A_JumpIfInventory("RonSSG",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("RonSSG",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			Fail
+		PickupTerro:
+			TNT1 A 0 A_JumpIfInventory("PKDoubleShotguns",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("PKDoubleShotguns",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			Fail
+	}
+}
+ACTOR PlasmaRifle2 : PlasmaRifle{}
+ACTOR PlasmaSpawner : CustomInventory replaces PlasmaRifle
+{
+	Inventory.PickupMessage "$GOTLAUNCHER"
+	States
+	{
+		Spawn:
+			PLAS A -1
+			Stop
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("LucianoID",1,"PickupGeneric")
+			TNT1 A 0 A_JumpIfInventory("AggeID",1,"PickupAgge")
+			TNT1 A 0 A_JumpIfInventory("ThanuID",1,"PickupThanu")
+			TNT1 A 0 A_JumpIfInventory("RonID",1,"PickupRon")
+			TNT1 A 0 A_JumpIfInventory("zLayerID", 1, "PickupGeneric")
+			TNT1 A 0 A_JumpIfInventory("TerroID",1,"PickupGeneric")
+			Stop
+		PickupRon:
+			TNT1 A 0 A_JumpIfInventory("RonPL",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("RonPL",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			Fail
+		PickupAgge:
+			TNT1 A 0 A_JumpIfInventory("AggeFlamethrower",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("AggeFlamethrower",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			// TNT1 A 0 A_SpawnItemEX("PlasmaSpawner")
+			Fail
+		PickupGeneric:
+			TNT1 A 0 A_JumpIfInventory("PlasmaRifle2",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("PlasmaRifle2",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			Fail
+		PickupThanu:
+			TNT1 A 0 A_JumpIfInventory("ThanuPL",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("ThanuPL",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			Fail
+	}
+}
+ACTOR UniqueWeaponSpawner : CustomInventory
+{
+	Inventory.PickupMessage "You got an unique weapon!"
+	States
+	{
+		Spawn:
+			ULTR A -1
+			Stop
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("LucianoID",1,"PickupLuciano")
+			TNT1 A 0 A_JumpIfInventory("AggeID",1,"PickupAgge")
+			TNT1 A 0 A_JumpIfInventory("RonID",1,"PickupGeneric")
+			TNT1 A 0 A_JumpIfInventory("zLayerID", 1, "PickupzLayer")
+			TNT1 A 0 A_JumpIfInventory("ThanuID", 1, "PickupGeneric")
+			TNT1 A 0 A_JumpIfInventory("TerroID",1,"PickupGeneric")
+			Stop
+		PickupLuciano:
+			TNT1 A 0 A_JumpIfInventory("CargaUnica",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("LucianoBomba",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			Stop
+		PickupzLayer:
+			TNT1 A 0 A_JumpIfInventory("CargaUnica",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("zLayerUnique",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			Stop
+		PickupAgge:
+			TNT1 A 0 A_JumpIfInventory("CargaAgge",10,"Spawn")
+			TNT1 A 0 A_GiveInventory("AggeUnique",1)
+			TNT1 A 0 A_GiveInventory("CargaAgge",10)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			Stop
+		PickupGeneric:
+			TNT1 A 1
+			Fail
+	}
+}

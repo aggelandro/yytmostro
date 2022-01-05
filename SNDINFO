@@ -1,0 +1,139 @@
+// sonidos originales del mod
+agge/flamet AFLAME
+agge/ssgfir AGGESSGF
+agge/visor VISOR
+agge/shildbrk SHILDBRK
+agge/hachazo AXE5
+agge/swing HAMMIS2
+agge/pared HAMWAL1
+agge/buah BUAAAH
+agge/lagrima TEARDEAD
+agge/pistolzap ASWELZP1
+agge/pistolded ASWDLCH2
+agge/pistoltzz ASWELID1
+agge/pedo AGGEPEDO
+agge/powerup POWERUP1
+elect/spark LHTSPARK
+
+agge/waskafire1 WLFSS1
+agge/waskafire2 WLFSS2
+agge/waskafire3 WLFSS3
+$random agge/waskafire { agge/waskafire1 agge/waskafire2 agge/waskafire3 }
+
+agge/waskadeath SPLAT12
+agge/explosion  KRLDTH
+agge/dropfire   WLS2D
+ron/click PCLICK
+ron/error PERROR
+ron/SSGload XSSGCHAR
+ron/SSGfire XSSGFIRE
+thanu/puij SPLAT12
+thanu/clownssg CLOWNGUN
+thanu/batswing BATSWING
+thanu/batrage BATRAGE
+thanu/bathit BATHIT
+terro/pistol ENFOFIRE
+terro/puniol PUNIOL
+terro/punior PUNIOR
+terro/punio1 PUNIO1
+terro/punio2 PUNIO2
+terro/punio3 PUNIO3
+terro/punio4 PUNIO4
+terro/punio5 PUNIO5
+terro/punio6 PUNIO6
+terro/punio7 PUNIO7
+terro/punio8 PUNIO8
+terro/punio9 PUNIO9
+terro/punio10 PUNIO10
+terro/puniopun PUNIOPUN
+terro/puniooff PUNIOOFF
+zlayer/sniper ZSNIPER
+zlayer/srelo ZSNIPRE
+ando/ytho YTHO
+bruno/minab MINABEEP
+hielo/llama HIELOLLA
+
+// jetpackzombie afanado de realm667
+$Random JetpackZombie/Sight	{ JPZMSIG1 JPZMSIG2 JPZMSIG3 }
+JPZMSIG1			JPZMSIG1
+JPZMSIG2			JPZMSIG2
+JPZMSIG3			JPZMSIG3
+JetpackZombie/Fly		JPZMFLY
+$Random JetpackZombie/Active	{ JPZMACT1 JPZMACT2 JPZMACT3 }
+JPZMACT1			JPZMACT1
+JPZMACT2			JPZMACT2
+JPZMACT3			JPZMACT3
+$Random JetpackZombie/Fire	{ JPZMFIR1 JPZMFIR2 JPZMFIR3 }
+JPZMFIR1			JPZMFIR1
+JPZMFIR2			JPZMFIR2
+JPZMFIR3			JPZMFIR3
+$Random JetpackZombie/Pain	{ JPZMPAI1 JPZMPAI2 JPZMPAI3 }
+JPZMPAI1			JPZMPAI1
+JPZMPAI2			JPZMPAI2
+JPZMPAI3			JPZMPAI3
+
+// dinamita afanada del samsara
+TNT/Throw			TNTTOSS
+TNT/Fuse			TNTFUSE
+TNT/Explode			NAPALMEX
+Napalm/Explode		NAPALMEX
+TNT/Zip				ZIPCLS
+TNT/Match			P1CH_FL8
+
+//pistola afanada de realm667
+weapons/boltfire	BOLTFIRE
+
+//escopeta afanada del super skulltag
+weapons/slamfire	shotslam
+$volume weapons/slamfire 0.6
+
+terro/shotty1    DSSHOTG1
+terro/shotty2	 DSSHOTG2
+terro/shotty3	 DSSHOTG3
+terro/shotty4    DSSHOTG4
+$random weapons/shotgf	{ terro/shotty1 terro/shotty2 terro/shotty3 terro/shotty4 }
+
+weapons/trace1                  dssrico1
+weapons/trace2                  dssrico2
+weapons/trace3                  dssrico3
+weapons/trace4                  dssrico4
+weapons/trace5                  dssrico5
+weapons/trace6                  dssrico6
+weapons/trace7                  dssrico7
+weapons/trace8                  dssrico8
+weapons/trace9                  dssrico9
+weapons/trace10                 dssric10
+weapons/trace11                 dssric11
+weapons/trace12                 dssric12
+weapons/trace13                 dssric13
+$random weapons/trace           { weapons/trace2 weapons/trace3 weapons/trace4 weapons/trace5 weapons/trace6 weapons/trace10 weapons/trace11 misc/null misc/null misc/null}
+$rolloff weapons/trace 1 1200
+$volume weapons/trace 0.75
+$random puff/ricochet {weapons/trace1 weapons/trace7 weapons/trace8 weapons/trace9 weapons/trace12 weapons/trace13 misc/null misc/null}
+$rolloff puff/ricochet 48 1800
+
+// sonidos pistola thanu del wad de joel
+SPRPSHOT SPRPSHOT
+$Limit SPRPSHOT 0
+
+SPRPIMPT SPRPIMPT
+$Limit SPRPIMPT	0
+
+// sonidos de los casquillos del complex
+
+// Bullet Casing
+$random weapons/casing1	{ weapons/bullet1 weapons/bullet2 weapons/bullet3 weapons/bullet4 }
+weapons/bullet1			dscasing
+weapons/bullet2			dscasin2
+weapons/bullet3			dscasin3
+weapons/bullet4			dscasin4
+//=====================================
+//Shell Casing
+$random weapons/casing2	{ weapons/shell1 weapons/shell2 weapons/shell3 }
+weapons/shell1			dsshell1
+weapons/shell2			dsshell2
+weapons/shell3			dsshell3
+
+
+
+

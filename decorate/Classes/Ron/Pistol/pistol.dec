@@ -1,0 +1,160 @@
+ACTOR RonPistol : DoomWeapon
+{
+  Weapon.SelectionOrder 1900
+  Weapon.AmmoUse 1
+  Weapon.AmmoUse2 0
+  Weapon.AmmoGive 20
+  Weapon.AmmoType "Clip"
+  Obituary "$OB_MPPISTOL"
+  +WEAPON.WIMPY_WEAPON
+  Inventory.Pickupmessage "$PICKUP_PISTOL_DROPPED"
+  Tag "$TAG_PISTOL"
+  States
+  {
+  Ready:
+    PISB B 0 A_JumpIfInventory("CargaRonPistol",2,"Ready3")
+	PISB B 0 A_JumpIfInventory("CargaRonPistol",1,"Ready2")
+    PISB B 1 A_WeaponReady
+    Loop
+  Ready2:
+    PIGG B 1 A_WeaponReady 
+	Loop
+  Ready3:
+    PISR B 1 A_WeaponReady
+	Loop
+  Deselect:
+    PISB B 0 A_JumpIfInventory("CargaRonPistol",2,"Deselect3")
+	PISB B 0 A_JumpIfInventory("CargaRonPistol",1,"Deselect2")
+    PISB B 1 A_Lower
+	PISB B 0 A_TakeInventory("CargaRonPistol",2)
+    Loop
+  Deselect2:
+    PIGG B 1 A_Lower
+	PIGG B 0 A_TakeInventory("CargaRonPistol",2)
+	Loop
+  Deselect3:
+    PISR B 1 A_Lower
+	PISR B 0 A_TakeInventory("CargaRonPistol",2)
+	Loop	
+  Select:
+    PISB B 1 A_Raise
+    Loop
+  Fire:
+	PISB B 0 A_JumpIfInventory("CargaRonPistol",2,"Fire3")
+	PISB B 0 A_JumpIfInventory("CargaRonPistol",1,"Fire2")
+    PISB C 4
+    PISB D 6 A_FirePistol
+    PISB C 4
+    PISB B 5 A_ReFire
+    Goto Ready
+  Fire2:
+    PIGG B 2
+    PIGG C 2 
+	PIGG C 0 A_FireBullets (5.6, 0, 1, 8, "BulletPuff")
+	PIGG C 0 A_PlaySound("weapons/pistol", CHAN_WEAPON)
+	PIGG C 0 A_GunFlash("Flash2")
+	PIGG D 2
+    PIGG C 3 
+	PIGG C 0 A_FireBullets (5.6, 0, 1, 8, "BulletPuff")
+	PIGG C 0 A_PlaySound("weapons/pistol", CHAN_WEAPON)
+	PIGG C 0 A_GunFlash("Flash2")
+	PISB D 2
+    PISB C 2 
+	PISB B 0 A_FireBullets (5.6, 0, 1, 8, "BulletPuff")
+	PISB B 0 A_PlaySound("weapons/pistol", CHAN_WEAPON)
+	PISB B 0 A_GunFlash("Flash2")
+    PISB D 3
+    PISB B 3 A_TakeInventory("CargaRonPistol",2)
+    Goto Ready
+  Fire3:
+    PISR B 2
+    PISR C 3 
+	PISR C 0 A_FireCustomMissile("StickyBullet")
+	PISR C 0 A_TakeInventory("Clip",4)
+    PISR D 4
+    PISB C 5 A_TakeInventory("CargaRonPistol",2)
+	Goto Ready
+  Altfire:
+	PISB A 0 A_JumpIfInventory("CargaRonPistol",2,"Ready")
+	PISB B 4
+	PISB C 0 A_PlaySound("ron/click")
+    PISB C 4 A_GiveInventory("CargaRonPistol",1)
+    PISB C 4
+    PISB B 4 A_ReFire
+	Goto Ready
+  Flash:
+    TNT1 A 7 Bright A_Light1
+    Goto LightDone
+    TNT1 A 7 Bright A_Light1
+    Goto LightDone
+  Flash2:
+	TNT1 A 2 Bright A_Light1
+    Goto LightDone
+    TNT1 A 2 Bright A_Light1
+    Goto LightDone
+  Spawn:
+    PIST A -1
+    Stop
+  }
+}
+ACTOR CargaRonPistol : Inventory
+{
+	Inventory.MaxAmount 2
+}
+ACTOR StickyBullet
+{
+  var int user_tracer;
+  Radius 13
+  Height 8
+  Scale 0.5
+  Speed 30
+  Damage 1
+  Projectile
+  +RANDOMIZE
+  +SEEKERMISSILE
+  SeeSound "weapons/plasmaf"
+  DeathSound "weapons/plasmax"
+  Obituary "$OB_MPPLASMARIFLE" // "%o was obliterated by %k's charged attack."
+  States
+  {
+  Spawn:
+    PLSS AB 6 Bright
+    Loop
+  XDeath:
+	PLSE A 0 A_SetUserVar(user_tracer, random(16,48))
+	PLSE A 0 A_SeekerMissile(15,15,SMF_LOOK,256,15)
+	PLSS ABABABABABABABABABABABABABABABABABABABABAB 1 Bright A_Fire(user_tracer)
+    // PLSS ABABABABABABAB 4 Bright A_Warp(AAPTR_TRACER,0,0,32,0,WARPF_STOP)
+	PLSS A 0 A_SpawnItemEx("StickyExplosion",0,0,0,0,0,0)
+	// MISL A 0 A_Explode(100,64,0,0,64)
+	// MISL A 0 A_PlaySound("weapons/rocklx")
+	// MISL B 8 Bright A_Fire(32)
+	// MISL C 6 Bright A_Fire(32)
+	//MISL D 4 Bright A_Fire(32)
+    Stop
+  Death:
+	PLSE ABCDE 4 Bright
+    Stop
+  }
+}
+ACTOR StickyExplosion 
+{
+  Radius 13
+  Height 8
+  Speed 0
+  Damage 0
+  Scale 0.3
+  DamageType Friendly
+  Projectile
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    MISL A 1 NoDelay A_Explode(80,64,0,0,64)
+	MISL A 0 A_PlaySound("weapons/rocklx")
+	MISL B 8 Bright A_Fire(32)
+	MISL C 6 Bright A_Fire(32)
+	MISL D 4 Bright A_Fire(32)
+	Stop
+  }
+}

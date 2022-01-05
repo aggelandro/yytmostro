@@ -1,0 +1,68 @@
+ACTOR RonPL : DoomWeapon
+{
+	Inventory.PickupMessage "You got the Sticky Plasma Rifler!"
+    Weapon.AmmoType "Cell"
+    Weapon.AmmoUse 1
+    Weapon.AmmoGive 40
+	Tag "Sticky Plasma Rifle"
+	States
+	{
+	Ready:
+		PLSG A 1 A_WeaponReady
+    Loop
+	Deselect:
+		PLSG A 1 A_Lower
+    Loop
+	Select:
+		PLSG A 1 A_Raise
+    Loop
+	Fire:
+		PLSG A 5 A_GunFlash
+		PLSG A 0 A_FireCustomMissile("StickyBulletP")
+		PLSG B 20 A_ReFire
+		Goto Ready
+	Flash:
+		PLSF A 4 Bright A_Light1
+		PLSS A 0 A_PlaySound("agge/flamet",1,2.0)
+		Goto LightDone
+		PLSF B 4 Bright A_Light1
+		PLSS A 0 A_PlaySound("agge/flamet",1,2.0)
+		Goto LightDone
+	Spawn:
+		PLAS A -1
+		Stop
+	}
+}
+
+ACTOR StickyBulletP : StickyBullet
+{
+	States
+	{
+	XDeath:
+	PLSE A 0 A_SetUserVar(user_tracer, random(16,48))
+	PLSE A 0 A_SeekerMissile(15,15,SMF_LOOK,256,15)
+	PLSS ABABABABABABABABABABABABABABABABABABABABAB 1 Bright A_Fire(user_tracer)
+    // PLSS ABABABABABABAB 4 Bright A_Warp(AAPTR_TRACER,0,0,32,0,WARPF_STOP)
+	MISL A 0 A_SpawnItemEx("StickyExplosionP",0,0,0,0,0,0)
+	//MISL A 0 A_PlaySound("weapons/rocklx")
+	//MISL B 8 Bright A_Fire(user_tracer)
+	//MISL C 6 Bright A_Fire(user_tracer)
+	//MISL D 4 Bright A_Fire(user_tracer)
+    Stop
+	}
+}
+
+ACTOR StickyExplosionP : StickyExplosion
+{
+  +FORCERADIUSDMG
+  States
+  {
+  Spawn:
+    MISL A 1 NoDelay A_Explode(40,64,0,0,64)
+	MISL A 0 A_PlaySound("weapons/rocklx")
+	MISL B 8 Bright A_Fire(32)
+	MISL C 6 Bright A_Fire(32)
+	MISL D 4 Bright A_Fire(32)
+	Stop
+  }
+ } 

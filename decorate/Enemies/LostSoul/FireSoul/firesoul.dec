@@ -1,0 +1,5 @@
+ACTOR FireSoul : LostSoul2
+{
+	Translation "208:250=192:207"
+	DropItem "HellfireM"
+}

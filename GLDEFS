@@ -1,0 +1,66 @@
+pointlight AggeFire1
+{
+    color 0.8 0.0 0.0
+    size 50
+    offset 0 16 0
+}
+//Object HellfireUltra
+//
+//{
+//	frame FIRE 
+//	{ 
+//	light AggeFire1 
+//	}
+//}
+
+
+
+pointlight CryoLight
+{
+	color 0.0 0.0 1.0
+	size 80
+	offset 0 0 0
+}
+
+// jetpackzombie afanado de realm667
+
+FlickerLight2 JetpackZombieFire1
+{
+Color 1.0 0.8 0.2
+Size 24
+SecondarySize 32
+Interval 1
+Offset 0 28 -14
+}
+
+FlickerLight2 JetpackZombieFire2
+{
+Color 1.0 0.8 0.2
+Size 24
+SecondarySize 32
+Interval 1
+Offset 0 28 14
+}
+
+FlickerLight2 JetpackZombieFire3
+{
+Color 1.0 0.8 0.2
+Size 48
+SecondarySize 56
+Interval 1
+Offset 0 28 0
+}
+
+Object JetpackZombie
+{
+Frame JPZMB { Light JetpackZombieFire1 }
+Frame JPZMC { Light JetpackZombieFire2 }
+Frame JPZMD { Light JetpackZombieFire3 }
+}
+
+Object JetpackZombieExplosion
+{
+Frame MISLB { Light ROCKET_X1 }
+Frame MISLC { Light ROCKET_X2 }
+Frame MISLD { Light ROCKET_X3 }
+}

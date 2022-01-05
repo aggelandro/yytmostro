@@ -1,0 +1,52 @@
+ACTOR BulletCasing
+{
+   Radius 3
+   Speed 2
+   Mass 5
+   Scale 0.18
+   BounceFactor 0.5
+   WallBounceFactor 0.25
+   PROJECTILE
+   +DOOMBOUNCE
+   +CLIENTSIDEONLY
+   -NOGRAVITY
+   -NOBLOCKMAP
+   SeeSound "weapons/casing1"
+   States
+   {
+   Spawn:
+      CAS2 ABCDEFGH 1
+      Loop
+   Death:
+      TNT1 A 0
+      TNT1 A 0 A_Jump(128,3)
+      CAS2 C 100
+      CAS2 C 5 A_FadeOut(0.10)
+      Goto Death+3
+      CAS2 G 100
+	  CAS2 G 5 A_FadeOut(0.10)
+	  Goto Death+5
+   }
+}
+
+ACTOR ShellCasing : BulletCasing
+{
+	Scale 0.24
+	Seesound "weapons/casing2"
+	States
+	{
+	Spawn:
+	  TNT1 A 0
+	  REDC ABCDEFGH 2
+	  Loop
+    Death:
+	  TNT1 A 0
+      TNT1 A 0 A_Jump(128,3)
+      REDC C 100
+      REDC C 5 A_FadeOut(0.10)
+      Goto Death+3
+      REDC G 100
+	  REDC G 5 A_FadeOut(0.10)
+	  Goto Death+5
+	  }
+}

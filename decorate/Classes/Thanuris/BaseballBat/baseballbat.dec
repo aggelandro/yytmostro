@@ -1,0 +1,82 @@
+ACTOR BaseballBat : Weapon
+{
+	Weapon.Kickback 200
+	Weapon.AmmoType2 "BatReflectAmmo"
+	Weapon.AmmoUse2 100
+	Obituary ""
+	Tag "Baseball Bat"
+	+WEAPON.WIMPY_WEAPON
+	+WEAPON.MELEEWEAPON
+	States
+	{
+		Ready:
+			BBAT A 0 A_GiveInventory("BatReflectAmmo",2)
+			BBAT A 1 A_WeaponReady
+			Loop
+		Select:
+			BBAT A 1 A_Raise
+			Loop
+		Deselect:
+			BBAT A 1 A_Lower
+			Loop
+		Fire:
+			TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, "Berserked")
+		Normal:
+			BBAT BCDE 2
+			BBAT F 0 A_PlaySound("thanu/batswing", CHAN_WEAPON)
+			BBAT F 2 A_CustomPunch(3 * random(1, 10),1,0,"BatPuff")
+			BBAT GHI 2
+			Goto Ready
+		Berserked:
+			BBAT BCDE 2
+			BBAT F 0 A_PlaySound("thanu/batrage", CHAN_WEAPON)
+			BBAT F 2 A_CustomPunch(30 * random(1, 10),1,0,"SuperBatPuff")
+			BBAT GHI 2
+			Goto Ready
+		Altfire:
+			BBAT B 1 A_FireCustomMissile("BatReflect",0,1) 
+			BBAT CDEFGHI 1
+			Goto Ready
+	}
+}
+ACTOR BatReflect
+{
+	Health 999999
+	Radius 36
+	Height 64
+	Speed 12
+	DamageFactor "Bat",0
+	PainChance 255
+	RenderStyle None
+	+SHOOTABLE
+	+NOGRAVITY
+	+REFLECTIVE
+	+DEFLECT
+	-SOLID
+	States
+	{
+		Spawn:
+			MISL A 8
+			MISL A 0 Thing_Remove(0)
+			Stop
+		Pain:
+			MISL A 1 A_PlaySound("thanu/bathit",CHAN_AUTO)
+			MISL A 0 Thing_Remove(0)
+			Stop
+	}
+}
+ACTOR BatPuff : BulletPuff
+{
+	DamageType "Bat"
+	RenderStyle None
+	ProjectileKickback 200
+}
+ACTOR SuperBatPuff : BatPuff
+{
+	ProjectileKickback 2000
+}
+ACTOR BatReflectAmmo : Ammo
+{
+	Inventory.MaxAmount 100
+	Inventory.Icon "BBATJ0"
+}

@@ -1,0 +1,97 @@
+ACTOR ThanuRL : DoomWeapon
+{
+	Weapon.SelectionOrder 2500
+    Weapon.AmmoUse 1
+    Weapon.AmmoGive 2
+    Weapon.AmmoType "RocketAmmo"
+    +WEAPON.NOAUTOFIRE
+    Inventory.MaxAmount 1
+    Inventory.PickupMessage "You got the proximity mines!"
+    Tag "$TAG_ROCKETLAUNCHER"
+	States
+	{
+	Ready:
+		MENA A 1 A_WeaponReady
+		Loop
+	Deselect:
+		MENA A 1 A_Lower
+		Loop
+	Select:
+		MENA A 1 A_Raise
+		Loop
+	Fire:
+		MENA A 0 A_JumpIfNoAmmo("Deselect")
+		MENA A 2 offset (0,52)
+		MENA A 2 offset (0,82)
+		// MENA A 0 A_TakeInventory("RocketAmmo",1)
+		MENA A 5 offset (0,112) A_FireCustomMissile("MinaThanu",0,1,-1,8)
+		MENA A 2 offset (0,82)
+		MENA A 2 offset (0,52)
+		Goto Ready
+	Spawn:
+		LAUN A -1
+		Stop
+	}
+}
+ACTOR MinaThanu
+{
+	Health 1
+	Radius 20
+	Height 8
+	Mass 100000
+	Speed 0
+	PainChance 0
+	DamageType "Mina"
+	DamageFactor "Mina", 0
+	Monster
+	Species "Player"
+	+FRIENDLY
+	+FLOORCLIP
+	+ALWAYSFAST
+	+THRUSPECIES	
+	+NOBLOOD
+	-SOLID
+	-BLOCKEDBYSOLIDACTORS
+	States
+	{
+	Spawn:
+		MINA A 0 A_ChangeFlag("INVULNERABLE",true)
+		MINA A 20
+		MINA A 0 A_ChangeFlag("INVULNERABLE",false)
+		Goto See
+	See:
+		MINA B 1 A_PlaySound("bruno/minab")
+		MINA BBB 5 A_Chase
+		MINA B 4
+		MINA AAAA 5 A_Chase
+		Loop
+	Melee:
+		MISL B 0 A_PlaySound("weapons/rocklx")
+		MISL B 5 A_CustomMissile("MinaExplosion")
+		MISL C 5
+		MISL D 5
+		Stop
+	Death:
+		MISL B 0 A_PlaySound("weapons/rocklx")
+		MISL B 5 A_CustomMissile("MinaExplosion")
+		MISL C 5
+		MISL D 5
+		Stop
+	 }
+}
+ACTOR MinaExplosion
+{
+	Scale 0.3
+	Damage 1
+	RenderStyle None
+	DamageType "Mina"
+	+NOINTERACTION
+	-PUFFONACTORS
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 1 A_Explode(200,72,0,0,72)
+		Stop
+	}
+}

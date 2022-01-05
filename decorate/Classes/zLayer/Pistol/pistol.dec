@@ -1,0 +1,38 @@
+ACTOR zLayerPistol : DoomWeapon
+{
+  Weapon.SelectionOrder 1900
+  Weapon.AmmoUse 1
+  Weapon.AmmoGive 20
+  Weapon.AmmoType "Clip"
+  Obituary "%o was shot."
+  +WEAPON.NOAUTOFIRE
+  +WEAPON.WIMPY_WEAPON
+  Inventory.Pickupmessage "$PICKUP_PISTOL_DROPPED"
+  Tag "zLayer Pistol"
+  States
+  {
+  Ready:
+    PISG A 1 A_WeaponReady
+    Loop
+  Deselect:
+    PISG A 1 A_Lower
+    Loop
+  Select:
+    PISG A 1 A_Raise
+    Loop
+  Fire:
+    EN2A A 0
+    EN2A B 1 A_FirePistol
+    EN2A C 0
+    EN2A B 1 //A_ReFire("Ready")
+    Goto Ready
+  Flash:
+    PISF A 1 Bright A_Light1
+    Goto LightDone
+    PISF A 1 Bright A_Light1
+    Goto LightDone
+  Spawn:
+    PIST A -1
+    Stop
+  }
+}

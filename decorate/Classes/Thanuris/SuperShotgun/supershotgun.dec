@@ -1,0 +1,125 @@
+ACTOR ReloadShotgun : SuperShotgun
+{
+	Weapon.AmmoUse 0
+	Weapon.AmmoUse2 1
+	Weapon.AmmoType2 "RocketAmmo"
+	States
+	{
+	Ready:
+		SHT2 A 1 A_WeaponReady(WRF_ALLOWRELOAD)
+		Loop
+	Fire:
+		SHT2 A 0 A_JumpIfInventory("ShotgunEmpty", 1, "Ready")
+		SHT2 A 3 
+		SHT2 A 0 A_FireCustomMissile("Pie",0,0,-5,0,0,10)
+		SHT2 A 0 A_FireCustomMissile("Pie",0,0,5,0,0,10)
+		SHT2 A 0 A_PlaySound ("thanu/clownssg", CHAN_WEAPON)
+		SHT2 A 7 
+		SHT2 A 0 A_GiveInventory("ShotgunEmpty",1)
+		Goto Ready
+	Altfire:
+		SHT2 A 3
+		// Fórmula para que A_SpawnItemEx funcione con el pitch (ángulo vertical del jugador) = speed * cos(pitch),0,speed*-sin(pitch). Ejemplo = A_SpawnItemEx("Rocket",0,0,0,20*cos(pitch),0,20*-sin(pitch)
+		SHT2 A 0 A_SpawnItemEx("DragonSpray",0,frandom(-20,20),frandom(32,48),frandom(15,25)*cos(pitch),0,frandom(15,25)*-sin(pitch),0,SXF_TRANSFERPITCH)
+		SHT2 A 0 A_SpawnItemEx("DragonSprayB",0,frandom(-20,20),frandom(32,48),frandom(15,25)*cos(pitch),0,frandom(15,25)*-sin(pitch),0,SXF_TRANSFERPITCH)
+		SHT2 A 0 A_SpawnItemEx("DragonSprayY",0,frandom(-20,20),frandom(32,48),frandom(15,25)*cos(pitch),0,frandom(15,25)*-sin(pitch),0,SXF_TRANSFERPITCH)
+		SHT2 A 0 A_SpawnItemEx("DragonSprayG",0,frandom(-20,20),frandom(32,48),frandom(15,25)*cos(pitch),0,frandom(15,25)*-sin(pitch),0,SXF_TRANSFERPITCH)
+		SHT2 A 0 A_GiveInventory("ShotgunSpray",1)
+		SHT2 A 0 A_JumpIfInventory("ShotgunSpray",30,"AltfireF")
+		Goto Altfire+1
+	AltfireF:
+		SHT2 A 0 A_TakeInventory("RocketAmmo",1)
+		SHT2 A 0 A_TakeInventory("ShotgunSpray",30)
+		SHT2 A 0 A_PlaySound ("weapons/sshotf", CHAN_WEAPON)
+		SHT2 A 0 A_Recoil(20)
+		SHT2 A 2 A_GunFlash
+		SHT2 A 2 offset (0,42)
+		SHT2 A 3 offset (0,52)
+		SHT2 A 5 offset (0,62)
+		SHT2 A 3 offset (0,52)
+		SHT2 A 3 offset (0,42)
+		Goto Ready
+	Reload:
+		SHT2 A 0 A_JumpIfInventory("ShotgunEmpty",1,2)
+		SHT2 A 1
+		Goto Ready
+		SHT2 A 0 A_JumpIfInventory("Shell",2,"ReloadUse")
+		SHT2 A 1
+		Goto Ready
+	ReloadUse:
+		SHT2 D 6 A_OpenShotgun2
+		SHT2 FF 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
+		SHT2 E 6
+		SHT2 F 0 A_TakeInventory("Shell",2)
+		SHT2 F 6 A_LoadShotgun2
+		SHT2 G 4 
+		SHT2 H 4 A_PlaySoundEx ("weapons/sshotc", "Weapon")
+		SHT2 H 0 A_TakeInventory("ShotgunEmpty",1)
+		Goto Ready
+	Flash:
+		SHT2 I 4 Bright A_Light1
+		SHT2 J 3 Bright A_Light2
+		Goto LightDone
+	AltFlash:
+		SHT2 I 2 Bright A_Light1
+		SHT2 J 2 Bright offset(0,42) A_Light2
+		Goto LightDone
+	}
+}
+ACTOR DragonSpray : DoomImpBall
+{
+	Damage (2)
+	RenderStyle Normal
+	Gravity 0.3
+	-NOGRAVITY
+	-RANDOMIZE
+	+BLOODSPLATTER
+	BounceType Hexen
+	BounceCount 2
+	-BOUNCEONACTORS
+	-BOUNCEONFLOORS
+	-BOUNCEONCEILINGS
+	Scale 0.2
+	Speed 20
+}
+ACTOR Pie 
+{
+	Radius 6
+	Height 8
+	Scale 0.7
+	Speed 22
+	Projectile
+	Damage 25
+	+RANDOMIZE
+	-NOGRAVITY
+	States
+	{
+	Spawn:
+		FPIE A 1 
+		Loop
+	Death:
+		PPLT A 2 A_PlaySound("thanu/puij", CHAN_AUTO)
+		PPLT BCDEFGHIJ 2
+		Stop
+	}	
+}
+ACTOR DragonSprayB : DragonSpray
+{
+	Translation "172:191=200:207"
+}
+ACTOR DragonSprayY : DragonSpray
+{
+	Translation "172:191=224:231"
+}
+ACTOR DragonSprayG : DragonSpray
+{
+	Translation "172:191=119:127"
+}
+ACTOR ShotgunEmpty : Inventory
+{
+	Inventory.MaxAmount 1
+}
+ACTOR ShotgunSpray : Inventory
+{
+	Inventory.MaxAmount 30
+}

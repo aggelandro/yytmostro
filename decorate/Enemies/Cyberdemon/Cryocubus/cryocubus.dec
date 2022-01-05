@@ -1,0 +1,162 @@
+ACTOR Cryocubus
+{
+  Health 4000
+  Radius 40
+  Height 110
+  Mass 1000
+  Speed 8
+  Scale 1.5
+  PainChance 0
+  Monster
+  +MISSILEMORE
+  +MISSILEEVENMORE
+  +BOSS
+  +FLOORCLIP
+  +BOSSDEATH
+  DamageFactor "Friendly", 0
+  SeeSound "fatso/sight"
+  PainSound "fatso/pain"
+  DeathSound "fatso/death"
+  ActiveSound "fatso/active"
+  Obituary "%o was frozen by the Cryocubus."
+  DropItem "UniqueWeaponSpawner"
+  var int user_isfiring;
+  States
+  {
+  Spawn:
+    HIEL AB 15 Light("CryoLight") A_Look
+    Loop
+  See:
+    HIEL AABBCCDDEEFF 4 Light("CryoLight") A_Chase
+    Loop
+  Missile:
+	HIEL G 0 A_SetUserVar("user_isfiring",0)
+    HIEL G 20 Light("CryoLight") A_FatRaise
+	HIEL G 0 Light("CryoLight") A_JumpIfCloser(450,"MissileAlt")
+	HIEL G 0  Light("CryoLight") A_JumpIf(user_isfiring == 0,1)
+	Goto See
+	HIEL G 0 Light("CryoLight") A_CustomMissile("FatsoIce",27,-42,0,1)
+    HIEL H 3 Light("CryoLight") Bright A_CustomMissile("FatsoIce",27,42,0,1)
+	HIEL I  3 Light("CryoLight") A_FaceTarget
+	HIEL G 0 Light("CryoLight") A_CustomMissile("FatsoIce",27,-42,0,1)
+    HIEL H 3 Light("CryoLight") Bright A_CustomMissile("FatsoIce",27,42,0,1)
+	HIEL I  3 Light("CryoLight") A_FaceTarget
+	HIEL G 0 Light("CryoLight") A_CustomMissile("FatsoIce",27,-42,0,1)
+    HIEL H 3 Light("CryoLight") Bright A_CustomMissile("FatsoIce",27,42,0,1)
+	HIEL I  3 Light("CryoLight") A_SetUserVar("user_isfiring",0)
+	Goto See
+  MissileAlt:
+	HIEL G 0  Light("CryoLight") A_SetUserVar("user_isfiring",1)
+	HIEL G 0 Light("CryoLight") A_CustomMissile("LanzaHielo",27,-42,0,1)
+    HIEL H 2 Light("CryoLight") A_CustomMissile("LanzaHielo",27,42,0,1) 
+    HIEL H 2 Light("CryoLight") A_SpidRefire
+    Goto Missile+2
+  Pain:
+    HIEL J 3 Light("CryoLight") A_SetUserVar("user_isfiring",0)
+    HIEL J 3 Light("CryoLight") A_Pain
+    Goto See
+	Pain.Lightning:
+		TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.5),0,0,0,0)
+		TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.5),0,0,0,0)
+    Goto Pain
+  Death:
+    HIEL K 6
+    HIEL L 6 A_Scream
+    HIEL M 6 A_NoBlocking
+    HIEL NOP 6
+    HIEL P -1 A_BossDeath
+    Stop
+  Raise:
+    HIEL R 5
+    HIEL QPONMLK 5
+    Goto See
+  }
+}
+
+ACTOR LanzaHielo
+{
+  Radius 8
+  Height 8
+  Damage 4
+  Speed 35
+  Projectile
+  RenderStyle Translucent
+  Alpha 0.5
+  +RIPPER
+  +BLOODLESSIMPACT
+  +RANDOMIZE
+  DamageType Ice
+  SeeSound "hielo/llama"
+  Obituary "%o was frozen by the Cryocubus."
+  States
+  {
+  Spawn:
+	HUMO A 0 
+	HUMO ABCDEFGHIJKLMNOPQ 1
+	Stop
+  Death:
+	Stop
+  }
+}
+ACTOR FatsoIce : FatShot
+{
+	Damage 10
+	+RANDOMIZE
+	+SEEKERMISSILE
+	Speed 20
+	Translation "168:223=192:207", "208:239=192:195"
+	RenderStyle Normal
+	DamageType Ice
+	States
+	{
+	Spawn:
+		MANF A 0
+		MANF AB 4 Bright A_SeekerMissile(5,10)
+		Loop
+	XDeath:
+		MISL B 0 A_SpawnItemEx("FatsoIceEffect")
+		MISL B 0 A_SpawnItemEx("FreezeDebuff")
+		MISL B 0 A_FreezeDeathChunks
+		Stop
+	Death:
+		MISL B 0 A_SpawnItemEx("FatsoIceEffect")
+		MISL B 0 A_FreezeDeathChunks
+		MISL B 0
+		Stop
+	}
+}
+ACTOR FatsoIceEffect
+{
+	+NOINTERACTION
+	RenderStyle Normal
+	Translation "168:223=192:207", "208:239=192:195"
+	States
+	{
+	Spawn:
+		MISL B 8 Bright
+		MISL C 6
+		MISL D 4
+		Stop
+	}
+}
+
+Actor PowerSlowSpeed : PowerSpeed
+{
+powerup.duration -3 
+speed 0.0
+}
+ACTOR FreezeDebuff : PowerupGiver
+{
+	powerup.type SlowSpeed
+	RenderStyle None
+	Inventory.PickupMessage ""
+	+INVENTORY.QUIET
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+	States
+	{
+	Spawn:
+		FIRE A 5
+		Stop
+	}
+}
