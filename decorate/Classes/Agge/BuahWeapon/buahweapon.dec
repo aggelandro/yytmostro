@@ -13,10 +13,18 @@ ACTOR BuahWeapon : Weapon {
 			Stop
 			
 	  Ready:
+			TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 1)
+			Goto ReadyLoop
+			
+		ReadyLoop:
 			CFLM AAAABBBBCCCC 1 A_WeaponReady
 			Loop
 			
 	  Deselect:
+			TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
+			Goto DeselectLoop
+		
+		DeselectLoop:
 			CFLM A 1 A_Lower
 			Loop
 			
@@ -131,7 +139,7 @@ ACTOR Cat-O-Nine-Tails : AbstractAutoCustomPowerUp 4000 {
 	States {
 		
 		Spawn:
-			CATO A 1 BRIGHT
+			P000 A 1 BRIGHT
 			Loop
 		
 		WeaponInInventory:
@@ -153,7 +161,7 @@ ACTOR GrowthHormones : AbstractAutoCustomPowerUp 4001 {
 	States {
 		
 		Spawn:
-			GROW A 1 BRIGHT
+			P001 A 1 BRIGHT
 			Loop
 		
 		WeaponInInventory:
@@ -174,7 +182,7 @@ ACTOR JesusJuice : AbstractAutoCustomPowerUp 4002 {
 	States {
 		
 		Spawn:
-			JESU A 1 BRIGHT
+			P002 A 1 BRIGHT
 			Loop
 		
 		WeaponInInventory:
@@ -199,7 +207,7 @@ ACTOR MomsHeels : AbstractAutoCustomPowerUp 4003 {
 	States {
 		
 		Spawn:
-			HEEL A 1 BRIGHT
+			P003 A 1 BRIGHT
 			Loop
 		
 		WeaponInInventory:
@@ -223,7 +231,7 @@ ACTOR MomsLipstick : AbstractAutoCustomPowerUp 4004 {
 	States {
 		
 		Spawn:
-			LIPS A 1 BRIGHT
+			P004 A 1 BRIGHT
 			Loop
 		
 		WeaponInInventory:
@@ -247,7 +255,7 @@ ACTOR MomsUnderwear : AbstractAutoCustomPowerUp 4005 {
 	States {
 		
 		Spawn:
-			UNDE A 1 BRIGHT
+			P005 A 1 BRIGHT
 			Loop
 		
 		WeaponInInventory:
@@ -271,7 +279,7 @@ ACTOR RoidRage : AbstractAutoCustomPowerUp 4006 {
 	States {
 		
 		Spawn:
-			ROID A 1 BRIGHT
+			P006 A 1 BRIGHT
 			Loop
 		
 		WeaponInInventory:
@@ -295,7 +303,7 @@ ACTOR SafetyPin : AbstractAutoCustomPowerUp 4007 {
 	States {
 		
 		Spawn:
-			PINE A 1 BRIGHT
+			P007 A 1 BRIGHT
 			Loop
 		
 		WeaponInInventory:
@@ -320,7 +328,7 @@ ACTOR Synthoil : AbstractAutoCustomPowerUp 4008 {
 	States {
 		
 		Spawn:
-			SYNT A 1 BRIGHT
+			P008 A 1 BRIGHT
 			Loop
 			
 		WeaponInInventory:
@@ -345,7 +353,7 @@ ACTOR SpeedBall : AbstractAutoCustomPowerUp 4009 {
 	States {
 		
 		Spawn:
-			SPEE A 1 BRIGHT
+			P009 A 1 BRIGHT
 			Loop
 			
 		WeaponInInventory:
@@ -366,7 +374,7 @@ ACTOR Magic8Ball : AbstractAutoCustomPowerUp 4010 {
 	States {
 		
 		Spawn:
-			8BAL A 1 BRIGHT
+			P010 A 1 BRIGHT
 			Loop
 			
 		WeaponInInventory:
@@ -387,7 +395,7 @@ ACTOR Screw : AbstractAutoCustomPowerUp 4011 {
 	States {
 		
 		Spawn:
-			SCRE A 1 BRIGHT
+			P011 A 1 BRIGHT
 			Loop
 			
 		WeaponInInventory:
@@ -409,7 +417,7 @@ ACTOR Toothpicks : AbstractAutoCustomPowerUp 4012 {
 	States {
 		
 		Spawn:
-			TOOT A 1 BRIGHT
+			P012 A 1 BRIGHT
 			Loop
 			
 		WeaponInInventory:
@@ -431,7 +439,7 @@ ACTOR TornPhoto : AbstractAutoCustomPowerUp 4013 {
 	States {
 		
 		Spawn:
-			TORN A 1 BRIGHT
+			P013 A 1 BRIGHT
 			Loop
 			
 		WeaponInInventory:
@@ -453,7 +461,7 @@ ACTOR Adrenaline : AbstractAutoCustomPowerUp 4014 {
 	States {
 		
 		Spawn:
-			ADRE A 1 BRIGHT
+			P014 A 1 BRIGHT
 			Loop
 			
 		WeaponInInventory:

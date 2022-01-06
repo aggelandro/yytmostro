@@ -3,12 +3,18 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
+#define DISPLAYABLE_POWERUP_MAX 15
 
 global int 0:AGGE_TEAR_PROJECTILE_STATS[];
 global int 1:INITIALIZE_FLAG;
 
 int  SV_PLAYERS_TIDS[PLAYER_MAX];
 bool ENERGY_SHIELD_RELOAD = true;
+str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
+    "CONTGiverP000A0", "GrowthHormonesGiverP001A0", "JesusJuiceGiverP002A0", "MomsHeelsGiverP003A0", "MomsLipstickGiverP004A0", 
+    "MomsUnderwearGiverP005A0", "RoidRageGiverP006A0", "SafetyPinGiverP007A0", "SynthoilGiverP008A0", "SpeedBallGiverP009A0", 
+    "Magic8BallGiverP010A0", "ScrewGiverP011A0", "ToothpicksGiverP012A0", "TornPhotoGiverP013A0", "AdrenalineGiverP014A0" 
+};
  
 script "yytmod_mensajesalida" DEATH
 {
@@ -82,21 +88,9 @@ script 337 RESPAWN {
     int classNum = PlayerClass(PlayerNumber());
     if (classNum == 0) {
         ACS_NamedExecuteAlways("resetTearStats", 0);
-        TakeInventory("CONTGiver", 1);
-        TakeInventory("GrowthHormonesGiver", 1);
-        TakeInventory("JesusJuiceGiver", 1);
-        TakeInventory("MomsHeelsGiver", 1);
-        TakeInventory("MomsLipstickGiver", 1);
-        TakeInventory("MomsUnderwearGiver", 1);
-        TakeInventory("RoidRageGiver", 1);
-        TakeInventory("SafetyPinGiver", 1);
-        TakeInventory("SynthoilGiver", 1);
-        TakeInventory("SpeedBallGiver", 1);
-        TakeInventory("Magic8BallGiver", 1);
-        TakeInventory("ScrewGiver", 1);
-        TakeInventory("ToothpicksGiver", 1);
-        TakeInventory("TornPhotoGiver", 1);
-        TakeInventory("AdrenalineGiver", 1);
+        for (int i=0; i<DISPLAYABLE_POWERUP_MAX; i++) {
+            TakeInventory(StrLeft(SV_DISPLAYABLE_POWERUPS[i], StrLen(SV_DISPLAYABLE_POWERUPS[i])-6), 1);
+        }
     }
 }
  
@@ -270,4 +264,21 @@ script "setScale" (int scale) CLIENTSIDE {
 
 script "getFireRateBoost" (void) {
     SetResultValue(AGGE_TEAR_PROJECTILE_STATS[6]);
+}
+
+script "showPowerups" (int displayFlag) {
+    for (int i=1; i!=DISPLAYABLE_POWERUP_MAX; i++) {
+        if (displayFlag) {
+            SetFont(StrRight(SV_DISPLAYABLE_POWERUPS[i], 6));
+            if (CheckInventory(StrLeft(SV_DISPLAYABLE_POWERUPS[i], StrLen(SV_DISPLAYABLE_POWERUPS[i])-6)) == 1) {
+                HudMessage(s:"A"; HUDMSG_PLAIN, i, 0, FixedDiv(i << 16, 75.0), 0.05, 0);
+            }
+            else {
+                HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA, i, 0, FixedDiv(i << 16, 75.0), 0.05, 0, 0.25);
+            }
+        }
+        else {
+            HudMessage(s:""; HUDMSG_PLAIN, i, 0, 0, 0, 1);
+        }
+    }
 }
