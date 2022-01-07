@@ -266,7 +266,7 @@ script "getFireRateBoost" (void) {
     SetResultValue(AGGE_TEAR_PROJECTILE_STATS[6]);
 }
 
-script "showPowerups" (int displayFlag) {
+script "showPowerups" (int displayFlag) CLIENTSIDE {
     for (int i=1; i!=DISPLAYABLE_POWERUP_MAX; i++) {
         if (displayFlag) {
             SetFont(StrRight(SV_DISPLAYABLE_POWERUPS[i], 6));
