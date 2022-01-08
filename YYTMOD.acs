@@ -3,7 +3,7 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 15
+#define DISPLAYABLE_POWERUP_MAX 18
 
 global int 0:AGGE_TEAR_PROJECTILE_STATS[];
 global int 1:INITIALIZE_FLAG;
@@ -13,7 +13,8 @@ bool ENERGY_SHIELD_RELOAD = true;
 str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "CONTGiverP000A0", "GrowthHormonesGiverP001A0", "JesusJuiceGiverP002A0", "MomsHeelsGiverP003A0", "MomsLipstickGiverP004A0", 
     "MomsUnderwearGiverP005A0", "RoidRageGiverP006A0", "SafetyPinGiverP007A0", "SynthoilGiverP008A0", "SpeedBallGiverP009A0", 
-    "Magic8BallGiverP010A0", "ScrewGiverP011A0", "ToothpicksGiverP012A0", "TornPhotoGiverP013A0", "AdrenalineGiverP014A0" 
+    "Magic8BallGiverP010A0", "ScrewGiverP011A0", "ToothpicksGiverP012A0", "TornPhotoGiverP013A0", "AdrenalineGiverP014A0", 
+    "TwentyTwentyGiverP015A0", "ALumpOfCoalGiverP016A0", "BloodOfTheMartyrGiverP017A0"
 };
  
 script "yytmod_mensajesalida" DEATH
@@ -185,12 +186,24 @@ script "addTearBoost" (int boostType, int bonus) {
 }
 
 script "setTearStats" (void) {
+    int ptid = GetActorProperty(0, APROP_TargetTID);
     ACS_NamedExecuteAlways("setRadius", 0, AGGE_TEAR_PROJECTILE_STATS[0]);
     ACS_NamedExecuteAlways("setHeight", 0, AGGE_TEAR_PROJECTILE_STATS[1]);
-    ACS_NamedExecuteAlways("setDamage", 0, AGGE_TEAR_PROJECTILE_STATS[2]);
+    ACS_NamedExecuteAlways("setDamage", 0, AGGE_TEAR_PROJECTILE_STATS[2], ptid);
     ACS_NamedExecuteAlways("setRange", 0, AGGE_TEAR_PROJECTILE_STATS[3]);
     ACS_NamedExecuteAlways("setSpeed", 0, AGGE_TEAR_PROJECTILE_STATS[4]);
     ACS_NamedExecuteAlways("setScale", 0, AGGE_TEAR_PROJECTILE_STATS[5]);
+
+    if (CheckActorInventory(ptid, "ALumpOfCoalGiver") == 1) {
+        CreateTranslation (1, 128:225=[0,0,0]:[24,13,2]);
+        Thing_SetTranslation(0, 1);
+        ACS_NamedExecuteAlways("setDamageBoostPerTime", 0, 1, 35, 10);
+    }
+
+    if (CheckActorInventory(ptid, "BloodOfTheMartyrGiver") == 1) {
+        CreateTranslation (1, 192:193=[0,0,0]:[238,25,34], 194:197=[0,0,0]:[158,6,12]);
+        Thing_SetTranslation(0, 1);
+    }
 }
 
 script "setRadius" (int radius) {
@@ -201,10 +214,23 @@ script "setHeight" (int hgt) {
     SetActorProperty(0, APROP_Height, hgt << 16);
 }
 
-script "setDamage" (int damage) {
-    int ptid = GetActorProperty(0, APROP_TargetTID);
+script "setDamage" (int damage, int ptid) {
     if (CheckActorInventory(ptid, "AdrenalineGiver") == 1 && GetActorProperty(ptid, APROP_Health) <= 100) {
         damage = damage + (2 * ((GetActorProperty(ptid, APROP_Health) - 100) / -10)); // +2 damage cada -10 de HP, máximo +18 con menos de 10 HP
+    }
+
+    if (CheckActorInventory(ptid, "TwentyTwentyGiver") == 1) {
+        // Reduce 25% el daño de cada lagrima.
+        // Se randomiza el redondeo de float->integer en base a la parte decimal del float.
+        // Ej: 0.5 tiene 50% chance de redondear a 1 y 50% chance de redondear a 0.
+        int dmgCutDec = (damage * 0.75) & 0x0000FFFF;
+        int rand = Random(0x00000000, 0x0000FFFF);
+        if (dmgCutDec <= rand) {
+            damage = ((damage * 0.75) >> 16);
+        }
+        else {
+            damage = ((damage * 0.75) >> 16) + 1;
+        }
     }
 
     SetActorProperty(0, APROP_Damage, damage);
@@ -280,5 +306,15 @@ script "showPowerups" (int displayFlag) CLIENTSIDE {
         else {
             HudMessage(s:""; HUDMSG_PLAIN, i, 0, 0, 0, 1);
         }
+    }
+}
+
+script "setDamageBoostPerTime" (int boost, int tics, int maxi) {
+    // Prerequisito: El actor que llama al script tiene que tener user_isdead.
+    for (int i=0; i<maxi; i++) {
+        Delay(tics);
+        if (GetUserVariable(0, "user_isdead")) { terminate; }
+        int newDmg = GetActorProperty(0, APROP_Damage) + boost;
+        SetActorProperty(0, APROP_Damage, newDmg);
     }
 }

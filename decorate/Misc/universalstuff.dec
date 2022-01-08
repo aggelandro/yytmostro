@@ -207,7 +207,10 @@ ACTOR Cacodemon2 : Cacodemon {
 	DropItem "Screw" 18
 	DropItem "Toothpicks" 18
 	DropItem "TornPhoto" 18
+	DropItem "BloodOfTheMartyr" 18
 	DropItem "Adrenaline" 15
+	DropItem "ALumpOfCoal" 15
+	DropItem "TwentyTwenty" 2
 
 	States {
 		Pain.Lightning:
@@ -232,7 +235,10 @@ ACTOR Revenant2 : Revenant {
 	DropItem "Screw" 18
 	DropItem "Toothpicks" 18
 	DropItem "TornPhoto" 18
+	DropItem "BloodOfTheMartyr" 18
 	DropItem "Adrenaline" 15
+	DropItem "ALumpOfCoal" 15
+	DropItem "TwentyTwenty" 2
 	
 	States {
 		Pain.Lightning:
@@ -257,7 +263,9 @@ ACTOR PainElemental2: PainElemental {
 	DropItem "Screw" 26
 	DropItem "Toothpicks" 26
 	DropItem "TornPhoto" 26
+	DropItem "BloodOfTheMartyr" 26
 	DropItem "Adrenaline" 22
+	DropItem "ALumpOfCoal" 22
 
 	States {
 		Pain.Lightning:
@@ -267,22 +275,6 @@ ACTOR PainElemental2: PainElemental {
 	}
 }
 ACTOR LostSoul2 : LostSoul {
-
-	DropItem "Cat-O-Nine-Tails" 3
-	DropItem "GrowthHormones" 3
-	DropItem "JesusJuice" 3
-	DropItem "MomsHeels" 3
-	DropItem "MomsLipstick" 3
-	DropItem "MomsUnderwear" 3
-	DropItem "RoidRage" 3
-	DropItem "SafetyPin" 3
-	DropItem "Synthoil" 3
-	DropItem "SpeedBall" 3
-	DropItem "Magic8Ball" 3
-	DropItem "Screw" 3
-	DropItem "Toothpicks" 3
-	DropItem "TornPhoto" 3
-	DropItem "Adrenaline" 2
 	
 	States {
 		Pain.Lightning:
@@ -307,7 +299,10 @@ ACTOR Fatso2 : Fatso {
 	DropItem "Screw" 26
 	DropItem "Toothpicks" 26
 	DropItem "TornPhoto" 26
+	DropItem "BloodOfTheMartyr" 26
 	DropItem "Adrenaline" 22
+	DropItem "ALumpOfCoal" 22
+	DropItem "TwentyTwenty" 5
 
 	States {
 		Pain.Lightning:
@@ -332,7 +327,9 @@ ACTOR Pinky2 : Demon {
 	DropItem "Screw" 13
 	DropItem "Toothpicks" 13
 	DropItem "TornPhoto" 13
+	DropItem "BloodOfTheMartyr" 13
 	DropItem "Adrenaline" 10
+	DropItem "ALumpOfCoal" 10
 	
 	States {
 		Pain.Lightning:
@@ -357,7 +354,9 @@ ACTOR Spectre2 : Spectre {
 	DropItem "Screw" 13
 	DropItem "Toothpicks" 13
 	DropItem "TornPhoto" 13
+	DropItem "BloodOfTheMartyr" 13
 	DropItem "Adrenaline" 10
+	DropItem "ALumpOfCoal" 10
 	
 	States {
 		Pain.Lightning:
@@ -383,6 +382,7 @@ ACTOR DoomImp2 : DoomImp {
 	DropItem "Screw" 8
 	DropItem "Toothpicks" 8
 	DropItem "TornPhoto" 8
+	DropItem "BloodOfTheMartyr" 8
 	DropItem "Adrenaline" 5
 	
   States {
@@ -409,7 +409,9 @@ ACTOR Arachnotron2 : Arachnotron {
 	DropItem "Screw" 18
 	DropItem "Toothpicks" 18
 	DropItem "TornPhoto" 18
+	DropItem "BloodOfTheMartyr" 18
 	DropItem "Adrenaline" 15
+	DropItem "ALumpOfCoal" 15
 
 	States {
 		Pain.Lightning:
@@ -440,7 +442,10 @@ ACTOR SpiderMastermind2 : SpiderMastermind
 	DropItem "Screw" 51
 	DropItem "Toothpicks" 51
 	DropItem "TornPhoto" 51
+	DropItem "BloodOfTheMartyr" 51
 	DropItem "Adrenaline" 46
+	DropItem "ALumpOfCoal" 46
+	DropItem "TwentyTwenty" 35
 	
 	States {
 		Pain.Lightning:
@@ -470,7 +475,10 @@ ACTOR Cyberdemon2 : Cyberdemon
 	DropItem "Screw" 64
 	DropItem "Toothpicks" 64
 	DropItem "TornPhoto" 64
+	DropItem "BloodOfTheMartyr" 64
 	DropItem "Adrenaline" 60
+	DropItem "ALumpOfCoal" 60
+	DropItem "TwentyTwenty" 50
 	
 	States {
 		Pain.Lightning:
@@ -498,7 +506,10 @@ ACTOR BaronOfHell2 : BaronOfHell
 	DropItem "Screw" 38
 	DropItem "Toothpicks" 38
 	DropItem "TornPhoto" 38
+	DropItem "BloodOfTheMartyr" 38
 	DropItem "Adrenaline" 32
+	DropItem "ALumpOfCoal" 32
+	DropItem "TwentyTwenty" 10
 	
 	States {
 		Pain.Lightning:
@@ -524,7 +535,9 @@ ACTOR HellKnight2 : HellKnight
 	DropItem "Screw" 18
 	DropItem "Toothpicks" 18
 	DropItem "TornPhoto" 18
+	DropItem "BloodOfTheMartyr" 18
 	DropItem "Adrenaline" 15
+	DropItem "ALumpOfCoal" 15
 	
 	States {
 		Pain.Lightning:
@@ -564,6 +577,7 @@ ACTOR ShotgunGuyMod
 	DropItem "Screw" 8
 	DropItem "Toothpicks" 8
 	DropItem "TornPhoto" 8
+	DropItem "BloodOfTheMartyr" 8
 	DropItem "Adrenaline" 5
   States
   {
@@ -687,6 +701,7 @@ ACTOR ChaingunGuyMod
 	DropItem "Screw" 10
 	DropItem "Toothpicks" 10
 	DropItem "TornPhoto" 10
+	DropItem "BloodOfTheMartyr" 10
 	DropItem "Adrenaline" 7
   States
   {
@@ -795,6 +810,7 @@ ACTOR ZombieMan2 : ZombieMan
 	DropItem "Screw" 3
 	DropItem "Toothpicks" 3
 	DropItem "TornPhoto" 3
+	DropItem "BloodOfTheMartyr" 3
 	DropItem "Adrenaline" 2
 	
   States
