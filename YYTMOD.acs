@@ -3,7 +3,7 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 18
+#define DISPLAYABLE_POWERUP_MAX 19
 
 global int 0:AGGE_TEAR_PROJECTILE_STATS[];
 global int 1:INITIALIZE_FLAG;
@@ -14,7 +14,7 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "CONTGiverP000A0", "GrowthHormonesGiverP001A0", "JesusJuiceGiverP002A0", "MomsHeelsGiverP003A0", "MomsLipstickGiverP004A0", 
     "MomsUnderwearGiverP005A0", "RoidRageGiverP006A0", "SafetyPinGiverP007A0", "SynthoilGiverP008A0", "SpeedBallGiverP009A0", 
     "Magic8BallGiverP010A0", "ScrewGiverP011A0", "ToothpicksGiverP012A0", "TornPhotoGiverP013A0", "AdrenalineGiverP014A0", 
-    "TwentyTwentyGiverP015A0", "ALumpOfCoalGiverP016A0", "BloodOfTheMartyrGiverP017A0"
+    "TwentyTwentyGiverP015A0", "ALumpOfCoalGiverP016A0", "BloodOfTheMartyrGiverP017A0", "DarkMatterGiverP018A0"
 };
  
 script "yytmod_mensajesalida" DEATH
@@ -35,12 +35,23 @@ script "yytmod_mensajesalida" DEATH
         break;
     }
 }
- 
+
+// METODO DEPRECADO PARA CAMBIAR DAÑO DE LA SSG DE RON
 script 2 (int value)
 {
     SetActorProperty(0,APROP_Damage,value);
 }
- 
+
+script 332 OPEN {
+    //Translations
+    CreateTranslation (1, 0:255=0:255); // Default
+    CreateTranslation (2, 128:225=[0,0,0]:[24,13,2]); // A Lump of Coal
+    CreateTranslation (3, 192:193=[0,0,0]:[238,25,34], 194:197=[0,0,0]:[158,6,12]); // Blood of the Martyr
+    CreateTranslation (4, 192:193=[0,0,0]:[42,42,42], 194:224=[0,0,0]:[23,23,23]); // Dark Matter
+    CreateTranslation (5, 0:255=[0,0,0]:[125,33,155]); // Fear Effect
+}
+
+// SCRIPT UTILIZADO POR EL ARMA 5 DE AGGE PARA HACER EXPLOTAR LA BALA DE WASKA
 Script 333 (void) {
     GiveInventory("DetonateWaskaAction",1);
 }
@@ -61,6 +72,7 @@ script "setEnergyShieldReload" (int flag) {
  
 script 335 ENTER {
     ACS_ExecuteAlways(338, 0);
+
     int classNum = PlayerClass(PlayerNumber());
     if (classNum == 0) {
         if (!INITIALIZE_FLAG) {
@@ -195,14 +207,12 @@ script "setTearStats" (void) {
     ACS_NamedExecuteAlways("setScale", 0, AGGE_TEAR_PROJECTILE_STATS[5]);
 
     if (CheckActorInventory(ptid, "ALumpOfCoalGiver") == 1) {
-        CreateTranslation (1, 128:225=[0,0,0]:[24,13,2]);
-        Thing_SetTranslation(0, 1);
+        Thing_SetTranslation(0, 2);
         ACS_NamedExecuteAlways("setDamageBoostPerTime", 0, 1, 35, 10);
     }
 
     if (CheckActorInventory(ptid, "BloodOfTheMartyrGiver") == 1) {
-        CreateTranslation (1, 192:193=[0,0,0]:[238,25,34], 194:197=[0,0,0]:[158,6,12]);
-        Thing_SetTranslation(0, 1);
+        Thing_SetTranslation(0, 3);
     }
 }
 
@@ -316,5 +326,33 @@ script "setDamageBoostPerTime" (int boost, int tics, int maxi) {
         if (GetUserVariable(0, "user_isdead")) { terminate; }
         int newDmg = GetActorProperty(0, APROP_Damage) + boost;
         SetActorProperty(0, APROP_Damage, newDmg);
+    }
+}
+
+script "isEffectChanceSuccessful" (int chance) {
+    int res = Random(1, 100);
+    SetResultValue(res <= chance);
+}
+
+// Obligado a usar switch a causa de que ACS no se banca otras variables que
+// no sean int como parametros y que admite una cantidad limitada de ellos
+script "applyEffect" (int option, int dur) {
+    switch(option) {
+        case 1: {
+            SetActorProperty(0, APROP_Frightened, 1);
+            Thing_SetTranslation(0, 5);
+            Delay(dur);
+            SetActorProperty(0, APROP_Frightened, 0);
+            TakeInventory("FearDebuff", 1);
+            Thing_SetTranslation(0, 1);
+        }; break;
+    }
+}
+
+script "showShotDeathTranslation" (int option) CLIENTSIDE {
+    switch(option) {
+        case 1: {
+            Thing_SetTranslation(0, 4);
+        }; break;
     }
 }

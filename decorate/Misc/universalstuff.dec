@@ -303,6 +303,7 @@ ACTOR Fatso2 : Fatso {
 	DropItem "Adrenaline" 22
 	DropItem "ALumpOfCoal" 22
 	DropItem "TwentyTwenty" 5
+	DropItem "DarkMatter" 5
 
 	States {
 		Pain.Lightning:
@@ -446,6 +447,7 @@ ACTOR SpiderMastermind2 : SpiderMastermind
 	DropItem "Adrenaline" 46
 	DropItem "ALumpOfCoal" 46
 	DropItem "TwentyTwenty" 35
+	DropItem "DarkMatter" 35
 	
 	States {
 		Pain.Lightning:
@@ -479,6 +481,7 @@ ACTOR Cyberdemon2 : Cyberdemon
 	DropItem "Adrenaline" 60
 	DropItem "ALumpOfCoal" 60
 	DropItem "TwentyTwenty" 50
+	DropItem "DarkMatter" 50
 	
 	States {
 		Pain.Lightning:
@@ -510,6 +513,7 @@ ACTOR BaronOfHell2 : BaronOfHell
 	DropItem "Adrenaline" 32
 	DropItem "ALumpOfCoal" 32
 	DropItem "TwentyTwenty" 10
+	DropItem "DarkMatter" 10
 	
 	States {
 		Pain.Lightning:

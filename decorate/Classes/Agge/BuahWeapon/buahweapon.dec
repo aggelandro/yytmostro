@@ -1,90 +1,123 @@
 ACTOR BuahWeapon : Weapon {	
-   Inventory.PickupSound "misc/w_pkup"
-   Inventory.PickupMessage "You got the buah weapon!"
-   Obituary "%o was PUIJed by %k's buah weapon."
-   Weapon.AmmoGive 100
-   Weapon.AmmoUse 1
-   Weapon.AmmoType "Clip"
+	Inventory.PickupSound "misc/w_pkup"
+	Inventory.PickupMessage "You got the buah weapon!"
+	Obituary "%o was PUIJed by %k's buah weapon."
+	Weapon.AmmoGive 100
+	Weapon.AmmoUse 1
+	Weapon.AmmoType "Clip"
+
+	States {
 	 
-   States {
-	 
-	   Spawn:
-			 MGUN A -1
-			 Stop
+		Spawn:
+		  MGUN A -1
+		  Stop
+
+		Ready:
+		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 1)
+		  Goto ReadyLoop
+
+		ReadyLoop:
+		  CFLM AAAABBBBCCCC 1 A_WeaponReady
+		  Loop
+
+		Deselect:
+		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
+		  Goto DeselectLoop
+
+		DeselectLoop:
+		  CFLM A 1 A_Lower
+		  Loop
+
+		Select:
+		  CFLM A 1 A_Raise
+		  Loop
+
+		Fire:
+			CFLM A 1 Offset (0, 40)
+			CFLM D 2 Offset (0, 50)
+			CFLM D 2 Offset (0, 36)
+			CFLM E 4 Bright
+			TNT1 A 0 A_JumpIfInventory("TwentyTwentyGiver", 1, "FireDoubleShot")
+			Goto FireNormalShot
+
+		FireNormalShot:
+			// No se pueden usar variables de usuario en armas, gracias Mauricio
+			TNT1 A 0 A_JumpIfInventory("DarkMatterGiver", 1, "FireFearShot")
+			CFLM E 0 A_PlaySound("agge/buah", CHAN_WEAPON)
+			CFLM F 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLM E 0 A_FireCustomMissile("NormalTearProjectile")
+			CFLM E 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLM E 0 A_FireCustomMissile("NormalTearProjectile")
+			CFLM F 0 A_PlaySound("agge/buah", CHAN_WEAPON)
+			CFLM F 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLM F 0 A_FireCustomMissile("NormalTearProjectile")
+			CFLM E 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLM E 0 A_FireCustomMissile("NormalTearProjectile")
+			Goto FireEnd
+		 
+		FireFearShot:
+			CFLM E 0 A_PlaySound("agge/buah", CHAN_WEAPON)
+			CFLM F 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLM E 0 A_FireCustomMissile("FearTearProjectile")
+			CFLM E 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLM E 0 A_FireCustomMissile("FearTearProjectile")
+			CFLM F 0 A_PlaySound("agge/buah", CHAN_WEAPON)
+			CFLM F 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLM F 0 A_FireCustomMissile("FearTearProjectile")
+			CFLM E 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLM E 0 A_FireCustomMissile("FearTearProjectile")
+			Goto FireEnd
+		 
+
+		FireDoubleShot:
+			TNT1 A 0 A_JumpIfInventory("DarkMatterGiver", 1, "FireDoubleFearShot")
+			CFLM E 0 A_PlaySound("agge/buah", CHAN_WEAPON)
+			CFLM F 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLM E 0 A_FireCustomMissile("NormalTearProjectile", 0, TRUE, -10)
+			CFLM E 0 A_FireCustomMissile("NormalTearProjectile", 0, TRUE, 10)
+			CFLM E 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLM E 0 A_FireCustomMissile("NormalTearProjectile", 0, TRUE, -10)
+			CFLM E 0 A_FireCustomMissile("NormalTearProjectile", 0, TRUE, 10)
+			CFLM F 0 A_PlaySound("agge/buah", CHAN_WEAPON)
+			CFLM F 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLM E 0 A_FireCustomMissile("NormalTearProjectile", 0, TRUE, -10)
+			CFLM E 0 A_FireCustomMissile("NormalTearProjectile", 0, TRUE, 10)
+			CFLM E 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLM E 0 A_FireCustomMissile("NormalTearProjectile", 0, TRUE, -10)
+			CFLM E 0 A_FireCustomMissile("NormalTearProjectile", 0, TRUE, 10)
+			Goto FireEnd
 			
-	   Ready:
-			 TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 1)
-			 Goto ReadyLoop
-			
-		 ReadyLoop:
-			 CFLM AAAABBBBCCCC 1 A_WeaponReady
-			 Loop
-			
-	   Deselect:
-			 TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
-			 Goto DeselectLoop
-		
-		 DeselectLoop:
-			 CFLM A 1 A_Lower
-			 Loop
-			
-	   Select:
-			 CFLM A 1 A_Raise
-			 Loop
-			
-	   Fire:
- 			 CFLM A 1 Offset (0, 40)
-			 CFLM D 2 Offset (0, 50)
-			 CFLM D 2 Offset (0, 36)
-			 CFLM E 4 Bright
-			 TNT1 A 0 A_JumpIfInventory("TwentyTwentyGiver", 1, "FireDoubleShot")
-			 Goto FireNormalShot
-			
-		 FireNormalShot:
-			 // No se pueden usar variables de usuario en armas, gracias Mauricio
-			 CFLM E 0 A_PlaySound("agge/buah", CHAN_WEAPON)
-			 CFLM F 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
-			 CFLM E 0 A_FireCustomMissile("NormalTearProjectile")
-			 CFLM E 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
-			 CFLM E 0 A_FireCustomMissile("NormalTearProjectile")
-			 CFLM F 0 A_PlaySound("agge/buah", CHAN_WEAPON)
-			 CFLM F 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
-			 CFLM F 0 A_FireCustomMissile("NormalTearProjectile")
-			 CFLM E 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
-			 CFLM E 0 A_FireCustomMissile("NormalTearProjectile")
-			 Goto FireEnd
-			
-		 FireDoubleShot:
-			 CFLM E 0 A_PlaySound("agge/buah", CHAN_WEAPON)
-			 CFLM F 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
-			 CFLM E 0 A_FireCustomMissile("NormalTearProjectile", 0, TRUE, -10)
-			 CFLM E 0 A_FireCustomMissile("NormalTearProjectile", 0, TRUE, 10)
-			 CFLM E 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
-			 CFLM E 0 A_FireCustomMissile("NormalTearProjectile", 0, TRUE, -10)
-			 CFLM E 0 A_FireCustomMissile("NormalTearProjectile", 0, TRUE, 10)
-			 CFLM F 0 A_PlaySound("agge/buah", CHAN_WEAPON)
-			 CFLM F 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
-			 CFLM E 0 A_FireCustomMissile("NormalTearProjectile", 0, TRUE, -10)
-			 CFLM E 0 A_FireCustomMissile("NormalTearProjectile", 0, TRUE, 10)
-			 CFLM E 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
-			 CFLM E 0 A_FireCustomMissile("NormalTearProjectile", 0, TRUE, -10)
-			 CFLM E 0 A_FireCustomMissile("NormalTearProjectile", 0, TRUE, 10)
-			 Goto FireEnd
-			 
-		 FireEnd:
-			 CFLM F 4 Bright
-			 CFLM E 4 Bright
-			 CFLM G 1
-			 CFLM G 1 Offset (0, 40)
-			 CFLM G 1 A_Refire
-			 Goto Ready
-			
-	   Flash:
-			 TNT1 A 2 A_Light1
-			 TNT1 A 2 A_Light2
-			 TNT1 A 1 A_Light1
-			 TNT1 A 1 A_Light0
-			 Stop
+		FireDoubleFearShot:
+			CFLM E 0 A_PlaySound("agge/buah", CHAN_WEAPON)
+			CFLM F 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLM E 0 A_FireCustomMissile("FearTearProjectile", 0, TRUE, -10)
+			CFLM E 0 A_FireCustomMissile("FearTearProjectile", 0, TRUE, 10)
+			CFLM E 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLM E 0 A_FireCustomMissile("FearTearProjectile", 0, TRUE, -10)
+			CFLM E 0 A_FireCustomMissile("FearTearProjectile", 0, TRUE, 10)
+			CFLM F 0 A_PlaySound("agge/buah", CHAN_WEAPON)
+			CFLM F 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLM E 0 A_FireCustomMissile("FearTearProjectile", 0, TRUE, -10)
+			CFLM E 0 A_FireCustomMissile("FearTearProjectile", 0, TRUE, 10)
+			CFLM E 2 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLM E 0 A_FireCustomMissile("FearTearProjectile", 0, TRUE, -10)
+			CFLM E 0 A_FireCustomMissile("FearTearProjectile", 0, TRUE, 10)
+			Goto FireEnd
+		 
+		FireEnd:
+			CFLM F 4 Bright
+			CFLM E 4 Bright
+			CFLM G 1
+			CFLM G 1 Offset (0, 40)
+			CFLM G 1 A_Refire
+			Goto Ready
+
+		Flash:
+			TNT1 A 2 A_Light1
+			TNT1 A 2 A_Light2
+			TNT1 A 1 A_Light1
+			TNT1 A 1 A_Light0
+			Stop
   }
 }
 
@@ -100,17 +133,19 @@ ACTOR NormalTearProjectile {
 	+BRIGHT
 	
   States {
+	
 	  Spawn:
 			// Esperar a que exista A_SetSize en zandromierda para height y radius
 			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("setTearStats")
 			TNT1 A 0 A_SetUserVar("user_isdead", 0)
-			Goto SpawnLoop
+			TNT1 A 0 A_Jump(256, "SpawnLoop") //La forma que tiene decorate de resolver por herencia
+			Wait
 			
 		SpawnLoop:
 			TBFI M 1
 			Loop
 			
-	  Death:
+		Death:
 			TNT1 A 0 A_SetUserVar("user_isdead", 1)
 			TDFI A 0 A_PlaySound("agge/lagrima",CHAN_AUTO)
 			TDFI A 1
@@ -129,6 +164,33 @@ ACTOR NormalTearProjectile {
 			Stop
   }
 }
+
+ACTOR FearTearProjectile : NormalTearProjectile {
+	+HITTRACER
+	
+  States {
+			
+		SpawnLoop:
+			DMFI A 2
+			DMFI B 2
+			DMFI C 2
+			DMFI D 2
+			Loop
+			
+		XDeath:
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 8) == 0, "Death")
+			TNT1 A 0 A_GiveInventory("FearDebuff", 1, AAPTR_TRACER)
+			Goto Death
+			
+		Death:
+			TNT1 A 0 ACS_NamedExecuteWithResult("showShotDeathTranslation", 1)
+			TNT1 A 0 A_Jump(256, "Super::Death")
+			Wait
+  }
+}
+
+
+
 
 //=============
 // Power Ups
@@ -153,6 +215,7 @@ ACTOR AbstractAutoCustomPowerUp : CustomInventory {
 	+INVENTORY.NEVERRESPAWN
 	+FLOATBOB
 	+COUNTITEM
+	+BRIGHT
 	
 	States {
 		Pickup:
@@ -171,7 +234,7 @@ ACTOR Cat-O-Nine-Tails : AbstractAutoCustomPowerUp 4000 {
 	States {
 		
 		Spawn:
-			P000 A 1 BRIGHT
+			P000 A 1
 			Loop
 		
 		WeaponInInventory:
@@ -189,7 +252,7 @@ ACTOR GrowthHormones : AbstractAutoCustomPowerUp 4001 {
 	States {
 		
 		Spawn:
-			P001 A 1 BRIGHT
+			P001 A 1
 			Loop
 		
 		WeaponInInventory:
@@ -206,7 +269,7 @@ ACTOR JesusJuice : AbstractAutoCustomPowerUp 4002 {
 	States {
 		
 		Spawn:
-			P002 A 1 BRIGHT
+			P002 A 1
 			Loop
 		
 		WeaponInInventory:
@@ -227,7 +290,7 @@ ACTOR MomsHeels : AbstractAutoCustomPowerUp 4003 {
 	States {
 		
 		Spawn:
-			P003 A 1 BRIGHT
+			P003 A 1
 			Loop
 		
 		WeaponInInventory:
@@ -247,7 +310,7 @@ ACTOR MomsLipstick : AbstractAutoCustomPowerUp 4004 {
 	States {
 		
 		Spawn:
-			P004 A 1 BRIGHT
+			P004 A 1
 			Loop
 		
 		WeaponInInventory:
@@ -267,7 +330,7 @@ ACTOR MomsUnderwear : AbstractAutoCustomPowerUp 4005 {
 	States {
 		
 		Spawn:
-			P005 A 1 BRIGHT
+			P005 A 1
 			Loop
 		
 		WeaponInInventory:
@@ -287,7 +350,7 @@ ACTOR RoidRage : AbstractAutoCustomPowerUp 4006 {
 	States {
 		
 		Spawn:
-			P006 A 1 BRIGHT
+			P006 A 1
 			Loop
 		
 		WeaponInInventory:
@@ -307,7 +370,7 @@ ACTOR SafetyPin : AbstractAutoCustomPowerUp 4007 {
 	States {
 		
 		Spawn:
-			P007 A 1 BRIGHT
+			P007 A 1
 			Loop
 		
 		WeaponInInventory:
@@ -328,7 +391,7 @@ ACTOR Synthoil : AbstractAutoCustomPowerUp 4008 {
 	States {
 		
 		Spawn:
-			P008 A 1 BRIGHT
+			P008 A 1
 			Loop
 			
 		WeaponInInventory:
@@ -349,7 +412,7 @@ ACTOR SpeedBall : AbstractAutoCustomPowerUp 4009 {
 	States {
 		
 		Spawn:
-			P009 A 1 BRIGHT
+			P009 A 1
 			Loop
 			
 		WeaponInInventory:
@@ -366,7 +429,7 @@ ACTOR Magic8Ball : AbstractAutoCustomPowerUp 4010 {
 	States {
 		
 		Spawn:
-			P010 A 1 BRIGHT
+			P010 A 1
 			Loop
 			
 		WeaponInInventory:
@@ -383,7 +446,7 @@ ACTOR Screw : AbstractAutoCustomPowerUp 4011 {
 	States {
 		
 		Spawn:
-			P011 A 1 BRIGHT
+			P011 A 1
 			Loop
 			
 		WeaponInInventory:
@@ -401,7 +464,7 @@ ACTOR Toothpicks : AbstractAutoCustomPowerUp 4012 {
 	States {
 		
 		Spawn:
-			P012 A 1 BRIGHT
+			P012 A 1
 			Loop
 			
 		WeaponInInventory:
@@ -419,7 +482,7 @@ ACTOR TornPhoto : AbstractAutoCustomPowerUp 4013 {
 	States {
 		
 		Spawn:
-			P013 A 1 BRIGHT
+			P013 A 1
 			Loop
 			
 		WeaponInInventory:
@@ -437,7 +500,7 @@ ACTOR Adrenaline : AbstractAutoCustomPowerUp 4014 {
 	States {
 		
 		Spawn:
-			P014 A 1 BRIGHT
+			P014 A 1
 			Loop
 			
 		WeaponInInventory:
@@ -453,7 +516,7 @@ ACTOR TwentyTwenty : AbstractAutoCustomPowerUp 4015 {
 	States {
 		
 		Spawn:
-			P015 A 1 BRIGHT
+			P015 A 1
 			Loop
 			
 		WeaponInInventory:
@@ -469,7 +532,7 @@ ACTOR ALumpOfCoal : AbstractAutoCustomPowerUp 4016 {
 	States {
 		
 		Spawn:
-			P016 A 1 BRIGHT
+			P016 A 1
 			Loop
 			
 		WeaponInInventory:
@@ -485,7 +548,7 @@ ACTOR BloodOfTheMartyr : AbstractAutoCustomPowerUp 4017 {
 	States {
 		
 		Spawn:
-			P017 A 1 BRIGHT
+			P017 A 1
 			Loop
 			
 		WeaponInInventory:
@@ -502,7 +565,7 @@ ACTOR DarkMatter : AbstractAutoCustomPowerUp 4018 {
 	States {
 		
 		Spawn:
-			P018 A 1 BRIGHT
+			P018 A 1
 			Loop
 			
 		WeaponInInventory:

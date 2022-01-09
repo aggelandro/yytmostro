@@ -3,6 +3,7 @@
 // code that is inherited by lots of other actors
 #include "decorate/Misc/universalstuff.dec"
 #include "decorate/Misc/casing.dec"
+#include "decorate/Misc/debuffs.dec"
 
 //weapons from classes
 #include "decorate/Classes/Luciano/Pistol/pistol.dec"

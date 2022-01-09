@@ -1,0 +1,11 @@
+// Fear debuff quee afecta a los monstruos
+ACTOR FearDebuff : CustomInventory 4200 {
+	Inventory.MaxAmount 1
+	+INVENTORY.AUTOACTIVATE
+	
+	States {
+		Pickup:
+			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 1, 350)
+			Stop
+	}
+}
