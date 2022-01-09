@@ -35,12 +35,12 @@ script "yytmod_mensajesalida" DEATH
         break;
     }
 }
- 
+// METODO DEPRECADO PARA CAMBIAR DAÑO DE LA SSG DE RON
 script 2 (int value)
 {
     SetActorProperty(0,APROP_Damage,value);
 }
- 
+// SCRIPT UTILIZADO POR EL ARMA 5 DE AGGE PARA HACER EXPLOTAR LA BALA DE WASKA
 Script 333 (void) {
     GiveInventory("DetonateWaskaAction",1);
 }
@@ -54,7 +54,7 @@ script 334 (void) NET CLIENTSIDE {
     Log(s:"Scale: ", i:AGGE_TEAR_PROJECTILE_STATS[5]);
     Log(s:"Fire Rate Boost: ", i:AGGE_TEAR_PROJECTILE_STATS[6]);
 }
- 
+
 script "setEnergyShieldReload" (int flag) {
     ENERGY_SHIELD_RELOAD = flag;
 }
