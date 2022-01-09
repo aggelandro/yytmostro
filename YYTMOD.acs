@@ -1,0 +1,356 @@
+#library "YYTMOD"
+#include "zcommon.acs"
+ 
+#define PLAYER_TID_START 1000
+#define PLAYER_MAX 20
+#define DISPLAYABLE_POWERUP_MAX 19
+
+global int 0:AGGE_TEAR_PROJECTILE_STATS[];
+global int 1:INITIALIZE_FLAG;
+
+int  SV_PLAYERS_TIDS[PLAYER_MAX];
+bool ENERGY_SHIELD_RELOAD = true;
+str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
+    "CONTGiverP000A0", "GrowthHormonesGiverP001A0", "JesusJuiceGiverP002A0", "MomsHeelsGiverP003A0", "MomsLipstickGiverP004A0", 
+    "MomsUnderwearGiverP005A0", "RoidRageGiverP006A0", "SafetyPinGiverP007A0", "SynthoilGiverP008A0", "SpeedBallGiverP009A0", 
+    "Magic8BallGiverP010A0", "ScrewGiverP011A0", "ToothpicksGiverP012A0", "TornPhotoGiverP013A0", "AdrenalineGiverP014A0", 
+    "TwentyTwentyGiverP015A0", "ALumpOfCoalGiverP016A0", "BloodOfTheMartyrGiverP017A0", "DarkMatterGiverP018A0"
+};
+ 
+script "yytmod_mensajesalida" DEATH
+{
+    int yyt_mensaje = random(1,3);
+    switch(yyt_mensaje)
+    {
+        case 1:
+        print(s:"No papu, asi no!");
+        break;
+ 
+        case 2:
+        print(s:"Sos la cara de la verga.");
+        break;
+ 
+        case 3:
+        print(s:"Ah listo...");
+        break;
+    }
+}
+
+script 2 (int value)
+{
+    SetActorProperty(0,APROP_Damage,value);
+}
+
+script 332 OPEN {
+    //Translations
+    CreateTranslation (1, 0:255=0:255); // Default
+    CreateTranslation (2, 128:225=[0,0,0]:[24,13,2]); // A Lump of Coal
+    CreateTranslation (3, 192:193=[0,0,0]:[238,25,34], 194:197=[0,0,0]:[158,6,12]); // Blood of the Martyr
+    CreateTranslation (4, 192:193=[0,0,0]:[42,42,42], 194:224=[0,0,0]:[23,23,23]); // Dark Matter
+    CreateTranslation (5, 0:255=[0,0,0]:[125,33,155]); // Fear Effect
+}
+
+Script 333 (void) {
+    GiveInventory("DetonateWaskaAction",1);
+}
+
+script 334 (void) NET CLIENTSIDE {
+    Log(s:"Radius: ", i:AGGE_TEAR_PROJECTILE_STATS[0]);
+    Log(s:"Height: ", i:AGGE_TEAR_PROJECTILE_STATS[1]);
+    Log(s:"Damage: ", i:AGGE_TEAR_PROJECTILE_STATS[2]);
+    Log(s:"Range: ", i:AGGE_TEAR_PROJECTILE_STATS[3]);
+    Log(s:"Speed Boost: ", i:AGGE_TEAR_PROJECTILE_STATS[4]);
+    Log(s:"Scale: ", i:AGGE_TEAR_PROJECTILE_STATS[5]);
+    Log(s:"Fire Rate Boost: ", i:AGGE_TEAR_PROJECTILE_STATS[6]);
+}
+ 
+script "setEnergyShieldReload" (int flag) {
+    ENERGY_SHIELD_RELOAD = flag;
+}
+ 
+script 335 ENTER {
+    ACS_ExecuteAlways(338, 0);
+
+    int classNum = PlayerClass(PlayerNumber());
+    if (classNum == 0) {
+        if (!INITIALIZE_FLAG) {
+            ACS_NamedExecuteAlways("resetTearStats", 0);
+            INITIALIZE_FLAG = 1;
+        }
+                
+        while (true) {
+            if (ENERGY_SHIELD_RELOAD) {
+                GiveInventory("EnergyShieldAmmo",1);
+                Delay(1);
+            }
+            Delay(1);
+        }
+    }
+}
+ 
+script 336 DEATH {
+    SV_PLAYERS_TIDS[PlayerNumber()] = 0;
+    Thing_ChangeTID(PLAYER_TID_START+PlayerNumber(), 0);
+}
+ 
+script 337 RESPAWN {
+    ACS_ExecuteAlways(338, 0);
+        
+    int classNum = PlayerClass(PlayerNumber());
+    if (classNum == 0) {
+        ACS_NamedExecuteAlways("resetTearStats", 0);
+        for (int i=0; i<DISPLAYABLE_POWERUP_MAX; i++) {
+            TakeInventory(StrLeft(SV_DISPLAYABLE_POWERUPS[i], StrLen(SV_DISPLAYABLE_POWERUPS[i])-6), 1);
+        }
+    }
+}
+ 
+script 338 (void) {
+    int playerNum = PlayerNumber();
+    int newTID = playerNum + PLAYER_TID_START;
+    SV_PLAYERS_TIDS[playerNum] = newTID;
+    Thing_ChangeTID(0, newTID);
+}
+ 
+script "isPressingAltFire" (void) {
+ 
+    int playerTID = GetActorProperty(0, APROP_TargetTID);
+    for (int i=0; i<PLAYER_MAX; i++) {
+ 
+        if (SV_PLAYERS_TIDS[i] == playerTID) {
+            int playerNum = i;
+            break;
+        }
+    }
+ 
+    int buttons = GetPlayerInput(playerNum, INPUT_BUTTONS);
+ 
+    //Log(s:"isPressingAltFire(): ", i:buttons, s:" ", i:INPUT_BUTTONS, s:" ", i:BT_ALTATTACK);
+    SetResultValue(buttons & BT_ALTATTACK);
+}
+
+// codigo escopeta terro
+// COMIENZO
+script 891 (void)
+{
+    while(checkinventory("SynthFireActive")>0)
+    {       
+        if(getplayerinput(PlayerNumber(), INPUT_BUTTONS) & BT_ATTACK)
+        {
+            giveinventory("SynthFireLeft",1);
+            while(checkinventory("SynthFireLeft">0) || getplayerinput(PlayerNumber(), INPUT_BUTTONS) & BT_ATTACK) { delay(1); }
+            takeinventory("SynthFireLeft",1);
+        }
+        delay(1);
+    }
+}
+
+// Right (secondary) weapon.
+script 892 (void)
+{
+    while(CheckInventory("SynthFireActive")>0)
+    {
+        if(GetPlayerInput(PlayerNumber(), INPUT_BUTTONS) & BT_ALTATTACK)
+        {
+            GiveInventory("SynthFireRight",1);
+            while(GetPlayerInput(PlayerNumber(), INPUT_BUTTONS) & BT_ALTATTACK) { delay(1); }
+            TakeInventory("SynthFireRight",1);
+        }
+        delay(1);
+    }
+}
+Script 893 (void) {
+    GiveInventory("IsReloading",1);
+}
+Script 894 (void) {
+    takeInventory("IsReloading",1);
+}
+// FIN
+
+script "resetTearStats" (void) {
+    // Radius y height no se pueden cambiar en zandro 3.0
+    AGGE_TEAR_PROJECTILE_STATS[0] = 2;  //Radius
+    AGGE_TEAR_PROJECTILE_STATS[1] = 3;  //Height
+    AGGE_TEAR_PROJECTILE_STATS[2] = 2;  //Damage
+    AGGE_TEAR_PROJECTILE_STATS[3] = 35; //Range (en tics)
+    AGGE_TEAR_PROJECTILE_STATS[4] = 0;  //Speed Boost
+    AGGE_TEAR_PROJECTILE_STATS[5] = 1;  //Scale
+    AGGE_TEAR_PROJECTILE_STATS[6] = 1;  //Fire Rate Boost
+
+    if (IsNetworkGame()) {
+        for (int i=0; i<7; i++) {
+            ACS_NamedExecuteAlways("sendToClient", 0, i, AGGE_TEAR_PROJECTILE_STATS[i]);
+        }
+    }
+}
+
+script "sendToClient" (int entry, int val) CLIENTSIDE {
+    AGGE_TEAR_PROJECTILE_STATS[entry] = val;
+}
+
+script "addTearBoost" (int boostType, int bonus) {
+    AGGE_TEAR_PROJECTILE_STATS[boostType] = AGGE_TEAR_PROJECTILE_STATS[boostType] + bonus;
+    if (IsNetworkGame()) {
+        ACS_NamedExecuteAlways("sendToClient", 0, boostType, AGGE_TEAR_PROJECTILE_STATS[boostType]);
+    }
+}
+
+script "setTearStats" (void) {
+    int ptid = GetActorProperty(0, APROP_TargetTID);
+    ACS_NamedExecuteAlways("setRadius", 0, AGGE_TEAR_PROJECTILE_STATS[0]);
+    ACS_NamedExecuteAlways("setHeight", 0, AGGE_TEAR_PROJECTILE_STATS[1]);
+    ACS_NamedExecuteAlways("setDamage", 0, AGGE_TEAR_PROJECTILE_STATS[2], ptid);
+    ACS_NamedExecuteAlways("setRange", 0, AGGE_TEAR_PROJECTILE_STATS[3]);
+    ACS_NamedExecuteAlways("setSpeed", 0, AGGE_TEAR_PROJECTILE_STATS[4]);
+    ACS_NamedExecuteAlways("setScale", 0, AGGE_TEAR_PROJECTILE_STATS[5]);
+
+    if (CheckActorInventory(ptid, "ALumpOfCoalGiver") == 1) {
+        Thing_SetTranslation(0, 2);
+        ACS_NamedExecuteAlways("setDamageBoostPerTime", 0, 1, 35, 10);
+    }
+
+    if (CheckActorInventory(ptid, "BloodOfTheMartyrGiver") == 1) {
+        Thing_SetTranslation(0, 3);
+    }
+}
+
+script "setRadius" (int radius) {
+    SetActorProperty(0, APROP_Radius, radius << 16);
+}
+
+script "setHeight" (int hgt) {
+    SetActorProperty(0, APROP_Height, hgt << 16);
+}
+
+script "setDamage" (int damage, int ptid) {
+    if (CheckActorInventory(ptid, "AdrenalineGiver") == 1 && GetActorProperty(ptid, APROP_Health) <= 100) {
+        damage = damage + (2 * ((GetActorProperty(ptid, APROP_Health) - 100) / -10)); // +2 damage cada -10 de HP, máximo +18 con menos de 10 HP
+    }
+
+    if (CheckActorInventory(ptid, "TwentyTwentyGiver") == 1) {
+        // Reduce 25% el daño de cada lagrima.
+        // Se randomiza el redondeo de float->integer en base a la parte decimal del float.
+        // Ej: 0.5 tiene 50% chance de redondear a 1 y 50% chance de redondear a 0.
+        int dmgCutDec = (damage * 0.75) & 0x0000FFFF;
+        int rand = Random(0x00000000, 0x0000FFFF);
+        if (dmgCutDec <= rand) {
+            damage = ((damage * 0.75) >> 16);
+        }
+        else {
+            damage = ((damage * 0.75) >> 16) + 1;
+        }
+    }
+
+    SetActorProperty(0, APROP_Damage, damage);
+}
+
+script "setRange" (int range) {
+    Delay(range);
+    ThrustThingZ(0, 10, 1, 0);
+}
+
+script "setSpeed" (int boost) {
+    if (boost != 0) {
+        int newVelX = ((GetActorVelX(0) * boost) / 100) + GetActorVelX(0);
+        int newVelY = ((GetActorVelY(0) * boost) / 100) + GetActorVelY(0);
+        int newVelZ = ((GetActorVelZ(0) * boost) / 100) + GetActorVelZ(0);
+        SetActorVelocity(0, newVelX, newVelY, newVelZ, false, false);
+    }
+}
+
+// Al ser algo puramente visual queda del lado del cliente
+script "setScale" (int scale) CLIENTSIDE {
+    switch(scale) {
+        case 1: {
+            SetActorProperty(0, APROP_ScaleX, 0.125);
+            SetActorProperty(0, APROP_ScaleY, 0.125);
+        }; break;
+        case 2: {
+            SetActorProperty(0, APROP_ScaleX, 0.25);
+            SetActorProperty(0, APROP_ScaleY, 0.25);
+        }; break;
+        case 3: {
+            SetActorProperty(0, APROP_ScaleX, 0.375);
+            SetActorProperty(0, APROP_ScaleY, 0.375);
+        }; break;
+        case 4: {
+            SetActorProperty(0, APROP_ScaleX, 0.5);
+            SetActorProperty(0, APROP_ScaleY, 0.5);
+        }; break;
+        case 5: {
+            SetActorProperty(0, APROP_ScaleX, 0.625);
+            SetActorProperty(0, APROP_ScaleY, 0.625);
+        }; break;
+        case 6: {
+            SetActorProperty(0, APROP_ScaleX, 0.75);
+            SetActorProperty(0, APROP_ScaleY, 0.75);
+        }; break;
+        case 7: {
+            SetActorProperty(0, APROP_ScaleX, 0.875);
+            SetActorProperty(0, APROP_ScaleY, 0.875);
+        }; break;
+        case 8: {
+            SetActorProperty(0, APROP_ScaleX, 1.0);
+            SetActorProperty(0, APROP_ScaleY, 1.0);
+        }; break;
+    }
+}
+
+script "getFireRateBoost" (void) {
+    SetResultValue(AGGE_TEAR_PROJECTILE_STATS[6]);
+}
+
+script "showPowerups" (int displayFlag) CLIENTSIDE {
+    for (int i=1; i!=DISPLAYABLE_POWERUP_MAX; i++) {
+        if (displayFlag) {
+            SetFont(StrRight(SV_DISPLAYABLE_POWERUPS[i], 6));
+            if (CheckInventory(StrLeft(SV_DISPLAYABLE_POWERUPS[i], StrLen(SV_DISPLAYABLE_POWERUPS[i])-6)) == 1) {
+                HudMessage(s:"A"; HUDMSG_PLAIN, i, 0, FixedDiv(i << 16, 75.0), 0.05, 0);
+            }
+            else {
+                HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA, i, 0, FixedDiv(i << 16, 75.0), 0.05, 0, 0.25);
+            }
+        }
+        else {
+            HudMessage(s:""; HUDMSG_PLAIN, i, 0, 0, 0, 1);
+        }
+    }
+}
+
+script "setDamageBoostPerTime" (int boost, int tics, int maxi) {
+    // Prerequisito: El actor que llama al script tiene que tener user_isdead.
+    for (int i=0; i<maxi; i++) {
+        Delay(tics);
+        if (GetUserVariable(0, "user_isdead")) { terminate; }
+        int newDmg = GetActorProperty(0, APROP_Damage) + boost;
+        SetActorProperty(0, APROP_Damage, newDmg);
+    }
+}
+
+script "isEffectChanceSuccessful" (int chance) {
+    int res = Random(1, 100);
+    SetResultValue(res <= chance);
+}
+
+// Obligado a usar switch a causa de que ACS no se banca otras variables que
+// no sean int como parametros y que admite una cantidad limitada de ellos
+script "applyEffect" (int option, int dur) {
+    switch(option) {
+        case 1: {
+            SetActorProperty(0, APROP_Frightened, 1);
+            Thing_SetTranslation(0, 5);
+            Delay(dur);
+            SetActorProperty(0, APROP_Frightened, 0);
+            TakeInventory("FearDebuff", 1);
+            Thing_SetTranslation(0, 1);
+        }; break;
+    }
+}
+
+script "showShotDeathTranslation" (int option) CLIENTSIDE {
+    switch(option) {
+        case 1: {
+            Thing_SetTranslation(0, 4);
+        }; break;
+    }
+}
