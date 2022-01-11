@@ -10,6 +10,7 @@ global int 1:INITIALIZE_FLAG;
 
 int  SV_PLAYERS_TIDS[PLAYER_MAX];
 bool ENERGY_SHIELD_RELOAD = true;
+
 str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "CONTGiverP000A0", "GrowthHormonesGiverP001A0", "JesusJuiceGiverP002A0", "MomsHeelsGiverP003A0", "MomsLipstickGiverP004A0", 
     "MomsUnderwearGiverP005A0", "RoidRageGiverP006A0", "SafetyPinGiverP007A0", "SynthoilGiverP008A0", "SpeedBallGiverP009A0", 
@@ -53,16 +54,6 @@ script 332 OPEN {
 Script 333 (void) {
     GiveInventory("DetonateWaskaAction",1);
 }
-
-script 334 (void) NET CLIENTSIDE {
-    Log(s:"Radius: ", i:AGGE_TEAR_PROJECTILE_STATS[0]);
-    Log(s:"Height: ", i:AGGE_TEAR_PROJECTILE_STATS[1]);
-    Log(s:"Damage: ", i:AGGE_TEAR_PROJECTILE_STATS[2]);
-    Log(s:"Range: ", i:AGGE_TEAR_PROJECTILE_STATS[3]);
-    Log(s:"Speed Boost: ", i:AGGE_TEAR_PROJECTILE_STATS[4]);
-    Log(s:"Scale: ", i:AGGE_TEAR_PROJECTILE_STATS[5]);
-    Log(s:"Fire Rate Boost: ", i:AGGE_TEAR_PROJECTILE_STATS[6]);
-}
  
 script "setEnergyShieldReload" (int flag) {
     ENERGY_SHIELD_RELOAD = flag;
@@ -89,13 +80,6 @@ script 335 ENTER {
 }
  
 script 336 DEATH {
-    SV_PLAYERS_TIDS[PlayerNumber()] = 0;
-    Thing_ChangeTID(PLAYER_TID_START+PlayerNumber(), 0);
-}
- 
-script 337 RESPAWN {
-    ACS_ExecuteAlways(338, 0);
-        
     int classNum = PlayerClass(PlayerNumber());
     if (classNum == 0) {
         ACS_NamedExecuteAlways("resetTearStats", 0);
@@ -103,6 +87,13 @@ script 337 RESPAWN {
             TakeInventory(StrLeft(SV_DISPLAYABLE_POWERUPS[i], StrLen(SV_DISPLAYABLE_POWERUPS[i])-6), 1);
         }
     }
+
+    SV_PLAYERS_TIDS[PlayerNumber()] = 0;
+    Thing_ChangeTID(PLAYER_TID_START+PlayerNumber(), 0);
+}
+ 
+script 337 RESPAWN {
+    ACS_ExecuteAlways(338, 0);
 }
  
 script 338 (void) {
@@ -115,10 +106,11 @@ script 338 (void) {
 script "isPressingAltFire" (void) {
  
     int playerTID = GetActorProperty(0, APROP_TargetTID);
+    int playerNum = 0;
     for (int i=0; i<PLAYER_MAX; i++) {
  
         if (SV_PLAYERS_TIDS[i] == playerTID) {
-            int playerNum = i;
+            playerNum = i;
             break;
         }
     }
@@ -166,6 +158,55 @@ Script 894 (void) {
     takeInventory("IsReloading",1);
 }
 // FIN
+
+script "setDamageBoostPerTime" (int boost, int tics, int maxi) {
+    // Prerequisito: El actor que llama al script tiene que tener user_isdead.
+    for (int i=0; i<maxi; i++) {
+        Delay(tics);
+        if (GetUserVariable(0, "user_isdead")) { terminate; }
+        int newDmg = GetActorProperty(0, APROP_Damage) + boost;
+        SetActorProperty(0, APROP_Damage, newDmg);
+    }
+}
+
+script "isEffectChanceSuccessful" (int chance) {
+    int res = Random(1, 100);
+    SetResultValue(res <= chance);
+}
+
+// Obligado a usar switch a causa de que ACS no se banca otras variables que
+// no sean int como parametros y que admite una cantidad limitada de ellos
+script "applyEffect" (int option, int dur) {
+    switch(option) {
+        case 1: {
+            SetActorProperty(0, APROP_Frightened, 1);
+            Thing_SetTranslation(0, 5);
+            Delay(dur);
+            SetActorProperty(0, APROP_Frightened, 0);
+            TakeInventory("FearDebuff", 1);
+            Thing_SetTranslation(0, 1);
+        }; break;
+    }
+}
+
+
+
+
+
+
+/************************
+*   ARMA 4 CLASE AGGE   
+************************/
+
+script 334 (void) NET CLIENTSIDE {
+    Log(s:"Radius: ", i:AGGE_TEAR_PROJECTILE_STATS[0]);
+    Log(s:"Height: ", i:AGGE_TEAR_PROJECTILE_STATS[1]);
+    Log(s:"Damage: ", i:AGGE_TEAR_PROJECTILE_STATS[2]);
+    Log(s:"Range: ", i:AGGE_TEAR_PROJECTILE_STATS[3]);
+    Log(s:"Speed Boost: ", i:AGGE_TEAR_PROJECTILE_STATS[4]);
+    Log(s:"Scale: ", i:AGGE_TEAR_PROJECTILE_STATS[5]);
+    Log(s:"Fire Rate Boost: ", i:AGGE_TEAR_PROJECTILE_STATS[6]);
+}
 
 script "resetTearStats" (void) {
     // Radius y height no se pueden cambiar en zandro 3.0
@@ -314,36 +355,6 @@ script "showPowerups" (int displayFlag) CLIENTSIDE {
         else {
             HudMessage(s:""; HUDMSG_PLAIN, i, 0, 0, 0, 1);
         }
-    }
-}
-
-script "setDamageBoostPerTime" (int boost, int tics, int maxi) {
-    // Prerequisito: El actor que llama al script tiene que tener user_isdead.
-    for (int i=0; i<maxi; i++) {
-        Delay(tics);
-        if (GetUserVariable(0, "user_isdead")) { terminate; }
-        int newDmg = GetActorProperty(0, APROP_Damage) + boost;
-        SetActorProperty(0, APROP_Damage, newDmg);
-    }
-}
-
-script "isEffectChanceSuccessful" (int chance) {
-    int res = Random(1, 100);
-    SetResultValue(res <= chance);
-}
-
-// Obligado a usar switch a causa de que ACS no se banca otras variables que
-// no sean int como parametros y que admite una cantidad limitada de ellos
-script "applyEffect" (int option, int dur) {
-    switch(option) {
-        case 1: {
-            SetActorProperty(0, APROP_Frightened, 1);
-            Thing_SetTranslation(0, 5);
-            Delay(dur);
-            SetActorProperty(0, APROP_Frightened, 0);
-            TakeInventory("FearDebuff", 1);
-            Thing_SetTranslation(0, 1);
-        }; break;
     }
 }
 

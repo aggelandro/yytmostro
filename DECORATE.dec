@@ -4,6 +4,7 @@
 #include "decorate/Misc/universalstuff.dec"
 #include "decorate/Misc/casing.dec"
 #include "decorate/Misc/debuffs.dec"
+#include "decorate/Misc/powerups.dec"
 
 //weapons from classes
 #include "decorate/Classes/Luciano/Pistol/pistol.dec"
