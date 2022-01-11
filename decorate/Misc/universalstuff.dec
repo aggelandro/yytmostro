@@ -304,6 +304,7 @@ ACTOR Fatso2 : Fatso {
 	DropItem "ALumpOfCoal" 22
 	DropItem "TwentyTwenty" 5
 	DropItem "DarkMatter" 5
+	DropItem "Infestation2" 5
 
 	States {
 		Pain.Lightning:
@@ -448,6 +449,7 @@ ACTOR SpiderMastermind2 : SpiderMastermind
 	DropItem "ALumpOfCoal" 46
 	DropItem "TwentyTwenty" 35
 	DropItem "DarkMatter" 35
+	DropItem "Infestation2" 35
 	
 	States {
 		Pain.Lightning:
@@ -482,6 +484,7 @@ ACTOR Cyberdemon2 : Cyberdemon
 	DropItem "ALumpOfCoal" 60
 	DropItem "TwentyTwenty" 50
 	DropItem "DarkMatter" 50
+	DropItem "Infestation2" 50
 	
 	States {
 		Pain.Lightning:
@@ -514,6 +517,7 @@ ACTOR BaronOfHell2 : BaronOfHell
 	DropItem "ALumpOfCoal" 32
 	DropItem "TwentyTwenty" 10
 	DropItem "DarkMatter" 10
+	DropItem "Infestation2" 10
 	
 	States {
 		Pain.Lightning:
@@ -550,329 +554,8 @@ ACTOR HellKnight2 : HellKnight
     Goto Pain
 	}
 }
-ACTOR ShotgunGuyMod
-{
-  Health 30
-  Radius 20
-  Height 56
-  Mass 100
-  Speed 8
-  PainChance 170
-  Monster
-  +FLOORCLIP
-  SeeSound "shotguy/sight"
-  AttackSound "shotguy/attack"
-  PainSound "shotguy/pain"
-  DeathSound "shotguy/death"
-  ActiveSound "shotguy/active"
-  Obituary "$OB_SHOTGUY"
-  DropItem "Shotgun"
-	DropItem "Cat-O-Nine-Tails" 8
-	DropItem "GrowthHormones" 8
-	DropItem "JesusJuice" 8
-	DropItem "MomsHeels" 8
-	DropItem "MomsLipstick" 8
-	DropItem "MomsUnderwear" 8
-	DropItem "RoidRage" 8
-	DropItem "SafetyPin" 8
-	DropItem "Synthoil" 8
-	DropItem "SpeedBall" 8
-	DropItem "Magic8Ball" 8
-	DropItem "Screw" 8
-	DropItem "Toothpicks" 8
-	DropItem "TornPhoto" 8
-	DropItem "BloodOfTheMartyr" 8
-	DropItem "Adrenaline" 5
-  States
-  {
-  Spawn:
-    SPOS AB 10 A_Look
-    Loop
-  See:
-    SPOS AABBCCDD 3 A_Chase
-    Loop
-  Missile:
-    SPOS E 10 A_FaceTarget
-    SPOS F 10 Bright A_SPosAttackUseAtkSound
-    SPOS E 10
-    Goto See
-  Pain:
-    SPOS G 3
-    SPOS G 3 A_Pain
-    Goto See
-	Pain.Lightning:
-		TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.5),0,0,0,0)
-		TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.5),0,0,0,0)
-    Goto Pain
-  Death:
-	SPOS H 0 A_SpawnItemEx("Shell")
-    SPOS H 5
-    SPOS I 5 A_Scream
-    SPOS J 5 A_NoBlocking
-    SPOS K 5
-    SPOS L -1
-    Stop
-  XDeath:
-	SPOS H 0 A_SpawnItemEx("Shell")
-    SPOS M 5
-    SPOS N 5 A_XScream
-    SPOS O 5 A_NoBlocking
-    SPOS PQRST 5
-    SPOS U -1
-    Stop
-  Raise:
-    SPOS L 5
-    SPOS KJIH 5
-    Goto See
-  Death.AfireF:
-	REEB A 3 Bright A_PlaySound("shotguy/pain")
-	REEB B 3 Bright
-	REEB C 3 Bright A_NoBlocking
-	REEB D 3 Bright
-	REEB E 3 Bright
-	REEB F 3 Bright
-	REEB G 3 Bright
-	REEB H 3 Bright
-	REEB I 3 Bright A_PlaySound("shotguy/pain")
-	REEB J 3 Bright
-	REEB K 3 Bright
-	REEB L 3 Bright
-	REEB M 3 Bright
-	REEB N 3 Bright
-	REEB O 3 Bright A_PlaySound("shotguy/pain")
-	REEB P 3 Bright
-	REEB Q 3 Bright
-	REEB R 3 Bright
-	REEB S 3 Bright A_PlaySound("shotguy/death")
-	REEB T 3 Bright
-	REEB W 3 Bright
-	REEB V -1 
-	Stop
-  Death.Afire:
-	REEB A 3 Bright A_PlaySound("shotguy/pain")
-	REEB B 3 Bright
-	REEB C 3 Bright A_NoBlocking
-	REEB D 3 Bright
-	REEB E 3 Bright
-	REEB F 3 Bright
-	REEB G 3 Bright
-	REEB H 3 Bright
-	REEB I 3 Bright A_PlaySound("shotguy/pain")
-	REEB J 3 Bright
-	REEB K 3 Bright
-	REEB L 3 Bright
-	REEB M 3 Bright
-	REEB N 3 Bright
-	REEB O 3 Bright A_PlaySound("shotguy/pain")
-	REEB P 3 Bright
-	REEB Q 3 Bright
-	REEB R 3 Bright
-	REEB S 3 Bright A_PlaySound("shotguy/death")
-	REEB T 3 Bright
-	REEB W 3 Bright
-	REEB V -1 
-	Stop
-  }
-}
-ACTOR ChaingunGuyMod
-{
-  Health 70
-  Radius 20
-  Height 56
-  Mass 100
-  Speed 8
-  PainChance 170
-  Monster
-  +FLOORCLIP
-  SeeSound "chainguy/sight"
-  PainSound "chainguy/pain"
-  DeathSound "chainguy/death"
-  ActiveSound "chainguy/active"
-  AttackSound "chainguy/attack"
-  Obituary "$OB_CHAINGUY"
-  Dropitem "Chaingun"
-	DropItem "Cat-O-Nine-Tails" 10
-	DropItem "GrowthHormones" 10
-	DropItem "JesusJuice" 10
-	DropItem "MomsHeels" 10
-	DropItem "MomsLipstick" 10
-	DropItem "MomsUnderwear" 10
-	DropItem "RoidRage" 10
-	DropItem "SafetyPin" 10
-	DropItem "Synthoil" 10
-	DropItem "SpeedBall" 10
-	DropItem "Magic8Ball" 10
-	DropItem "Screw" 10
-	DropItem "Toothpicks" 10
-	DropItem "TornPhoto" 10
-	DropItem "BloodOfTheMartyr" 10
-	DropItem "Adrenaline" 7
-  States
-  {
-  Spawn:
-    CPOS AB 10 A_Look
-    Loop
-  See:
-    CPOS AABBCCDD 3 A_Chase
-    Loop
-  Missile:
-    CPOS E 10 A_FaceTarget
-    CPOS FE 4 Bright A_CPosAttack
-    CPOS F 1 A_CPosRefire
-    Goto Missile+1
-  Pain:
-    CPOS G 3
-    CPOS G 3 A_Pain
-    Goto See
-	Pain.Lightning:
-		TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.5),0,0,0,0)
-		TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.5),0,0,0,0)
-    Goto Pain
-  Death:
-	CPOS HHHH 0 A_SpawnItemEx("Clip")
-    CPOS H 5 
-    CPOS I 5 A_Scream
-    CPOS J 5 A_NoBlocking
-    CPOS KLM 5
-    CPOS N -1
-    Stop
-  XDeath:
-	CPOS OOOO 0 A_SpawnItemEx("Clip")
-    CPOS O 5 
-    CPOS P 5 A_XScream
-    CPOS Q 5 A_NoBlocking
-    CPOS RS 5
-    CPOS T -1
-    Stop
-  Raise:
-    CPOS N 5
-    CPOS MLKJIH 5
-    Goto See
-  Death.AfireF:
-	REEB A 3 Bright A_PlaySound("chainguy/pain")
-	REEB B 3 Bright
-	REEB C 3 Bright A_NoBlocking
-	REEB D 3 Bright
-	REEB E 3 Bright
-	REEB F 3 Bright
-	REEB G 3 Bright
-	REEB H 3 Bright
-	REEB I 3 Bright A_PlaySound("chainguy/pain")
-	REEB J 3 Bright
-	REEB K 3 Bright
-	REEB L 3 Bright
-	REEB M 3 Bright
-	REEB N 3 Bright
-	REEB O 3 Bright A_PlaySound("chainguy/pain")
-	REEB P 3 Bright
-	REEB Q 3 Bright
-	REEB R 3 Bright
-	REEB S 3 Bright A_PlaySound("chainguy/death")
-	REEB T 3 Bright
-	REEB W 3 Bright
-	REEB V -1 
-	Stop
-  Death.Afire:
-	REEB A 3 Bright A_PlaySound("chainguy/pain")
-	REEB B 3 Bright
-	REEB C 3 Bright A_NoBlocking
-	REEB D 3 Bright
-	REEB E 3 Bright
-	REEB F 3 Bright
-	REEB G 3 Bright
-	REEB H 3 Bright
-	REEB I 3 Bright A_PlaySound("chainguy/pain")
-	REEB J 3 Bright
-	REEB K 3 Bright
-	REEB L 3 Bright
-	REEB M 3 Bright
-	REEB N 3 Bright
-	REEB O 3 Bright A_PlaySound("chainguy/pain")
-	REEB P 3 Bright
-	REEB Q 3 Bright
-	REEB R 3 Bright
-	REEB S 3 Bright A_PlaySound("chainguy/death")
-	REEB T 3 Bright
-	REEB W 3 Bright
-	REEB V -1 
-	Stop
-  }
-}
-ACTOR ZombieMan2 : ZombieMan
-{
-	DropItem "Cat-O-Nine-Tails" 3
-	DropItem "GrowthHormones" 3
-	DropItem "JesusJuice" 3
-	DropItem "MomsHeels" 3
-	DropItem "MomsLipstick" 3
-	DropItem "MomsUnderwear" 3
-	DropItem "RoidRage" 3
-	DropItem "SafetyPin" 3
-	DropItem "Synthoil" 3
-	DropItem "SpeedBall" 3
-	DropItem "Magic8Ball" 3
-	DropItem "Screw" 3
-	DropItem "Toothpicks" 3
-	DropItem "TornPhoto" 3
-	DropItem "BloodOfTheMartyr" 3
-	DropItem "Adrenaline" 2
-	
-  States
-  {
-	Pain.Lightning:
-		TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.5),0,0,0,0)
-		TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.5),0,0,0,0)
-    Goto Pain
-  Death.AfireF:
-	REEB A 3 Bright A_PlaySound("grunt/pain")
-	REEB B 3 Bright
-	REEB C 3 Bright A_NoBlocking
-	REEB D 3 Bright
-	REEB E 3 Bright
-	REEB F 3 Bright
-	REEB G 3 Bright
-	REEB H 3 Bright
-	REEB I 3 Bright A_PlaySound("grunt/pain")
-	REEB J 3 Bright
-	REEB K 3 Bright
-	REEB L 3 Bright
-	REEB M 3 Bright
-	REEB N 3 Bright
-	REEB O 3 Bright A_PlaySound("grunt/pain")
-	REEB P 3 Bright
-	REEB Q 3 Bright
-	REEB R 3 Bright
-	REEB S 3 Bright A_PlaySound("grunt/death")
-	REEB T 3 Bright
-	REEB W 3 Bright
-	REEB V -1 
-	Stop
-  Death.Afire:
-	REEB A 3 Bright A_PlaySound("grunt/pain")
-	REEB B 3 Bright
-	REEB C 3 Bright A_NoBlocking
-	REEB D 3 Bright
-	REEB E 3 Bright
-	REEB F 3 Bright
-	REEB G 3 Bright
-	REEB H 3 Bright
-	REEB I 3 Bright A_PlaySound("grunt/pain")
-	REEB J 3 Bright
-	REEB K 3 Bright
-	REEB L 3 Bright
-	REEB M 3 Bright
-	REEB N 3 Bright
-	REEB O 3 Bright A_PlaySound("grunt/pain")
-	REEB P 3 Bright
-	REEB Q 3 Bright
-	REEB R 3 Bright
-	REEB S 3 Bright A_PlaySound("grunt/death")
-	REEB T 3 Bright
-	REEB W 3 Bright
-	REEB V -1 
-	Stop
-  }
-}
+
+
 ACTOR MiniArachnotron
 {
   RenderStyle Stencil
@@ -933,6 +616,22 @@ ACTOR MiniArachnotron
     Goto See+1
   }
 }
+
+ACTOR FriendlyMiniArachnotron : MiniArachnotron {
+	+FRIENDLY
+	RenderStyle Stencil
+  StencilColor DarkBlue
+	
+	States {
+		Melee:
+    BSPI A 5 Fast Bright A_FaceTarget
+    BSPI G 10 Fast Bright A_CustomMeleeAttack(1)
+    BSPI H 3 Fast Bright
+    BSPI H 3 Fast Bright
+    Goto See
+	}
+}
+
 ACTOR ArchvileCustom
 {
   DamageFactor "AFire",0
@@ -988,5 +687,271 @@ ACTOR ArchvileCustom
     VILE TUVWXY 7
     VILE Z -1
     Stop
+  }
+}
+
+ACTOR AbstractYYTZombie {
+	Height 56
+	Speed 8
+	Monster
+  +FLOORCLIP
+	
+	States {
+	
+		Pain.Lightning:
+			TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.5),0,0,0,0)
+			TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.5),0,0,0,0)
+			Goto Pain
+			
+		Death.AfireF:
+			REEB A 3 Bright A_PlaySound("grunt/pain")
+			REEB B 3 Bright
+			REEB C 3 Bright A_NoBlocking
+			REEB D 3 Bright
+			REEB E 3 Bright
+			REEB F 3 Bright
+			REEB G 3 Bright
+			REEB H 3 Bright
+			REEB I 3 Bright A_PlaySound("grunt/pain")
+			REEB J 3 Bright
+			REEB K 3 Bright
+			REEB L 3 Bright
+			REEB M 3 Bright
+			REEB N 3 Bright
+			REEB O 3 Bright A_PlaySound("grunt/pain")
+			REEB P 3 Bright
+			REEB Q 3 Bright
+			REEB R 3 Bright
+			REEB S 3 Bright A_PlaySound("grunt/death")
+			REEB T 3 Bright
+			REEB W 3 Bright
+			REEB V -1 
+			Stop
+			
+		Death.Afire:
+			REEB A 3 Bright A_PlaySound("grunt/pain")
+			REEB B 3 Bright
+			REEB C 3 Bright A_NoBlocking
+			REEB D 3 Bright
+			REEB E 3 Bright
+			REEB F 3 Bright
+			REEB G 3 Bright
+			REEB H 3 Bright
+			REEB I 3 Bright A_PlaySound("grunt/pain")
+			REEB J 3 Bright
+			REEB K 3 Bright
+			REEB L 3 Bright
+			REEB M 3 Bright
+			REEB N 3 Bright
+			REEB O 3 Bright A_PlaySound("grunt/pain")
+			REEB P 3 Bright
+			REEB Q 3 Bright
+			REEB R 3 Bright
+			REEB S 3 Bright A_PlaySound("grunt/death")
+			REEB T 3 Bright
+			REEB W 3 Bright
+			REEB V -1
+			Stop
+	}
+}
+
+ACTOR ShotgunGuyMod : AbstractYYTZombie
+{
+  Health 30
+  Radius 20
+  Mass 100
+  PainChance 170
+  SeeSound "shotguy/sight"
+  AttackSound "shotguy/attack"
+  PainSound "shotguy/pain"
+  DeathSound "shotguy/death"
+  ActiveSound "shotguy/active"
+  Obituary "$OB_SHOTGUY"
+  DropItem "Shotgun"
+	DropItem "Shell"
+	DropItem "Cat-O-Nine-Tails" 8
+	DropItem "GrowthHormones" 8
+	DropItem "JesusJuice" 8
+	DropItem "MomsHeels" 8
+	DropItem "MomsLipstick" 8
+	DropItem "MomsUnderwear" 8
+	DropItem "RoidRage" 8
+	DropItem "SafetyPin" 8
+	DropItem "Synthoil" 8
+	DropItem "SpeedBall" 8
+	DropItem "Magic8Ball" 8
+	DropItem "Screw" 8
+	DropItem "Toothpicks" 8
+	DropItem "TornPhoto" 8
+	DropItem "BloodOfTheMartyr" 8
+	DropItem "Adrenaline" 5
+  States
+  {
+  Spawn:
+    SPOS AB 10 A_Look
+    Loop
+  See:
+    SPOS AABBCCDD 3 A_Chase
+    Loop
+  Missile:
+    SPOS E 10 A_FaceTarget
+    SPOS F 10 Bright A_SPosAttackUseAtkSound
+    SPOS E 10
+    Goto See
+  Pain:
+    SPOS G 3
+    SPOS G 3 A_Pain
+    Goto See
+  Death:
+    SPOS H 5
+    SPOS I 5 A_Scream
+    SPOS J 5 A_NoBlocking
+    SPOS K 5
+    SPOS L -1
+    Stop
+  XDeath:
+    SPOS M 5
+    SPOS N 5 A_XScream
+    SPOS O 5 A_NoBlocking
+    SPOS PQRST 5
+    SPOS U -1
+    Stop
+  Raise:
+    SPOS L 5
+    SPOS KJIH 5
+    Goto See
+  }
+}
+ACTOR ChaingunGuyMod : AbstractYYTZombie
+{
+  Health 70
+  Radius 20
+  Mass 100
+  PainChance 170
+  SeeSound "chainguy/sight"
+  PainSound "chainguy/pain"
+  DeathSound "chainguy/death"
+  ActiveSound "chainguy/active"
+  AttackSound "chainguy/attack"
+  Obituary "$OB_CHAINGUY"
+  Dropitem "Chaingun"
+	Dropitem "Clip"
+	DropItem "Cat-O-Nine-Tails" 10
+	DropItem "GrowthHormones" 10
+	DropItem "JesusJuice" 10
+	DropItem "MomsHeels" 10
+	DropItem "MomsLipstick" 10
+	DropItem "MomsUnderwear" 10
+	DropItem "RoidRage" 10
+	DropItem "SafetyPin" 10
+	DropItem "Synthoil" 10
+	DropItem "SpeedBall" 10
+	DropItem "Magic8Ball" 10
+	DropItem "Screw" 10
+	DropItem "Toothpicks" 10
+	DropItem "TornPhoto" 10
+	DropItem "BloodOfTheMartyr" 10
+	DropItem "Adrenaline" 7
+  States
+  {
+  Spawn:
+    CPOS AB 10 A_Look
+    Loop
+  See:
+    CPOS AABBCCDD 3 A_Chase
+    Loop
+  Missile:
+    CPOS E 10 A_FaceTarget
+    CPOS FE 4 Bright A_CPosAttack
+    CPOS F 1 A_CPosRefire
+    Goto Missile+1
+  Pain:
+    CPOS G 3
+    CPOS G 3 A_Pain
+    Goto See
+  Death:
+    CPOS H 5 
+    CPOS I 5 A_Scream
+    CPOS J 5 A_NoBlocking
+    CPOS KLM 5
+    CPOS N -1
+    Stop
+  XDeath:
+    CPOS O 5 
+    CPOS P 5 A_XScream
+    CPOS Q 5 A_NoBlocking
+    CPOS RS 5
+    CPOS T -1
+    Stop
+  Raise:
+    CPOS N 5
+    CPOS MLKJIH 5
+    Goto See
+  }
+}
+ACTOR ZombieMan2 : AbstractYYTZombie
+{
+  Health 20
+  Radius 20
+  PainChance 200
+  SeeSound "grunt/sight"
+  AttackSound "grunt/attack"
+  PainSound "grunt/pain"
+  DeathSound "grunt/death"
+  ActiveSound "grunt/active"
+  Obituary "$OB_ZOMBIE"
+  DropItem "Clip"
+	DropItem "Cat-O-Nine-Tails" 3
+	DropItem "GrowthHormones" 3
+	DropItem "JesusJuice" 3
+	DropItem "MomsHeels" 3
+	DropItem "MomsLipstick" 3
+	DropItem "MomsUnderwear" 3
+	DropItem "RoidRage" 3
+	DropItem "SafetyPin" 3
+	DropItem "Synthoil" 3
+	DropItem "SpeedBall" 3
+	DropItem "Magic8Ball" 3
+	DropItem "Screw" 3
+	DropItem "Toothpicks" 3
+	DropItem "TornPhoto" 3
+	DropItem "BloodOfTheMartyr" 3
+	DropItem "Adrenaline" 2
+	
+  States
+  {
+  Spawn:
+    POSS AB 10 A_Look
+    Loop
+  See:
+    POSS AABBCCDD 4 A_Chase
+    Loop
+  Missile:
+    POSS E 10 A_FaceTarget
+    POSS F 8 A_PosAttack
+    POSS E 8
+    Goto See
+  Pain:
+    POSS G 3
+    POSS G 3 A_Pain
+    Goto See
+  Death:
+    POSS H 5
+    POSS I 5 A_Scream
+    POSS J 5 A_NoBlocking
+    POSS K 5
+    POSS L -1
+    Stop
+  XDeath:
+    POSS M 5
+    POSS N 5 A_XScream
+    POSS O 5 A_NoBlocking
+    POSS PQRST 5
+    POSS U -1
+    Stop
+  Raise:
+    POSS K 5
+    POSS JIH 5
+    Goto See
   }
 }

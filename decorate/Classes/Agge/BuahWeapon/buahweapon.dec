@@ -131,6 +131,7 @@ ACTOR NormalTearProjectile {
 	var int user_isdead;
 
 	+BRIGHT
+	+HITTRACER
 	
   States {
 	
@@ -161,12 +162,17 @@ ACTOR NormalTearProjectile {
 			TDFI L 2
 			TDFI M 1
 			TDFI N 2
+			TNT1 A 0 A_JumpIfInventory("Infestation2Giver", 1, "InfestationDeath", AAPTR_TARGET)
+			Stop
+			
+		InfestationDeath:
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 20) == 0, 1)
+			TNT1 A 0 A_GiveInventory("InfestationDebuff", 1, AAPTR_TRACER)
 			Stop
   }
 }
 
 ACTOR FearTearProjectile : NormalTearProjectile {
-	+HITTRACER
 	
   States {
 			

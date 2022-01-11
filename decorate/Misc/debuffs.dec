@@ -1,11 +1,48 @@
-// Fear debuff quee afecta a los monstruos
-ACTOR FearDebuff : CustomInventory 4200 {
-	Inventory.MaxAmount 1
+// debuffs que afectan a los monstruos
+ACTOR AbstractMonsterDebuff : CustomInventory {
 	+INVENTORY.AUTOACTIVATE
+  Inventory.Amount 1
+  Inventory.MaxAmount 1
+	
+	States {
+		AlreadyActive:
+			TNT1 A 0
+			Stop
+	}
+}
+
+ACTOR FearDebuff : AbstractMonsterDebuff 4200 {
 	
 	States {
 		Pickup:
+			TNT1 A 0 A_JumpIfInventory("FearDebuffGiver", 1, "AlreadyActive")
+			TNT1 A 0 A_GiveInventory("FearDebuffGiver", 1)
 			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 1, 350)
 			Stop
 	}
 }
+
+ACTOR InfestationDebuff : AbstractMonsterDebuff 4201 {
+	
+	States {
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("InfestationDebuffGiver", 1, "AlreadyActive")
+			TNT1 A 0 A_GiveInventory("InfestationDebuffGiver", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 2, 0)
+			Stop
+	}
+}
+
+
+
+//=========
+// Givers
+//=========
+
+ACTOR AbstractDebuffGiver : Inventory {
+  Inventory.Amount 1
+  Inventory.MaxAmount 1
+}
+
+ACTOR FearDebuffGiver : AbstractDebuffGiver {}
+ACTOR InfestationDebuffGiver : AbstractDebuffGiver {}

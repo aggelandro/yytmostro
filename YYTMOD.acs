@@ -3,7 +3,7 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 19
+#define DISPLAYABLE_POWERUP_MAX 20
 
 global int 0:AGGE_TEAR_PROJECTILE_STATS[];
 global int 1:INITIALIZE_FLAG;
@@ -15,7 +15,7 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "CONTGiverP000A0", "GrowthHormonesGiverP001A0", "JesusJuiceGiverP002A0", "MomsHeelsGiverP003A0", "MomsLipstickGiverP004A0", 
     "MomsUnderwearGiverP005A0", "RoidRageGiverP006A0", "SafetyPinGiverP007A0", "SynthoilGiverP008A0", "SpeedBallGiverP009A0", 
     "Magic8BallGiverP010A0", "ScrewGiverP011A0", "ToothpicksGiverP012A0", "TornPhotoGiverP013A0", "AdrenalineGiverP014A0", 
-    "TwentyTwentyGiverP015A0", "ALumpOfCoalGiverP016A0", "BloodOfTheMartyrGiverP017A0", "DarkMatterGiverP018A0"
+    "TwentyTwentyGiverP015A0", "ALumpOfCoalGiverP016A0", "BloodOfTheMartyrGiverP017A0", "DarkMatterGiverP018A0", "Infestation2GiverP019A0"
 };
  
 script "yytmod_mensajesalida" DEATH
@@ -183,8 +183,12 @@ script "applyEffect" (int option, int dur) {
             Thing_SetTranslation(0, 5);
             Delay(dur);
             SetActorProperty(0, APROP_Frightened, 0);
-            TakeInventory("FearDebuff", 1);
             Thing_SetTranslation(0, 1);
+            TakeInventory("FearDebuffGiver",1);
+        }; break;
+        case 2: {
+            while(GetActorProperty(0, APROP_Health) > 0.0) { Delay(1); }
+            Spawn("FriendlyMiniArachnotron", GetActorX(0), GetActorY(0), GetActorZ(0));
         }; break;
     }
 }
@@ -365,3 +369,10 @@ script "showShotDeathTranslation" (int option) CLIENTSIDE {
         }; break;
     }
 }
+
+/*script "checkForInfestationEffect" (void) {
+    int ptid = GetActorProperty(0, APROP_TargetTID);
+    if (CheckActorInventory(ptid, "Infestation2Giver") == 1) {
+
+    }
+}*/
