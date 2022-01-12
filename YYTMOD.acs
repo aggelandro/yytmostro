@@ -5,6 +5,8 @@
 #define PLAYER_MAX 20
 #define DISPLAYABLE_POWERUP_MAX 20
 
+// Al no poder usar array de 2 dimensiones en variables globales, no se puede persistir los stats por jugador.
+// Hay que buscarle otra solución a esto.
 global int 0:AGGE_TEAR_PROJECTILE_STATS[];
 global int 1:INITIALIZE_FLAG;
 
@@ -40,6 +42,16 @@ script "yytmod_mensajesalida" DEATH
 script 2 (int value)
 {
     SetActorProperty(0,APROP_Damage,value);
+}
+
+script 331 (void) NET CLIENTSIDE {
+    Log(s:"Current player Number: ", i:PlayerNumber());
+    Log(s:"Current player TID: ", i:ActivatorTID());
+    Log(s:"Player list: ");
+
+    for (int i=0; i<PLAYER_MAX; i++) {
+        Log(s:"Player ", i:i, s:": TID -> ", i:SV_PLAYERS_TIDS[i]);
+    }
 }
 
 script 332 OPEN {
@@ -106,19 +118,21 @@ script 338 (void) {
 script "isPressingAltFire" (void) {
  
     int playerTID = GetActorProperty(0, APROP_TargetTID);
-    int playerNum = 0;
-    for (int i=0; i<PLAYER_MAX; i++) {
- 
-        if (SV_PLAYERS_TIDS[i] == playerTID) {
-            playerNum = i;
-            break;
-        }
-    }
- 
+    int playerNum = ACS_NamedExecuteWithResult("getPlayerNumberFromTID", playerTID); 
     int buttons = GetPlayerInput(playerNum, INPUT_BUTTONS);
  
     //Log(s:"isPressingAltFire(): ", i:buttons, s:" ", i:INPUT_BUTTONS, s:" ", i:BT_ALTATTACK);
     SetResultValue(buttons & BT_ALTATTACK);
+}
+
+script "getPlayerNumberFromTID" (int ptid) {
+    for (int i=0; i<PLAYER_MAX; i++) {
+ 
+        if (SV_PLAYERS_TIDS[i] == ptid) {
+            SetResultValue(i);
+            break;
+        }
+    }
 }
 
 // codigo escopeta terro
@@ -234,6 +248,7 @@ script "sendToClient" (int entry, int val) CLIENTSIDE {
 }
 
 script "addTearBoost" (int boostType, int bonus) {
+    int pnum = PlayerNumber();
     AGGE_TEAR_PROJECTILE_STATS[boostType] = AGGE_TEAR_PROJECTILE_STATS[boostType] + bonus;
     if (IsNetworkGame()) {
         ACS_NamedExecuteAlways("sendToClient", 0, boostType, AGGE_TEAR_PROJECTILE_STATS[boostType]);
@@ -369,10 +384,3 @@ script "showShotDeathTranslation" (int option) CLIENTSIDE {
         }; break;
     }
 }
-
-/*script "checkForInfestationEffect" (void) {
-    int ptid = GetActorProperty(0, APROP_TargetTID);
-    if (CheckActorInventory(ptid, "Infestation2Giver") == 1) {
-
-    }
-}*/

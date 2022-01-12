@@ -25,7 +25,7 @@ ACTOR AbstractAutoCustomPowerUp : CustomInventory {
 	
 	States {
 		Pickup:
-		  TNT1 A 0 A_JumpIfInventory("BuahWeapon", 1, "WeaponInInventory")
+		  TNT1 A 0 A_JumpIfInventory("IsaacHands", 1, "WeaponInInventory")
 			Fail
 			
 		AlreadyActive:
