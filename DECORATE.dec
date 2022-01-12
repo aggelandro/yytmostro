@@ -456,7 +456,7 @@ ACTOR Ron : DoomPlayer
   Player.StartItem "Clip", 50
   Player.StartItem  "Shell", 5
   Player.StartItem "RonID"
-  Player.StartItem "RonTurretItem", 3
+  Player.StartItem "RonTurretItem", 1
   Player.WeaponSlot 1, RonWrench, Chainsaw
   Player.WeaponSlot 2, RonPistol
   Player.WeaponSlot 3, Shotgun2, RonSSG

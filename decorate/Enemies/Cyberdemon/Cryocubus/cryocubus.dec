@@ -142,7 +142,7 @@ ACTOR FatsoIceEffect
 
 Actor PowerSlowSpeed : PowerSpeed
 {
-powerup.duration -3 
+powerup.duration -1 
 speed 0.0
 }
 ACTOR FreezeDebuff : PowerupGiver
