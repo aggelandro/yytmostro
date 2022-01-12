@@ -58,7 +58,7 @@ ACTOR RonTurretItem : CustomInventory
   Inventory.PickupSound "misc/p_pkup"
   Inventory.Icon "TURA0"
   Inventory.Amount 1
-  Inventory.MaxAmount 3
+  Inventory.MaxAmount 1
   States
   {
   Spawn:
