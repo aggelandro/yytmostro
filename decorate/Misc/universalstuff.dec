@@ -305,6 +305,7 @@ ACTOR Fatso2 : Fatso {
 	DropItem "TwentyTwenty" 5
 	DropItem "DarkMatter" 5
 	DropItem "Infestation2" 5
+	DropItem "LostContact" 5
 
 	States {
 		Pain.Lightning:
@@ -450,6 +451,7 @@ ACTOR SpiderMastermind2 : SpiderMastermind
 	DropItem "TwentyTwenty" 35
 	DropItem "DarkMatter" 35
 	DropItem "Infestation2" 35
+	DropItem "LostContact" 35
 	
 	States {
 		Pain.Lightning:
@@ -485,6 +487,7 @@ ACTOR Cyberdemon2 : Cyberdemon
 	DropItem "TwentyTwenty" 50
 	DropItem "DarkMatter" 50
 	DropItem "Infestation2" 50
+	DropItem "LostContact" 50
 	
 	States {
 		Pain.Lightning:
@@ -518,6 +521,7 @@ ACTOR BaronOfHell2 : BaronOfHell
 	DropItem "TwentyTwenty" 10
 	DropItem "DarkMatter" 10
 	DropItem "Infestation2" 10
+	DropItem "LostContact" 10
 	
 	States {
 		Pain.Lightning:

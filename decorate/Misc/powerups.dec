@@ -410,6 +410,7 @@ ACTOR LostContact : AbstractAutoCustomPowerUp 4020 {
 		WeaponInInventory:
 			TNT1 A 0 A_JumpIfInventory("LostContactGiver", 1, "AlreadyActive")
 			TNT1 A 0 A_GiveInventory("LostContactGiver", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, -60)
 			Stop
 	}
 }
