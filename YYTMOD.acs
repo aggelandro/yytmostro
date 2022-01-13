@@ -3,21 +3,38 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 20
+#define DISPLAYABLE_POWERUP_MAX 21
 
-// Al no poder usar array de 2 dimensiones en variables globales, no se puede persistir los stats por jugador.
-// Hay que buscarle otra solución a esto.
+/* Al no poder usar array de 2 dimensiones en variables globales, no se puede persistir los tear stats por jugador.
+** ----------------
+** POSIBLE SOLUCIÓN
+**
+** Hacer un array que sea variable de mapa donde:
+**  clave -> player number de clase Agge
+**  valor -> array global que guarde sus stats
+**
+** PRECONDICIÓN:
+**  + Player number se mantiene IGUAL.
+**  + Script "getPlayerNumberFromTID" tiene que ser 100% confiable para casos donde el activador NO SEA el player.
+** -----------------
+** OTRA SOLUCIÓN
+** 
+** Hacer X globales para X cantidad de jugadores con la clase.
+** Se guarda el player number en el primer elemento y a la hora de actualizar se compara contra ese elemento.
+** Mismas precondiciones que el caso anterior.
+*/
 global int 0:AGGE_TEAR_PROJECTILE_STATS[];
 global int 1:INITIALIZE_FLAG;
 
-int  SV_PLAYERS_TIDS[PLAYER_MAX];
+int  SV_PLAYERS_NUMBERS_2_TIDS[PLAYER_MAX];
 bool ENERGY_SHIELD_RELOAD = true;
 
 str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "CONTGiverP000A0", "GrowthHormonesGiverP001A0", "JesusJuiceGiverP002A0", "MomsHeelsGiverP003A0", "MomsLipstickGiverP004A0", 
     "MomsUnderwearGiverP005A0", "RoidRageGiverP006A0", "SafetyPinGiverP007A0", "SynthoilGiverP008A0", "SpeedBallGiverP009A0", 
     "Magic8BallGiverP010A0", "ScrewGiverP011A0", "ToothpicksGiverP012A0", "TornPhotoGiverP013A0", "AdrenalineGiverP014A0", 
-    "TwentyTwentyGiverP015A0", "ALumpOfCoalGiverP016A0", "BloodOfTheMartyrGiverP017A0", "DarkMatterGiverP018A0", "Infestation2GiverP019A0"
+    "TwentyTwentyGiverP015A0", "ALumpOfCoalGiverP016A0", "BloodOfTheMartyrGiverP017A0", "DarkMatterGiverP018A0", "Infestation2GiverP019A0",
+    "LostContactGiverP020A0"
 };
  
 script "yytmod_mensajesalida" DEATH
@@ -44,13 +61,14 @@ script 2 (int value)
     SetActorProperty(0,APROP_Damage,value);
 }
 
+// Player Information Script
 script 331 (void) NET CLIENTSIDE {
     Log(s:"Current player Number: ", i:PlayerNumber());
     Log(s:"Current player TID: ", i:ActivatorTID());
     Log(s:"Player list: ");
 
     for (int i=0; i<PLAYER_MAX; i++) {
-        Log(s:"Player ", i:i, s:": TID -> ", i:SV_PLAYERS_TIDS[i]);
+        Log(s:"Player ", i:i, s:": TID -> ", i:SV_PLAYERS_NUMBERS_2_TIDS[i]);
     }
 }
 
@@ -100,7 +118,7 @@ script 336 DEATH {
         }
     }
 
-    SV_PLAYERS_TIDS[PlayerNumber()] = 0;
+    SV_PLAYERS_NUMBERS_2_TIDS[PlayerNumber()] = 0;
     Thing_ChangeTID(PLAYER_TID_START+PlayerNumber(), 0);
 }
  
@@ -111,7 +129,7 @@ script 337 RESPAWN {
 script 338 (void) {
     int playerNum = PlayerNumber();
     int newTID = playerNum + PLAYER_TID_START;
-    SV_PLAYERS_TIDS[playerNum] = newTID;
+    SV_PLAYERS_NUMBERS_2_TIDS[playerNum] = newTID;
     Thing_ChangeTID(0, newTID);
 }
  
@@ -128,7 +146,7 @@ script "isPressingAltFire" (void) {
 script "getPlayerNumberFromTID" (int ptid) {
     for (int i=0; i<PLAYER_MAX; i++) {
  
-        if (SV_PLAYERS_TIDS[i] == ptid) {
+        if (SV_PLAYERS_NUMBERS_2_TIDS[i] == ptid) {
             SetResultValue(i);
             break;
         }
@@ -216,6 +234,7 @@ script "applyEffect" (int option, int dur) {
 *   ARMA 4 CLASE AGGE   
 ************************/
 
+// Tear Stats Information Script
 script 334 (void) NET CLIENTSIDE {
     Log(s:"Radius: ", i:AGGE_TEAR_PROJECTILE_STATS[0]);
     Log(s:"Height: ", i:AGGE_TEAR_PROJECTILE_STATS[1]);
@@ -383,4 +402,10 @@ script "showShotDeathTranslation" (int option) CLIENTSIDE {
             Thing_SetTranslation(0, 4);
         }; break;
     }
+}
+
+// Función génerica para saber si el jugador tiene al menos 1 giver (perspectiva proyectil)
+script "checkForInventoryGiver" (int entry) {
+    int ptid = GetActorProperty(0, APROP_TargetTID);
+    SetResultValue(CheckActorInventory(ptid, StrLeft(SV_DISPLAYABLE_POWERUPS[entry], StrLen(SV_DISPLAYABLE_POWERUPS[entry])-6)) >= 1);
 }

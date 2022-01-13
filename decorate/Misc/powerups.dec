@@ -398,6 +398,22 @@ ACTOR Infestation2 : AbstractAutoCustomPowerUp 4019 {
 	}
 }
 
+ACTOR LostContact : AbstractAutoCustomPowerUp 4020 {
+	Inventory.PickupMessage "Lost Contact: Shielded tears"
+	
+	States {
+		
+		Spawn:
+			P020 A 1
+			Loop
+			
+		WeaponInInventory:
+			TNT1 A 0 A_JumpIfInventory("LostContactGiver", 1, "AlreadyActive")
+			TNT1 A 0 A_GiveInventory("LostContactGiver", 1)
+			Stop
+	}
+}
+
 
 
 
@@ -431,3 +447,4 @@ ACTOR ALumpOfCoalGiver : AbstractAutoTBOIGiver {}
 ACTOR BloodOfTheMartyrGiver : AbstractAutoTBOIGiver {}
 ACTOR DarkMatterGiver : AbstractAutoTBOIGiver {}
 ACTOR Infestation2Giver : AbstractAutoTBOIGiver {}
+ACTOR LostContactGiver : AbstractAutoTBOIGiver {}
