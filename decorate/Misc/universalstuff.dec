@@ -311,6 +311,7 @@ ACTOR Fatso2 : Fatso {
 	DropItem "Infestation2" 5
 	DropItem "LostContact" 5
 	DropItem "MomsContacts" 5
+	DropItem "MutantSpider" 5
 
 	States {
 		Pain.Lightning:
@@ -463,6 +464,7 @@ ACTOR SpiderMastermind2 : SpiderMastermind
 	DropItem "Infestation2" 35
 	DropItem "LostContact" 35
 	DropItem "MomsContacts" 35
+	DropItem "MutantSpider" 35
 	
 	States {
 		Pain.Lightning:
@@ -501,6 +503,7 @@ ACTOR Cyberdemon2 : Cyberdemon
 	DropItem "Infestation2" 50
 	DropItem "LostContact" 50
 	DropItem "MomsContacts" 50
+	DropItem "MutantSpider" 50
 	
 	States {
 		Pain.Lightning:
@@ -537,6 +540,7 @@ ACTOR BaronOfHell2 : BaronOfHell
 	DropItem "Infestation2" 10
 	DropItem "LostContact" 10
 	DropItem "MomsContacts" 10
+	DropItem "MutantSpider" 10
 	
 	States {
 		Pain.Lightning:
