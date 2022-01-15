@@ -415,6 +415,39 @@ ACTOR LostContact : AbstractAutoCustomPowerUp 4020 {
 	}
 }
 
+ACTOR MomsContacts : AbstractAutoCustomPowerUp 4021 {
+	Inventory.PickupMessage "Mom's Contacts: Freeze effect"
+	
+	States {
+		
+		Spawn:
+			P021 A 1
+			Loop
+			
+		WeaponInInventory:
+			TNT1 A 0 A_JumpIfInventory("MomsContactsGiver", 1, "AlreadyActive")
+			TNT1 A 0 A_GiveInventory("MomsContactsGiver", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 3, 4)
+			Stop
+	}
+}
+
+ACTOR MomsEye : AbstractAutoCustomPowerUp 4022 {
+	Inventory.PickupMessage "Mom's Eye: Eye in the back of your head"
+	
+	States {
+		
+		Spawn:
+			P022 A 1
+			Loop
+			
+		WeaponInInventory:
+			TNT1 A 0 A_JumpIfInventory("MomsEyeGiver", 1, "AlreadyActive")
+			TNT1 A 0 A_GiveInventory("MomsEyeGiver", 1)
+			Stop
+	}
+}
+
 
 
 
@@ -422,7 +455,7 @@ ACTOR LostContact : AbstractAutoCustomPowerUp 4020 {
 // Givers
 //=========
 
-//Nota: Los givers son una forma de controlar el stackeo que puede tener un powerup.
+//Nota: Los givers son una forma de controlar el stackeo que puede tener un powerup permanente.
 ACTOR AbstractAutoTBOIGiver : Inventory {
   Inventory.Amount 1
   Inventory.MaxAmount 1
@@ -449,3 +482,5 @@ ACTOR BloodOfTheMartyrGiver : AbstractAutoTBOIGiver {}
 ACTOR DarkMatterGiver : AbstractAutoTBOIGiver {}
 ACTOR Infestation2Giver : AbstractAutoTBOIGiver {}
 ACTOR LostContactGiver : AbstractAutoTBOIGiver {}
+ACTOR MomsContactsGiver : AbstractAutoTBOIGiver {}
+ACTOR MomsEyeGiver : AbstractAutoTBOIGiver {}

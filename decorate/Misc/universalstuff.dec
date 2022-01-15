@@ -208,6 +208,7 @@ ACTOR Cacodemon2 : Cacodemon {
 	DropItem "Toothpicks" 18
 	DropItem "TornPhoto" 18
 	DropItem "BloodOfTheMartyr" 18
+	DropItem "MomsEye" 18
 	DropItem "Adrenaline" 15
 	DropItem "ALumpOfCoal" 15
 	DropItem "TwentyTwenty" 2
@@ -236,6 +237,7 @@ ACTOR Revenant2 : Revenant {
 	DropItem "Toothpicks" 18
 	DropItem "TornPhoto" 18
 	DropItem "BloodOfTheMartyr" 18
+	DropItem "MomsEye" 18
 	DropItem "Adrenaline" 15
 	DropItem "ALumpOfCoal" 15
 	DropItem "TwentyTwenty" 2
@@ -264,6 +266,7 @@ ACTOR PainElemental2: PainElemental {
 	DropItem "Toothpicks" 26
 	DropItem "TornPhoto" 26
 	DropItem "BloodOfTheMartyr" 26
+	DropItem "MomsEye" 26
 	DropItem "Adrenaline" 22
 	DropItem "ALumpOfCoal" 22
 
@@ -300,12 +303,14 @@ ACTOR Fatso2 : Fatso {
 	DropItem "Toothpicks" 26
 	DropItem "TornPhoto" 26
 	DropItem "BloodOfTheMartyr" 26
+	DropItem "MomsEye" 26
 	DropItem "Adrenaline" 22
 	DropItem "ALumpOfCoal" 22
 	DropItem "TwentyTwenty" 5
 	DropItem "DarkMatter" 5
 	DropItem "Infestation2" 5
 	DropItem "LostContact" 5
+	DropItem "MomsContacts" 5
 
 	States {
 		Pain.Lightning:
@@ -331,6 +336,7 @@ ACTOR Pinky2 : Demon {
 	DropItem "Toothpicks" 13
 	DropItem "TornPhoto" 13
 	DropItem "BloodOfTheMartyr" 13
+	DropItem "MomsEye" 13
 	DropItem "Adrenaline" 10
 	DropItem "ALumpOfCoal" 10
 	
@@ -358,6 +364,7 @@ ACTOR Spectre2 : Spectre {
 	DropItem "Toothpicks" 13
 	DropItem "TornPhoto" 13
 	DropItem "BloodOfTheMartyr" 13
+	DropItem "MomsEye" 13
 	DropItem "Adrenaline" 10
 	DropItem "ALumpOfCoal" 10
 	
@@ -386,6 +393,7 @@ ACTOR DoomImp2 : DoomImp {
 	DropItem "Toothpicks" 8
 	DropItem "TornPhoto" 8
 	DropItem "BloodOfTheMartyr" 8
+	DropItem "MomsEye" 8
 	DropItem "Adrenaline" 5
 	
   States {
@@ -413,6 +421,7 @@ ACTOR Arachnotron2 : Arachnotron {
 	DropItem "Toothpicks" 18
 	DropItem "TornPhoto" 18
 	DropItem "BloodOfTheMartyr" 18
+	DropItem "MomsEye" 18
 	DropItem "Adrenaline" 15
 	DropItem "ALumpOfCoal" 15
 
@@ -446,12 +455,14 @@ ACTOR SpiderMastermind2 : SpiderMastermind
 	DropItem "Toothpicks" 51
 	DropItem "TornPhoto" 51
 	DropItem "BloodOfTheMartyr" 51
+	DropItem "MomsEye" 51
 	DropItem "Adrenaline" 46
 	DropItem "ALumpOfCoal" 46
 	DropItem "TwentyTwenty" 35
 	DropItem "DarkMatter" 35
 	DropItem "Infestation2" 35
 	DropItem "LostContact" 35
+	DropItem "MomsContacts" 35
 	
 	States {
 		Pain.Lightning:
@@ -482,12 +493,14 @@ ACTOR Cyberdemon2 : Cyberdemon
 	DropItem "Toothpicks" 64
 	DropItem "TornPhoto" 64
 	DropItem "BloodOfTheMartyr" 64
+	DropItem "MomsEye" 64
 	DropItem "Adrenaline" 60
 	DropItem "ALumpOfCoal" 60
 	DropItem "TwentyTwenty" 50
 	DropItem "DarkMatter" 50
 	DropItem "Infestation2" 50
 	DropItem "LostContact" 50
+	DropItem "MomsContacts" 50
 	
 	States {
 		Pain.Lightning:
@@ -516,12 +529,14 @@ ACTOR BaronOfHell2 : BaronOfHell
 	DropItem "Toothpicks" 38
 	DropItem "TornPhoto" 38
 	DropItem "BloodOfTheMartyr" 38
+	DropItem "MomsEye" 38
 	DropItem "Adrenaline" 32
 	DropItem "ALumpOfCoal" 32
 	DropItem "TwentyTwenty" 10
 	DropItem "DarkMatter" 10
 	DropItem "Infestation2" 10
 	DropItem "LostContact" 10
+	DropItem "MomsContacts" 10
 	
 	States {
 		Pain.Lightning:
@@ -548,6 +563,7 @@ ACTOR HellKnight2 : HellKnight
 	DropItem "Toothpicks" 18
 	DropItem "TornPhoto" 18
 	DropItem "BloodOfTheMartyr" 18
+	DropItem "MomsEye" 18
 	DropItem "Adrenaline" 15
 	DropItem "ALumpOfCoal" 15
 	
@@ -788,6 +804,7 @@ ACTOR ShotgunGuyMod : AbstractYYTZombie
 	DropItem "Toothpicks" 8
 	DropItem "TornPhoto" 8
 	DropItem "BloodOfTheMartyr" 8
+	DropItem "MomsEye" 8
 	DropItem "Adrenaline" 5
   States
   {
@@ -855,6 +872,7 @@ ACTOR ChaingunGuyMod : AbstractYYTZombie
 	DropItem "Toothpicks" 10
 	DropItem "TornPhoto" 10
 	DropItem "BloodOfTheMartyr" 10
+	DropItem "MomsEye" 10
 	DropItem "Adrenaline" 7
   States
   {
@@ -920,6 +938,7 @@ ACTOR ZombieMan2 : AbstractYYTZombie
 	DropItem "Toothpicks" 3
 	DropItem "TornPhoto" 3
 	DropItem "BloodOfTheMartyr" 3
+	DropItem "MomsEye" 3
 	DropItem "Adrenaline" 2
 	
   States

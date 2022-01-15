@@ -33,6 +33,17 @@ ACTOR InfestationDebuff : AbstractMonsterDebuff 4201 {
 	}
 }
 
+ACTOR PetrifyingDebuff : AbstractMonsterDebuff 4202 {
+	
+	States {
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("PetrifyingDebuffGiver", 1, "AlreadyActive")
+			TNT1 A 0 A_GiveInventory("PetrifyingDebuffGiver", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 3, 350)
+			Stop
+	}
+}
+
 
 
 //=========
@@ -46,3 +57,4 @@ ACTOR AbstractDebuffGiver : Inventory {
 
 ACTOR FearDebuffGiver : AbstractDebuffGiver {}
 ACTOR InfestationDebuffGiver : AbstractDebuffGiver {}
+ACTOR PetrifyingDebuffGiver : AbstractDebuffGiver {}
