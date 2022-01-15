@@ -3,7 +3,7 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 24
+#define DISPLAYABLE_POWERUP_MAX 25
 
 /* Al no poder usar array de 2 dimensiones en variables globales, no se puede persistir los tear stats por jugador.
 ** ----------------
@@ -34,7 +34,7 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "MomsUnderwearGiverP005A0", "RoidRageGiverP006A0", "SafetyPinGiverP007A0", "SynthoilGiverP008A0", "SpeedBallGiverP009A0", 
     "Magic8BallGiverP010A0", "ScrewGiverP011A0", "ToothpicksGiverP012A0", "TornPhotoGiverP013A0", "AdrenalineGiverP014A0", 
     "TwentyTwentyGiverP015A0", "ALumpOfCoalGiverP016A0", "BloodOfTheMartyrGiverP017A0", "DarkMatterGiverP018A0", "Infestation2GiverP019A0",
-    "LostContactGiverP020A0", "MomsContactsGiverP021A0", "MomsEyeGiverP022A0", "MutantSpiderGiverP023A0"
+    "LostContactGiverP020A0", "MomsContactsGiverP021A0", "MomsEyeGiverP022A0", "MutantSpiderGiverP023A0", "PiscesGiverP024A0" 
 };
  
 script "yytmod_mensajesalida" DEATH
@@ -225,22 +225,18 @@ script "applyEffect" (int option, int dur) {
             Spawn("FriendlyMiniArachnotron", GetActorX(0), GetActorY(0), GetActorZ(0));
         }; break;
         case 3: {
-            //Falta efecto que no pueda atacar
-            //Esto solo puede hacerse desde el monstruo en decorate
-            //Lo agrego después de armar herencia
-            int currSpeed = GetActorProperty(0, APROP_Speed);
-            //int currRenderStyle = GetActorProperty(0, APROP_RenderStyle);
-            //int currAlpha = GetActorProperty(0, APROP_Alpha);
-            SetActorProperty(0, APROP_Speed, 0.0);
+            //No puede atacar ni moverse pero tampoco se le puede hacer daño
+            Thing_Deactivate(ActivatorTID());
             Thing_SetTranslation(0, 7);
-            //SetActorProperty(0, APROP_RenderStyle, STYLE_Add);
-            //SetActorProperty(0, APROP_Alpha, 0.8);
             Delay(dur);
-            SetActorProperty(0, APROP_Speed, currSpeed);
-            //SetActorProperty(0, APROP_RenderStyle, currRenderStyle);
-            //SetActorProperty(0, APROP_Alpha, currAlpha);
+            Thing_Activate(ActivatorTID());
             Thing_SetTranslation(0, 1);
             TakeInventory("PetrifyingDebuffGiver",1);
+        }; break;
+        case 4: {
+            int angle = GetActorAngle(0) >> 8;
+            if (angle < 128) { angle = angle + 128; } else { angle = angle - 128; }
+            ThrustThing(angle, 20, 0, 0);
         }; break;
     }
 }
@@ -248,7 +244,6 @@ script "applyEffect" (int option, int dur) {
 script "showTranslation" (int option) CLIENTSIDE {
     Thing_SetTranslation(0, option);
 }
-
 
 
 
@@ -423,4 +418,9 @@ script "showPowerups" (int displayFlag) CLIENTSIDE {
 
 script "checkForNoGiverInInventory" (int option) {
     SetResultValue(CheckInventory(StrLeft(SV_DISPLAYABLE_POWERUPS[option], StrLen(SV_DISPLAYABLE_POWERUPS[option])-6)) == 0);
+}
+
+script "checkForNoGiverInTargetInventory" (int option) {
+    int ptid = GetActorProperty(0, APROP_TargetTID);
+    SetResultValue(CheckActorInventory(ptid, StrLeft(SV_DISPLAYABLE_POWERUPS[option], StrLen(SV_DISPLAYABLE_POWERUPS[option])-6)) == 0);
 }

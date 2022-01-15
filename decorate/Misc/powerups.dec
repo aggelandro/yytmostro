@@ -474,6 +474,23 @@ ACTOR MutantSpider : AbstractAutoCustomPowerUp 4023 {
 	}
 }
 
+ACTOR Pisces : AbstractAutoCustomPowerUp 4024 {
+	Inventory.PickupMessage "Pisces: Tears up + knock-back shots"
+	
+	States {
+		
+		Spawn:
+			P024 A 1
+			Loop
+			
+		WeaponInInventory:
+			TNT1 A 0 A_JumpIfInventory("PiscesGiver", 1, "AlreadyActive")
+			TNT1 A 0 A_GiveInventory("PiscesGiver", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 6, 3)
+			Stop
+	}
+}
+
 
 
 
@@ -511,3 +528,4 @@ ACTOR LostContactGiver : AbstractAutoTBOIGiver {}
 ACTOR MomsContactsGiver : AbstractAutoTBOIGiver {}
 ACTOR MomsEyeGiver : AbstractAutoTBOIGiver {}
 ACTOR MutantSpiderGiver : AbstractAutoTBOIGiver {}
+ACTOR PiscesGiver : AbstractAutoTBOIGiver {}

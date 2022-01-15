@@ -44,6 +44,15 @@ ACTOR PetrifyingDebuff : AbstractMonsterDebuff 4202 {
 	}
 }
 
+ACTOR KnockBackDebuff : AbstractMonsterDebuff 4203 {
+	
+	States {
+		Pickup:
+			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 4, 0)
+			Stop
+	}
+}
+
 
 
 //=========

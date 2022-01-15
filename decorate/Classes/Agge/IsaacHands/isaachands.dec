@@ -151,8 +151,8 @@ ACTOR NormalTearProjectile {
 	Gravity 1.0
 	Speed 3.0
 	Health 1
+	Species "Player" // Para que las lagrimas shielded no colisionen
 	Projectile
-	Species "Player" //Para que no se choquen las tears entre ellas cuando son shielded
 	var int user_isdead;
 	var int user_petrifying_flag;
 
@@ -192,6 +192,8 @@ ACTOR NormalTearProjectile {
 			Loop
 			
 		XDeath:
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 24), 2)
+			TNT1 A 0 A_GiveInventory("KnockBackDebuff", 1, AAPTR_TRACER)
 			TNT1 A 0 A_JumpIf(user_petrifying_flag==0, "Death")
 			TNT1 A 0 A_GiveInventory("PetrifyingDebuff", 1, AAPTR_TRACER)
 			TNT1 A 0 A_Jump(256, "Death")
