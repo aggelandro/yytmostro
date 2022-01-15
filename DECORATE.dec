@@ -366,7 +366,7 @@ ACTOR Agge : DoomPlayer
   Player.WeaponSlot 1, AggeShield, Chainsaw
   Player.WeaponSlot 2, AggePistol
   Player.WeaponSlot 3, Shotgun2, AggeSSG
-  Player.WeaponSlot 4, IsaacHands
+  Player.WeaponSlot 4, IsaacHands, BlackIsaacHands
   Player.WeaponSlot 5, Motumbo
   Player.WeaponSlot 6, AggeFlamethrower
   Player.WeaponSlot 7, BFG9000
@@ -708,6 +708,7 @@ ACTOR ChainGunSpawner : CustomInventory replaces ChainGun
 			Fail
 		PickupAgge:
 			TNT1 A 0 A_JumpIfInventory("IsaacHands",1,"Spawn")
+			TNT1 A 0 A_JumpIfInventory("BlackIsaacHands",1,"Spawn")
 			TNT1 A 0 A_GiveInventory("IsaacHands",1)
 			TNT1 A 0 A_PlaySound("misc/w_pkup")
 			// TNT1 A 0 A_SpawnItemEX("ShotgunSpawner")

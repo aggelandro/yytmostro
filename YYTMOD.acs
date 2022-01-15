@@ -80,6 +80,7 @@ script 332 OPEN {
     CreateTranslation (4, 192:193=[0,0,0]:[42,42,42], 194:224=[0,0,0]:[23,23,23]); // Dark Matter
     CreateTranslation (5, 0:255=[0,0,0]:[125,33,155]); // Fear Effect
     CreateTranslation (6, 128:225=[0,0,0]:[179,26,60]); // Moms Contact
+    CreateTranslation (7, 0:255=[0,0,0]:[87,87,87]); // Petrifying Effect
 }
 
 Script 333 (void) {
@@ -228,15 +229,17 @@ script "applyEffect" (int option, int dur) {
             //Esto solo puede hacerse desde el monstruo en decorate
             //Lo agrego después de armar herencia
             int currSpeed = GetActorProperty(0, APROP_Speed);
-            int currRenderStyle = GetActorProperty(0, APROP_RenderStyle);
-            int currAlpha = GetActorProperty(0, APROP_Alpha);
+            //int currRenderStyle = GetActorProperty(0, APROP_RenderStyle);
+            //int currAlpha = GetActorProperty(0, APROP_Alpha);
             SetActorProperty(0, APROP_Speed, 0.0);
-            SetActorProperty(0, APROP_RenderStyle, STYLE_Add);
-            SetActorProperty(0, APROP_Alpha, 0.8);
+            Thing_SetTranslation(0, 7);
+            //SetActorProperty(0, APROP_RenderStyle, STYLE_Add);
+            //SetActorProperty(0, APROP_Alpha, 0.8);
             Delay(dur);
             SetActorProperty(0, APROP_Speed, currSpeed);
-            SetActorProperty(0, APROP_RenderStyle, currRenderStyle);
-            SetActorProperty(0, APROP_Alpha, currAlpha);
+            //SetActorProperty(0, APROP_RenderStyle, currRenderStyle);
+            //SetActorProperty(0, APROP_Alpha, currAlpha);
+            Thing_SetTranslation(0, 1);
             TakeInventory("PetrifyingDebuffGiver",1);
         }; break;
     }

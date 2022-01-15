@@ -26,6 +26,7 @@ ACTOR AbstractAutoCustomPowerUp : CustomInventory {
 	States {
 		Pickup:
 		  TNT1 A 0 A_JumpIfInventory("IsaacHands", 1, "WeaponInInventory")
+			TNT1 A 0 A_JumpIfInventory("BlackIsaacHands", 1, "WeaponInInventory")
 			Fail
 			
 		AlreadyActive:
@@ -277,7 +278,7 @@ ACTOR Toothpicks : AbstractAutoCustomPowerUp 4012 {
 			TNT1 A 0 A_JumpIfInventory("ToothpicksGiver", 1, "AlreadyActive")
 			TNT1 A 0 A_GiveInventory("ToothpicksGiver", 1)
 			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, 60)
-			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 6, 2)
+			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 6, 1)
 			Stop
 	}
 }
@@ -295,7 +296,7 @@ ACTOR TornPhoto : AbstractAutoCustomPowerUp 4013 {
 			TNT1 A 0 A_JumpIfInventory("TornPhotoGiver", 1, "AlreadyActive")
 			TNT1 A 0 A_GiveInventory("TornPhotoGiver", 1)
 			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, 60)
-			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 6, 2)
+			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 6, 1)
 			Stop
 	}
 }
@@ -379,6 +380,10 @@ ACTOR DarkMatter : AbstractAutoCustomPowerUp 4018 {
 		WeaponInInventory:
 			TNT1 A 0 A_JumpIfInventory("DarkMatterGiver", 1, "AlreadyActive")
 			TNT1 A 0 A_GiveInventory("DarkMatterGiver", 1)
+			TNT1 A 0 A_SelectWeapon("AggeShield")
+			TNT1 A 0 A_TakeInventory("IsaacHands", 1)
+			TNT1 A 0 A_GiveInventory("BlackIsaacHands", 1)
+			TNT1 A 1 A_SelectWeapon("BlackIsaacHands")
 			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 2, 2)
 			Stop
 	}

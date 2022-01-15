@@ -725,7 +725,8 @@ ACTOR AbstractYYTZombie {
 		Pain.Lightning:
 			TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.5),0,0,0,0)
 			TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.5),0,0,0,0)
-			Goto Pain
+			TNT1 A 0 A_Jump(256, "Pain")
+			Wait
 			
 		Death.AfireF:
 			REEB A 3 Bright A_PlaySound("grunt/pain")
