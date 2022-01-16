@@ -246,6 +246,27 @@ script "showTranslation" (int option) CLIENTSIDE {
     Thing_SetTranslation(0, option);
 }
 
+//SALTOS DE HERENCIA DINAMICOS
+script "jumpSpawnLoop" (void) {
+    SetActorState(0, "SpawnLoop");
+}
+
+script "jumpReadyLoop" (void) {
+    SetActorState(0, "ReadyLoop");
+}
+
+script "jumpDeselectLoop" (void) {
+    SetActorState(0, "DeselectLoop");
+}
+
+script "jumpDeath" (void) {
+    SetActorState(0, "Death");
+}
+
+script "jumpPain" (void) {
+    SetActorState(0, "Pain");
+}
+
 
 
 
