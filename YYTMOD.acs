@@ -3,7 +3,7 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 25
+#define DISPLAYABLE_POWERUP_MAX 26
 
 /* Al no poder usar array de 2 dimensiones en variables globales, no se puede persistir los tear stats por jugador.
 ** ----------------
@@ -34,7 +34,8 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "MomsUnderwearGiverP005A0", "RoidRageGiverP006A0", "SafetyPinGiverP007A0", "SynthoilGiverP008A0", "SpeedBallGiverP009A0", 
     "Magic8BallGiverP010A0", "ScrewGiverP011A0", "ToothpicksGiverP012A0", "TornPhotoGiverP013A0", "AdrenalineGiverP014A0", 
     "TwentyTwentyGiverP015A0", "ALumpOfCoalGiverP016A0", "BloodOfTheMartyrGiverP017A0", "DarkMatterGiverP018A0", "Infestation2GiverP019A0",
-    "LostContactGiverP020A0", "MomsContactsGiverP021A0", "MomsEyeGiverP022A0", "MutantSpiderGiverP023A0", "PiscesGiverP024A0" 
+    "LostContactGiverP020A0", "MomsContactsGiverP021A0", "MomsEyeGiverP022A0", "MutantSpiderGiverP023A0", "PiscesGiverP024A0",
+    "RubberCementGiverP025A0"
 };
  
 script "yytmod_mensajesalida" DEATH
@@ -236,7 +237,7 @@ script "applyEffect" (int option, int dur) {
         case 4: {
             int angle = GetActorAngle(0) >> 8;
             if (angle < 128) { angle = angle + 128; } else { angle = angle - 128; }
-            ThrustThing(angle, 20, 0, 0);
+            ThrustThing(angle, 10, 0, 0);
         }; break;
     }
 }
@@ -345,7 +346,8 @@ script "setDamage" (int damage, int ptid) {
 
 script "setRange" (int range) {
     Delay(range);
-    ThrustThingZ(0, 10, 1, 0);
+    ThrustThingZ(0, 15, 1, 0);
+    SetActorState(0, "Death");
 }
 
 script "setSpeed" (int boost) {
@@ -423,4 +425,14 @@ script "checkForNoGiverInInventory" (int option) {
 script "checkForNoGiverInTargetInventory" (int option) {
     int ptid = GetActorProperty(0, APROP_TargetTID);
     SetResultValue(CheckActorInventory(ptid, StrLeft(SV_DISPLAYABLE_POWERUPS[option], StrLen(SV_DISPLAYABLE_POWERUPS[option])-6)) == 0);
+}
+
+// Por defecto duran 2:30 minutos, se puede agregar un parametro más adelante para duraciones especificas
+script "activateTemporalPowerup" (int option) {
+    str powerup = StrLeft(SV_DISPLAYABLE_POWERUPS[option], StrLen(SV_DISPLAYABLE_POWERUPS[option])-6);
+    GiveInventory(powerup, 1);
+    // Agregar algo para que se sepa que está activo
+    Delay(5250);
+    TakeInventory(powerup, 1);
+    // Desactivar el efecto
 }
