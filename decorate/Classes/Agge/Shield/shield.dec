@@ -1,128 +1,132 @@
 ACTOR AggeShield : Weapon
 {
   Weapon.AmmoType2 "EnergyShieldAmmo"
-  Weapon.AmmoType "EnergyShieldAmmo"
-  Weapon.AmmoUse2 1
   Weapon.Kickback 100
   Obituary "$OB_MPFIST"
   Tag "Fist"
   +WEAPON.WIMPY_WEAPON
   +WEAPON.MELEEWEAPON
-  States
-  {
-  Ready:
-		CONE AB 4 A_WeaponReady
-    Loop
-  Deselect:
-    CONE AB 1 A_Lower
-    Loop
-  Select:
-    CONE AB 1 A_Raise
-    Loop
-  Fire:
-	CONE A 0 A_JumpIfInventory("PowerStrength", 1, "Berserked")
-	CONE G 0 A_PlaySound("agge/swing", CHAN_WEAPON)
-    CONE GH 4
-	CONE I 4 A_CustomPunch(3 * random(1, 10), TRUE,0,"ShieldPuff")
-	CONE I 4 Offset(20,70)
-	CONE J 4
-    TNT1 A 4
-    Goto Ready
-  Berserked:
-	CONE G 0 A_PlaySound("agge/swing", CHAN_WEAPON)
-	CONE GH 4
-	CONE I 4 A_CustomPunch(30 * random(1, 10), TRUE,0,"ShieldPuff")
-	CONE I 4 Offset(20,70)
-	CONE J 4
-    TNT1 A 4
-	Goto Ready
-  Altfire:
-	CONE ZCDE 3
-	TNT1 A 0 ACS_NamedExecuteWithResult("setEnergyShieldReload",0)
-	CONE F 1 A_FireCustomMissile("EnergyShield",0,8)
-	Goto AltHold
-  AltHold:
-    CONE F 1 A_TakeInventory("EnergyShieldAmmo",1)
-	CONE C 0 A_JumpIfNoAmmo("ShieldEnd")
-	CONE C 0 A_Refire("AltHold")
-	CONE EDCZ 3
-	TNT1 A 0 ACS_NamedExecuteWithResult("setEnergyShieldReload",1)
-	Goto Ready
-  ShieldEnd:
-	CONE E 0 A_PlaySound("agge/shildbrk",CHAN_WEAPON)
-	CONE EDCZ 3
-	TNT1 A 0 ACS_NamedExecuteWithResult("setEnergyShieldReload",1)
-	Goto Ready
- 
+	
+  States {
+	
+		Ready:
+			CONE AB 4 A_WeaponReady
+			Loop
+			
+		Deselect:
+			CONE AB 1 A_Lower
+			Loop
+			
+		Select:
+			CONE AB 1 A_Raise
+			Loop
+			
+		Fire:
+			CONE A 0 A_JumpIfInventory("PowerStrength", 1, "Berserked")
+			CONE G 0 A_PlaySound("agge/swing", CHAN_WEAPON)
+			CONE GH 4
+			CONE I 4 A_CustomPunch(3 * random(1, 10), TRUE,0,"ShieldPuff")
+			CONE I 4 Offset(20, 70)
+			CONE J 4
+			TNT1 A 4
+			Goto Ready
+			
+		Berserked:
+			CONE G 0 A_PlaySound("agge/swing", CHAN_WEAPON)
+			CONE GH 4
+			CONE I 4 A_CustomPunch(30 * random(1, 10), TRUE, 0, "ShieldPuff")
+			CONE I 4 Offset(20, 70)
+			CONE J 4
+			TNT1 A 4
+			Goto Ready
+		
+		Altfire:
+			CONE ZCDE 3
+			TNT1 A 0 ACS_NamedExecuteWithResult("setEnergyShieldReload", 0)
+			CONE F 1 A_SpawnItemEx("EnergyShield", 0, 15, 38)
+			Goto AltHold
+			
+		AltHold:
+			CONE F 1 A_TakeInventory("EnergyShieldAmmo", 1)
+			CONE C 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoAmmoInInventory", 1), "ShieldEnd")
+			CONE C 0 A_Refire("AltHold")
+			CONE EDCZ 3
+			TNT1 A 0 ACS_NamedExecuteWithResult("setEnergyShieldReload", 1)
+			Goto Ready
+			
+		ShieldEnd:
+			CONE E 0 A_PlaySound("agge/shildbrk",CHAN_WEAPON)
+			CONE EDCZ 3
+			TNT1 A 0 ACS_NamedExecuteWithResult("setEnergyShieldReload", 1)
+			Goto Ready
+	 
   }
 }
-actor EnergyShield
-{
+
+ACTOR EnergyShield {
+
   Health 999999
-  Radius 16
-  Height 16
-  Speed 4
-  DamageFactor "Friendly",0
+  Radius 20
+  Height 10
+  DamageFactor "Friendly", 0
   PainChance 255
-  Scale 0.5
-  RenderStyle Add
-  Alpha 0.01
-  Bloodtype None
+	Projectile
+	
   +SHOOTABLE
-  +NOGRAVITY
-  +NOTELEPORT
+	-NOBLOCKMAP
   +NODAMAGE
   +DONTRIP
-  +NOBLOODDECALS
-  +FLOORCLIP
+  +NOBLOOD
   +REFLECTIVE
-  +GHOST
 	+SEEKERMISSILE
-  States
-  {
-  Spawn:
-	  // Swapea el target con el master para poder guardar al jugador actual en el master.
-		// Nota: El puntero a target cambia internamente cuando la bala es reflejada (pain state).
-		TNT1 A 0 BRIGHT NoDelay A_RearrangePointers(AAPTR_MASTER,AAPTR_TARGET,AAPTR_TRACER)
-		Goto SpawnLoop
- 
-	SpawnLoop:
-    TNT1 A 1 BRIGHT A_Warp(AAPTR_MASTER,10,0,38)
-		TNT1 A 0 BRIGHT A_JumpIfInTargetInventory("EnergyShieldAmmo", 0, "Death", AAPTR_MASTER)
-		TNT1 A 0 BRIGHT A_JumpIf(CallACS("isPressingAltFire") == 0, "Death")
-    loop
- 
-  Pain:
-		TNT1 A 3 A_SpawnItemEx("ShieldHit",0,0,0,0,0,0,0,SXF_TRANSFERPOINTERS)
-		goto SpawnLoop
- 
-  Death:
-    TNT1 A 2
-    stop
+	
+  States {
+	
+		Spawn:
+			// Swapea el target con el master para poder guardar al jugador actual en el master.
+			// Nota: El puntero a target cambia internamente cuando la bala es reflejada (pain state).
+			TNT1 A 0 NoDelay A_RearrangePointers(AAPTR_MASTER, AAPTR_TARGET, AAPTR_TRACER)
+			Goto SpawnLoop
+	 
+		SpawnLoop:
+			TNT1 A 1 A_Warp(AAPTR_MASTER, 45, 5, 38, WARPF_NOCHECKPOSITION)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoAmmoInPointerInventory", 1), "Death")
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isPressingAltFire") == 0, "Death")
+			Loop
+	 
+		Pain:
+			TNT1 A 3 A_SpawnItemEx("ShieldHit", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+			Goto SpawnLoop
+	 
+		Death:
+			TNT1 A 2
+			Stop
   }
 }
-ACTOR ShieldHit
-{
-  Radius 1
-  Height 1
+
+ACTOR ShieldHit {
+
   Scale 0.2
   Renderstyle Add
+	
   +NOGRAVITY
   +NOINTERACTION
   +SEEKERMISSILE
-  States
-  {
-  Spawn:
-	SHIE A 0 NoDelay A_PlaySound("agge/visor", CHAN_AUTO)
-    SHIE ABCDEFGHIJKLMNOPQRST 2 A_Warp(AAPTR_MASTER,10,0,38)
-    stop
+	
+  States {
+		Spawn:
+			TNT1 A 0 NoDelay A_PlaySound("agge/visor", CHAN_AUTO)
+			SHIE ABCDEFGHIJKLMNOPQRST 2 BRIGHT A_Warp(AAPTR_MASTER, 10, 0, 38)
+			stop
   }
 }
+
 ACTOR EnergyShieldAmmo : Ammo
 {
     Inventory.MaxAmount 200
 	  Inventory.Icon "SHICOA0"
 }
+
 ACTOR ShieldPuff
 {
 	+NOGRAVITY

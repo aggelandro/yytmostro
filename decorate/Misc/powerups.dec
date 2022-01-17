@@ -544,8 +544,8 @@ ACTOR PiscesGiver : AbstractAutoTBOIGiver {}
 */
 ACTOR AbstractTemporalCustomPowerUp : CustomInventory {
 	Inventory.Amount 1
-	Inventory.MaxAmount 10
-	Inventory.InterHubAmount 10
+	Inventory.MaxAmount 5
+	Inventory.InterHubAmount 5
 	Inventory.PickupSound "agge/powerup"
 	Inventory.RestrictedTo "Agge"
 	
@@ -594,8 +594,8 @@ ACTOR RubberCement : AbstractTemporalCustomPowerUp 4025 {
 //=========
 
 ACTOR AbstractTemporalTBOIGiver : Inventory {
-	Inventory.Amount 10
-  Inventory.MaxAmount 10
+	Inventory.Amount 5
+  Inventory.MaxAmount 5
 }
 
 ACTOR RubberCementGiver : AbstractTemporalTBOIGiver {}

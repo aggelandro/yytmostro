@@ -73,6 +73,16 @@ script 331 (void) NET CLIENTSIDE {
     }
 }
 
+// Actor Information Script (solo para debugs)
+script "printMyPointers" (void) {
+    log(s:"MASTER: ", i:GetActorProperty(0, APROP_MasterTID));
+    log(s:"TARGET: ", i:GetActorProperty(0, APROP_TargetTID));
+    log(s:"TRACER: ", i:GetActorProperty(0, APROP_TracerTID));
+    log(s:"X: ", f:GetActorX(0));
+    log(s:"Y: ", f:GetActorY(0));
+    log(s:"Z: ", f:GetActorZ(0));
+}
+
 script 332 OPEN {
     //Translations
     CreateTranslation (1, 0:255=0:255); // Default
@@ -84,8 +94,8 @@ script 332 OPEN {
     CreateTranslation (7, 0:255=[0,0,0]:[87,87,87]); // Petrifying Effect
 }
 
-Script 333 (void) {
-    GiveInventory("DetonateWaskaAction",1);
+Script 333 (void) NET {
+    GiveInventory("DetonateWaskaAction", 1);
 }
  
 script "setEnergyShieldReload" (int flag) {
@@ -116,6 +126,12 @@ script 336 DEATH {
     int classNum = PlayerClass(PlayerNumber());
     if (classNum == 0) {
         ACS_NamedExecuteAlways("resetTearStats", 0);
+
+        if (!ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 18)) {
+            TakeInventory("BlackIsaacHands", 1);
+            GiveInventory("IsaacHands", 1);
+        }
+
         for (int i=0; i<DISPLAYABLE_POWERUP_MAX; i++) {
             TakeInventory(StrLeft(SV_DISPLAYABLE_POWERUPS[i], StrLen(SV_DISPLAYABLE_POWERUPS[i])-6), 1);
         }
@@ -138,7 +154,7 @@ script 338 (void) {
  
 script "isPressingAltFire" (void) {
  
-    int playerTID = GetActorProperty(0, APROP_TargetTID);
+    int playerTID = GetActorProperty(0, APROP_MasterTID);
     int playerNum = ACS_NamedExecuteWithResult("getPlayerNumberFromTID", playerTID); 
     int buttons = GetPlayerInput(playerNum, INPUT_BUTTONS);
  
@@ -153,6 +169,24 @@ script "getPlayerNumberFromTID" (int ptid) {
             SetResultValue(i);
             break;
         }
+    }
+}
+
+//Hago estas dos funciones porque los jumps de decorate son una cagada
+script "checkForNoAmmoInInventory" (int choice) {
+    switch(choice) {
+        case 1: {
+            SetResultValue(CheckInventory("EnergyShieldAmmo") == 0);
+        }; break;
+    }
+}
+
+script "checkForNoAmmoInPointerInventory" (int choice) {
+    switch(choice) {
+        case 1: {
+            int ptid = GetActorProperty(0, APROP_MasterTID);
+            SetResultValue(CheckActorInventory(ptid, "EnergyShieldAmmo") == 0);
+        }; break;
     }
 }
 
@@ -237,34 +271,13 @@ script "applyEffect" (int option, int dur) {
         case 4: {
             int angle = GetActorAngle(0) >> 8;
             if (angle < 128) { angle = angle + 128; } else { angle = angle - 128; }
-            ThrustThing(angle, 10, 0, 0);
+            ThrustThing(angle, 7, 0, 0);
         }; break;
     }
 }
 
 script "showTranslation" (int option) CLIENTSIDE {
     Thing_SetTranslation(0, option);
-}
-
-//SALTOS DE HERENCIA DINAMICOS
-script "jumpSpawnLoop" (void) {
-    SetActorState(0, "SpawnLoop");
-}
-
-script "jumpReadyLoop" (void) {
-    SetActorState(0, "ReadyLoop");
-}
-
-script "jumpDeselectLoop" (void) {
-    SetActorState(0, "DeselectLoop");
-}
-
-script "jumpDeath" (void) {
-    SetActorState(0, "Death");
-}
-
-script "jumpPain" (void) {
-    SetActorState(0, "Pain");
 }
 
 
@@ -448,12 +461,12 @@ script "checkForNoGiverInTargetInventory" (int option) {
     SetResultValue(CheckActorInventory(ptid, StrLeft(SV_DISPLAYABLE_POWERUPS[option], StrLen(SV_DISPLAYABLE_POWERUPS[option])-6)) == 0);
 }
 
-// Por defecto duran 2:30 minutos, se puede agregar un parametro más adelante para duraciones especificas
+// Por defecto duran 1:30 minutos, se puede agregar un parametro más adelante para duraciones especificas
 script "activateTemporalPowerup" (int option) {
     str powerup = StrLeft(SV_DISPLAYABLE_POWERUPS[option], StrLen(SV_DISPLAYABLE_POWERUPS[option])-6);
     GiveInventory(powerup, 1);
     // Agregar algo para que se sepa que está activo
-    Delay(5250);
+    Delay(3150);
     TakeInventory(powerup, 1);
     // Desactivar el efecto
 }
