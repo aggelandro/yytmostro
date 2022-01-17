@@ -15,7 +15,7 @@ ACTOR CargaAgge : CargaUnica
 	Ammo.BackpackMaxAmount 10
 }
 
-//projectiles for monsters and weapons
+//projectiles and effects for monsters and weapons
 ACTOR Hellfire : ArchvileFire
 {
   Translation "208:231=192:207","248:249=192:207","160:167=192:207"
@@ -189,10 +189,16 @@ ACTOR ElectricSpark2 {
 			Stop
 	}
 }
-
+//blood effects
+ACTOR BlueBlood : Blood  {
+	Translation "168:191=192:207"
+}
+ACTOR GreenBlood : Blood {
+	Translation "168:191=112:127"
+}
 //monsters that I use more than once
 ACTOR Cacodemon2 : Cacodemon {
-
+	BloodColor "00 00 CD"
 	DropItem "Cat-O-Nine-Tails" 18
 	DropItem "GrowthHormones" 18
 	DropItem "JesusJuice" 18
@@ -218,11 +224,11 @@ ACTOR Cacodemon2 : Cacodemon {
 		Pain.Lightning:
 		TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.5),0,0,0,0)
 		TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.5),0,0,0,0)
-    Goto Pain
+		Goto Pain
 	}
 }
 ACTOR Revenant2 : Revenant {
-
+	BloodColor "80 14 0A"
 	DropItem "Cat-O-Nine-Tails" 18
 	DropItem "GrowthHormones" 18
 	DropItem "JesusJuice" 18
@@ -281,7 +287,7 @@ ACTOR PainElemental2: PainElemental {
 	}
 }
 ACTOR LostSoul2 : LostSoul {
-	
+	BloodType None
 	States {
 		Pain.Lightning:
 		TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.5),0,0,0,0)
@@ -526,6 +532,7 @@ ACTOR Cyberdemon2 : Cyberdemon
 }
 ACTOR BaronOfHell2 : BaronOfHell
 {
+	BloodColor "00 64 00"
 	Species Goat
 	DropItem "Cat-O-Nine-Tails" 38
 	DropItem "GrowthHormones" 38
@@ -563,6 +570,7 @@ ACTOR BaronOfHell2 : BaronOfHell
 }
 ACTOR HellKnight2 : HellKnight
 {
+	BloodColor "00 64 00"
 	Species Goat
 	DropItem "Cat-O-Nine-Tails" 18
 	DropItem "GrowthHormones" 18
