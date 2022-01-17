@@ -40,7 +40,7 @@ ACTOR AggePistol : Weapon
       PLBG B 0 ThrustThing(angle * 256 / 360 + 128, 18, 0, 0)
 	  PLBG B 0 A_PlaySound("agge/pedo",CHAN_AUTO)
 	  PLBG B 0 A_TakeInventory("RocketAmmo",1)
-      PLBG B 2 Bright A_SpawnItemEx("AggeExplosionPistol",0,20,0)
+      PLBG B 2 Bright A_SpawnItemEx("AggeExplosionPistol",40,20,0)
 	  PLBG C 1
 	  PLBG A 2 offset(0,42)
 	  PLBG A 2 offset(0,52)

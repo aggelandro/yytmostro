@@ -3,7 +3,7 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 26
+#define DISPLAYABLE_POWERUP_MAX 27
 
 /* Al no poder usar array de 2 dimensiones en variables globales, no se puede persistir los tear stats por jugador.
 ** ----------------
@@ -35,7 +35,7 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "Magic8BallGiverP010A0", "ScrewGiverP011A0", "ToothpicksGiverP012A0", "TornPhotoGiverP013A0", "AdrenalineGiverP014A0", 
     "TwentyTwentyGiverP015A0", "ALumpOfCoalGiverP016A0", "BloodOfTheMartyrGiverP017A0", "DarkMatterGiverP018A0", "Infestation2GiverP019A0",
     "LostContactGiverP020A0", "MomsContactsGiverP021A0", "MomsEyeGiverP022A0", "MutantSpiderGiverP023A0", "PiscesGiverP024A0",
-    "RubberCementGiverP025A0"
+    "RubberCementGiverP025A0", "SacredHeartGiverP026A0"
 };
  
 script "yytmod_mensajesalida" DEATH
@@ -92,6 +92,9 @@ script 332 OPEN {
     CreateTranslation (5, 0:255=[0,0,0]:[125,33,155]); // Fear Effect
     CreateTranslation (6, 128:225=[0,0,0]:[179,26,60]); // Moms Contact
     CreateTranslation (7, 0:255=[0,0,0]:[87,87,87]); // Petrifying Effect
+    CreateTranslation (8, 192:193=[0,0,0]:[214,215,223], 194:197=[0,0,0]:[199,225,230]); // Sacred Heart
+    CreateTranslation (9, 0:255=[0,0,0]:[97,19,146]); // Spoon Bender
+    CreateTranslation (10, 192:193=[0,0,0]:[83,115,168], 194:197=[0,0,0]:[76,115,178]); // Lost Contact
 }
 
 Script 333 (void) NET {
@@ -346,6 +349,18 @@ script "setTearStats" (void) {
     if (CheckActorInventory(ptid, "BloodOfTheMartyrGiver") == 1) {
         Thing_SetTranslation(0, 3);
     }
+
+    if (CheckActorInventory(ptid, "LostContactGiver") == 1) {
+        Thing_SetTranslation(0, 10);
+    }
+
+    if (CheckActorInventory(ptid, "SacredHeartGiver") == 1) {
+        Thing_SetTranslation(0, 8);
+    }
+
+    /*if (CheckActorInventory(ptid, "SpoonBenderGiver") == 1) {
+        Thing_SetTranslation(0, 9);
+    }*/
 }
 
 script "setRadius" (int radius) {
@@ -357,25 +372,36 @@ script "setHeight" (int hgt) {
 }
 
 script "setDamage" (int damage, int ptid) {
+    if (CheckActorInventory(ptid, "SacredHeartGiver") == 1) {
+        damage = multiplyValue(damage, 2.3);
+    }
+
     if (CheckActorInventory(ptid, "AdrenalineGiver") == 1 && GetActorProperty(ptid, APROP_Health) <= 100) {
         damage = damage + (2 * ((GetActorProperty(ptid, APROP_Health) - 100) / -10)); // +2 damage cada -10 de HP, máximo +18 con menos de 10 HP
     }
 
     if (CheckActorInventory(ptid, "TwentyTwentyGiver") == 1) {
-        // Reduce 25% el daño de cada lagrima.
-        // Se randomiza el redondeo de float->integer en base a la parte decimal del float.
-        // Ej: 0.5 tiene 50% chance de redondear a 1 y 50% chance de redondear a 0.
-        int dmgCutDec = (damage * 0.75) & 0x0000FFFF;
-        int rand = Random(0x00000000, 0x0000FFFF);
-        if (dmgCutDec <= rand) {
-            damage = ((damage * 0.75) >> 16);
-        }
-        else {
-            damage = ((damage * 0.75) >> 16) + 1;
-        }
+        damage = multiplyValue(damage, 0.75);
     }
 
     SetActorProperty(0, APROP_Damage, damage);
+}
+
+function int multiplyValue(int value, int multiplier) {
+    // Multiplica (o divide) a value.
+    // value es un integer y multiplier es un fixed number.
+    // Se randomiza el redondeo de float->integer en base a la parte decimal del float.
+    // Ej: 0.5 tiene 50% chance de redondear a 1 y 50% chance de redondear a 0.
+    int dmgCutDec = (value * multiplier) & 0x0000FFFF;
+    int rand = Random(0x00000000, 0x0000FFFF);
+    if (dmgCutDec <= rand) {
+        value = ((value * multiplier) >> 16);
+    }
+    else {
+        value = ((value * multiplier) >> 16) + 1;
+    }
+
+    return value;
 }
 
 script "setRange" (int range) {
@@ -465,8 +491,28 @@ script "checkForNoGiverInTargetInventory" (int option) {
 script "activateTemporalPowerup" (int option) {
     str powerup = StrLeft(SV_DISPLAYABLE_POWERUPS[option], StrLen(SV_DISPLAYABLE_POWERUPS[option])-6);
     GiveInventory(powerup, 1);
+
+    switch(option) {
+        case 26: {
+            ACS_NamedExecuteAlways("addTearBoost", 0, 2, 1);
+            ACS_NamedExecuteAlways("addTearBoost", 0, 6, -2);
+            ACS_NamedExecuteAlways("addTearBoost", 0, 4, -75);
+            //ACS_NamedExecuteAlways("addTearBoost", 0, 1, 2); //Más height (para cuando zandro lo soporte)
+        }
+    }
+
     // Agregar algo para que se sepa que está activo
     Delay(3150);
+
+    switch(option) {
+        case 26: {
+            ACS_NamedExecuteAlways("addTearBoost", 0, 2, -1);
+            ACS_NamedExecuteAlways("addTearBoost", 0, 6, 2);
+            ACS_NamedExecuteAlways("addTearBoost", 0, 4, 75);
+            //ACS_NamedExecuteAlways("addTearBoost", 0, 1, -2); //Más height (para cuando zandro lo soporte)
+        }
+    }
+
     TakeInventory(powerup, 1);
     // Desactivar el efecto
 }
