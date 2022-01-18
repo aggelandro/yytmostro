@@ -3,7 +3,7 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 27
+#define DISPLAYABLE_POWERUP_MAX 29
 
 /* Al no poder usar array de 2 dimensiones en variables globales, no se puede persistir los tear stats por jugador.
 ** ----------------
@@ -35,7 +35,7 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "Magic8BallGiverP010A0", "ScrewGiverP011A0", "ToothpicksGiverP012A0", "TornPhotoGiverP013A0", "AdrenalineGiverP014A0", 
     "TwentyTwentyGiverP015A0", "ALumpOfCoalGiverP016A0", "BloodOfTheMartyrGiverP017A0", "DarkMatterGiverP018A0", "Infestation2GiverP019A0",
     "LostContactGiverP020A0", "MomsContactsGiverP021A0", "MomsEyeGiverP022A0", "MutantSpiderGiverP023A0", "PiscesGiverP024A0",
-    "RubberCementGiverP025A0", "SacredHeartGiverP026A0"
+    "RubberCementGiverP025A0", "SacredHeartGiverP026A0", "SpoonBenderGiverP027A0", "TheCommonColdGiverP028A0"
 };
  
 script "yytmod_mensajesalida" DEATH
@@ -93,8 +93,10 @@ script 332 OPEN {
     CreateTranslation (6, 128:225=[0,0,0]:[179,26,60]); // Moms Contact
     CreateTranslation (7, 0:255=[0,0,0]:[87,87,87]); // Petrifying Effect
     CreateTranslation (8, 192:193=[0,0,0]:[214,215,223], 194:197=[0,0,0]:[199,225,230]); // Sacred Heart
-    CreateTranslation (9, 0:255=[0,0,0]:[97,19,146]); // Spoon Bender
-    CreateTranslation (10, 192:193=[0,0,0]:[83,115,168], 194:197=[0,0,0]:[76,115,178]); // Lost Contact
+    CreateTranslation (9, 192:193=[0,0,0]:[122,38,158], 194:197=[0,0,0]:[111,32,155], 198:255=[0,0,0]:[97,19,146]); // Spoon Bender
+    CreateTranslation (10, 192:193=[0,0,0]:[83,115,168], 194:197=[0,0,0]:[81,116,174], 198:255=[0,0,0]:[76,115,178]); // Lost Contact
+    CreateTranslation (11, 128:225=[0,0,0]:[85,154,117]); // The Common Cold
+    CreateTranslation (12, 0:255=[0,0,0]:[69,97,64]); // Poison Effect
 }
 
 Script 333 (void) NET {
@@ -276,6 +278,15 @@ script "applyEffect" (int option, int dur) {
             if (angle < 128) { angle = angle + 128; } else { angle = angle - 128; }
             ThrustThing(angle, 7, 0, 0);
         }; break;
+        case 5: {
+            int times = dur / 35;
+            Thing_SetTranslation(0, 12);
+            for (int i=0; i<times; i++) {
+                Thing_Damage2(0, AGGE_TEAR_PROJECTILE_STATS[2], "Poison");
+                Delay(70);
+            }
+            Thing_SetTranslation(0, 1);
+        }; break;
     }
 }
 
@@ -358,9 +369,9 @@ script "setTearStats" (void) {
         Thing_SetTranslation(0, 8);
     }
 
-    /*if (CheckActorInventory(ptid, "SpoonBenderGiver") == 1) {
+    if (CheckActorInventory(ptid, "SpoonBenderGiver") == 1) {
         Thing_SetTranslation(0, 9);
-    }*/
+    }
 }
 
 script "setRadius" (int radius) {

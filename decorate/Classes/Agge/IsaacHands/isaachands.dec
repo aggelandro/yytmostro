@@ -209,6 +209,7 @@ ACTOR NormalTearProjectile {
 	Projectile
 	var int user_isdead;
 	var int user_petrifying_flag;
+	var int user_poison_flag;
 
 	+BRIGHT
 	+HITTRACER
@@ -221,9 +222,12 @@ ACTOR NormalTearProjectile {
 			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("setTearStats")
 			TNT1 A 0 A_SetUserVar("user_isdead", 0)
 			TNT1 A 0 A_SetUserVar("user_petrifying_flag", 0)
+			TNT1 A 0 A_SetUserVar("user_poison_flag", 0)
 			TNT1 A 0 A_JumpIfInventory("SacredHeartGiver", 1, "SpawnHomingTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("SpoonBenderGiver", 1, "SpawnHomingTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("LostContactGiver", 1, "SpawnShieldedTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("MomsContactsGiver", 1, "SpawnPetrifyingTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("TheCommonColdGiver", 1, "SpawnPoisonTear", AAPTR_TARGET)
 			TNT1 A -1 A_Jump(256, "SpawnLoop") //La forma que tiene decorate de resolver por herencia
 			Wait
 			
@@ -231,31 +235,47 @@ ACTOR NormalTearProjectile {
 			TNT1 A 0 A_ChangeFlag("SEEKERMISSILE", TRUE)
 			TNT1 A 0 A_JumpIfInventory("LostContactGiver", 1, "SpawnShieldedTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("MomsContactsGiver", 1, "SpawnPetrifyingTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("TheCommonColdGiver", 1, "SpawnPoisonTear", AAPTR_TARGET)
 			TNT1 A -1 A_Jump(256, "SpawnLoop")
 			
 		SpawnShieldedTear:
 			TNT1 A 0 A_ChangeFlag("SHOOTABLE", TRUE)
 			TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", FALSE)
 			TNT1 A 0 A_JumpIfInventory("MomsContactsGiver", 1, "SpawnPetrifyingTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("TheCommonColdGiver", 1, "SpawnPoisonTear", AAPTR_TARGET)
 			TNT1 A -1 A_Jump(256, "SpawnLoop")
 			Wait
 			
 		SpawnPetrifyingTear:
-			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 15) == 0, "SpawnLoop")
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 5), 3) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("TheCommonColdGiver", 1, "SpawnPoisonTear", AAPTR_TARGET)
+			TNT1 A -1 A_Jump(256, "SpawnLoop")
+			Wait
 			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 6)
 			TNT1 A 0 A_SetUserVar("user_petrifying_flag", 1)
+			TNT1 A 0 A_JumpIfInventory("TheCommonColdGiver", 1, "SpawnPoisonTear", AAPTR_TARGET)
+			TNT1 A -1 A_Jump(256, "SpawnLoop")
+			Wait
+			
+		SpawnPoisonTear:
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 5) == 0, "SpawnLoop")
+			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 11)
+			TNT1 A 0 A_SetUserVar("user_poison_flag", 1)
 			TNT1 A -1 A_Jump(256, "SpawnLoop")
 			Wait
 			
 		SpawnLoop:
-			TBFI M 1 A_SeekerMissile(5, 8, SMF_LOOK|SMF_CURSPEED, 256, 2)
+			TBFI M 1 A_SeekerMissile(5, 8, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			TBFI M 4
 			Loop
 			
 		XDeath:
-			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 24), 2)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 24), 2) // OFFSET
 			TNT1 A 0 A_GiveInventory("KnockBackDebuff", 1, AAPTR_TRACER)
-			TNT1 A 0 A_JumpIf(user_petrifying_flag==0, "Death")
+			TNT1 A 0 A_JumpIf(user_petrifying_flag==0, 2) //OFFSET
 			TNT1 A 0 A_GiveInventory("PetrifyingDebuff", 1, AAPTR_TRACER)
+			TNT1 A 0 A_JumpIf(user_poison_flag==0, "Death")
+			TNT1 A 0 A_GiveInventory("PoisonDebuff", 1, AAPTR_TRACER)
 			TNT1 A -1 A_Jump(256, "Death")
 			Wait
 			
