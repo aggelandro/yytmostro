@@ -72,6 +72,14 @@ JPZMPAI1			JPZMPAI1
 JPZMPAI2			JPZMPAI2
 JPZMPAI3			JPZMPAI3
 
+//crackodemon afanado de realm667
+cracko/see s_cracko
+cracko/pain p_cracko
+crack/see cracksee
+crack/death crackdth
+blusoul/see blusosee
+blusoul/death blusodth
+
 // dinamita afanada del samsara
 TNT/Throw			TNTTOSS
 TNT/Fuse			TNTFUSE

@@ -64,3 +64,80 @@ Frame MISLB { Light ROCKET_X1 }
 Frame MISLC { Light ROCKET_X2 }
 Frame MISLD { Light ROCKET_X3 }
 }
+
+// crackodemon afanado de realm667
+
+Pointlight CrackoBall1
+{
+Color 0.0 0.0 0.4
+Size 40
+}
+
+Pointlight CrackoBall2
+{
+Color 0.9 0.0 0.5
+Size 56
+}
+
+Pointlight CrackoBall3
+{
+Color 1.0 0.0 0.5
+Size 64
+}
+
+Pointlight CrackoBall4
+{
+Color 0.5 0.0 0.1
+Size 32
+}
+
+Object CrackodemonBall
+{
+Frame BAL9A { Light CrackoBall1 }
+Frame BAL9B { Light CrackoBall1 }
+Frame BAL9C { Light CrackoBall2 }
+Frame BAL9D { Light CrackoBall3 }
+Frame BAL9E { Light CrackoBall4 }
+}
+
+Flickerlight2 BlueLostSoul1
+{
+Color 0.0 0.0 0.5
+Size 64
+SecondarySize 80
+Interval 1.4
+}
+
+Pointlight BlueLostSoul2
+{
+Color 0.0 0.0 0.5
+Size 72
+}
+
+Pointlight BlueLostSoul3
+{
+Color 0.0 0.0 1.0
+Size 96
+}
+
+Pointlight BlueLostSoul4
+{
+Color 0.0 0.0 0.7
+Size 64
+}
+
+Pointlight BlueLostSoul5
+{
+Color 0.0 0.0 0.3
+Size 40
+}
+
+Object BluSoul
+{
+Frame SKUDC { Light BlueLostSoul1 }
+Frame SKUDD { Light BlueLostSoul1 }
+Frame SKUDH { Light BlueLostSoul2 }
+Frame SKUDI { Light BlueLostSoul3 }
+Frame SKUDJ { Light BlueLostSoul4 }
+Frame SKUDK { Light BlueLostSoul5 }
+}

@@ -56,6 +56,7 @@
 #include "decorate/Enemies/PainElemental/FireElemental/fireelemental.dec"
 
 #include "decorate/Enemies/Cacodemons/NeoCacodemon/neocacodemon.dec"
+#include "decorate/Enemies/Cacodemons/CrackoDemon/crackodemon.dec"
 
 #include "decorate/Enemies/Revenants/HoloRevenant/holorevenant.dec"
 #include "decorate/Enemies/Revenants/VayneAurelius/vayneaurelius.dec"
@@ -118,8 +119,9 @@ ACTOR ShotgunGuySpawner : RandomSpawner replaces ShotgunGuy
 }
 ACTOR CacodemonSpawner : RandomSpawner replaces Cacodemon
 {
-	DropItem "Cacodemon2", 255, 75
+	DropItem "Cacodemon2", 255, 65
 	DropItem "NeoCacodemon", 255, 25
+	DropItem "CrackoDemon", 255, 10
 }
 ACTOR HellKnightSpawner : RandomSpawner replaces HellKnight
 {
