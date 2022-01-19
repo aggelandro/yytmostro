@@ -3,7 +3,7 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 29
+#define DISPLAYABLE_POWERUP_MAX 31
 
 /* Al no poder usar array de 2 dimensiones en variables globales, no se puede persistir los tear stats por jugador.
 ** ----------------
@@ -35,7 +35,8 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "Magic8BallGiverP010A0", "ScrewGiverP011A0", "ToothpicksGiverP012A0", "TornPhotoGiverP013A0", "AdrenalineGiverP014A0", 
     "TwentyTwentyGiverP015A0", "ALumpOfCoalGiverP016A0", "BloodOfTheMartyrGiverP017A0", "DarkMatterGiverP018A0", "Infestation2GiverP019A0",
     "LostContactGiverP020A0", "MomsContactsGiverP021A0", "MomsEyeGiverP022A0", "MutantSpiderGiverP023A0", "PiscesGiverP024A0",
-    "RubberCementGiverP025A0", "SacredHeartGiverP026A0", "SpoonBenderGiverP027A0", "TheCommonColdGiverP028A0"
+    "RubberCementGiverP025A0", "SacredHeartGiverP026A0", "SpoonBenderGiverP027A0", "TheCommonColdGiverP028A0", "TheInnerEyeGiverP029A0",
+    "TheParasiteGiverP030A0"
 };
  
 script "yytmod_mensajesalida" DEATH
@@ -93,10 +94,11 @@ script 332 OPEN {
     CreateTranslation (6, 128:225=[0,0,0]:[179,26,60]); // Moms Contact
     CreateTranslation (7, 0:255=[0,0,0]:[87,87,87]); // Petrifying Effect
     CreateTranslation (8, 192:193=[0,0,0]:[214,215,223], 194:197=[0,0,0]:[199,225,230]); // Sacred Heart
-    CreateTranslation (9, 192:193=[0,0,0]:[122,38,158], 194:197=[0,0,0]:[111,32,155], 198:255=[0,0,0]:[97,19,146]); // Spoon Bender
-    CreateTranslation (10, 192:193=[0,0,0]:[83,115,168], 194:197=[0,0,0]:[81,116,174], 198:255=[0,0,0]:[76,115,178]); // Lost Contact
+    CreateTranslation (9, 192:193=[0,0,0]:[122,38,158], 194:197=[0,0,0]:[111,32,155], 198:224=[0,0,0]:[97,19,146]); // Spoon Bender
+    CreateTranslation (10, 192:193=[0,0,0]:[83,115,168], 194:197=[0,0,0]:[81,116,174], 198:224=[0,0,0]:[76,115,178]); // Lost Contact
     CreateTranslation (11, 128:225=[0,0,0]:[85,154,117]); // The Common Cold
     CreateTranslation (12, 0:255=[0,0,0]:[69,97,64]); // Poison Effect
+    CreateTranslation (13, 192:193=[0,0,0]:[187,98,69], 194:197=[0,0,0]:[154,78,40], 198:224=[0,0,0]:[128,71,43]); // The Parasite
 }
 
 Script 333 (void) NET {
@@ -234,10 +236,10 @@ Script 894 (void) {
 // FIN
 
 script "setDamageBoostPerTime" (int boost, int tics, int maxi) {
-    // Prerequisito: El actor que llama al script tiene que tener user_isdead.
+    // Prerequisito: El actor que llama al script tiene que tener user_deadflag.
     for (int i=0; i<maxi; i++) {
         Delay(tics);
-        if (GetUserVariable(0, "user_isdead")) { terminate; }
+        if (GetUserVariable(0, "user_deadflag")) { terminate; }
         int newDmg = GetActorProperty(0, APROP_Damage) + boost;
         SetActorProperty(0, APROP_Damage, newDmg);
     }
@@ -292,6 +294,15 @@ script "applyEffect" (int option, int dur) {
 
 script "showTranslation" (int option) CLIENTSIDE {
     Thing_SetTranslation(0, option);
+}
+
+script "deathTimer" (int tics) {
+    Delay(tics);
+    SetActorState(0, "Death");
+}
+
+script "getUniqueTID" (void) {
+    SetResultValue(UniqueTID());
 }
 
 
@@ -372,6 +383,10 @@ script "setTearStats" (void) {
     if (CheckActorInventory(ptid, "SpoonBenderGiver") == 1) {
         Thing_SetTranslation(0, 9);
     }
+
+    if (CheckActorInventory(ptid, "TheParasiteGiver") == 1) {
+        Thing_SetTranslation(0, 13);
+    }
 }
 
 script "setRadius" (int radius) {
@@ -383,6 +398,11 @@ script "setHeight" (int hgt) {
 }
 
 script "setDamage" (int damage, int ptid) {
+    damage = applyGiversToDamage(damage, ptid);
+    SetActorProperty(0, APROP_Damage, damage);
+}
+
+function int applyGiversToDamage(int damage, int ptid) {
     if (CheckActorInventory(ptid, "SacredHeartGiver") == 1) {
         damage = multiplyValue(damage, 2.3);
     }
@@ -395,7 +415,7 @@ script "setDamage" (int damage, int ptid) {
         damage = multiplyValue(damage, 0.75);
     }
 
-    SetActorProperty(0, APROP_Damage, damage);
+    return damage;
 }
 
 function int multiplyValue(int value, int multiplier) {
@@ -416,9 +436,19 @@ function int multiplyValue(int value, int multiplier) {
 }
 
 script "setRange" (int range) {
-    Delay(range);
+    while (range > 0) {
+        if (GetUserVariable(0, "user_deadflag")) {
+            SetUserVariable(0, "user_deadflag", range);
+            terminate;
+        }
+
+        range--;
+        Delay(1);
+    }
+
     ThrustThingZ(0, 15, 1, 0);
-    SetActorState(0, "Death");
+    SetUserVariable(0, "user_deadflag", 1);
+    SetActorState(0, "DeathEnd");
 }
 
 script "setSpeed" (int boost) {
@@ -473,10 +503,10 @@ script "getFireRateBoost" (void) {
 }
 
 script "showPowerups" (int displayFlag) CLIENTSIDE {
-    for (int i=1; i!=DISPLAYABLE_POWERUP_MAX; i++) {
+    for (int i=1; i<=DISPLAYABLE_POWERUP_MAX; i++) {
         if (displayFlag) {
-            SetFont(StrRight(SV_DISPLAYABLE_POWERUPS[i], 6));
-            if (CheckInventory(StrLeft(SV_DISPLAYABLE_POWERUPS[i], StrLen(SV_DISPLAYABLE_POWERUPS[i])-6)) == 1) {
+            SetFont(StrRight(SV_DISPLAYABLE_POWERUPS[i-1], 6));
+            if (CheckInventory(StrLeft(SV_DISPLAYABLE_POWERUPS[i-1], StrLen(SV_DISPLAYABLE_POWERUPS[i-1])-6)) == 1) {
                 HudMessage(s:"A"; HUDMSG_PLAIN, i, 0, FixedDiv(i << 16, 65.0), 0.05, 0);
             }
             else {
@@ -498,7 +528,7 @@ script "checkForNoGiverInTargetInventory" (int option) {
     SetResultValue(CheckActorInventory(ptid, StrLeft(SV_DISPLAYABLE_POWERUPS[option], StrLen(SV_DISPLAYABLE_POWERUPS[option])-6)) == 0);
 }
 
-// Por defecto duran 1:30 minutos, se puede agregar un parametro más adelante para duraciones especificas
+// Por defecto duran 2:30 minutos, se puede agregar un parametro más adelante para duraciones especificas
 script "activateTemporalPowerup" (int option) {
     str powerup = StrLeft(SV_DISPLAYABLE_POWERUPS[option], StrLen(SV_DISPLAYABLE_POWERUPS[option])-6);
     GiveInventory(powerup, 1);
@@ -512,8 +542,7 @@ script "activateTemporalPowerup" (int option) {
         }
     }
 
-    // Agregar algo para que se sepa que está activo
-    Delay(3150);
+    Delay(5250);
 
     switch(option) {
         case 26: {
@@ -525,5 +554,27 @@ script "activateTemporalPowerup" (int option) {
     }
 
     TakeInventory(powerup, 1);
-    // Desactivar el efecto
+}
+
+script "setParasiteChildrenStats" (int ctid) {
+    int masterDmg = GetActorProperty(0, APROP_Damage);
+    int masterScaleX = GetActorProperty(0, APROP_ScaleX);
+    int masterScaleY = GetActorProperty(0, APROP_ScaleY);
+
+    SetActivator(ctid);
+
+    SetActorProperty(0, APROP_Damage, masterDmg / 2);
+
+    //Lo mismo sería para height y radius
+    SetActorProperty(0, APROP_ScaleX, masterScaleX / 2);
+    SetActorProperty(0, APROP_ScaleY, masterScaleY / 2);
+
+    int range = GetUserVariable(0, "user_deadflag");
+    if (range < 5) { range = 5; }
+    ACS_NamedExecuteAlways("setRange", 0, range);
+    Thing_ChangeTID(ctid, 0);
+}
+
+script "isDamageTooLow" (int threshold) {
+    SetResultValue(GetActorProperty(0, APROP_Damage) < threshold);
 }
