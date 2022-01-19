@@ -218,6 +218,9 @@ ACTOR Cacodemon2 : Cacodemon {
 	DropItem "Adrenaline" 15
 	DropItem "ALumpOfCoal" 15
 	DropItem "RubberCement" 15
+	DropItem "SacredHeart" 15
+	DropItem "SpoonBender" 15
+	DropItem "TheParasite" 15
 	DropItem "TwentyTwenty" 2
 
 	States {
@@ -248,6 +251,9 @@ ACTOR Revenant2 : Revenant {
 	DropItem "Adrenaline" 15
 	DropItem "ALumpOfCoal" 15
 	DropItem "RubberCement" 15
+	DropItem "SacredHeart" 15
+	DropItem "SpoonBender" 15
+	DropItem "TheParasite" 15
 	DropItem "TwentyTwenty" 2
 	
 	States {
@@ -278,6 +284,9 @@ ACTOR PainElemental2: PainElemental {
 	DropItem "Adrenaline" 22
 	DropItem "ALumpOfCoal" 22
 	DropItem "RubberCement" 22
+	DropItem "SacredHeart" 22
+	DropItem "SpoonBender" 22
+	DropItem "TheParasite" 22
 
 	States {
 		Pain.Lightning:
@@ -316,6 +325,9 @@ ACTOR Fatso2 : Fatso {
 	DropItem "Adrenaline" 22
 	DropItem "ALumpOfCoal" 22
 	DropItem "RubberCement" 22
+	DropItem "SacredHeart" 22
+	DropItem "SpoonBender" 22
+	DropItem "TheParasite" 22
 	DropItem "TwentyTwenty" 5
 	DropItem "DarkMatter" 5
 	DropItem "Infestation2" 5
@@ -323,6 +335,8 @@ ACTOR Fatso2 : Fatso {
 	DropItem "MomsContacts" 5
 	DropItem "MutantSpider" 5
 	DropItem "Pisces" 8
+	DropItem "TheCommonCold" 5
+	DropItem "TheInnerEye" 5
 
 	States {
 		Pain.Lightning:
@@ -437,6 +451,9 @@ ACTOR Arachnotron2 : Arachnotron {
 	DropItem "Adrenaline" 15
 	DropItem "ALumpOfCoal" 15
 	DropItem "RubberCement" 15
+	DropItem "SacredHeart" 15
+	DropItem "SpoonBender" 15
+	DropItem "TheParasite" 15
 
 	States {
 		Pain.Lightning:
@@ -472,6 +489,9 @@ ACTOR SpiderMastermind2 : SpiderMastermind
 	DropItem "Adrenaline" 46
 	DropItem "ALumpOfCoal" 46
 	DropItem "RubberCement" 46
+	DropItem "SacredHeart" 46
+	DropItem "SpoonBender" 46
+	DropItem "TheParasite" 46
 	DropItem "TwentyTwenty" 35
 	DropItem "DarkMatter" 35
 	DropItem "Infestation2" 35
@@ -479,6 +499,8 @@ ACTOR SpiderMastermind2 : SpiderMastermind
 	DropItem "MomsContacts" 35
 	DropItem "MutantSpider" 35
 	DropItem "Pisces" 35
+	DropItem "TheCommonCold" 35
+	DropItem "TheInnerEye" 35
 	
 	States {
 		Pain.Lightning:
@@ -513,6 +535,9 @@ ACTOR Cyberdemon2 : Cyberdemon
 	DropItem "Adrenaline" 60
 	DropItem "ALumpOfCoal" 60
 	DropItem "RubberCement" 60
+	DropItem "SacredHeart" 60
+	DropItem "SpoonBender" 60
+	DropItem "TheParasite" 60
 	DropItem "TwentyTwenty" 50
 	DropItem "DarkMatter" 50
 	DropItem "Infestation2" 50
@@ -520,6 +545,8 @@ ACTOR Cyberdemon2 : Cyberdemon
 	DropItem "MomsContacts" 50
 	DropItem "MutantSpider" 50
 	DropItem "Pisces" 50
+	DropItem "TheCommonCold" 50
+	DropItem "TheInnerEye" 50
 	
 	States {
 		Pain.Lightning:
@@ -553,6 +580,9 @@ ACTOR BaronOfHell2 : BaronOfHell
 	DropItem "Adrenaline" 32
 	DropItem "ALumpOfCoal" 32
 	DropItem "RubberCement" 32
+	DropItem "SacredHeart" 32
+	DropItem "SpoonBender" 32
+	DropItem "TheParasite" 32
 	DropItem "TwentyTwenty" 10
 	DropItem "DarkMatter" 10
 	DropItem "Infestation2" 10
@@ -560,6 +590,8 @@ ACTOR BaronOfHell2 : BaronOfHell
 	DropItem "MomsContacts" 10
 	DropItem "MutantSpider" 10
 	DropItem "Pisces" 10
+	DropItem "TheCommonCold" 10
+	DropItem "TheInnerEye" 10
 	
 	States {
 		Pain.Lightning:
@@ -591,6 +623,9 @@ ACTOR HellKnight2 : HellKnight
 	DropItem "Adrenaline" 15
 	DropItem "ALumpOfCoal" 15
 	DropItem "RubberCement" 15
+	DropItem "SacredHeart" 15
+	DropItem "SpoonBender" 15
+	DropItem "TheParasite" 15
 	
 	States {
 		Pain.Lightning:
