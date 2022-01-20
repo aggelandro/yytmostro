@@ -13,6 +13,8 @@ agge/pistolded ASWDLCH2
 agge/pistoltzz ASWELID1
 agge/pedo AGGEPEDO
 agge/powerup POWERUP1
+agge/powerupuse PWUPUSE
+agge/powerupfail PWUPFAIL
 elect/spark LHTSPARK
 
 agge/waskafire1 WLFSS1
@@ -23,6 +25,7 @@ $random agge/waskafire { agge/waskafire1 agge/waskafire2 agge/waskafire3 }
 agge/waskadeath SPLAT12
 agge/explosion  KRLDTH
 agge/dropfire   WLS2D
+agge/droppuij   MTMS2D
 ron/click PCLICK
 ron/error PERROR
 ron/SSGload XSSGCHAR

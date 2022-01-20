@@ -586,8 +586,8 @@ ACTOR AbstractTemporalCustomPowerUp : CustomInventory {
 	Inventory.MaxAmount 5
 	Inventory.InterHubAmount 5
 	Inventory.PickupSound "agge/powerup"
+	Inventory.UseSound "agge/powerupuse"
 	Inventory.RestrictedTo "Agge"
-	// Agregarles un UseSound
 	
 	+INVENTORY.UNDROPPABLE
 	+INVENTORY.HUBPOWER
@@ -605,6 +605,10 @@ ACTOR AbstractTemporalCustomPowerUp : CustomInventory {
 		WeaponInInventory:
 			TNT1 A 0 A_RailWait
 			Stop
+			
+		AlreadyActive:
+			TNT1 A 0 A_PlaySound("agge/powerupfail", CHAN_ITEM)
+			Fail
 	}
 }
 
@@ -620,6 +624,7 @@ ACTOR RubberCement : AbstractTemporalCustomPowerUp 4025 {
 			Loop
 			
 		Use:
+			TNT1 A 0 A_JumpIfInventory("RubberCementGiver", 1, "AlreadyActive")
 			TNT1 A 0 ACS_NamedExecuteWithResult("activateTemporalPowerup", 25)
 			Stop
 	}
@@ -637,6 +642,7 @@ ACTOR SacredHeart : AbstractTemporalCustomPowerUp 4026 {
 			Loop
 			
 		Use:
+			TNT1 A 0 A_JumpIfInventory("SacredHeartGiver", 1, "AlreadyActive")
 			TNT1 A 0 ACS_NamedExecuteWithResult("activateTemporalPowerup", 26)
 			Stop
 	}
@@ -654,6 +660,7 @@ ACTOR SpoonBender : AbstractTemporalCustomPowerUp 4027 {
 			Loop
 			
 		Use:
+			TNT1 A 0 A_JumpIfInventory("SpoonBenderGiver", 1, "AlreadyActive")
 			TNT1 A 0 ACS_NamedExecuteWithResult("activateTemporalPowerup", 27)
 			Stop
 	}
@@ -671,6 +678,7 @@ ACTOR TheParasite : AbstractTemporalCustomPowerUp 4030 {
 			Loop
 			
 		Use:
+			TNT1 A 0 A_JumpIfInventory("TheParasiteGiver", 1, "AlreadyActive")
 			TNT1 A 0 ACS_NamedExecuteWithResult("activateTemporalPowerup", 30)
 			Stop
 	}
