@@ -190,19 +190,51 @@ ACTOR ElectricSpark2 {
 	}
 }
 
-ACTOR Bleeding {
+ACTOR StatusEffect {
 	+NOGRAVITY
 	+NOINTERACTION
 	+SEEKERMISSILE
 	
 	States {
-	  Spawn:
-			BLEE ABCDEFGHI 2 A_Warp(AAPTR_TRACER, 0, 0, ACS_NamedExecuteWithResult("getTracerHeight"), 0, WARPF_NOCHECKPOSITION)
-			Loop
-			
 		Death:
 			TNT1 A 0
 			Stop
+	}
+}
+
+ACTOR BleedingEffect : StatusEffect {
+	
+	States {
+	  Spawn:
+			BLEE ABCDEFGHI 2 A_Warp(AAPTR_TRACER, 0, 0, ACS_NamedExecuteWithResult("getTracerHeight"), 0, WARPF_NOCHECKPOSITION)
+			Loop
+	}
+}
+
+ACTOR PoisonEffect : StatusEffect {
+	
+	States {
+	  Spawn:
+			POIS ABCDEFG 2 A_Warp(AAPTR_TRACER, 0, 0, ACS_NamedExecuteWithResult("getTracerHeight"), 0, WARPF_NOCHECKPOSITION)
+			Loop
+	}
+}
+
+ACTOR FearEffect : StatusEffect {
+	
+	States {
+	  Spawn:
+			FEAR ABCB 2 A_Warp(AAPTR_TRACER, 0, 0, ACS_NamedExecuteWithResult("getTracerHeight"), 0, WARPF_NOCHECKPOSITION)
+			Loop
+	}
+}
+
+ACTOR PetrifyingEffect : StatusEffect {
+	
+	States {
+	  Spawn:
+			PETR ABCB 20 A_Warp(AAPTR_TRACER, 0, 0, ACS_NamedExecuteWithResult("getTracerHeight"), 0, WARPF_NOCHECKPOSITION)
+			Loop
 	}
 }
 
@@ -239,6 +271,8 @@ ACTOR Cacodemon2 : Cacodemon {
 	DropItem "SpoonBender" 15
 	DropItem "TheParasite" 15
 	DropItem "TwentyTwenty" 2
+	DropItem "TheWiz" 2
+	DropItem "Backstabber" 2
 
 	States {
 		Pain.Lightning:
@@ -272,6 +306,8 @@ ACTOR Revenant2 : Revenant {
 	DropItem "SpoonBender" 15
 	DropItem "TheParasite" 15
 	DropItem "TwentyTwenty" 2
+	DropItem "TheWiz" 2
+	DropItem "Backstabber" 2
 	
 	States {
 		Pain.Lightning:
@@ -354,6 +390,8 @@ ACTOR Fatso2 : Fatso {
 	DropItem "Pisces" 8
 	DropItem "TheCommonCold" 5
 	DropItem "TheInnerEye" 5
+	DropItem "TheWiz" 5
+	DropItem "Backstabber" 5
 	var int user_max_healh;
 
 	States {
@@ -524,6 +562,8 @@ ACTOR SpiderMastermind2 : SpiderMastermind
 	DropItem "Pisces" 35
 	DropItem "TheCommonCold" 35
 	DropItem "TheInnerEye" 35
+	DropItem "TheWiz" 35
+	DropItem "Backstabber" 35
 	
 	States {
 		Pain.Lightning:
@@ -570,6 +610,8 @@ ACTOR Cyberdemon2 : Cyberdemon
 	DropItem "Pisces" 50
 	DropItem "TheCommonCold" 50
 	DropItem "TheInnerEye" 50
+	DropItem "TheWiz" 50
+	DropItem "Backstabber" 50
 	
 	States {
 		Pain.Lightning:
@@ -615,6 +657,8 @@ ACTOR BaronOfHell2 : BaronOfHell
 	DropItem "Pisces" 10
 	DropItem "TheCommonCold" 10
 	DropItem "TheInnerEye" 10
+	DropItem "TheWiz" 10
+	DropItem "Backstabber" 10
 	
 	States {
 		Pain.Lightning:

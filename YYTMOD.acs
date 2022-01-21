@@ -86,18 +86,14 @@ script "printMyPointers" (void) {
 
 script 332 OPEN {
     //Translations
-    CreateTranslation (1, 0:255=0:255); // Default
     CreateTranslation (2, 128:225=[0,0,0]:[24,13,2]); // A Lump of Coal
     CreateTranslation (3, 192:193=[0,0,0]:[238,25,34], 194:197=[0,0,0]:[158,6,12]); // Blood of the Martyr
     CreateTranslation (4, 192:193=[0,0,0]:[42,42,42], 194:224=[0,0,0]:[23,23,23]); // Dark Matter
-    CreateTranslation (5, 0:255=[0,0,0]:[125,33,155]); // Fear Effect
     CreateTranslation (6, 128:225=[0,0,0]:[179,26,60]); // Moms Contact
-    CreateTranslation (7, 0:255=[0,0,0]:[87,87,87]); // Petrifying Effect
     CreateTranslation (8, 192:193=[0,0,0]:[214,215,223], 194:197=[0,0,0]:[199,225,230]); // Sacred Heart
     CreateTranslation (9, 192:193=[0,0,0]:[122,38,158], 194:197=[0,0,0]:[111,32,155], 198:224=[0,0,0]:[97,19,146]); // Spoon Bender
     CreateTranslation (10, 192:193=[0,0,0]:[83,115,168], 194:197=[0,0,0]:[81,116,174], 198:224=[0,0,0]:[76,115,178]); // Lost Contact
     CreateTranslation (11, 128:225=[0,0,0]:[85,154,117]); // The Common Cold
-    CreateTranslation (12, 0:255=[0,0,0]:[69,97,64]); // Poison Effect
     CreateTranslation (13, 192:193=[0,0,0]:[187,98,69], 194:197=[0,0,0]:[154,78,40], 198:224=[0,0,0]:[128,71,43]); // The Parasite
 }
 
@@ -253,14 +249,23 @@ script "isEffectChanceSuccessful" (int chance) {
 // Obligado a usar switch a causa de que ACS no se banca otras variables que
 // no sean int como parametros y que admite una cantidad limitada de ellos
 script "applyEffect" (int option, int dur) {
+    int mtid, ptid;
     switch(option) {
         case 1: {
-            SetActorProperty(0, APROP_Frightened, 1);
-            Thing_SetTranslation(0, 5);
+            mtid = UniqueTID();
+            int ftid = UniqueTID();
+
+            Thing_ChangeTID(0, mtid);
+            Spawn("FearEffect", GetActorX(0), GetActorY(0), GetActorZ(0), ftid);
+            SetActivator(ftid);
+            SetPointer(AAPTR_TRACER, mtid);
+            SetActorProperty(mtid, APROP_Frightened, 1);
             Delay(dur);
-            SetActorProperty(0, APROP_Frightened, 0);
-            Thing_SetTranslation(0, 1);
-            TakeInventory("FearDebuffGiver",1);
+            SetActorProperty(mtid, APROP_Frightened, 0);
+            TakeActorInventory(mtid, "FearDebuffGiver", 1);
+            SetActorState(0, "Death");
+            Thing_ChangeTID(mtid, 0);
+            Thing_ChangeTID(ftid, 0);
         }; break;
         case 2: {
             while(GetActorProperty(0, APROP_Health) > 0.0) { Delay(1); }
@@ -268,12 +273,20 @@ script "applyEffect" (int option, int dur) {
         }; break;
         case 3: {
             //No puede atacar ni moverse pero tampoco se le puede hacer daño
-            Thing_Deactivate(ActivatorTID());
-            Thing_SetTranslation(0, 7);
+            mtid = UniqueTID();
+            ptid = UniqueTID();
+
+            Thing_ChangeTID(0, mtid);
+            Spawn("PetrifyingEffect", GetActorX(0), GetActorY(0), GetActorZ(0), ptid);
+            SetActivator(ptid);
+            SetPointer(AAPTR_TRACER, mtid);
+            Thing_Deactivate(mtid);
             Delay(dur);
-            Thing_Activate(ActivatorTID());
-            Thing_SetTranslation(0, 1);
-            TakeInventory("PetrifyingDebuffGiver",1);
+            Thing_Activate(mtid);
+            TakeActorInventory(mtid, "PetrifyingDebuffGiver", 1);
+            SetActorState(0, "Death");
+            Thing_ChangeTID(mtid, 0);
+            Thing_ChangeTID(ptid, 0);
         }; break;
         case 4: {
             int angle = GetActorAngle(0) >> 8;
@@ -284,31 +297,38 @@ script "applyEffect" (int option, int dur) {
         case 5: {
             // Poison hace el daño sin modificadores de la lágrima al monstruo cada 2 segundos una X cantidad de veces
             int times = dur / 35;
-            Thing_SetTranslation(0, 12);
+            mtid = UniqueTID();
+            ptid = UniqueTID();
+
+            Thing_ChangeTID(0, mtid);
+            Spawn("PoisonEffect", GetActorX(0), GetActorY(0), GetActorZ(0), ptid);
+            SetActivator(ptid);
+            SetPointer(AAPTR_TRACER, mtid);
             for (int i=0; i<times; i++) {
-                Thing_Damage2(0, AGGE_TEAR_PROJECTILE_STATS[2], "Poison");
+                Thing_Damage2(mtid, AGGE_TEAR_PROJECTILE_STATS[2], "Poison");
                 Delay(70);
             }
-            Thing_SetTranslation(0, 1);
+
+            SetActorState(0, "Death");
+            Thing_ChangeTID(mtid, 0);
+            Thing_ChangeTID(ptid, 0);
         }; break;
         case 6: {
             //Bleeding hace 10% de su salud maxima de daño al monstruo cada 5 segundos y no tiene limite de tiempo.
-            int mtid = UniqueTID();
+            mtid = UniqueTID();
             int btid = UniqueTID();
 
             Thing_ChangeTID(0, mtid);
-            Spawn("Bleeding", GetActorX(0), GetActorY(0), GetActorZ(0), btid);
+            Spawn("BleedingEffect", GetActorX(0), GetActorY(0), GetActorZ(0), btid);
             SetActivator(btid);
             SetPointer(AAPTR_TRACER, mtid);
-            SetActivator(mtid);
 
             //LA SUPERCLASE DEL MONSTER TIENE QUE TENER user_max_health SETEADO
-            while (GetActorProperty(0, APROP_Health) > 0.0) {
-                Thing_Damage2(0, multiplyValue(GetUserVariable(0, "user_max_healh"), 0.1), "Bleeding");
+            while (GetActorProperty(mtid, APROP_Health) > 0.0) {
+                Thing_Damage2(mtid, multiplyValue(GetUserVariable(0, "user_max_healh"), 0.1), "Bleeding");
                 Delay(175);
             }
 
-            SetActivator(btid);
             SetActorState(0, "Death");
             Thing_ChangeTID(mtid, 0);
             Thing_ChangeTID(btid, 0);

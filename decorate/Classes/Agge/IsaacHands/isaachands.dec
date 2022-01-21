@@ -447,12 +447,7 @@ ACTOR FearTearProjectile : NormalTearProjectile {
   States {
 			
 		SpawnLoop:
-			DMFI A 1 A_SeekerMissile(5, 8, SMF_LOOK|SMF_CURSPEED, 256, 3)
-			DMFI A 1
-			DMFI B 3
-			DMFI C 1 A_SeekerMissile(5, 8, SMF_LOOK|SMF_CURSPEED, 256, 3)
-			DMFI C 1
-			DMFI D 3
+			DMFI AB 5 A_SeekerMissile(5, 8, SMF_LOOK|SMF_CURSPEED, 256, 3)
 			Loop
 			
 		XDeath:
