@@ -1,6 +1,12 @@
 // sonidos originales del mod
 agge/flamet AFLAME
+agge/flame	FMTRFLAM
+agge/flamefire	FMTRFIRE
+agge/flamehit	FMTRHIT
 agge/ssgfir AGGESSGF
+agge/ssgopen ASWAFOP1
+agge/ssgreload ASWAFLD1
+agge/ssgclose ASWAFCL1
 agge/visor VISOR
 agge/shildbrk SHILDBRK
 agge/hachazo AXE5

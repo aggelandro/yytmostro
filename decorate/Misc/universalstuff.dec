@@ -61,7 +61,8 @@ ACTOR AggeNewFire
 	States
 	{
 	Spawn:
-		FLME A 2 NoDelay bright A_Explode(5, 32, 0)
+		TNT1 A 0 NoDelay A_PlaySound("agge/flame", CHAN_5, 1.0, TRUE)
+		FLME A 2 bright A_Explode(5, 32, 0)
 		FLME BCDEFGHIJKLMN 2 bright A_Explode(5, 16, 0)
 		FLME A 2 bright A_Explode(5, 32, 0)
 		FLME BCDEFGHIJKLMN 2 bright A_Explode(5, 16, 0)
@@ -74,6 +75,7 @@ ACTOR AggeNewFire
 		TNT1 A 0 A_Jump(192, "Death")
 		Loop
 	Death:
+		TNT1 A 0 A_StopSound(CHAN_5)
 		TNT1 A 1
 		Stop
 	}
@@ -112,8 +114,8 @@ ACTOR FlameThrowerFire : PlasmaBall
 	Speed 20
 	+FORCERADIUSDMG
 	+THRUACTORS
-	SeeSound ""
-	DeathSound ""
+	SeeSound "agge/flamefire"
+	DeathSound "agge/flamehit"
 	var int user_duracionF;
 	States
 	{

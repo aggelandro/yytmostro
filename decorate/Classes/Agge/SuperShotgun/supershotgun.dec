@@ -22,47 +22,48 @@ ACTOR AggeSSG : DoomWeapon
     Loop
   Fire:
     AGGE A 3
-	AGGE A 0 A_FireBullets (11.2, 7.1, 30, 5, "BulletPuff")
-    AGGE A 0 A_PlaySound ("weapons/shotgf", CHAN_AUTO)
+		AGGE A 0 A_FireBullets (11.2, 7.1, 30, 5, "BulletPuff")
+    AGGE A 0 A_PlaySound ("agge/ssgfir", CHAN_AUTO)
     AGGE B 7 A_GunFlash
     AGGE C 7
     AGGE D 7 A_CheckReload
-	AGGE AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
+		AGGE AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
     AGGE E 7 A_OpenShotgun2
-    AGGE F 4
+    AGGE F 4 A_PlaySound ("agge/ssgopen", CHAN_WEAPON)
     AGGE G 4 A_LoadShotgun2
-    AGGE H 3 A_PlaySound ("weapons/sshotc", CHAN_WEAPON)
+    AGGE H 3 A_PlaySound ("agge/ssgreload", CHAN_WEAPON)
     AGGE F 3 
-	AGGE A 1 
-	AGGE A 0 A_Refire
+		AGGE A 1 A_PlaySound ("agge/ssgclose", CHAN_WEAPON)
+		AGGE A 0 A_Refire
     Goto Ready
   Altfire:
-	AGGE A 0 A_JumpIfNoAmmo("Ready")
-	AGGE A 3
+		AGGE A 0 A_JumpIfNoAmmo("Ready")
+		AGGE A 3
 	// AGGE AAA 0 A_FireCustomMissile("VacuumSSG",0,false)
     AGGE A 0 A_FireBullets (15.2, 5.1, 110, 1, "BulletPuff")
     AGGE A 0 A_PlaySound ("agge/ssgfir", CHAN_AUTO)
-	AGGE B 3 A_GunFlash
-	AGGE A 0 A_JumpIfNoAmmo("Ready")
+		AGGE B 3 A_GunFlash
+		AGGE A 0 A_JumpIfNoAmmo("Ready")
     AGGE A 3
-	AGGE A 0 A_FireBullets (15.2, 5.1, 110, 1, "BulletPuff")
+		AGGE A 0 A_FireBullets (15.2, 5.1, 110, 1, "BulletPuff")
     AGGE A 0 A_PlaySound ("agge/ssgfir", CHAN_AUTO)
-	AGGE B 3 A_GunFlash
+		AGGE B 3 A_GunFlash
     AGGE C 3
     AGGE D 8 A_CheckReload
-	AGGE AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
+		AGGE AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
     AGGE E 8 A_OpenShotgun2
+    AGGE F 8 A_PlaySound ("agge/ssgopen", CHAN_WEAPON)
+    AGGE G 8 A_LoadShotgun2
+		TNT1 A 0 A_PlaySound ("agge/ssgreload", CHAN_WEAPON)
+		AGGE AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
+		AGGE E 8 A_OpenShotgun2
     AGGE F 8
     AGGE G 8 A_LoadShotgun2
-	AGGE AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
-	AGGE E 8 A_OpenShotgun2
-    AGGE F 8
-    AGGE G 8 A_LoadShotgun2
-    AGGE H 6 A_PlaySound ("weapons/sshotc", CHAN_WEAPON)
+    AGGE H 6 A_PlaySound ("agge/ssgreload", CHAN_WEAPON)
     AGGE F 5
-	AGGE A 1
-	AGGE A 0 A_Refire
-	Goto Ready
+		AGGE A 1 A_PlaySound ("agge/ssgclose", CHAN_WEAPON)
+		AGGE A 0 A_Refire
+		Goto Ready
   Flash:
     TNT1 A 4 Bright A_Light1
     TNT1 A 3 Bright A_Light2
