@@ -3,7 +3,7 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 31
+#define DISPLAYABLE_POWERUP_MAX 33
 
 /* Al no poder usar array de 2 dimensiones en variables globales, no se puede persistir los tear stats por jugador.
 ** ----------------
@@ -36,7 +36,7 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "TwentyTwentyGiverP015A0", "ALumpOfCoalGiverP016A0", "BloodOfTheMartyrGiverP017A0", "DarkMatterGiverP018A0", "Infestation2GiverP019A0",
     "LostContactGiverP020A0", "MomsContactsGiverP021A0", "MomsEyeGiverP022A0", "MutantSpiderGiverP023A0", "PiscesGiverP024A0",
     "RubberCementGiverP025A0", "SacredHeartGiverP026A0", "SpoonBenderGiverP027A0", "TheCommonColdGiverP028A0", "TheInnerEyeGiverP029A0",
-    "TheParasiteGiverP030A0"
+    "TheParasiteGiverP030A0", "TheWizGiverP031A0", "BackstabberGiverP032A0"
 };
  
 script "yytmod_mensajesalida" DEATH
@@ -278,9 +278,11 @@ script "applyEffect" (int option, int dur) {
         case 4: {
             int angle = GetActorAngle(0) >> 8;
             if (angle < 128) { angle = angle + 128; } else { angle = angle - 128; }
+            // IMPORTANTE: Si es piercing tear tiene que knockbackear menos
             ThrustThing(angle, 7, 0, 0);
         }; break;
         case 5: {
+            // Poison hace el daño sin modificadores de la lágrima al monstruo cada 2 segundos una X cantidad de veces
             int times = dur / 35;
             Thing_SetTranslation(0, 12);
             for (int i=0; i<times; i++) {
@@ -288,6 +290,28 @@ script "applyEffect" (int option, int dur) {
                 Delay(70);
             }
             Thing_SetTranslation(0, 1);
+        }; break;
+        case 6: {
+            //Bleeding hace 10% de su salud maxima de daño al monstruo cada 5 segundos y no tiene limite de tiempo.
+            int mtid = UniqueTID();
+            int btid = UniqueTID();
+
+            Thing_ChangeTID(0, mtid);
+            Spawn("Bleeding", GetActorX(0), GetActorY(0), GetActorZ(0), btid);
+            SetActivator(btid);
+            SetPointer(AAPTR_TRACER, mtid);
+            SetActivator(mtid);
+
+            //LA SUPERCLASE DEL MONSTER TIENE QUE TENER user_max_health SETEADO
+            while (GetActorProperty(0, APROP_Health) > 0.0) {
+                Thing_Damage2(0, multiplyValue(GetUserVariable(0, "user_max_healh"), 0.1), "Bleeding");
+                Delay(175);
+            }
+
+            SetActivator(btid);
+            SetActorState(0, "Death");
+            Thing_ChangeTID(mtid, 0);
+            Thing_ChangeTID(btid, 0);
         }; break;
     }
 }
@@ -303,6 +327,11 @@ script "deathTimer" (int tics) {
 
 script "getUniqueTID" (void) {
     SetResultValue(UniqueTID());
+}
+
+script "getTracerHeight" (void) {
+    int ttid = GetActorProperty(0, APROP_TracerTID);
+    SetResultValue(GetActorProperty(ttid, APROP_Height) >> 16);
 }
 
 
@@ -577,4 +606,44 @@ script "setParasiteChildrenStats" (int ctid) {
 
 script "isDamageTooLow" (int threshold) {
     SetResultValue(GetActorProperty(0, APROP_Damage) < threshold);
+}
+
+script "checkForBackstabDebuff" (void) {
+    int projectileAngle = GetActorAngle(0) >> 8;
+    int projectileDamage = GetActorProperty(0, APROP_Damage);
+
+    SetActivator(0, AAPTR_TRACER);
+
+    int monsterAngle = GetActorAngle(0) >> 8;
+    int minThreshold, maxThreshold;
+
+    if (monsterAngle >= 32 && monsterAngle < 224) {
+        minThreshold = monsterAngle - 32;
+        maxThreshold = monsterAngle + 32;
+        if (projectileAngle >= minThreshold && projectileAngle <= maxThreshold) {
+            ACS_NamedExecuteAlways("dealBackstabDamage", 0, projectileDamage);
+        }
+    }
+    else {
+        if (monsterAngle < 32) {
+            minThreshold = monsterAngle + 224;
+            maxThreshold = monsterAngle + 32;
+            if (projectileAngle >= minThreshold || projectileAngle <= maxThreshold) {
+                ACS_NamedExecuteAlways("dealBackstabDamage", 0, projectileDamage);
+            }
+        }
+        else {
+            minThreshold = monsterAngle - 224;
+            maxThreshold = monsterAngle - 32;
+            if (projectileAngle <= minThreshold || projectileAngle >= maxThreshold) {
+                ACS_NamedExecuteAlways("dealBackstabDamage", 0, projectileDamage);
+            }
+        }
+    }
+}
+
+script "dealBackstabDamage" (int damage) {
+    // Segundo golpe y efecto bleeding
+    Thing_Damage2(0, damage, "None");
+    ACS_NamedExecuteAlways("applyEffect", 0, 6);
 }
