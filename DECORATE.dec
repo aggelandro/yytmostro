@@ -367,7 +367,7 @@ ACTOR Agge : DoomPlayer
   Player.StartItem "Shell", 5
   Player.StartItem "EnergyShieldAmmo", 200
   Player.StartItem "AggeID"
-  Player.WeaponSlot 1, AggeShield, Chainsaw2
+  Player.WeaponSlot 1, Chainsaw2, AggeShield
   Player.WeaponSlot 2, AggePistol
   Player.WeaponSlot 3, Shotgun2, AggeSSG
   Player.WeaponSlot 4, IsaacHands, BlackIsaacHands
