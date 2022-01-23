@@ -10,6 +10,7 @@ agge/ssgclose ASWAFCL1
 agge/visor VISOR
 agge/shildbrk SHILDBRK
 agge/hachazo AXE5
+agge/charged CHARGED
 agge/swing HAMMIS2
 agge/pared HAMWAL1
 agge/buah BUAAAH
@@ -151,6 +152,15 @@ weapons/shell1			dsshell1
 weapons/shell2			dsshell2
 weapons/shell3			dsshell3
 
-
+// Efecto de fuego en el piso choreado del complex
+$rolloff weapons/rocklx 600 1800
+$random weapons/rocklx { exp1 exp2 exp3 exp4 exp5 exp6 exp7 }
+exp1					DSLAGEX1
+exp2					DSLAGEX2
+exp3					DSLAGEX3
+exp4					DSLAGEX4
+exp5					DSLAGEX5
+exp6					DSLAGEX6
+exp7					DSLAGEX7
 
 

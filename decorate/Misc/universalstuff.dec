@@ -122,7 +122,7 @@ ACTOR FlameThrowerFire : PlasmaBall
 		FRFX ABCD 2 Bright A_Explode(5*random(2,5),15)
 		TNT1 A 0 A_LowGravity
 		FRFX EFGHIJKLMNOP 2 Bright A_Explode(5*random(2,5),15)
-		Stop
+		Goto Death
 	Death:
 	    // HellFire actors are in "universalstuff.dec"
 		FRFX C 1 Bright A_SpawnItemEx("AggeNewFire",5,0,0,0,0,0,0)

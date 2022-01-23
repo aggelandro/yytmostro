@@ -38,7 +38,14 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "RubberCementGiverP025A0", "SacredHeartGiverP026A0", "SpoonBenderGiverP027A0", "TheCommonColdGiverP028A0", "TheInnerEyeGiverP029A0",
     "TheParasiteGiverP030A0", "TheWizGiverP031A0", "BackstabberGiverP032A0"
 };
- 
+
+str SV_DRAWABLE_CHARGE_BAR[40] = {
+    "CHRBAR3", "CHRBAR4", "CHRBAR5", "CHRBAR6", "CHRBAR7", "CHRBAR8", "CHRBAR9", "CHRBAR10", "CHRBAR11", "CHRBAR12", "CHRBAR13", 
+    "CHRBAR14", "CHRBAR15", "CHRBAR16", "CHRBAR17", "CHRBAR18", "CHRBAR19", "CHRBAR20", "CHRBAR21", "CHRBAR22", "CHRBAR23", "CHRBAR24", 
+    "CHRBAR25", "CHRBAR26", "CHRBAR27", "CHRBAR28", "CHRBAR29", "CHRBAR30", "CHRBAR31", "CHRBAR32", "CHRBAR33", "CHRBAR34", "CHRBAR35", 
+    "CHRBAR36", "CHRBAR37", "CHRBAR38", "CHRBAR39", "CHRBAR40", "CHRBAR41", "CHRBAR42"
+};
+
 script "yytmod_mensajesalida" DEATH
 {
     int yyt_mensaje = random(1,3);
@@ -155,13 +162,11 @@ script 338 (void) {
     Thing_ChangeTID(0, newTID);
 }
  
-script "isPressingAltFire" (void) {
- 
+script "isMasterPressingAltFire" (void) {
     int playerTID = GetActorProperty(0, APROP_MasterTID);
     int playerNum = ACS_NamedExecuteWithResult("getPlayerNumberFromTID", playerTID); 
     int buttons = GetPlayerInput(playerNum, INPUT_BUTTONS);
  
-    //Log(s:"isPressingAltFire(): ", i:buttons, s:" ", i:INPUT_BUTTONS, s:" ", i:BT_ALTATTACK);
     SetResultValue(buttons & BT_ALTATTACK);
 }
 
@@ -191,6 +196,74 @@ script "checkForNoAmmoInPointerInventory" (int choice) {
             SetResultValue(CheckActorInventory(ptid, "EnergyShieldAmmo") == 0);
         }; break;
     }
+}
+
+script "loadChargedAttack" (int fullyCharged) {
+    SetUserVariable(0, "user_axe_charge_state", 0);
+    int progressFactor = 40.0 / fullyCharged;
+    int playFeedbackSound = 1;
+    int chargedTime, progressC;
+    ACS_NamedExecuteWithResult("displayChargeBar", 1);
+
+    while (ACS_NamedExecuteWithResult("isPressingFire")) {
+        progressC = (progressFactor * chargedTime) >> 16;
+        ACS_NamedExecuteWithResult("showProgressChargeBar", progressC);
+
+        if (chargedTime < fullyCharged) { chargedTime++; }
+        else {
+            if (playFeedbackSound) {
+                PlaySound(0, "agge/charged", CHAN_AUTO);
+                playFeedbackSound = 0;
+            }
+        }
+        Delay(1);
+    }
+
+    ACS_NamedExecuteWithResult("displayChargeBar", 0);
+    if (chargedTime == fullyCharged) {
+        ACS_NamedExecuteWithResult("pausePlayer", 1);
+        SetActorPitch(0, 0.1);
+        SetUserVariable(0, "user_axe_charge_state", 1);
+    }
+    else {
+        SetUserVariable(0, "user_axe_charge_state", 2);
+    }
+}
+
+script "displayChargeBar" (int isOn) CLIENTSIDE {
+    if (isOn) {
+        SetFont("CHRBAR1");
+        HudMessage(s:"A"; HUDMSG_PLAIN, 2, 0, 0.01, 0.01, 0);
+    }
+    else {
+        HudMessage(s:""; HUDMSG_PLAIN, 2, 0, 0, 0, 1);
+        HudMessage(s:""; HUDMSG_PLAIN, 1, 0, 0, 0, 1);
+    }
+}
+
+script "showProgressChargeBar" (int entry) CLIENTSIDE {
+    SetFont(SV_DRAWABLE_CHARGE_BAR[entry]);
+    HudMessage(s:"A"; HUDMSG_PLAIN, 1, 0, 0.013, 0.013, 0);
+}
+
+script "pausePlayer" (int activeFlag) {
+    if (activeFlag) {
+        Thing_Stop(0);
+        SetPlayerProperty(0, activeFlag, PROP_TOTALLYFROZEN);
+    }
+    else {
+        SetPlayerProperty(0, activeFlag, PROP_TOTALLYFROZEN);
+    }
+}
+
+script "getChargeState" (void) {
+    int chargeState = GetUserVariable(0, "user_axe_charge_state");
+    SetResultValue(chargeState);
+}
+
+script "isPressingFire" (void) {
+    int buttons = GetPlayerInput(PlayerNumber(), INPUT_BUTTONS);
+    SetResultValue(buttons & BT_ATTACK);
 }
 
 // codigo escopeta terro
