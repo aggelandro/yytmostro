@@ -57,6 +57,9 @@ terro/punio9 PUNIO9
 terro/punio10 PUNIO10
 terro/puniopun PUNIOPUN
 terro/puniooff PUNIOOFF
+terro/ssgshot COYOTE
+terro/ssgreload COYOTERE
+terro/ssgshell COYOTESH
 zlayer/sniper ZSNIPER
 zlayer/srelo ZSNIPRE
 ando/ytho YTHO

@@ -199,7 +199,7 @@ script "checkForNoAmmoInPointerInventory" (int choice) {
 }
 
 script "loadChargedAttack" (int fullyCharged) {
-    SetUserVariable(0, "user_axe_charge_state", 0);
+    SetUserVariable(0, "user_charge_state", 0);
     int progressFactor = 40.0 / fullyCharged;
     int playFeedbackSound = 1;
     int chargedTime, progressC;
@@ -223,10 +223,10 @@ script "loadChargedAttack" (int fullyCharged) {
     if (chargedTime == fullyCharged) {
         ACS_NamedExecuteWithResult("pausePlayer", 1);
         SetActorPitch(0, 0.1);
-        SetUserVariable(0, "user_axe_charge_state", 1);
+        SetUserVariable(0, "user_charge_state", 1);
     }
     else {
-        SetUserVariable(0, "user_axe_charge_state", 2);
+        SetUserVariable(0, "user_charge_state", 2);
     }
 }
 
@@ -257,7 +257,7 @@ script "pausePlayer" (int activeFlag) {
 }
 
 script "getChargeState" (void) {
-    int chargeState = GetUserVariable(0, "user_axe_charge_state");
+    int chargeState = GetUserVariable(0, "user_charge_state");
     SetResultValue(chargeState);
 }
 
