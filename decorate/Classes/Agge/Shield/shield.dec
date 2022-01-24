@@ -214,6 +214,7 @@ ACTOR AxeFloorFire {
   Damage 8
   Projectile
   RenderStyle Add
+	Scale 1.5
   +NOCLIP
   +FLOORHUGGER
   +FORCERADIUSDMG

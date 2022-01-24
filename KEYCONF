@@ -1,8 +1,5 @@
 ADDKEYSECTION "Custom Buttons YYTMOSTRO" WaskaLauncherFireSection
 
 ADDMENUKEY "Detonate Waska" DetonateWaska
-ADDMENUKEY "Terro Reload" +d_reload
-alias +d_reload "Puke 893"
-alias -d_reload "Puke 894"
 ALIAS DetonateWaska "Puke 333"
 DEFAULTBIND Q DetonateWaska

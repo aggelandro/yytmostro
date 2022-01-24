@@ -7,7 +7,6 @@ ACTOR PkDoubleShotguns : Weapon
 	Weapon.AmmoType "Shell"
 	Weapon.AmmoType2 "Shell"
 	Weapon.SelectionOrder 50
-	Weapon.Kickback 500
 	Inventory.Pickupmessage "You plucked a pair of serious sawed-offs!"
 	Obituary "%o was smashed into piles of putrid debris by %k's sawed-offs."
 	Decal "BulletChip"
@@ -18,22 +17,29 @@ ACTOR PkDoubleShotguns : Weapon
 	Spawn:
 		SGN2 C -1
 		Stop
+		
 	Deselect:
 		SGDL A 0 A_TakeInventory("SynthFireActive",1)
 		SGDL A 0 A_TakeInventory("SynthFireLeft",1)
 		SGDL A 0 A_TakeInventory("SynthFireRight",1)
+		Goto DS
+		
 	DS:
 		SGDL A 0 A_Lower 
 		SGDL A 1 A_Lower
-		Goto DS
+		Loop
+		
 	Select:
 		SGDL A 0 A_Raise
 		SGDL A 1 A_Raise
 		SGDL A 0 A_GunFlash
+		Goto SL
+		
 	SL:
 		SGDL A 0 A_Raise
 		SGDL A 1 A_Raise
 		Goto Select+1
+		
 	Ready:
 		SGDL A 1
 		SGDL A 0 A_GiveInventory("ClipDoubleLeft",2)
@@ -41,13 +47,31 @@ ACTOR PkDoubleShotguns : Weapon
 		SGDL A 0 A_GiveInventory("SynthFireActive",1)
 		SGDL A 0 ACS_ExecuteAlways(891,0,0,0,0) //act.synth-fire LEFT(pri)
 		SGDL A 0 ACS_ExecuteAlways(892,0,0,0,0) //act.synth-fire RIGHT(sec)
+		Goto LIdle
+		
 	// Left Shotgun
 	LIdle:
-		SGDL A 1 A_WeaponReady(12)
+		SGDL A 1 A_WeaponReady(WRF_ALLOWRELOAD|12)
 		SGDL A 0 A_JumpIfInventory("SynthFireLeft",1,"LFire")
-    	SGDL A 0 A_JumpIfInventory("IsReloading",1,"LReload")
-    	Loop
+		SGDL A 0 A_JumpIfInventory("IsLReloading",1,"LReload")
+		Loop
+		
+	LFire:
+    SGDL A 0 A_JumpIfInventory("ClipDoubleLeft",1,1)
+		Goto LDryFire
+    SGDL C 0 A_AlertMonsters
+		SGDL C 0 A_TakeInventory("ClipDoubleLeft",1,1)
+		SGDL C 0 A_FireBullets(12,6,7,4,"BulletPuff")
+		SGDL BC 2 BRIGHT
+		SGDL D 2
+		SGDL D 0 A_JumpIfInventory("ClipDoubleLeft",1,1)
+		Goto LReload
+		SGDL EFA 2
+		SGDL A 0 A_JumpIfInventory("SynthFireLeft",1,"LFire")
+		Goto LIdle
+		
 	LReload:
+		TNT1 A 0 A_TakeInventory("IsLReloading",1)
 		SGRL A 0 A_JumpIfInventory("ClipDoubleLeft",2,"LIdle")
 		SGRL A 0 A_JumpIfInventory("Shell",1,1)
 		Goto LIdle
@@ -57,45 +81,39 @@ ACTOR PkDoubleShotguns : Weapon
 		SGRL H 12
 		SGRL I 2
 		SGRL J 2 A_PlaySound("terro/ssgreload")
-		SGRL K 2 
-	   LRStart:
+		SGRL K 2
+		Goto LRStart
+		
+	LRStart:
 		TNT1 A 0 A_JumpIfInventory("ClipDoubleLeft",0,"LREnd")
 		TNT1 A 0 A_JumpIfInventory("Shell",1,1)
 		Goto LREnd
-		TNT1 A 0 A_TakeInventory("Shell",1,1)
 		TNT1 A 0 A_GiveInventory("ClipDoubleLeft",1)
-		goto LRStart
-	   LREnd:
+		Loop
+		
+	LREnd:
 		SGRL L 2
 		SGRL M 2 A_PlaySound("weapons/sshotc")
 		SGDL EF 2
 		SGDL A 4
 		Goto LIdle
+		
 	LDryFire:
 		SGDL A 6 A_PlaySound("weapons/sshoto")
 		Goto LIdle
-    LFire:
-    	SGDL A 0 A_JumpIfInventory("ClipDoubleLeft",1,1)
-		Goto LDryFire
-    	SGDL C 0 A_AlertMonsters
-		SGDL C 0 A_TakeInventory("ClipDoubleLeft",1,1)
-		SGDL C 0 A_FireBullets(12,6,7,4,"BulletPuff",0)
-		SGDL BC 2 BRIGHT
-		SGDL D 2
-		SGDL D 0 A_JumpIfInventory("ClipDoubleLeft",1,1)
-		Goto LReload
-		SGDL EFA 2
-		SGDL A 0 A_JumpIfInventory("SynthFireLeft",1,"LFire")
-		Goto LIdle
+		
 	// Right Shotgun
 	Flash:
 		SGDR A 8
+		
 	RIdle:
 		SGDR A 1
 		SGDR A 0 A_JumpIfInventory("SynthFireRight",1,"RFire")
-    	SGDR A 0 A_JumpIfInventory("IsReloading",1,"RReload")
-    	Loop
+		SGDR A 0 A_JumpIfInventory("IsRReloading",1,"RReload")
+		Loop
+		
 	RReload:
+		TNT1 A 0 A_TakeInventory("IsRReloading",1)
 		SGDR A 0 A_JumpIfInventory("ClipDoubleRight",2,"RIdle")
 		SGDR A 0 A_JumpIfInventory("Shell",1,1)
 		Goto RIdle
@@ -106,28 +124,32 @@ ACTOR PkDoubleShotguns : Weapon
 		SGRR I 2
 		SGRR J 2 A_PlaySound("terro/ssgreload")
 		SGRR K 2 
-	   RRStart:
+		Goto RRStart
+		
+	RRStart:
 		TNT1 A 0 A_JumpIfInventory("ClipDoubleRight",0,"RREnd")
 		TNT1 A 0 A_JumpIfInventory("Shell",1,1)
 		Goto RREnd
-		TNT1 A 0 A_TakeInventory("Shell",1,1)
 		TNT1 A 0 A_GiveInventory("ClipDoubleRight",1)
 		goto RRStart
-	   RREnd:
+
+	RREnd:
 		SGRR L 2
 		SGRR M 2 A_PlaySound("weapons/sshotc")
 		SGDR EF 2
 		SGDR A 4
 		Goto RIdle
+		
 	RDryFire:
 		SGDR A 6 A_PlaySound("weapons/sshoto")
 		Goto RIdle
-    RFire:
-    	SGDR A 0 A_JumpIfInventory("ClipDoubleRight",1,1)
+		
+	RFire:
+    SGDR A 0 A_JumpIfInventory("ClipDoubleRight",1,1)
 		Goto RDryFire
-    	SGDR C 0 A_AlertMonsters
+    SGDR C 0 A_AlertMonsters
 		SGDR C 0 A_TakeInventory("ClipDoubleRight",1,1)
-		SGDR C 0 A_FireBullets(12,6,7,4,"BulletPuff",0)
+		SGDR C 0 A_FireBullets(12,6,7,4,"BulletPuff")
 		SGDR BC 2 BRIGHT
 		SGDR D 2
 		SGDR D 0 A_JumpIfInventory("ClipDoubleRight",1,1)
@@ -135,9 +157,24 @@ ACTOR PkDoubleShotguns : Weapon
 		SGDR EFA 2
 		SGDR A 0 A_JumpIfInventory("SynthFireRight",1,"RFire")
 		Goto RIdle
+		
+	Reload:
+		TNT1 A 0 A_JumpIfInventory("ClipDoubleLeft",1,"EnableLReload")
+		TNT1 A 0 A_JumpIfInventory("ClipDoubleRight",1,"EnableRReload")
+		Goto LIdle
+		
+	EnableLReload:
+		TNT1 A 0 A_GiveInventory("IsLReloading",1)
+		Goto Reload+1
+		
+	EnableRReload:
+		TNT1 A 0 A_GiveInventory("IsRReloading",1)
+		Goto LIdle
+		
 	Fire:
 		TNT1 A 0
 		Goto Ready
+		
 	AltFire:
 		Stop
 	}
@@ -154,36 +191,13 @@ ACTOR GenericItem : Inventory
 ACTOR SynthFireActive : GenericItem {} // enables synthetic-fire system.
 ACTOR SynthFireLeft   : GenericItem {} // special refire-trackers for
 ACTOR SynthFireRight  : GenericItem {} // synthetic-fire dual-wielding.
-ACTOR Action_Reload : CustomInventory
+ACTOR IsLReloading : Inventory
 {
    Inventory.Amount 1
    Inventory.MaxAmount 1
    -INVBAR
-   + UNDROPPABLE
-
-   States
-   {
-       Use:
-       TNT1 A 0 A_GiveInventory("IsReloading",1)
-       Fail
-   }
 }
-
-ACTOR Action_ReloadCancel : CustomInventory
-{
-   Inventory.Amount 1
-   Inventory.MaxAmount 1
-   -INVBAR
-   + UNDROPPABLE
-
-   States
-   {
-       Use:
-       TNT1 A 0 A_TakeInventory("IsReloading",1)
-       Fail
-   }
-}
-ACTOR IsReloading : Inventory
+ACTOR IsRReloading : Inventory
 {
    Inventory.Amount 1
    Inventory.MaxAmount 1

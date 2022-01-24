@@ -296,12 +296,6 @@ script 892 (void)
         delay(1);
     }
 }
-Script 893 (void) {
-    GiveInventory("IsReloading",1);
-}
-Script 894 (void) {
-    takeInventory("IsReloading",1);
-}
 // FIN
 
 script "setDamageBoostPerTime" (int boost, int tics, int maxi) {
