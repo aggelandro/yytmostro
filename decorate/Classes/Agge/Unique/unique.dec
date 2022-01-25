@@ -4,7 +4,6 @@ ACTOR AggeUnique : DoomWeapon
   Weapon.SelectionOrder 3700
   Weapon.Kickback 100
   Weapon.AmmoType "CargaAgge"
-  Weapon.AmmoGive 10
   Weapon.AmmoUse 1
   Obituary ""
   Tag "UNIQUE"
