@@ -33,6 +33,10 @@ ACTOR AggeShield : Weapon
 			
 		Fire:
 			TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, "Berserked")
+			TNT1 A -1 A_Jump(256, "VSwing", "HSwing")
+			Wait
+			
+		VSwing:
 			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
 			CONE GH 4
 			CONE I 4 A_CustomPunch(3 * random(1, 10), TRUE,0,"ShieldPuff")
@@ -41,13 +45,33 @@ ACTOR AggeShield : Weapon
 			CONE K 4
 			Goto Ready
 			
+		HSwing:
+			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
+			CONE LM 4
+			CONE N 3 A_CustomPunch(3 * random(1, 10), TRUE,0,"ShieldPuff")
+			CONE OPQRS 2
+			CONE K 3
+			Goto Ready
+			
 		Berserked:
 			TNT1 A 0 A_Refire("BerserkedHold")
+			TNT1 A -1 A_Jump(256, "BerserkedVSwing", "BerserkedHSwing")
+			Wait
+			
+		BerserkedVSwing:
 			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
 			CONB GH 4
 			CONB I 2 A_CustomPunch(20 * random(1, 10), TRUE, 0, "ShieldPuff")
 			CONB I 2 Offset(20, 70)
 			CONB J 2
+			CONB K 2
+			Goto Ready
+			
+		BerserkedHSwing:
+			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
+			CONB LM 4
+			CONB N 1 A_CustomPunch(20 * random(1, 10), TRUE,0,"ShieldPuff")
+			CONB OPQRS 1
 			CONB K 2
 			Goto Ready
 			
@@ -69,9 +93,9 @@ ACTOR AggeShield : Weapon
 			CONB I 2
 			CONB I 10 A_SpawnItemEx("AxeFloorFire", 40)
 			CONB I 2
-			CONB I 2 Offset(20, 70)
-			CONB IHG 2
-			CONB G 1
+			CONB I 2
+			CONB IH 2
+			CONB G 3 Offset(1, 1)
 			TNT1 A 0 ACS_NamedExecuteWithResult("pausePlayer", 0)
 			Goto Ready
 		
