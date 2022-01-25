@@ -23,6 +23,7 @@
 ** Se guarda el player number en el primer elemento y a la hora de actualizar se compara contra ese elemento.
 ** Mismas precondiciones que el caso anterior.
 */
+global int 0:AGGE_TEAR_PROJECTILE_STATS[];
 global int 1:INITIALIZE_FLAG;
 
 int  SV_PLAYERS_NUMBERS_2_TIDS[PLAYER_MAX];
@@ -361,10 +362,8 @@ script "applyEffect" (int option, int dur) {
             ThrustThing(angle, 7, 0, 0);
         }; break;
         case 5: {
-            // Poison hace el daño de la lágrima al monstruo cada 2 segundos una X cantidad de veces
+            // Poison hace el daño sin modificadores de la lágrima al monstruo cada 2 segundos una X cantidad de veces
             int times = dur / 35;
-            int playerTID = GetActorProperty(0, APROP_TargetTID);
-            SetActivator(0, AAPTR_TRACER);
             mtid = UniqueTID();
             ptid = UniqueTID();
 
@@ -373,7 +372,7 @@ script "applyEffect" (int option, int dur) {
             SetActivator(ptid);
             SetPointer(AAPTR_TRACER, mtid);
             for (int i=0; i<times; i++) {
-                Thing_Damage2(mtid, GetUserVariable(playerTID, "user_tear_damage"), "Poison");
+                Thing_Damage2(mtid, AGGE_TEAR_PROJECTILE_STATS[2], "Poison");
                 Delay(70);
             }
 
@@ -432,61 +431,53 @@ script "getTracerHeight" (void) {
 
 // Tear Stats Information Script
 script 334 (void) NET CLIENTSIDE {
-    Log(s:"Radius: ", i:GetUserVariable(0, "user_tear_radius"));
-    Log(s:"Height: ", i:GetUserVariable(0, "user_tear_height"));
-    Log(s:"Damage: ", i:GetUserVariable(0, "user_tear_damage"));
-    Log(s:"Range: ", i:GetUserVariable(0, "user_tear_range"));
-    Log(s:"Speed Boost: ", i:GetUserVariable(0, "user_tear_speed_boost"));
-    Log(s:"Scale: ", i:GetUserVariable(0, "user_tear_scale"));
-    Log(s:"Fire Rate Boost: ", i:GetUserVariable(0, "user_tear_fire_rate_boost"));
+    Log(s:"Radius: ", i:AGGE_TEAR_PROJECTILE_STATS[0]);
+    Log(s:"Height: ", i:AGGE_TEAR_PROJECTILE_STATS[1]);
+    Log(s:"Damage: ", i:AGGE_TEAR_PROJECTILE_STATS[2]);
+    Log(s:"Range: ", i:AGGE_TEAR_PROJECTILE_STATS[3]);
+    Log(s:"Speed Boost: ", i:AGGE_TEAR_PROJECTILE_STATS[4]);
+    Log(s:"Scale: ", i:AGGE_TEAR_PROJECTILE_STATS[5]);
+    Log(s:"Fire Rate Boost: ", i:AGGE_TEAR_PROJECTILE_STATS[6]);
 }
 
 script "resetTearStats" (void) {
     // Radius y height no se pueden cambiar en zandro 3.0
-    SetUserVariable(0, "user_tear_radius", 2); //Radius
-    SetUserVariable(0, "user_tear_height", 3); //Height
-    SetUserVariable(0, "user_tear_damage", 2); //Damage
-    SetUserVariable(0, "user_tear_range", 35); //Range (en tics)
-    SetUserVariable(0, "user_tear_speed_boost", 0); //Speed Boost
-    SetUserVariable(0, "user_tear_scale", 1); //Scale
-    SetUserVariable(0, "user_tear_fire_rate_boost", 1);  //Fire Rate Boost
+    AGGE_TEAR_PROJECTILE_STATS[0] = 2;  //Radius
+    AGGE_TEAR_PROJECTILE_STATS[1] = 3;  //Height
+    AGGE_TEAR_PROJECTILE_STATS[2] = 2;  //Damage
+    AGGE_TEAR_PROJECTILE_STATS[3] = 35; //Range (en tics)
+    AGGE_TEAR_PROJECTILE_STATS[4] = 0;  //Speed Boost
+    AGGE_TEAR_PROJECTILE_STATS[5] = 1;  //Scale
+    AGGE_TEAR_PROJECTILE_STATS[6] = 1;  //Fire Rate Boost
+
+    if (IsNetworkGame()) {
+        for (int i=0; i<7; i++) {
+            ACS_NamedExecuteAlways("sendToClient", 0, i, AGGE_TEAR_PROJECTILE_STATS[i]);
+        }
+    }
+}
+
+script "sendToClient" (int entry, int val) CLIENTSIDE {
+    AGGE_TEAR_PROJECTILE_STATS[entry] = val;
 }
 
 script "addTearBoost" (int boostType, int bonus) {
-    switch(boostType) {
-        case 0: {
-            SetUserVariable(0, "user_tear_radius", GetUserVariable(0, "user_tear_radius") + bonus);
-        }; break;
-        case 1: {
-            SetUserVariable(0, "user_tear_height", GetUserVariable(0, "user_tear_height") + bonus);
-        }; break;
-        case 2: {
-            SetUserVariable(0, "user_tear_damage", GetUserVariable(0, "user_tear_damage") + bonus);
-        }; break;
-        case 3: {
-            SetUserVariable(0, "user_tear_range", GetUserVariable(0, "user_tear_range") + bonus);
-        }; break;
-        case 4: {
-            SetUserVariable(0, "user_tear_speed_boost", GetUserVariable(0, "user_tear_speed_boost") + bonus);
-        }; break;
-        case 5: {
-            SetUserVariable(0, "user_tear_scale", GetUserVariable(0, "user_tear_scale") + bonus);
-        }; break;
-        case 6: {
-            SetUserVariable(0, "user_tear_fire_rate_boost", GetUserVariable(0, "user_tear_fire_rate_boost") + bonus);
-        }; break;
+    int pnum = PlayerNumber();
+    AGGE_TEAR_PROJECTILE_STATS[boostType] = AGGE_TEAR_PROJECTILE_STATS[boostType] + bonus;
+    if (boostType == 6 && AGGE_TEAR_PROJECTILE_STATS[boostType] < 1) { AGGE_TEAR_PROJECTILE_STATS[boostType] = 1; }
+    if (IsNetworkGame()) {
+        ACS_NamedExecuteAlways("sendToClient", 0, boostType, AGGE_TEAR_PROJECTILE_STATS[boostType]);
     }
-    if (boostType == 6 && GetUserVariable(0, "user_tear_fire_rate_boost") < 1) { SetUserVariable(0, "user_tear_fire_rate_boost", 1); }
 }
 
 script "setTearStats" (void) {
     int ptid = GetActorProperty(0, APROP_TargetTID);
-    ACS_NamedExecuteAlways("setRadius", 0, GetUserVariable(ptid, "user_tear_radius"));
-    ACS_NamedExecuteAlways("setHeight", 0, GetUserVariable(ptid, "user_tear_height"));
-    ACS_NamedExecuteAlways("setDamage", 0, GetUserVariable(ptid, "user_tear_damage"), ptid);
-    ACS_NamedExecuteAlways("setRange", 0, GetUserVariable(ptid, "user_tear_range"));
-    ACS_NamedExecuteAlways("setSpeed", 0, GetUserVariable(ptid, "user_tear_speed_boost"));
-    ACS_NamedExecuteAlways("setScale", 0, GetUserVariable(ptid, "user_tear_scale"));
+    ACS_NamedExecuteAlways("setRadius", 0, AGGE_TEAR_PROJECTILE_STATS[0]);
+    ACS_NamedExecuteAlways("setHeight", 0, AGGE_TEAR_PROJECTILE_STATS[1]);
+    ACS_NamedExecuteAlways("setDamage", 0, AGGE_TEAR_PROJECTILE_STATS[2], ptid);
+    ACS_NamedExecuteAlways("setRange", 0, AGGE_TEAR_PROJECTILE_STATS[3]);
+    ACS_NamedExecuteAlways("setSpeed", 0, AGGE_TEAR_PROJECTILE_STATS[4]);
+    ACS_NamedExecuteAlways("setScale", 0, AGGE_TEAR_PROJECTILE_STATS[5]);
 
     if (CheckActorInventory(ptid, "ALumpOfCoalGiver") == 1) {
         Thing_SetTranslation(0, 2);
@@ -624,7 +615,7 @@ script "setScale" (int scale) CLIENTSIDE {
 }
 
 script "getFireRateBoost" (void) {
-    SetResultValue(GetUserVariable(0, "user_tear_fire_rate_boost"));
+    SetResultValue(AGGE_TEAR_PROJECTILE_STATS[6]);
 }
 
 script "showPowerups" (int displayFlag) CLIENTSIDE {

@@ -386,13 +386,6 @@ ACTOR Agge : DoomPlayer
   Player.ColorSet 6, "Light Red",     0xB0, 0xBF,  0xB2
   Player.ColorSet 7, "Light Blue",    0xC0, 0xCF,  0xC2
 	var int user_charge_state;
-	var int user_tear_radius;
-	var int user_tear_height;
-	var int user_tear_damage;
-	var int user_tear_range;
-	var int user_tear_speed_boost;
-	var int user_tear_scale;
-	var int user_tear_fire_rate_boost;
 
   States
   {
