@@ -372,7 +372,6 @@ script "applyEffect" (int option, int dur) {
             SetPointer(AAPTR_TRACER, mtid);
 
             //LA SUPERCLASE DEL MONSTER TIENE QUE TENER user_max_health SETEADO
-            log(s:"Max Health: ", i:GetUserVariable(mtid, "user_max_healh"));
             while (GetActorProperty(mtid, APROP_Health) > 0.0) {
                 Thing_Damage2(mtid, multiplyValue(GetUserVariable(mtid, "user_max_healh"), 0.1), "Bleeding");
                 Delay(175);
