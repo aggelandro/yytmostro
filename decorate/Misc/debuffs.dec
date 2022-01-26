@@ -53,17 +53,6 @@ ACTOR KnockBackDebuff : AbstractMonsterDebuff 4203 {
 	}
 }
 
-ACTOR PoisonDebuff : AbstractMonsterDebuff 4204 {
-	
-	States {
-		Pickup:
-			TNT1 A 0 A_JumpIfInventory("PoisonDebuffGiver", 1, "AlreadyActive")
-			TNT1 A 0 A_GiveInventory("PoisonDebuffGiver", 1)
-			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 5, 140)
-			Stop
-	}
-}
-
 
 
 //=========
@@ -78,4 +67,3 @@ ACTOR AbstractDebuffGiver : Inventory {
 ACTOR FearDebuffGiver : AbstractDebuffGiver {}
 ACTOR InfestationDebuffGiver : AbstractDebuffGiver {}
 ACTOR PetrifyingDebuffGiver : AbstractDebuffGiver {}
-ACTOR PoisonDebuffGiver : AbstractDebuffGiver {}
