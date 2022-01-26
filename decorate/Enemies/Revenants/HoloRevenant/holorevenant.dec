@@ -1,4 +1,4 @@
-ACTOR HoloRevenant
+ACTOR HoloRevenant : YYTMonster
 {
   Health 300
   Radius 20
@@ -19,7 +19,7 @@ ACTOR HoloRevenant
   Obituary "%o caught some fists."
   States
   {
-  Spawn:
+  SpawnLoop:
     SKEL AB 10 A_Look
     Loop
   See:

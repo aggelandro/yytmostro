@@ -17,7 +17,7 @@ ACTOR SpiderImp : DoomImp2
   Obituary "%o became food for a spider imp."
   States
   {
-  Spawn:
+  SpawnLoop:
     TROO AB 10 A_Look
     Loop
   See:

@@ -1,4 +1,4 @@
-ACTOR VayneAurelius
+ACTOR VayneAurelius : YYTMonster
 {
   Translation "80:95=176:187","128:144=176:187","64:79=176:187"
   Health 600
@@ -20,7 +20,7 @@ ACTOR VayneAurelius
   Obituary "%o got hit by the BlazeDragon-approved combo."
   States
   {
-  Spawn:
+  SpawnLoop:
     SKEL AB 5 A_Look
     Loop
   See:

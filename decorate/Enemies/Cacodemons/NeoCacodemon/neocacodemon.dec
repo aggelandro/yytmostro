@@ -1,4 +1,4 @@
-ACTOR NeoCacodemon 
+ACTOR NeoCacodemon : YYTMonster
 {
   Health 400
   Radius 31
@@ -17,7 +17,7 @@ ACTOR NeoCacodemon
   HitObituary "$OB_CACOHIT"
   States
   {
-  Spawn:
+  SpawnLoop:
     HEAD A 10 A_Look
     Loop
   See:

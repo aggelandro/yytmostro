@@ -1,4 +1,4 @@
-ACTOR Cryocubus
+ACTOR Cryocubus : YYTMonster
 {
   Health 4000
   Radius 40
@@ -23,7 +23,7 @@ ACTOR Cryocubus
   var int user_isfiring;
   States
   {
-  Spawn:
+  SpawnLoop:
     HIEL AB 15 Light("CryoLight") A_Look
     Loop
   See:

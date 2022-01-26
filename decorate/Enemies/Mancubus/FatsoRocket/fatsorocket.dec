@@ -1,4 +1,4 @@
-ACTOR FatsoRocket
+ACTOR FatsoRocket : YYTMonster
 {
   Translation "48:79=96:111", "144:152=96:111"
   Health 800
@@ -18,7 +18,7 @@ ACTOR FatsoRocket
   var int user_tiros;
   States
   {
-  Spawn:
+  SpawnLoop:
     FATT AB 15 A_Look
     Loop
   See:

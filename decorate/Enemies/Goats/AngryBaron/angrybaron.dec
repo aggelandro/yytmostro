@@ -1,4 +1,4 @@
-ACTOR AngryBaron
+ACTOR AngryBaron : YYTMonster
 {
   Health 1200
   Radius 24
@@ -17,7 +17,7 @@ ACTOR AngryBaron
   HitObituary "%o pissed off the wrong baron."
   States
   {
-  Spawn:
+  SpawnLoop:
     BOSS AB 10 A_Look
     Loop
   See:

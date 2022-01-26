@@ -1,4 +1,4 @@
-ACTOR RocketSpiderMastermind
+ACTOR RocketSpiderMastermind : YYTMonster
 {
   Health 3000
   Radius 128
@@ -22,7 +22,7 @@ ACTOR RocketSpiderMastermind
   Obituary "$OB_SPIDER"
   States
   {
-  Spawn:
+  SpawnLoop:
     SPID AB 10 A_Look
     Loop
   See:

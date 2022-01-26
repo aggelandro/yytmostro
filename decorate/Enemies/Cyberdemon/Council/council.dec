@@ -1,4 +1,4 @@
-ACTOR CouncilOfTheSeven
+ACTOR CouncilOfTheSeven : YYTMonster
 {
 	Health 2000
 	Radius 16
@@ -18,7 +18,7 @@ ACTOR CouncilOfTheSeven
 	DeathSound "*death"
 	States
 	{
-	Spawn:
+	SpawnLoop:
 		PLAY A 1 A_Look
 		Loop
 	See:

@@ -1,4 +1,4 @@
-Actor JetpackZombie 
+Actor JetpackZombie : YYTMonster
 {
   Obituary "%o was picked off by a Jetpack Zombie"
   Health 70
@@ -23,7 +23,7 @@ Actor JetpackZombie
   +FloatBob
   States
   {
-  Spawn:
+  SpawnLoop:
     JPZM A 0
     JPZM A 0 A_PlaySoundEx("JetpackZombie/Fly", "SoundSlot7", 1)
     JPZM A 1 A_Look
