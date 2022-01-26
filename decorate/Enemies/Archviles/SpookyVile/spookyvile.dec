@@ -15,7 +15,7 @@ ACTOR SpookyVileSpawner
 	}
 }
 
-ACTOR SpookyVile : ArchvileCustom
+ACTOR SpookyVile : Archvile2
 {
 	RenderStyle Stencil
 	StencilColor Grey

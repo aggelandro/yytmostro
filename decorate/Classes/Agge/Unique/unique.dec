@@ -1,6 +1,5 @@
 ACTOR AggeUnique : DoomWeapon
 {
-  Scale 0.5
   Weapon.SelectionOrder 3700
   Weapon.Kickback 100
   Weapon.AmmoType "CargaAgge"
