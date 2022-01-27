@@ -217,8 +217,8 @@ ACTOR BlackIsaacHands : IsaacHands {
 			TNT1 A -1 A_Jump(256, 31) //OFFSET
 			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 45, TRUE, -15)
 			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 315, FALSE, 15)
-			CFLM E 2 Bright
-			CFLM F 2 Bright
+			CFLB E 2 Bright
+			CFLB F 2 Bright
 			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 45, FALSE, -1)
 			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 45, FALSE, -30)
 			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 315, FALSE, 30)
@@ -273,8 +273,8 @@ ACTOR BlackIsaacHands : IsaacHands {
 			TNT1 A -1 A_Jump(256, 31) //OFFSET
 			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 45, TRUE, -15)
 			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 315, FALSE, 15)
-			CFLM E 2 Bright
-			CFLM F 2 Bright
+			CFLB E 2 Bright
+			CFLB F 2 Bright
 			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 45, FALSE, -1)
 			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 45, FALSE, -30)
 			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 315, FALSE, 30)

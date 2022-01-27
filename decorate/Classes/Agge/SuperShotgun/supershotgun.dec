@@ -9,67 +9,108 @@ ACTOR AggeSSG : DoomWeapon
   Inventory.PickupMessage "$GOTSHOTGUN2"
   Obituary "$OB_MPSSHOTGUN"
   Tag "$TAG_SUPERSHOTGUN"
-  States
-  {
+	
+  States {
+	
   Ready:
-    AGGE A 1 A_WeaponReady
-    Loop
-  Deselect:
+		TNT1 A 0 A_GiveInventory("ShellsLeft", 4)
+    Goto ReadyLoop
+		
+	ReadyLoop:
+		AGGE A 1 A_WeaponReady(WRF_ALLOWRELOAD)
+		Loop
+  
+	Deselect:
     AGGE A 1 A_Lower
     Loop
-  Select:
+  
+	Select:
     AGGE A 1 A_Raise
     Loop
-  Fire:
+  
+	Fire:
+		TNT1 A 0 A_JumpIf(CallACS("shellsLeft") == 0, "Empty")
     AGGE A 3
-		AGGE A 0 A_FireBullets (11.2, 7.1, 30, 5, "BulletPuff")
-    AGGE A 0 A_PlaySound ("agge/ssgfir", CHAN_AUTO)
+		TNT1 A 0 A_FireBullets (11.2, 7.1, 30, 5, "BulletPuff")
+		TNT1 A 0 A_TakeInventory("ShellsLeft", 2)
+    TNT1 A 0 A_PlaySound("agge/ssgfir", CHAN_AUTO)
     AGGE B 7 A_GunFlash
-    AGGE C 7
-    AGGE D 7 A_CheckReload
-		AGGE AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
-    AGGE E 7 A_OpenShotgun2
-    AGGE F 4 A_PlaySound ("agge/ssgopen", CHAN_WEAPON)
-    AGGE G 4 A_LoadShotgun2
-    AGGE H 3 A_PlaySound ("agge/ssgreload", CHAN_WEAPON)
-    AGGE F 3 
-		AGGE A 1 A_PlaySound ("agge/ssgclose", CHAN_WEAPON)
-		AGGE A 0 A_Refire
-    Goto Ready
-  Altfire:
-		AGGE A 0 A_JumpIfNoAmmo("Ready")
-		AGGE A 3
-	// AGGE AAA 0 A_FireCustomMissile("VacuumSSG",0,false)
-    AGGE A 0 A_FireBullets (15.2, 5.1, 110, 1, "BulletPuff")
-    AGGE A 0 A_PlaySound ("agge/ssgfir", CHAN_AUTO)
-		AGGE B 3 A_GunFlash
-		AGGE A 0 A_JumpIfNoAmmo("Ready")
-    AGGE A 3
-		AGGE A 0 A_FireBullets (15.2, 5.1, 110, 1, "BulletPuff")
-    AGGE A 0 A_PlaySound ("agge/ssgfir", CHAN_AUTO)
-		AGGE B 3 A_GunFlash
-    AGGE C 3
-    AGGE D 8 A_CheckReload
-		AGGE AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
-    AGGE E 8 A_OpenShotgun2
-    AGGE F 8 A_PlaySound ("agge/ssgopen", CHAN_WEAPON)
+    AGGE C 5
+    AGGE D 5 
+		AGGE E 7
+		AGGE D 2 
+		AGGE C 2
+		TNT1 A 0 A_Refire
+    Goto ReadyLoop
+		
+	Reload:
+		TNT1 A 0 A_JumpIfInventory("ShellsLeft", 4, "Ready")
+		TNT1 A 0 A_JumpIf(CallACS("shellsLeft") == 2, "Reload2")
+		TNT1 A 0 A_JumpIf(CallACS("shells") == 2, "Reload2")
+		// Full reload
+		TNT1 AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
+    AGGE F 8 A_OpenShotgun2
+    AGGE F 8 A_PlaySound("agge/ssgopen", CHAN_WEAPON)
     AGGE G 8 A_LoadShotgun2
-		TNT1 A 0 A_PlaySound ("agge/ssgreload", CHAN_WEAPON)
-		AGGE AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
-		AGGE E 8 A_OpenShotgun2
+		TNT1 A 0 A_PlaySound("agge/ssgreload", CHAN_WEAPON)
+		TNT1 AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
+		AGGE F 8 A_OpenShotgun2
     AGGE F 8
     AGGE G 8 A_LoadShotgun2
-    AGGE H 6 A_PlaySound ("agge/ssgreload", CHAN_WEAPON)
+    AGGE H 6 A_PlaySound("agge/ssgreload", CHAN_WEAPON)
     AGGE F 5
-		AGGE A 1 A_PlaySound ("agge/ssgclose", CHAN_WEAPON)
-		AGGE A 0 A_Refire
-		Goto Ready
-  Flash:
+		AGGE A 1 A_PlaySound("agge/ssgclose", CHAN_WEAPON)
+		TNT1 A 0 A_GiveInventory("ShellsLeft", 4)
+		Goto ReadyLoop
+		
+	Reload2:
+		// Reload de dos shells
+		TNT1 A 0 A_JumpIfNoAmmo("Empty")
+		TNT1 AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
+    AGGE F 7 A_OpenShotgun2
+    AGGE F 4 A_PlaySound("agge/ssgopen", CHAN_WEAPON)
+    AGGE G 4 A_LoadShotgun2
+    AGGE H 3 A_PlaySound("agge/ssgreload", CHAN_WEAPON)
+    AGGE F 3 
+		AGGE A 1 A_PlaySound("agge/ssgclose", CHAN_WEAPON)
+		TNT1 A 0 A_GiveInventory("ShellsLeft", 2)
+		Goto ReadyLoop
+		
+	Empty:
+    AGGE A 5 A_PlayWeaponSound("agge/ssgclick")
+		Goto ReadyLoop
+  
+	Altfire:
+		TNT1 A 0 A_JumpIf(CallACS("shellsLeft") == 0, "Empty")
+		TNT1 A 0 A_JumpIf(CallACS("shellsLeft") < 4, "Fire")
+		AGGE A 3
+	// AGGE AAA 0 A_FireCustomMissile("VacuumSSG",0,false)
+    TNT1 A 0 A_FireBullets (15.2, 5.1, 110, 1, "BulletPuff")
+		TNT1 A 0 A_TakeInventory("ShellsLeft", 2)
+    TNT1 A 0 A_PlaySound("agge/ssgfir", CHAN_AUTO)
+		AGGE B 3 A_GunFlash
+    AGGE A 3
+		TNT1 A 0 A_FireBullets (15.2, 5.1, 110, 1, "BulletPuff")
+		TNT1 A 0 A_TakeInventory("ShellsLeft", 2)
+    TNT1 A 0 A_PlaySound("agge/ssgfir", CHAN_AUTO)
+		AGGE B 3 A_GunFlash
+    AGGE C 3
+    AGGE D 6 
+		AGGE E 7
+		AGGE D 2
+		AGGE C 2
+		TNT1 A 0 A_Refire
+		Goto ReadyLoop
+  
+	Flash:
     TNT1 A 4 Bright A_Light1
     TNT1 A 3 Bright A_Light2
     Goto LightDone
-  Spawn:
+  
+	Spawn:
     SGN2 A -1
     Stop
   }
 }
+
+ACTOR ShellsLeft : Ammo { Inventory.MaxAmount 4 +IGNORESKILL }

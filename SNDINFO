@@ -7,6 +7,7 @@ agge/ssgfir AGGESSGF
 agge/ssgopen ASWAFOP1
 agge/ssgreload ASWAFLD1
 agge/ssgclose ASWAFCL1
+agge/ssgclick	DSCLICKY
 agge/visor VISOR
 agge/shildbrk SHILDBRK
 agge/hachazo AXE5
