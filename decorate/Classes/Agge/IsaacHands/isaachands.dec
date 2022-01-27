@@ -14,6 +14,7 @@ ACTOR IsaacHands : Weapon {
 
 		Ready:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 1)
 			TNT1 A -1 A_Jump(256, "ReadyLoop")
 		  Wait
 
@@ -23,6 +24,7 @@ ACTOR IsaacHands : Weapon {
 
 		Deselect:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 0)
 			TNT1 A -1 A_Jump(256, "DeselectLoop")
 		  Wait
 

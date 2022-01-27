@@ -389,6 +389,7 @@ ACTOR Agge : DoomPlayer
   Player.ColorSet 6, "Light Red",     0xB0, 0xBF,  0xB2
   Player.ColorSet 7, "Light Blue",    0xC0, 0xCF,  0xC2
 	var int user_charge_state;
+	var int user_isaac_hands_is_active;
 
   States
   {

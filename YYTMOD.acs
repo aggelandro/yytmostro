@@ -538,6 +538,10 @@ script "addTearBoost" (int boostType, int bonus) {
     if (IsNetworkGame()) {
         ACS_NamedExecuteAlways("sendToClient", 0, pnum, boostType, TEARS_STATS_BY_PLAYER[pnum][boostType]);
     }
+
+    if (GetUserVariable(0, "user_isaac_hands_is_active")) {
+        ACS_NamedExecuteAlways("showStats", 0, 1);
+    }
 }
 
 script "setTearStats" (void) {
@@ -704,6 +708,24 @@ script "showPowerups" (int displayFlag) CLIENTSIDE {
             HudMessage(s:""; HUDMSG_PLAIN, i, 0, 0, 0, 1);
         }
     }
+
+    ACS_NamedExecuteAlways("showStats", 0, displayFlag);
+}
+
+script "showStats" (int displayFlag) CLIENTSIDE {
+    int pnum = PlayerNumber();
+    int idFrom = DISPLAYABLE_POWERUP_MAX+1;
+    for (int i=0; i<TEAR_STATS; i++) {
+        if (displayFlag) {
+            str stat = StrRight(TEARS_STATS_TABLE[i], StrLen(TEARS_STATS_TABLE[i])-1);
+            if (i == 4 || i == 6) { stat = StrLeft(stat, StrLen(stat)-6); }
+            SetFont("BIGFONT");
+            HudMessage(s:stat, s:": ", i:TEARS_STATS_BY_PLAYER[pnum][i]; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP, idFrom+i, CR_ORANGE, 0.007, FixedDiv((i << 16) + 1.0 , 60.0) + 0.74, 0);
+        }
+        else {
+            HudMessage(s:""; HUDMSG_PLAIN, idFrom+i, 0, 0, 0, 1);
+        }
+    }
 }
 
 script "checkForNoGiverInInventory" (int option) {
@@ -804,4 +826,8 @@ script "dealBackstabDamage" (int damage) {
     // Segundo golpe y efecto bleeding
     Thing_Damage2(0, damage, "None");
     ACS_NamedExecuteAlways("applyEffect", 0, 6);
+}
+
+script "setIsaacHandsSelected" (int isOn) {
+    SetUserVariable(0, "user_isaac_hands_is_active", isOn);
 }

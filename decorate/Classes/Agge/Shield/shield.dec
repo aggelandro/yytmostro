@@ -6,7 +6,6 @@ ACTOR AggeShield : Weapon
   Tag "Fist"
   +WEAPON.WIMPY_WEAPON
   +WEAPON.MELEEWEAPON
-	+WEAPON.AXEBLOOD
 	
   States {
 	
