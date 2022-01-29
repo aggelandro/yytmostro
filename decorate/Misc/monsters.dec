@@ -20,7 +20,7 @@ ACTOR AbstractYYTZombie : YYTMonster {
 	Height 56
 	Speed 8
 	Monster
-    +FLOORCLIP
+  +FLOORCLIP
 	
 	States 
 	{
@@ -466,6 +466,7 @@ ACTOR Cacodemon2 : YYTMonster
 	DropItem "SacredHeart" 15
 	DropItem "SpoonBender" 15
 	DropItem "TheParasite" 15
+	DropItem "CompoundFracture" 15
 	DropItem "TwentyTwenty" 2
 	DropItem "TheWiz" 2
 	DropItem "Backstabber" 2
@@ -541,6 +542,7 @@ ACTOR Revenant2 : YYTMonster
 	DropItem "SacredHeart" 15
 	DropItem "SpoonBender" 15
 	DropItem "TheParasite" 15
+	DropItem "CompoundFracture" 15
 	DropItem "TwentyTwenty" 2
 	DropItem "TheWiz" 2
 	DropItem "Backstabber" 2
@@ -619,6 +621,7 @@ ACTOR Arachnotron2 : YYTMonster
 	DropItem "SacredHeart" 15
 	DropItem "SpoonBender" 15
 	DropItem "TheParasite" 15
+	DropItem "CompoundFracture" 15
   States
   {
   SpawnLoop:
@@ -691,6 +694,7 @@ ACTOR Fatso2 : YYTMonster
 	DropItem "SacredHeart" 22
 	DropItem "SpoonBender" 22
 	DropItem "TheParasite" 22
+	DropItem "CompoundFracture" 22
 	DropItem "TwentyTwenty" 5
 	DropItem "DarkMatter" 5
 	DropItem "Infestation2" 5
@@ -773,6 +777,7 @@ ACTOR PainElemental2 : YYTMonster
 	DropItem "SacredHeart" 22
 	DropItem "SpoonBender" 22
 	DropItem "TheParasite" 22
+	DropItem "CompoundFracture" 22
   States
   {
   SpawnLoop:
@@ -893,6 +898,7 @@ ACTOR BaronOfHell2 : YYTMonster
 	DropItem "SacredHeart" 32
 	DropItem "SpoonBender" 32
 	DropItem "TheParasite" 32
+	DropItem "CompoundFracture" 32
 	DropItem "TwentyTwenty" 10
 	DropItem "DarkMatter" 10
 	DropItem "Infestation2" 10
@@ -969,6 +975,7 @@ ACTOR HellKnight2 : BaronOfHell2
 	DropItem "SacredHeart" 15
 	DropItem "SpoonBender" 15
 	DropItem "TheParasite" 15
+	DropItem "CompoundFracture" 15
   States
   {
   SpawnLoop:
@@ -1103,6 +1110,7 @@ ACTOR Cyberdemon2 : YYTMonster
 	DropItem "SacredHeart" 60
 	DropItem "SpoonBender" 60
 	DropItem "TheParasite" 60
+	DropItem "CompoundFracture" 60
 	DropItem "TwentyTwenty" 50
 	DropItem "DarkMatter" 50
 	DropItem "Infestation2" 50
@@ -1203,6 +1211,7 @@ ACTOR SpiderMastermind2 : YYTMonster
 	DropItem "SacredHeart" 46
 	DropItem "SpoonBender" 46
 	DropItem "TheParasite" 46
+	DropItem "CompoundFracture" 46
 	DropItem "TwentyTwenty" 35
 	DropItem "DarkMatter" 35
 	DropItem "Infestation2" 35
