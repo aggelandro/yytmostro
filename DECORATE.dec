@@ -813,6 +813,7 @@ ACTOR SSGSpawner : CustomInventory replaces SuperShotgun
 		PickupAgge:
 			TNT1 A 0 A_JumpIfInventory("AggeSSG",1,"Spawn")
 			TNT1 A 0 A_GiveInventory("AggeSSG",1)
+			TNT1 A 0 A_GiveInventory("ShellsLeft",4)
 			TNT1 A 0 A_PlaySound("misc/w_pkup")
 			// TNT1 A 0 A_SpawnItemEx("SSGSpawner")
 			Fail

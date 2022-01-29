@@ -428,6 +428,7 @@ ACTOR NormalTearProjectile {
 		Death:
 			TNT1 A 0 A_SetUserVar("user_deadflag", 1)
 			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "DeathBoneTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIf(Z <= FloorZ, "DeathEnd") //Si toca el piso
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd")
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
@@ -456,6 +457,7 @@ ACTOR NormalTearProjectile {
 			Stop
 			
 		DeathBoneTear:
+			TNT1 A 0 A_JumpIf(Z <= FloorZ, "DeathBoneTearEnd")
 			TNT1 A 0 A_JumpIfInventory("TheParasiteGiver", 1, "DeathParasiteBoneTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isParasiteProjectile"), "DeathBoneTearEnd")
 			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
@@ -487,8 +489,10 @@ ACTOR NormalTearProjectile {
 			Goto DeathBoneTearEnd
 			
 		DeathBoneTearEnd:
-			TNT1 A 0 A_SpawnItemEx("BoneGib", 0, 0, -10, random(-5, 5), random(-5, 5), 3, random(0, 179), SXF_TRANSFERSCALE|SXF_TRANSFERTRANSLATION)
-	    TNT1 A 0 A_SpawnItemEx("BoneGib", 0, 0, -10, random(-5, 5), random(-5, 5), 3, random(180, 359), SXF_TRANSFERSCALE|SXF_TRANSFERTRANSLATION)
+			TNT1 A 0 A_SpawnItemEx("BoneGib", 0, 0, -10, random(-5, 5), random(-5, 5), 3, random(0, 89), SXF_TRANSFERSCALE|SXF_TRANSFERTRANSLATION)
+			TNT1 A 0 A_SpawnItemEx("BoneGib", 0, 0, -10, random(-5, 5), random(-5, 5), 3, random(90, 179), SXF_TRANSFERSCALE|SXF_TRANSFERTRANSLATION)
+			TNT1 A 0 A_SpawnItemEx("BoneGib", 0, 0, -10, random(-5, 5), random(-5, 5), 3, random(180, 269), SXF_TRANSFERSCALE|SXF_TRANSFERTRANSLATION)
+	    TNT1 A 0 A_SpawnItemEx("BoneGib", 0, 0, -10, random(-5, 5), random(-5, 5), 3, random(270, 359), SXF_TRANSFERSCALE|SXF_TRANSFERTRANSLATION)
 			EIDA A 2 A_PlaySound("agge/bonebreak",CHAN_AUTO)
 			EIDA B 2
 			EIDA C 2
@@ -520,6 +524,7 @@ ACTOR FearTearProjectile : NormalTearProjectile {
 			TNT1 A 0 A_SetUserVar("user_deadflag", 1)
 			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 4)
 			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "DeathBoneTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIf(Z <= FloorZ, "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd")
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
@@ -535,6 +540,7 @@ ACTOR FearTearProjectile : NormalTearProjectile {
 			Goto Super::DeathEnd
 			
 		DeathBoneTear:
+			TNT1 A 0 A_JumpIf(Z <= FloorZ, "DeathBoneTearEnd")
 			TNT1 A 0 A_JumpIfInventory("TheParasiteGiver", 1, "DeathParasiteBoneTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isParasiteProjectile"), "DeathBoneTearEnd")
 			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
@@ -592,6 +598,7 @@ ACTOR BouncingTearProjectile : NormalTearProjectile {
 		Death:
 			TNT1 A 0 A_SetUserVar("user_deadflag", 1)
 			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "DeathBoneTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIf(Z <= FloorZ, "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd")
 			TNT1 A 0 A_ChangeFlag("BOUNCEONACTORS", FALSE)
@@ -604,6 +611,7 @@ ACTOR BouncingTearProjectile : NormalTearProjectile {
 			Goto DeathEnd
 			
 		DeathBoneTear:
+			TNT1 A 0 A_JumpIf(Z <= FloorZ, "DeathBoneTearEnd")
 			TNT1 A 0 A_JumpIfInventory("TheParasiteGiver", 1, "DeathParasiteBoneTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isParasiteProjectile"), "DeathBoneTearEnd")
 			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
@@ -661,6 +669,7 @@ ACTOR BouncingFearTearProjectile : FearTearProjectile {
 		Death:
 			TNT1 A 0 A_SetUserVar("user_deadflag", 1)
 			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "DeathBoneTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIf(Z <= FloorZ, "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd") //OFFSET
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd") //OFFSET
 			TNT1 A 0 A_ChangeFlag("BOUNCEONACTORS", FALSE)
@@ -673,6 +682,7 @@ ACTOR BouncingFearTearProjectile : FearTearProjectile {
 			Goto DeathEnd
 			
 		DeathBoneTear:
+			TNT1 A 0 A_JumpIf(Z <= FloorZ, "DeathBoneTearEnd")
 			TNT1 A 0 A_JumpIfInventory("TheParasiteGiver", 1, "DeathParasiteBoneTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isParasiteProjectile"), "DeathBoneTearEnd")
 			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
@@ -766,23 +776,23 @@ ACTOR BoneGib {
 			Wait
 			
 		Gib1:
-			TBGA A 35
+			TBGA A 70
 			Stop
 		
 		Gib2:
-			TBGA B 35
+			TBGA B 70
 			Stop
 			
 		Gib3:
-			TBGA C 35
+			TBGA C 70
 			Stop
 			
 		Gib4:
-			TBGA D 35
+			TBGA D 70
 			Stop
 			
 		Gib5:
-			TBGA E 35
+			TBGA E 70
 			Stop
 	}
 }
