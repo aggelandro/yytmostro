@@ -336,6 +336,8 @@ ACTOR NormalTearProjectile {
 	var int user_vel_y;
 	var int user_vel_z;
 	var int user_spawn_tid;
+	var int user_bone_spawn_angle;
+	var int user_remaining_range;
 
 	+BRIGHT
 	+HITTRACER
@@ -352,12 +354,12 @@ ACTOR NormalTearProjectile {
 			TNT1 A 0 A_SetUserVar("user_vel_x", velx)
 			TNT1 A 0 A_SetUserVar("user_vel_y", vely)
 			TNT1 A 0 A_SetUserVar("user_vel_z", velz)
-			TNT1 A 0 A_SetUserVar("user_spawn_tid", 0)
 			TNT1 A 0 A_JumpIfInventory("SacredHeartGiver", 1, "SpawnHomingTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("SpoonBenderGiver", 1, "SpawnHomingTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("LostContactGiver", 1, "SpawnShieldedTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("MomsContactsGiver", 1, "SpawnPetrifyingTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("TheCommonColdGiver", 1, "SpawnPoisonTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "SpawnLoopBoneTear", AAPTR_TARGET)
 			TNT1 A -1 A_Jump(256, "SpawnLoop") //La forma que tiene decorate de resolver por herencia
 			Wait
 			
@@ -366,6 +368,7 @@ ACTOR NormalTearProjectile {
 			TNT1 A 0 A_JumpIfInventory("LostContactGiver", 1, "SpawnShieldedTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("MomsContactsGiver", 1, "SpawnPetrifyingTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("TheCommonColdGiver", 1, "SpawnPoisonTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "SpawnLoopBoneTear", AAPTR_TARGET)
 			TNT1 A -1 A_Jump(256, "SpawnLoop")
 			
 		SpawnShieldedTear:
@@ -373,30 +376,39 @@ ACTOR NormalTearProjectile {
 			TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", FALSE)
 			TNT1 A 0 A_JumpIfInventory("MomsContactsGiver", 1, "SpawnPetrifyingTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("TheCommonColdGiver", 1, "SpawnPoisonTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "SpawnLoopBoneTear", AAPTR_TARGET)
 			TNT1 A -1 A_Jump(256, "SpawnLoop")
 			Wait
 			
 		SpawnPetrifyingTear:
-			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 5), 3) //OFFSET
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 5), 4) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("TheCommonColdGiver", 1, "SpawnPoisonTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "SpawnLoopBoneTear", AAPTR_TARGET)
 			TNT1 A -1 A_Jump(256, "SpawnLoop")
 			Wait
 			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 6)
 			TNT1 A 0 A_SetUserVar("user_petrifying_flag", 1)
 			TNT1 A 0 A_JumpIfInventory("TheCommonColdGiver", 1, "SpawnPoisonTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "SpawnLoopBoneTear", AAPTR_TARGET)
 			TNT1 A -1 A_Jump(256, "SpawnLoop")
 			Wait
 			
 		SpawnPoisonTear:
-			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 5) == 0, "SpawnLoop")
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 5) == 0, 3) //OFFSET
 			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 11)
 			TNT1 A 0 A_SetUserVar("user_poison_flag", 1)
+			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "SpawnLoopBoneTear", AAPTR_TARGET)
 			TNT1 A -1 A_Jump(256, "SpawnLoop")
 			Wait
 			
 		SpawnLoop:
 			TBFI M 1 A_SeekerMissile(5, 8, SMF_LOOK|SMF_CURSPEED, 256, 3)
 			TBFI M 4
+			Loop
+			
+		SpawnLoopBoneTear:
+			TBAB A 2 A_SeekerMissile(5, 8, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			TBAB BAB 2
 			Loop
 			
 		XDeath:
@@ -415,6 +427,7 @@ ACTOR NormalTearProjectile {
 			
 		Death:
 			TNT1 A 0 A_SetUserVar("user_deadflag", 1)
+			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "DeathBoneTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd")
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
@@ -441,6 +454,48 @@ ACTOR NormalTearProjectile {
 			TDFI M 1
 			TDFI N 2
 			Stop
+			
+		DeathBoneTear:
+			TNT1 A 0 A_JumpIfInventory("TheParasiteGiver", 1, "DeathParasiteBoneTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isParasiteProjectile"), "DeathBoneTearEnd")
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x + cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y + sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(90, 135))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			Goto DeathBoneTearEnd
+			
+		DeathParasiteBoneTear:
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathBoneTearEnd")
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x - cos(Angle+90)*4, user_vel_y - sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x + cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y + sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(90, 135))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			Goto DeathBoneTearEnd
+			
+		DeathBoneTearEnd:
+			TNT1 A 0 A_SpawnItemEx("BoneGib", 0, 0, -10, random(-5, 5), random(-5, 5), 3, random(0, 179), SXF_TRANSFERSCALE|SXF_TRANSFERTRANSLATION)
+	    TNT1 A 0 A_SpawnItemEx("BoneGib", 0, 0, -10, random(-5, 5), random(-5, 5), 3, random(180, 359), SXF_TRANSFERSCALE|SXF_TRANSFERTRANSLATION)
+			EIDA A 2 A_PlaySound("agge/bonebreak",CHAN_AUTO)
+			EIDA B 2
+			EIDA C 2
+			EIDA D 2
+			EIDA E 2
+			EIDA F 2
+			Stop
   }
 }
 
@@ -452,6 +507,10 @@ ACTOR FearTearProjectile : NormalTearProjectile {
 			DMFI AB 5 A_SeekerMissile(5, 8, SMF_LOOK|SMF_CURSPEED, 256, 3)
 			Loop
 			
+		SpawnLoopBoneTear:
+			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 4)
+			Goto Super::SpawnLoopBoneTear
+			
 		XDeath:
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 8) == 0, "Super::XDeath")
 			TNT1 A 0 A_GiveInventory("FearDebuff", 1, AAPTR_TRACER)
@@ -459,6 +518,8 @@ ACTOR FearTearProjectile : NormalTearProjectile {
 			
 		Death:
 			TNT1 A 0 A_SetUserVar("user_deadflag", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 4)
+			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "DeathBoneTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd")
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
@@ -472,6 +533,37 @@ ACTOR FearTearProjectile : NormalTearProjectile {
 		DeathEnd:
 			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 4)
 			Goto Super::DeathEnd
+			
+		DeathBoneTear:
+			TNT1 A 0 A_JumpIfInventory("TheParasiteGiver", 1, "DeathParasiteBoneTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isParasiteProjectile"), "DeathBoneTearEnd")
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x + cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y + sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(90, 135))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			Goto DeathBoneTearEnd
+			
+		DeathParasiteBoneTear:
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathBoneTearEnd")
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x - cos(Angle+90)*4, user_vel_y - sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x + cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y + sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(90, 135))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			Goto DeathBoneTearEnd
   }
 }
 
@@ -481,11 +573,25 @@ ACTOR BouncingTearProjectile : NormalTearProjectile {
 	-BOUNCEONFLOORS
 	+BOUNCEONACTORS
 	+CANBOUNCEWATER
+	+USEBOUNCESTATE
 	
 	States {
 	
+		Bounce.Actor.Creature:
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 33), "DeathEnd")
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x + cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y + sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(90, 135))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			Goto SpawnLoopBoneTear
+	
 		Death:
 			TNT1 A 0 A_SetUserVar("user_deadflag", 1)
+			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "DeathBoneTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd")
 			TNT1 A 0 A_ChangeFlag("BOUNCEONACTORS", FALSE)
@@ -496,6 +602,37 @@ ACTOR BouncingTearProjectile : NormalTearProjectile {
 			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x - cos(Angle+90)*4, user_vel_y - sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
 			Goto DeathEnd
+			
+		DeathBoneTear:
+			TNT1 A 0 A_JumpIfInventory("TheParasiteGiver", 1, "DeathParasiteBoneTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isParasiteProjectile"), "DeathBoneTearEnd")
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x + cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y + sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(90, 135))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			Goto DeathBoneTearEnd
+			
+		DeathParasiteBoneTear:
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathBoneTearEnd")
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x - cos(Angle+90)*4, user_vel_y - sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x + cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y + sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(90, 135))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			Goto DeathBoneTearEnd
 	}
 }
 
@@ -505,11 +642,25 @@ ACTOR BouncingFearTearProjectile : FearTearProjectile {
 	-BOUNCEONFLOORS
 	+BOUNCEONACTORS
 	+CANBOUNCEWATER
+	+USEBOUNCESTATE
 	
 	States {
 	
+		Bounce.Actor.Creature:
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 33), "DeathEnd")
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x + cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y + sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(90, 135))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			Goto SpawnLoopBoneTear
+	
 		Death:
 			TNT1 A 0 A_SetUserVar("user_deadflag", 1)
+			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "DeathBoneTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd") //OFFSET
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd") //OFFSET
 			TNT1 A 0 A_ChangeFlag("BOUNCEONACTORS", FALSE)
@@ -520,6 +671,37 @@ ACTOR BouncingFearTearProjectile : FearTearProjectile {
 			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x - cos(Angle+90)*4, user_vel_y - sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
 			Goto DeathEnd
+			
+		DeathBoneTear:
+			TNT1 A 0 A_JumpIfInventory("TheParasiteGiver", 1, "DeathParasiteBoneTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isParasiteProjectile"), "DeathBoneTearEnd")
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x + cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y + sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(90, 135))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			Goto DeathBoneTearEnd
+			
+		DeathParasiteBoneTear:
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathBoneTearEnd")
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x - cos(Angle+90)*4, user_vel_y - sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x + cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y + sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(90, 135))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			Goto DeathBoneTearEnd
 	}
 }
 
@@ -527,6 +709,11 @@ ACTOR ParasiteTearProjectile : NormalTearProjectile {
 	States {
 		Spawn:
 			Goto Super::Spawn+1 //OFFSET
+			
+		SpawnLoopBoneTear:
+			TBAA A 2 A_SeekerMissile(5, 8, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			TBAA BAB 2
+			Loop
 	}
 }
 
@@ -534,6 +721,11 @@ ACTOR ParasiteFearTearProjectile : FearTearProjectile {
 	States {
 		Spawn:
 			Goto Super::Spawn+1 //OFFSET
+			
+			SpawnLoopBoneTear:
+			TBAA A 2 A_SeekerMissile(5, 8, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			TBAA BAB 2
+			Loop
 	}
 }
 
@@ -543,6 +735,11 @@ ACTOR ParasiteBouncingTearProjectile : BouncingTearProjectile {
 	States {
 		Spawn:
 			Goto Super::Spawn+1 //OFFSET
+			
+		SpawnLoopBoneTear:
+			TBAA A 2 A_SeekerMissile(5, 8, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			TBAA BAB 2
+			Loop
 	}
 }
 
@@ -552,6 +749,41 @@ ACTOR ParasiteBouncingFearTearProjectile : BouncingFearTearProjectile {
 	States {
 		Spawn:
 			Goto Super::Spawn+1 //OFFSET
+			
+		SpawnLoopBoneTear:
+			TBAA A 2 A_SeekerMissile(5, 8, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			TBAA BAB 2
+			Loop
+	}
+}
+
+ACTOR BoneGib {
+	+BRIGHT
+
+	States {
+		Spawn:
+			TNT1 A -1 NoDelay A_Jump(256, "Gib1", "Gib2", "Gib3", "Gib4", "Gib5")
+			Wait
+			
+		Gib1:
+			TBGA A 35
+			Stop
+		
+		Gib2:
+			TBGA B 35
+			Stop
+			
+		Gib3:
+			TBGA C 35
+			Stop
+			
+		Gib4:
+			TBGA D 35
+			Stop
+			
+		Gib5:
+			TBGA E 35
+			Stop
 	}
 }
 

@@ -39,7 +39,7 @@ ACTOR PetrifyingDebuff : AbstractMonsterDebuff 4202 {
 		Pickup:
 			TNT1 A 0 A_JumpIfInventory("PetrifyingDebuffGiver", 1, "AlreadyActive")
 			TNT1 A 0 A_GiveInventory("PetrifyingDebuffGiver", 1)
-			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 3, 140)
+			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 3, 105)
 			Stop
 	}
 }

@@ -195,8 +195,10 @@ ACTOR StatusEffect {
 	+NOGRAVITY
 	+NOINTERACTION
 	+SEEKERMISSILE
+	var int user_se_monster_height;
 	
 	States {
+	
 		Death:
 			TNT1 A 0
 			Stop
@@ -207,7 +209,7 @@ ACTOR BleedingEffect : StatusEffect {
 	
 	States {
 	  Spawn:
-			BLEE ABCDEFGHI 2 A_Warp(AAPTR_TRACER, 0, 0, ACS_NamedExecuteWithResult("getTracerHeight"), 0, WARPF_NOCHECKPOSITION)
+			BLEE ABCDEFGHI 2 A_Warp(AAPTR_TRACER, 0, 0, user_se_monster_height, 0, WARPF_NOCHECKPOSITION)
 			Loop
 	}
 }
@@ -216,7 +218,7 @@ ACTOR PoisonEffect : StatusEffect {
 	
 	States {
 	  Spawn:
-			POIS ABCDEFG 2 A_Warp(AAPTR_TRACER, 0, 0, ACS_NamedExecuteWithResult("getTracerHeight"), 0, WARPF_NOCHECKPOSITION)
+			POIS ABCDEFG 2 A_Warp(AAPTR_TRACER, 0, 0, user_se_monster_height, 0, WARPF_NOCHECKPOSITION)
 			Loop
 	}
 }
@@ -225,7 +227,7 @@ ACTOR FearEffect : StatusEffect {
 	
 	States {
 	  Spawn:
-			FEAR ABCB 2 A_Warp(AAPTR_TRACER, 0, 0, ACS_NamedExecuteWithResult("getTracerHeight"), 0, WARPF_NOCHECKPOSITION)
+			FEAR ABCB 2 A_Warp(AAPTR_TRACER, 0, 0, user_se_monster_height, 0, WARPF_NOCHECKPOSITION)
 			Loop
 	}
 }
@@ -234,7 +236,7 @@ ACTOR PetrifyingEffect : StatusEffect {
 	
 	States {
 	  Spawn:
-			PETR ABCB 20 A_Warp(AAPTR_TRACER, 0, 0, ACS_NamedExecuteWithResult("getTracerHeight"), 0, WARPF_NOCHECKPOSITION)
+			PETR ABCB 20 A_Warp(AAPTR_TRACER, 0, 0, user_se_monster_height, 0, WARPF_NOCHECKPOSITION)
 			Loop
 	}
 }

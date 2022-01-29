@@ -19,11 +19,23 @@ agge/lagrima TEARDEAD
 agge/pistolzap ASWELZP1
 agge/pistolded ASWDLCH2
 agge/pistoltzz ASWELID1
-agge/pedo AGGEPEDO
 agge/powerup POWERUP1
 agge/powerupuse PWUPUSE
 agge/powerupfail PWUPFAIL
 elect/spark LHTSPARK
+
+agge/pedo1 AGGEPED1
+agge/pedo2 AGGEPED2
+agge/pedo3 AGGEPED3
+agge/pedo4 AGGEPED4
+agge/pedo5 AGGEPED5
+agge/pedo6 AGGEPED6
+$random agge/pedo { agge/pedo1 agge/pedo2 agge/pedo3 agge/pedo4 agge/pedo5 agge/pedo6 }
+
+agge/bonebreak1 BONEBRK1
+agge/bonebreak2 BONEBRK2
+agge/bonebreak3 BONEBRK3
+$random agge/bonebreak { agge/bonebreak1 agge/bonebreak2 agge/bonebreak3 }
 
 agge/waskafire1 WLFSS1
 agge/waskafire2 WLFSS2
