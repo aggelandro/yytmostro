@@ -24,6 +24,7 @@ Actor VacuumBullet : ArachnotronPlasma
 {
 	RenderStyle None
 	Speed 0
+	SeeSound "vacuum/idle"
 	-MISSILE
 	-SOLID
 	States

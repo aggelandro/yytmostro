@@ -79,33 +79,6 @@ ando/ytho YTHO
 bruno/minab MINABEEP
 hielo/llama HIELOLLA
 
-// jetpackzombie afanado de realm667
-$Random JetpackZombie/Sight	{ JPZMSIG1 JPZMSIG2 JPZMSIG3 }
-JPZMSIG1			JPZMSIG1
-JPZMSIG2			JPZMSIG2
-JPZMSIG3			JPZMSIG3
-JetpackZombie/Fly		JPZMFLY
-$Random JetpackZombie/Active	{ JPZMACT1 JPZMACT2 JPZMACT3 }
-JPZMACT1			JPZMACT1
-JPZMACT2			JPZMACT2
-JPZMACT3			JPZMACT3
-$Random JetpackZombie/Fire	{ JPZMFIR1 JPZMFIR2 JPZMFIR3 }
-JPZMFIR1			JPZMFIR1
-JPZMFIR2			JPZMFIR2
-JPZMFIR3			JPZMFIR3
-$Random JetpackZombie/Pain	{ JPZMPAI1 JPZMPAI2 JPZMPAI3 }
-JPZMPAI1			JPZMPAI1
-JPZMPAI2			JPZMPAI2
-JPZMPAI3			JPZMPAI3
-
-//crackodemon afanado de realm667
-cracko/see s_cracko
-cracko/pain p_cracko
-crack/see cracksee
-crack/death crackdth
-blusoul/see blusosee
-blusoul/death blusodth
-
 // dinamita afanada del samsara
 TNT/Throw			TNTTOSS
 TNT/Fuse			TNTFUSE
@@ -179,4 +152,37 @@ exp5					DSLAGEX5
 exp6					DSLAGEX6
 exp7					DSLAGEX7
 
+//ENEMIGOS
 
+// jetpackzombie afanado de realm667
+$Random JetpackZombie/Sight	{ JPZMSIG1 JPZMSIG2 JPZMSIG3 }
+JPZMSIG1			JPZMSIG1
+JPZMSIG2			JPZMSIG2
+JPZMSIG3			JPZMSIG3
+JetpackZombie/Fly		JPZMFLY
+$Random JetpackZombie/Active	{ JPZMACT1 JPZMACT2 JPZMACT3 }
+JPZMACT1			JPZMACT1
+JPZMACT2			JPZMACT2
+JPZMACT3			JPZMACT3
+$Random JetpackZombie/Fire	{ JPZMFIR1 JPZMFIR2 JPZMFIR3 }
+JPZMFIR1			JPZMFIR1
+JPZMFIR2			JPZMFIR2
+JPZMFIR3			JPZMFIR3
+$Random JetpackZombie/Pain	{ JPZMPAI1 JPZMPAI2 JPZMPAI3 }
+JPZMPAI1			JPZMPAI1
+JPZMPAI2			JPZMPAI2
+JPZMPAI3			JPZMPAI3
+
+//crackodemon afanado de realm667
+cracko/see s_cracko
+cracko/pain p_cracko
+crack/see cracksee
+crack/death crackdth
+blusoul/see blusosee
+blusoul/death blusodth
+
+//mini arachnotron
+arania/sight ARANISEE
+arania/death ARANIDTH
+arania/active ARANIACT
+vacuum/idle VACIDLE
