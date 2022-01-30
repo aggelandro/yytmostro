@@ -268,10 +268,10 @@ ACTOR MiniArachnotron
   +ALWAYSFAST
   +THRUSPECIES
   -SOLID
-  SeeSound "baby/sight"
+  SeeSound "arania/sight"
   PainSound "baby/pain"
-  DeathSound "baby/death"
-  ActiveSound "baby/active"
+  DeathSound "arania/death"
+  ActiveSound "arania/active"
   Obituary "%o 's heels were bitten off by a spider."
   States
   {
