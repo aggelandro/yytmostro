@@ -22,6 +22,8 @@ agge/pistoltzz ASWELID1
 agge/powerup POWERUP1
 agge/powerupuse PWUPUSE
 agge/powerupfail PWUPFAIL
+agge/nailwall NAILWALL
+agge/nailhit NAILHIT
 elect/spark LHTSPARK
 
 agge/pedo1 AGGEPED1
@@ -36,6 +38,11 @@ agge/bonebreak1 BONEBRK1
 agge/bonebreak2 BONEBRK2
 agge/bonebreak3 BONEBRK3
 $random agge/bonebreak { agge/bonebreak1 agge/bonebreak2 agge/bonebreak3 }
+
+agge/scythebreak1 SCYTHBR1
+agge/scythebreak2 SCYTHBR2
+agge/scythebreak3 SCYTHBR3
+$random agge/scythebreak { agge/scythebreak1 agge/scythebreak2 agge/scythebreak3 }
 
 agge/waskafire1 WLFSS1
 agge/waskafire2 WLFSS2

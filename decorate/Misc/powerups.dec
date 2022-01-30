@@ -560,6 +560,23 @@ ACTOR Backstabber : AbstractAutoCustomPowerUp 4032 {
 	}
 }
 
+ACTOR 8InchNails : AbstractAutoCustomPowerUp 4034 {
+	Inventory.PickupMessage "8 Inch Nails: Stick it to 'em!"
+	
+	States {
+		
+		Spawn:
+			P034 A 1
+			Loop
+			
+		WeaponInInventory:
+			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "AlreadyActive")
+			TNT1 A 0 A_GiveInventory("8InchNailsGiver", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 2, 3)
+			Stop
+	}
+}
+
 
 
 
@@ -602,6 +619,7 @@ ACTOR TheCommonColdGiver : AbstractAutoTBOIGiver {}
 ACTOR TheInnerEyeGiver : AbstractAutoTBOIGiver {}
 ACTOR TheWizGiver : AbstractAutoTBOIGiver {}
 ACTOR BackstabberGiver : AbstractAutoTBOIGiver {}
+ACTOR 8InchNailsGiver : AbstractAutoTBOIGiver {}
 
 
 

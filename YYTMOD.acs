@@ -3,7 +3,7 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 34
+#define DISPLAYABLE_POWERUP_MAX 35
 #define TEAR_STATS 7
 
 int  SV_PLAYERS_NUMBERS_2_TIDS[PLAYER_MAX];
@@ -17,7 +17,7 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "TwentyTwentyGiverP015A0", "ALumpOfCoalGiverP016A0", "BloodOfTheMartyrGiverP017A0", "DarkMatterGiverP018A0", "Infestation2GiverP019A0",
     "LostContactGiverP020A0", "MomsContactsGiverP021A0", "MomsEyeGiverP022A0", "MutantSpiderGiverP023A0", "PiscesGiverP024A0",
     "RubberCementGiverP025A0", "SacredHeartGiverP026A0", "SpoonBenderGiverP027A0", "TheCommonColdGiverP028A0", "TheInnerEyeGiverP029A0",
-    "TheParasiteGiverP030A0", "TheWizGiverP031A0", "BackstabberGiverP032A0", "CompoundFractureGiverP033A0"
+    "TheParasiteGiverP030A0", "TheWizGiverP031A0", "BackstabberGiverP032A0", "CompoundFractureGiverP033A0", "8InchNailsGiverP034A0"
 };
 
 str SV_DRAWABLE_CHARGE_BAR[40] = {
@@ -365,6 +365,7 @@ script "applyEffect" (int option, int dur) {
             }
 
             SetActorState(ptid, "Death");
+            TakeInventory("PoisonDebuffGiver", 1);
             Thing_ChangeTID(ptid, 0);
         }; break;
         case 6: {
@@ -388,6 +389,7 @@ script "applyEffect" (int option, int dur) {
             }
 
             SetActorState(btid, "Death");
+            TakeInventory("BleedingDebuffGiver", 1);
             Thing_ChangeTID(btid, 0);
         }; break;
     }
@@ -625,13 +627,6 @@ script "setRange" (int range) {
 
     ThrustThingZ(0, 15, 1, 0);
     SetUserVariable(0, "user_deadflag", 1);
-
-    int ptid = GetActorProperty(0, APROP_TargetTID);
-    if (CheckActorInventory(ptid, "CompoundFractureGiver") == 1) {
-        SetActorState(0, "DeathBoneTearEnd");
-        terminate;
-    }
-
     SetActorState(0, "DeathEnd");
 }
 
