@@ -101,11 +101,11 @@ weapons/boltfire	BOLTFIRE
 weapons/slamfire	shotslam
 $volume weapons/slamfire 0.6
 
-terro/shotty1    DSSHOTG1
-terro/shotty2	 DSSHOTG2
-terro/shotty3	 DSSHOTG3
-terro/shotty4    DSSHOTG4
-$random weapons/shotgf	{ terro/shotty1 terro/shotty2 terro/shotty3 terro/shotty4 }
+terro/shotty1    TESHOTG1
+terro/shotty2	 TESHOTG2
+terro/shotty3	 TESHOTG3
+terro/shotty4    TESHOTG4
+$random weapons/shotgfte	{ terro/shotty1 terro/shotty2 terro/shotty3 terro/shotty4 }
 
 weapons/trace1                  dssrico1
 weapons/trace2                  dssrico2
