@@ -470,6 +470,8 @@ ACTOR Cacodemon2 : YYTMonster
 	DropItem "TwentyTwenty" 2
 	DropItem "TheWiz" 2
 	DropItem "Backstabber" 2
+	DropItem "8InchNails" 2
+	DropItem "DeathsTouch" 2
   States
   {
   SpawnLoop:
@@ -546,6 +548,8 @@ ACTOR Revenant2 : YYTMonster
 	DropItem "TwentyTwenty" 2
 	DropItem "TheWiz" 2
 	DropItem "Backstabber" 2
+	DropItem "8InchNails" 2
+	DropItem "DeathsTouch" 2
   States
   {
   SpawnLoop:
@@ -706,6 +710,8 @@ ACTOR Fatso2 : YYTMonster
 	DropItem "TheInnerEye" 5
 	DropItem "TheWiz" 5
 	DropItem "Backstabber" 5
+	DropItem "8InchNails" 5
+	DropItem "DeathsTouch" 5
   States
   {
   SpawnLoop:
@@ -910,6 +916,8 @@ ACTOR BaronOfHell2 : YYTMonster
 	DropItem "TheInnerEye" 10
 	DropItem "TheWiz" 10
 	DropItem "Backstabber" 10
+	DropItem "8InchNails" 10
+	DropItem "DeathsTouch" 10
   States
   {
   SpawnLoop:
@@ -1122,6 +1130,8 @@ ACTOR Cyberdemon2 : YYTMonster
 	DropItem "TheInnerEye" 50
 	DropItem "TheWiz" 50
 	DropItem "Backstabber" 50
+	DropItem "8InchNails" 50
+	DropItem "DeathsTouch" 50
   States
   {
   SpawnLoop:
@@ -1223,6 +1233,8 @@ ACTOR SpiderMastermind2 : YYTMonster
 	DropItem "TheInnerEye" 35
 	DropItem "TheWiz" 35
 	DropItem "Backstabber" 35
+	DropItem "8InchNails" 35
+	DropItem "DeathsTouch" 35
   States
   {
   SpawnLoop:

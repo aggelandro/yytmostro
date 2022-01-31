@@ -48,7 +48,7 @@ ACTOR Cat-O-Nine-Tails : AbstractAutoCustomPowerUp 4000 {
 			TNT1 A 0 A_JumpIfInventory("CONTGiver", 1, "AlreadyActive")
 			TNT1 A 0 A_GiveInventory("CONTGiver", 1)
 			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 2, 2)
-			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, 75)
+			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, 90)
 			Stop
 	}
 }
@@ -187,7 +187,7 @@ ACTOR SafetyPin : AbstractAutoCustomPowerUp 4007 {
 			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 1, 1)
 			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 0, 1)
 			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 5, 1)
-			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, 60)
+			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, 75)
 			Stop
 	}
 }
@@ -242,7 +242,7 @@ ACTOR Magic8Ball : AbstractAutoCustomPowerUp 4010 {
 		WeaponInInventory:
 			TNT1 A 0 A_JumpIfInventory("Magic8BallGiver", 1, "AlreadyActive")
 			TNT1 A 0 A_GiveInventory("Magic8BallGiver", 1)
-			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, 60)
+			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, 90)
 			Stop
 	}
 }
@@ -259,7 +259,7 @@ ACTOR Screw : AbstractAutoCustomPowerUp 4011 {
 		WeaponInInventory:
 			TNT1 A 0 A_JumpIfInventory("ScrewGiver", 1, "AlreadyActive")
 			TNT1 A 0 A_GiveInventory("ScrewGiver", 1)
-			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, 75)
+			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, 90)
 			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 6, 2)
 			Stop
 	}
@@ -277,7 +277,7 @@ ACTOR Toothpicks : AbstractAutoCustomPowerUp 4012 {
 		WeaponInInventory:
 			TNT1 A 0 A_JumpIfInventory("ToothpicksGiver", 1, "AlreadyActive")
 			TNT1 A 0 A_GiveInventory("ToothpicksGiver", 1)
-			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, 60)
+			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, 75)
 			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 6, 1)
 			Stop
 	}
@@ -295,7 +295,7 @@ ACTOR TornPhoto : AbstractAutoCustomPowerUp 4013 {
 		WeaponInInventory:
 			TNT1 A 0 A_JumpIfInventory("TornPhotoGiver", 1, "AlreadyActive")
 			TNT1 A 0 A_GiveInventory("TornPhotoGiver", 1)
-			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, 60)
+			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, 75)
 			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 6, 1)
 			Stop
 	}
@@ -419,7 +419,7 @@ ACTOR LostContact : AbstractAutoCustomPowerUp 4020 {
 		WeaponInInventory:
 			TNT1 A 0 A_JumpIfInventory("LostContactGiver", 1, "AlreadyActive")
 			TNT1 A 0 A_GiveInventory("LostContactGiver", 1)
-			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, -60)
+			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 4, -75)
 			Stop
 	}
 }
@@ -577,6 +577,24 @@ ACTOR 8InchNails : AbstractAutoCustomPowerUp 4034 {
 	}
 }
 
+ACTOR DeathsTouch : AbstractAutoCustomPowerUp 4035 {
+	Inventory.PickupMessage "Death's Touch: Piercing shots + DMG up"
+	
+	States {
+		
+		Spawn:
+			P035 A 1
+			Loop
+			
+		WeaponInInventory:
+			TNT1 A 0 A_JumpIfInventory("DeathsTouchGiver", 1, "AlreadyActive")
+			TNT1 A 0 A_GiveInventory("DeathsTouchGiver", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 2, 3)
+			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 6, -2)
+			Stop
+	}
+}
+
 
 
 
@@ -620,6 +638,7 @@ ACTOR TheInnerEyeGiver : AbstractAutoTBOIGiver {}
 ACTOR TheWizGiver : AbstractAutoTBOIGiver {}
 ACTOR BackstabberGiver : AbstractAutoTBOIGiver {}
 ACTOR 8InchNailsGiver : AbstractAutoTBOIGiver {}
+ACTOR DeathsTouchGiver : AbstractAutoTBOIGiver {}
 
 
 

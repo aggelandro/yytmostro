@@ -3,8 +3,9 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 35
+#define DISPLAYABLE_POWERUP_MAX 36
 #define TEAR_STATS 7
+#define TEMPORAL_POWERUPS 5
 
 int  SV_PLAYERS_NUMBERS_2_TIDS[PLAYER_MAX];
 bool ENERGY_SHIELD_RELOAD = true;
@@ -17,7 +18,8 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "TwentyTwentyGiverP015A0", "ALumpOfCoalGiverP016A0", "BloodOfTheMartyrGiverP017A0", "DarkMatterGiverP018A0", "Infestation2GiverP019A0",
     "LostContactGiverP020A0", "MomsContactsGiverP021A0", "MomsEyeGiverP022A0", "MutantSpiderGiverP023A0", "PiscesGiverP024A0",
     "RubberCementGiverP025A0", "SacredHeartGiverP026A0", "SpoonBenderGiverP027A0", "TheCommonColdGiverP028A0", "TheInnerEyeGiverP029A0",
-    "TheParasiteGiverP030A0", "TheWizGiverP031A0", "BackstabberGiverP032A0", "CompoundFractureGiverP033A0", "8InchNailsGiverP034A0"
+    "TheParasiteGiverP030A0", "TheWizGiverP031A0", "BackstabberGiverP032A0", "CompoundFractureGiverP033A0", "8InchNailsGiverP034A0",
+    "DeathsTouchGiverP035A0"
 };
 
 str SV_DRAWABLE_CHARGE_BAR[40] = {
@@ -25,6 +27,10 @@ str SV_DRAWABLE_CHARGE_BAR[40] = {
     "CHRBAR14", "CHRBAR15", "CHRBAR16", "CHRBAR17", "CHRBAR18", "CHRBAR19", "CHRBAR20", "CHRBAR21", "CHRBAR22", "CHRBAR23", "CHRBAR24", 
     "CHRBAR25", "CHRBAR26", "CHRBAR27", "CHRBAR28", "CHRBAR29", "CHRBAR30", "CHRBAR31", "CHRBAR32", "CHRBAR33", "CHRBAR34", "CHRBAR35", 
     "CHRBAR36", "CHRBAR37", "CHRBAR38", "CHRBAR39", "CHRBAR40", "CHRBAR41", "CHRBAR42"
+};
+
+str SV_TEMPORAL_POWERUPS[TEMPORAL_POWERUPS] = {
+    "RubberCementGiver", "SacredHeartGiver", "SpoonBenderGiver", "TheParasiteGiver", "CompoundFractureGiver"
 };
 
 script "yytmod_mensajesalida" DEATH
@@ -100,6 +106,12 @@ script 335 ENTER {
     int classNum = PlayerClass(pnum);
     if (classNum == 0) {
         ACS_NamedExecuteAlways("loadTearStatsData", 0, pnum);
+
+        for (int i; i<TEMPORAL_POWERUPS; i++) {
+            if (CheckInventory(SV_TEMPORAL_POWERUPS[i]) >= 1) {
+                TakeInventory(SV_TEMPORAL_POWERUPS[i], 1);
+            }
+        }
                 
         while (true) {
             if (ENERGY_SHIELD_RELOAD) {
@@ -734,7 +746,7 @@ script "activateTemporalPowerup" (int option) {
         case 26: {
             ACS_NamedExecuteAlways("addTearBoost", 0, 2, 1);
             ACS_NamedExecuteAlways("addTearBoost", 0, 6, -2);
-            ACS_NamedExecuteAlways("addTearBoost", 0, 4, -75);
+            ACS_NamedExecuteAlways("addTearBoost", 0, 4, -90);
             //ACS_NamedExecuteAlways("addTearBoost", 0, 1, 2); //Más height (para cuando zandro lo soporte)
         }
         case 33: {
@@ -751,7 +763,7 @@ script "activateTemporalPowerup" (int option) {
         case 26: {
             ACS_NamedExecuteAlways("addTearBoost", 0, 2, -1);
             ACS_NamedExecuteAlways("addTearBoost", 0, 6, 2);
-            ACS_NamedExecuteAlways("addTearBoost", 0, 4, 75);
+            ACS_NamedExecuteAlways("addTearBoost", 0, 4, 90);
             //ACS_NamedExecuteAlways("addTearBoost", 0, 1, -2); //Más height (para cuando zandro lo soporte)
         }
         case 33: {
@@ -837,4 +849,23 @@ script "isParasiteProjectile" (void) {
                 || CheckActorClass(0, "ParasiteFearTearProjectile")
                 || CheckActorClass(0, "ParasiteBouncingTearProjectile")
                 || CheckActorClass(0, "ParasiteBouncingFearTearProjectile"));
+}
+
+script "setDamageToChildren" (int tid) {
+    int masterDmg = GetActorProperty(0, APROP_Damage);
+    SetActivator(tid);
+    SetUserVariable(0, "user_master_damage", masterDmg);
+    Thing_ChangeTID(tid, 0);
+}
+
+script "dealPiercingDamage" (void) {
+    int damageToDeal = GetUserVariable(0, "user_master_damage");
+    SetActivator(0, AAPTR_TRACER);
+    if (CheckInventory("PiercingDamageFlag") == 0) {
+        GiveInventory("PiercingDamageFlag", 1);
+        Thing_Damage2(0, damageToDeal*2, "Piercing");
+        PlaySound(0, "agge/nailhit", CHAN_AUTO);
+        Delay(18);
+        TakeInventory("PiercingDamageFlag", 1);
+    }
 }

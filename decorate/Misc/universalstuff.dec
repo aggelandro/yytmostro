@@ -319,7 +319,7 @@ ACTOR FriendlyMiniArachnotron : MiniArachnotron {
 	States {
 	
 		Spawn:
-			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimer", 1050) // Viven 30 segs
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimer", 2100) // Viven 1 min
 			Goto Super::Spawn
 			
 		Melee:
