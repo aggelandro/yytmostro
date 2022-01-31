@@ -853,8 +853,12 @@ script "isParasiteProjectile" (void) {
 
 script "setDamageToChildren" (int tid) {
     int masterDmg = GetActorProperty(0, APROP_Damage);
+    int masterPetrFlag = GetUserVariable(0, "user_petrifying_flag");
+    int masterPoisonFlag = GetUserVariable(0, "user_poison_flag");
     SetActivator(tid);
     SetUserVariable(0, "user_master_damage", masterDmg);
+    SetUserVariable(0, "user_petrifying_flag", masterPetrFlag);
+    SetUserVariable(0, "user_poison_flag", masterPoisonFlag);
     Thing_ChangeTID(tid, 0);
 }
 
