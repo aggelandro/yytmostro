@@ -92,7 +92,7 @@ script 332 OPEN {
 }
 
 Script 333 (void) NET {
-    GiveInventory("DetonateWaskaAction", 1);
+    GiveInventory("WeaponSpecialAction", 1);
 }
  
 script "setEnergyShieldReload" (int flag) {
@@ -884,6 +884,10 @@ script "dealPiercingDamage" (void) {
 script "setTracerToPlayer" (void) {
     // La cantidad de tics completa de la rotación del sprite tiene que ser idealmente de 5
     int ptid = GetActorProperty(0, APROP_TargetTID);
+    int currVelX = GetActorVelX(0);
+    int currVelY = GetActorVelY(0);
+    int currVelZ = GetActorVelZ(0);
+    SetActorVelocity(0, 0, 0, 0, false, false);
     int currAngle = GetActorAngle(0);
     int newAngle;
     if (currAngle > 0.5) {
@@ -896,6 +900,7 @@ script "setTracerToPlayer" (void) {
     SetActorAngle(0, newAngle);
     PlaySound(0, "agge/reflactivated", CHAN_AUTO);
     Delay(4);
+    SetActorVelocity(0, currVelX, currVelY, currVelZ, false, false);
     SetPointer(AAPTR_TRACER, ptid);
-    TakeActorInventory(ptid, "DetonateWaskaAction", 1);
+    TakeActorInventory(ptid, "WeaponSpecialAction", 1);
 }
