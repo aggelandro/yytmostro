@@ -24,6 +24,7 @@ agge/powerupuse PWUPUSE
 agge/powerupfail PWUPFAIL
 agge/nailwall NAILWALL
 agge/nailhit NAILHIT
+agge/reflactivated REFLACTD
 elect/spark LHTSPARK
 
 agge/pedo1 AGGEPED1
@@ -43,6 +44,10 @@ agge/scythebreak1 SCYTHBR1
 agge/scythebreak2 SCYTHBR2
 agge/scythebreak3 SCYTHBR3
 $random agge/scythebreak { agge/scythebreak1 agge/scythebreak2 agge/scythebreak3 }
+
+agge/scythehit1 SCYTHIT1
+agge/scythehit2 SCYTHIT2
+$random agge/scythehit { agge/scythehit1 agge/scythehit2 }
 
 agge/waskafire1 WLFSS1
 agge/waskafire2 WLFSS2

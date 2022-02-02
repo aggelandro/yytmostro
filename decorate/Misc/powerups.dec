@@ -595,6 +595,23 @@ ACTOR DeathsTouch : AbstractAutoCustomPowerUp 4035 {
 	}
 }
 
+ACTOR MyReflection : AbstractAutoCustomPowerUp 4036 {
+	Inventory.PickupMessage "My Reflection: Boomerang tears"
+	
+	States {
+		
+		Spawn:
+			P036 A 1
+			Loop
+			
+		WeaponInInventory:
+			TNT1 A 0 A_JumpIfInventory("MyReflectionGiver", 1, "AlreadyActive")
+			TNT1 A 0 A_GiveInventory("MyReflectionGiver", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("addTearBoost", 3, 10)
+			Stop
+	}
+}
+
 
 
 
@@ -639,6 +656,7 @@ ACTOR TheWizGiver : AbstractAutoTBOIGiver {}
 ACTOR BackstabberGiver : AbstractAutoTBOIGiver {}
 ACTOR 8InchNailsGiver : AbstractAutoTBOIGiver {}
 ACTOR DeathsTouchGiver : AbstractAutoTBOIGiver {}
+ACTOR MyReflectionGiver : AbstractAutoTBOIGiver {}
 
 
 

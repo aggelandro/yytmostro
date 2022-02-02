@@ -3,7 +3,7 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 36
+#define DISPLAYABLE_POWERUP_MAX 37
 #define TEAR_STATS 7
 #define TEMPORAL_POWERUPS 5
 
@@ -19,7 +19,7 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "LostContactGiverP020A0", "MomsContactsGiverP021A0", "MomsEyeGiverP022A0", "MutantSpiderGiverP023A0", "PiscesGiverP024A0",
     "RubberCementGiverP025A0", "SacredHeartGiverP026A0", "SpoonBenderGiverP027A0", "TheCommonColdGiverP028A0", "TheInnerEyeGiverP029A0",
     "TheParasiteGiverP030A0", "TheWizGiverP031A0", "BackstabberGiverP032A0", "CompoundFractureGiverP033A0", "8InchNailsGiverP034A0",
-    "DeathsTouchGiverP035A0"
+    "DeathsTouchGiverP035A0", "MyReflectionGiverP036A0"
 };
 
 str SV_DRAWABLE_CHARGE_BAR[40] = {
@@ -433,7 +433,6 @@ script "shells" (void) {
 
 
 
-
 /************************
 *   ARMA 4 CLASE AGGE   
 ************************/
@@ -552,8 +551,8 @@ script "setTearStats" (void) {
     ACS_NamedExecuteAlways("setRadius", 0, TEARS_STATS_BY_PLAYER[pnum][0]);
     ACS_NamedExecuteAlways("setHeight", 0, TEARS_STATS_BY_PLAYER[pnum][1]);
     ACS_NamedExecuteAlways("setDamage", 0, TEARS_STATS_BY_PLAYER[pnum][2], ptid);
-    ACS_NamedExecuteAlways("setRange", 0, TEARS_STATS_BY_PLAYER[pnum][3]);
-    ACS_NamedExecuteAlways("setSpeed", 0, TEARS_STATS_BY_PLAYER[pnum][4]);
+    ACS_NamedExecuteAlways("setRange", 0, TEARS_STATS_BY_PLAYER[pnum][3], ptid);
+    ACS_NamedExecuteAlways("setSpeed", 0, TEARS_STATS_BY_PLAYER[pnum][4], ptid);
     ACS_NamedExecuteAlways("setScale", 0, TEARS_STATS_BY_PLAYER[pnum][5]);
 
     if (CheckActorInventory(ptid, "ALumpOfCoalGiver") == 1) {
@@ -628,7 +627,11 @@ function int multiplyValue(int value, int multiplier) {
     return value;
 }
 
-script "setRange" (int range) {
+script "setRange" (int range, int ptid) {
+    if (CheckActorInventory(ptid, "MyReflectionGiver") == 1) {
+        range = multiplyValue(range, 1.6);
+    }
+
     while (range > 0) {
         if (GetUserVariable(0, "user_deadflag")) { terminate; }
 
@@ -642,7 +645,11 @@ script "setRange" (int range) {
     SetActorState(0, "DeathEnd");
 }
 
-script "setSpeed" (int boost) {
+script "setSpeed" (int boost, int ptid) {
+    if (CheckActorInventory(ptid, "MyReflectionGiver") == 1) {
+        boost = multiplyValue(boost, 1.6);
+    }
+
     if (boost != 0) {
         int newVelX = ((GetActorVelX(0) * boost) / 100) + GetActorVelX(0);
         int newVelY = ((GetActorVelY(0) * boost) / 100) + GetActorVelY(0);
@@ -868,8 +875,27 @@ script "dealPiercingDamage" (void) {
     if (CheckInventory("PiercingDamageFlag") == 0) {
         GiveInventory("PiercingDamageFlag", 1);
         Thing_Damage2(0, damageToDeal*2, "Piercing");
-        PlaySound(0, "agge/nailhit", CHAN_AUTO);
+        PlaySound(0, "agge/scythehit", CHAN_AUTO);
         Delay(18);
         TakeInventory("PiercingDamageFlag", 1);
     }
+}
+
+script "setTracerToPlayer" (void) {
+    // La cantidad de tics completa de la rotación del sprite tiene que ser idealmente de 5
+    int ptid = GetActorProperty(0, APROP_TargetTID);
+    int currAngle = GetActorAngle(0);
+    int newAngle;
+    if (currAngle > 0.5) {
+        newAngle = currAngle - 0.5;
+    }
+    else {
+        newAngle = currAngle + 0.5;
+    }
+
+    SetActorAngle(0, newAngle);
+    PlaySound(0, "agge/reflactivated", CHAN_AUTO);
+    Delay(4);
+    SetPointer(AAPTR_TRACER, ptid);
+    TakeActorInventory(ptid, "DetonateWaskaAction", 1);
 }
