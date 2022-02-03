@@ -19,8 +19,13 @@ ACTOR IsaacHands : Weapon {
 		  Wait
 
 		ReadyLoop:
+			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, "MLReadyLoop")
 		  CFLM AAAABBBBCCCC 1 A_WeaponReady
 		  Loop
+			
+		MLReadyLoop:
+			CFLR AAAABBBBCCCC 1 A_WeaponReady
+		  Loop			
 
 		Deselect:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
@@ -29,20 +34,47 @@ ACTOR IsaacHands : Weapon {
 		  Wait
 
 		DeselectLoop:
+			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, 2)
 		  CFLM A 1 A_Lower
+		  Loop
+			CFLR A 1 A_Lower
 		  Loop
 
 		Select:
+			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, 2)
 		  CFLM A 1 A_Raise
+		  Loop
+			CFLR A 1 A_Raise
 		  Loop
 
 		Fire:
+			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, "MLFire")
 			CFLM A 1 Offset (0, 40)
 			CFLM D 2 Offset (0, 50)
 			CFLM D 2 Offset (0, 36)
 			CFLM E 4 Bright
 			TNT1 A 0 A_JumpIfInventory("RubberCementGiver", 1, "FireBouncingShot")
 			Goto FireShot
+			
+		MLFire:
+			TNT1 A 0 A_Refire("MLHold")
+			TNT1 A -1 A_Jump(256, "ReadyLoop")
+		  Wait
+			
+		MLHold:
+			CFLR A 1 Offset (0, 40)
+			CFLR D 2 Offset (0, 50)
+			TNT1 A 0 ACS_NamedExecuteWithResult("loadChargedAttack", ACS_NamedExecuteWithResult("getChargedAttackTime"))
+			Goto MLLoop
+			
+		MLLoop:
+			CFLR D 1 Offset (0, 36)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("getChargeState") == 2, "ReadyLoop")
+			TNT1 A 0 A_JumpIfInventory("RubberCementGiver", 1, 2)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("getChargeState") == 1, "FireCharged")
+			Loop
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("getChargeState") == 1, "FireBouncingCharged")
+			Loop
 		
 		FireShot:
 			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
@@ -112,22 +144,22 @@ ACTOR IsaacHands : Weapon {
 			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 11) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 10) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("TwentyTwentyGiver", 1, 4) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 45, TRUE, -15)
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 315, FALSE, 15)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 60, TRUE, -15)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 300, FALSE, 15)
 			TNT1 A -1 A_Jump(256, 36) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 45, TRUE, -25)
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 45, FALSE, -5)
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 315, FALSE, 25)
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 315, FALSE, 5)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 60, TRUE, -25)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 60, FALSE, -5)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 300, FALSE, 25)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 300, FALSE, 5)
 			TNT1 A -1 A_Jump(256, 31) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 45, TRUE, -15)
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 315, FALSE, 15)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 60, TRUE, -15)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 300, FALSE, 15)
 			CFLM E 2 Bright
 			CFLM F 2 Bright
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 45, FALSE, -1)
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 45, FALSE, -30)
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 315, FALSE, 30)
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 315, FALSE, 1)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 60, FALSE, -1)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 60, FALSE, -30)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 300, FALSE, 30)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 300, FALSE, 1)
 			TNT1 A -1 A_Jump(256, 22) //OFFSET
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 15), 6) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 6) //OFFSET
@@ -155,6 +187,132 @@ ACTOR IsaacHands : Weapon {
 			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile")
 			TNT1 A 0 A_JumpIfInventory("LoopFlag", 1, "FireEnd")
 			Loop
+			
+		FireCharged:
+			TNT1 A 0 A_PlaySound("agge/chargedatkml", CHAN_WEAPON)
+			CFLR E 2 Bright
+			CFLR F 2 Bright
+			// The Wiz cambiaría completamente el disparo... soon te-eme
+			//TNT1 A 0 A_JumpIfInventory("TheWizGiver", 1, 4) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 15), 18) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 4) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 4) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 6) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 29), 9) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 3) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 3) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0
+			Goto FireChargedEnd
+			
+		FireBouncingCharged:
+			TNT1 A 0 A_PlaySound("agge/chargedatkml", CHAN_WEAPON)
+			CFLR E 2 Bright
+			CFLR F 2 Bright
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 15), 18) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 4) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 4) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 6) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 29), 9) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 3) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 3) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0
+			Goto FireChargedEnd
+			
+		FireChargedEnd:
+			CFLR F 5 Bright
+			CFLR E 5 Bright
+			CFLR G 3
+			CFLR G 3 Offset (0, 40)
+			CFLR G 1 A_Refire
+			Goto Ready
 		 
 		FireEnd:
 			TNT1 A 0 A_TakeInventory("LoopFlag", 4)
@@ -178,18 +336,26 @@ ACTOR BlackIsaacHands : IsaacHands {
 	
 	States {
 		ReadyLoop:
+			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, "MLReadyLoop")
 		  CFLB AAAABBBBCCCC 1 A_WeaponReady
 		  Loop
 			
 		DeselectLoop:
+			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, 2)
 		  CFLB A 1 A_Lower
+		  Loop
+			CFLR A 1 A_Lower
 		  Loop
 
 		Select:
+			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, 2)
 		  CFLB A 1 A_Raise
+		  Loop
+			CFLR A 1 A_Raise
 		  Loop
 			
 		Fire:
+			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, "MLFire")
 			CFLB A 1 Offset (0, 40)
 			CFLB D 2 Offset (0, 50)
 			CFLB D 2 Offset (0, 36)
@@ -209,22 +375,22 @@ ACTOR BlackIsaacHands : IsaacHands {
 			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 11) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 10) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("TwentyTwentyGiver", 1, 4) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 45, TRUE, -15)
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 315, FALSE, 15)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 60, TRUE, -15)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 300, FALSE, 15)
 			TNT1 A -1 A_Jump(256, 36) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 45, TRUE, -25)
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 45, FALSE, -5)
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 315, FALSE, 25)
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 315, FALSE, 5)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 60, TRUE, -25)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 60, FALSE, -5)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 300, FALSE, 25)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 300, FALSE, 5)
 			TNT1 A -1 A_Jump(256, 31) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 45, TRUE, -15)
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 315, FALSE, 15)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 60, TRUE, -15)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 300, FALSE, 15)
 			CFLB E 2 Bright
 			CFLB F 2 Bright
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 45, FALSE, -1)
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 45, FALSE, -30)
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 315, FALSE, 30)
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 315, FALSE, 1)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 60, FALSE, -1)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 60, FALSE, -30)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 300, FALSE, 30)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 300, FALSE, 1)
 			TNT1 A -1 A_Jump(256, 22) //OFFSET
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 15), 6) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 6) //OFFSET
@@ -265,22 +431,22 @@ ACTOR BlackIsaacHands : IsaacHands {
 			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 11) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 10) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("TwentyTwentyGiver", 1, 4) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 45, TRUE, -15)
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 315, FALSE, 15)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 60, TRUE, -15)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 300, FALSE, 15)
 			TNT1 A -1 A_Jump(256, 36) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 45, TRUE, -25)
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 45, FALSE, -5)
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 315, FALSE, 25)
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 315, FALSE, 5)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 60, TRUE, -25)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 60, FALSE, -5)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 300, FALSE, 25)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 300, FALSE, 5)
 			TNT1 A -1 A_Jump(256, 31) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 45, TRUE, -15)
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 315, FALSE, 15)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 60, TRUE, -15)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 300, FALSE, 15)
 			CFLB E 2 Bright
 			CFLB F 2 Bright
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 45, FALSE, -1)
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 45, FALSE, -30)
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 315, FALSE, 30)
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 315, FALSE, 1)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 60, FALSE, -1)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 60, FALSE, -30)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 300, FALSE, 30)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 300, FALSE, 1)
 			TNT1 A -1 A_Jump(256, 22) //OFFSET
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 15), 6) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 6) //OFFSET
@@ -308,6 +474,122 @@ ACTOR BlackIsaacHands : IsaacHands {
 			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile")
 			TNT1 A 0 A_JumpIfInventory("LoopFlag", 1, "FireEnd")
 			Loop
+			
+		FireCharged:
+			TNT1 A 0 A_PlaySound("agge/chargedatkml", CHAN_WEAPON)
+			CFLR E 2 Bright
+			CFLR F 2 Bright
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 15), 18) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 4) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 4) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 6) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 29), 9) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 3) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 3) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroFearTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0
+			Goto FireChargedEnd
+			
+		FireBouncingCharged:
+			TNT1 A 0 A_PlaySound("agge/chargedatkml", CHAN_WEAPON)
+			CFLR E 2 Bright
+			CFLR F 2 Bright
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 15), 18) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 4) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 4) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 6) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 29), 9) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 3) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 3) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("MonstroBouncingFearTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0
+			Goto FireChargedEnd
 		 
 		FireEnd:
 			TNT1 A 0 A_TakeInventory("LoopFlag", 4)
@@ -590,12 +872,38 @@ ACTOR NormalTearProjectile {
   }
 }
 
+ACTOR MonstroTearProjectile : NormalTearProjectile {
+	Gravity 0.5
+
+	States {
+	
+		Spawn:
+			TNT1 A 0 NoDelay A_ChangeFlag("NOGRAVITY", FALSE)
+			Goto Super::Spawn
+		
+		SpawnLoop:
+			TNT1 A 0 A_SeekerMissile(user_seeker_threshold, user_seeker_maxturnangle, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			MLTS A 5 
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 36), 2)
+			TNT1 A 0 A_JumpIfInventory("WeaponSpecialAction", 1, "ReturnToPlayer", AAPTR_TARGET)
+			TNT1 A 0
+			Loop
+			
+		DeathEnd:
+			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 3)
+			Goto Super::DeathEnd
+	}
+}
+
 ACTOR FearTearProjectile : NormalTearProjectile {
 	
   States {
 			
 		SpawnLoop:
-			DMFI AB 5 A_SeekerMissile(user_seeker_threshold, user_seeker_maxturnangle, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			DMFI A 5 A_SeekerMissile(user_seeker_threshold, user_seeker_maxturnangle, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 36), 2)
+			TNT1 A 0 A_JumpIfInventory("WeaponSpecialAction", 1, "ReturnToPlayer", AAPTR_TARGET)
+			DMFI B 5 A_SeekerMissile(user_seeker_threshold, user_seeker_maxturnangle, SMF_LOOK|SMF_CURSPEED, 256, 3)
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 36), 2)
 			TNT1 A 0 A_JumpIfInventory("WeaponSpecialAction", 1, "ReturnToPlayer", AAPTR_TARGET)
 			TNT1 A 0
@@ -661,6 +969,17 @@ ACTOR FearTearProjectile : NormalTearProjectile {
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
 			Goto DeathBoneTearEnd
   }
+}
+
+ACTOR MonstroFearTearProjectile : FearTearProjectile {
+	Gravity 0.5
+
+	States {
+	
+		Spawn:
+			TNT1 A 0 NoDelay A_ChangeFlag("NOGRAVITY", FALSE)
+			Goto Super::Spawn
+	}
 }
 
 ACTOR BouncingTearProjectile : NormalTearProjectile {
@@ -810,6 +1129,40 @@ ACTOR BouncingFearTearProjectile : FearTearProjectile {
 			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
 			Goto DeathBoneTearEnd
+	}
+}
+
+ACTOR MonstroBouncingTearProjectile : BouncingTearProjectile {
+	Gravity 0.5
+
+	States {
+	
+		Spawn:
+			TNT1 A 0 NoDelay A_ChangeFlag("NOGRAVITY", FALSE)
+			Goto Super::Spawn
+		
+		SpawnLoop:
+			TNT1 A 0 A_SeekerMissile(user_seeker_threshold, user_seeker_maxturnangle, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			MLTS A 5 
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 36), 2)
+			TNT1 A 0 A_JumpIfInventory("WeaponSpecialAction", 1, "ReturnToPlayer", AAPTR_TARGET)
+			TNT1 A 0
+			Loop
+			
+		DeathEnd:
+			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 3)
+			Goto Super::DeathEnd
+	}
+}
+
+ACTOR MonstroBouncingFearTearProjectile : BouncingFearTearProjectile {
+	Gravity 0.5
+
+	States {
+	
+		Spawn:
+			TNT1 A 0 NoDelay A_ChangeFlag("NOGRAVITY", FALSE)
+			Goto Super::Spawn
 	}
 }
 

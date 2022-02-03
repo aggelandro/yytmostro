@@ -85,6 +85,7 @@ ACTOR AggeShield : Weapon
 			Loop
 			
 		FireCharged:
+			TNT1 A 0 ACS_NamedExecuteWithResult("stopAndPositionPlayer")
 			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
 			CONB GH 2
 			CONB I 2

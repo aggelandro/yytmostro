@@ -3,9 +3,9 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 37
+#define DISPLAYABLE_POWERUP_MAX 38
 #define TEAR_STATS 7
-#define TEMPORAL_POWERUPS 5
+#define TEMPORAL_POWERUPS 6
 
 int  SV_PLAYERS_NUMBERS_2_TIDS[PLAYER_MAX];
 bool ENERGY_SHIELD_RELOAD = true;
@@ -19,7 +19,7 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "LostContactGiverP020A0", "MomsContactsGiverP021A0", "MomsEyeGiverP022A0", "MutantSpiderGiverP023A0", "PiscesGiverP024A0",
     "RubberCementGiverP025A0", "SacredHeartGiverP026A0", "SpoonBenderGiverP027A0", "TheCommonColdGiverP028A0", "TheInnerEyeGiverP029A0",
     "TheParasiteGiverP030A0", "TheWizGiverP031A0", "BackstabberGiverP032A0", "CompoundFractureGiverP033A0", "8InchNailsGiverP034A0",
-    "DeathsTouchGiverP035A0", "MyReflectionGiverP036A0"
+    "DeathsTouchGiverP035A0", "MyReflectionGiverP036A0", "MonstrosLungGiverP037A0"
 };
 
 str SV_DRAWABLE_CHARGE_BAR[40] = {
@@ -30,7 +30,7 @@ str SV_DRAWABLE_CHARGE_BAR[40] = {
 };
 
 str SV_TEMPORAL_POWERUPS[TEMPORAL_POWERUPS] = {
-    "RubberCementGiver", "SacredHeartGiver", "SpoonBenderGiver", "TheParasiteGiver", "CompoundFractureGiver"
+    "RubberCementGiver", "SacredHeartGiver", "SpoonBenderGiver", "TheParasiteGiver", "CompoundFractureGiver", "MonstrosLungGiver"
 };
 
 script "yytmod_mensajesalida" DEATH
@@ -212,13 +212,16 @@ script "loadChargedAttack" (int fullyCharged) {
 
     ACS_NamedExecuteWithResult("displayChargeBar", 0);
     if (chargedTime == fullyCharged) {
-        ACS_NamedExecuteWithResult("pausePlayer", 1);
-        SetActorPitch(0, 0.1);
         SetUserVariable(0, "user_charge_state", 1);
     }
     else {
         SetUserVariable(0, "user_charge_state", 2);
     }
+}
+
+script "stopAndPositionPlayer" (void) {
+    ACS_NamedExecuteWithResult("pausePlayer", 1);
+    SetActorPitch(0, 0.1);
 }
 
 script "displayChargeBar" (int isOn) CLIENTSIDE {
@@ -615,13 +618,13 @@ function int multiplyValue(int value, int multiplier) {
     // value es un integer y multiplier es un fixed number.
     // Se randomiza el redondeo de float->integer en base a la parte decimal del float.
     // Ej: 0.5 tiene 50% chance de redondear a 1 y 50% chance de redondear a 0.
-    int dmgCutDec = (value * multiplier) & 0x0000FFFF;
+    int dmgCutDec = (multiplier * value) & 0x0000FFFF;
     int rand = Random(0x00000000, 0x0000FFFF);
     if (dmgCutDec <= rand) {
-        value = ((value * multiplier) >> 16);
+        value = ((multiplier * value) >> 16);
     }
     else {
-        value = ((value * multiplier) >> 16) + 1;
+        value = ((multiplier * value) >> 16) + 1;
     }
 
     return value;
@@ -697,7 +700,8 @@ script "setScale" (int scale) CLIENTSIDE {
 }
 
 script "getFireRateBoost" (void) {
-    SetResultValue(TEARS_STATS_BY_PLAYER[PlayerNumber()][6]);
+    int boost = TEARS_STATS_BY_PLAYER[PlayerNumber()][6];
+    SetResultValue(boost);
 }
 
 script "showPowerups" (int displayFlag) CLIENTSIDE {
@@ -903,4 +907,11 @@ script "setTracerToPlayer" (void) {
     SetActorVelocity(0, currVelX, currVelY, currVelZ, false, false);
     SetPointer(AAPTR_TRACER, ptid);
     TakeActorInventory(ptid, "WeaponSpecialAction", 1);
+}
+
+script "getChargedAttackTime" (void) {
+    int factor = FixedMul(0.23 * ACS_NamedExecuteWithResult("getFireRateBoost"), 1.5);
+    int maxTime = 87.5;
+    int result = FixedDiv(maxTime, factor) >> 16;
+    SetResultValue(result);
 }
