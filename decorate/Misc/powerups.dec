@@ -27,6 +27,7 @@ ACTOR AbstractAutoCustomPowerUp : CustomInventory {
 		Pickup:
 		  TNT1 A 0 A_JumpIfInventory("IsaacHands", 1, "WeaponInInventory")
 			TNT1 A 0 A_JumpIfInventory("BlackIsaacHands", 1, "WeaponInInventory")
+			TNT1 A 0 A_JumpIfInventory("BrimstoneHands", 1, "WeaponInInventory")
 			Fail
 			
 		AlreadyActive:
@@ -690,6 +691,7 @@ ACTOR AbstractTemporalCustomPowerUp : CustomInventory {
 		Pickup:
 		  TNT1 A 0 A_JumpIfInventory("IsaacHands", 1, "WeaponInInventory")
 			TNT1 A 0 A_JumpIfInventory("BlackIsaacHands", 1, "WeaponInInventory")
+			TNT1 A 0 A_JumpIfInventory("BrimstoneHands", 1, "WeaponInInventory")
 			Fail
 		
 		WeaponInInventory:
@@ -804,6 +806,26 @@ ACTOR MonstrosLung : AbstractTemporalCustomPowerUp 4037 {
 	}
 }
 
+ACTOR Brimstone : AbstractTemporalCustomPowerUp 4038 {
+	Inventory.PickupMessage "Brimstone: Blood laser barrage"
+	Inventory.Icon "P038A0"
+	
+	States {
+		
+		Spawn:
+			P038 A 1
+			Loop
+			
+		Use:
+			TNT1 A 0 A_JumpIfInventory("BrimstoneGiver", 1, "AlreadyActive")
+			TNT1 A 0 ACS_NamedExecuteWithResult("activateTemporalPowerup", 38)
+			TNT1 A 0 A_SelectWeapon("AggeShield")
+			TNT1 A 0 ACS_NamedExecuteWithResult("setBrimstoneAsMainWeapon")
+			TNT1 A 1 A_SelectWeapon("BrimstoneHands")
+			Stop
+	}
+}
+
 
 
 
@@ -822,3 +844,4 @@ ACTOR SpoonBenderGiver : AbstractTemporalTBOIGiver {}
 ACTOR TheParasiteGiver : AbstractTemporalTBOIGiver {}
 ACTOR CompoundFractureGiver : AbstractTemporalTBOIGiver {}
 ACTOR MonstrosLungGiver : AbstractTemporalTBOIGiver {}
+ACTOR BrimstoneGiver : AbstractTemporalTBOIGiver {}

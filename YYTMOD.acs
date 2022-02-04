@@ -3,9 +3,9 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 38
+#define DISPLAYABLE_POWERUP_MAX 39
 #define TEAR_STATS 7
-#define TEMPORAL_POWERUPS 6
+#define TEMPORAL_POWERUPS 7
 
 int  SV_PLAYERS_NUMBERS_2_TIDS[PLAYER_MAX];
 bool ENERGY_SHIELD_RELOAD = true;
@@ -19,7 +19,7 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "LostContactGiverP020A0", "MomsContactsGiverP021A0", "MomsEyeGiverP022A0", "MutantSpiderGiverP023A0", "PiscesGiverP024A0",
     "RubberCementGiverP025A0", "SacredHeartGiverP026A0", "SpoonBenderGiverP027A0", "TheCommonColdGiverP028A0", "TheInnerEyeGiverP029A0",
     "TheParasiteGiverP030A0", "TheWizGiverP031A0", "BackstabberGiverP032A0", "CompoundFractureGiverP033A0", "8InchNailsGiverP034A0",
-    "DeathsTouchGiverP035A0", "MyReflectionGiverP036A0", "MonstrosLungGiverP037A0"
+    "DeathsTouchGiverP035A0", "MyReflectionGiverP036A0", "MonstrosLungGiverP037A0", "BrimstoneGiverP038A0"
 };
 
 str SV_DRAWABLE_CHARGE_BAR[40] = {
@@ -30,7 +30,7 @@ str SV_DRAWABLE_CHARGE_BAR[40] = {
 };
 
 str SV_TEMPORAL_POWERUPS[TEMPORAL_POWERUPS] = {
-    "RubberCementGiver", "SacredHeartGiver", "SpoonBenderGiver", "TheParasiteGiver", "CompoundFractureGiver", "MonstrosLungGiver"
+    "RubberCementGiver", "SacredHeartGiver", "SpoonBenderGiver", "TheParasiteGiver", "CompoundFractureGiver", "MonstrosLungGiver", "BrimstoneGiver"
 };
 
 script "yytmod_mensajesalida" DEATH
@@ -878,9 +878,9 @@ script "dealPiercingDamage" (void) {
     SetActivator(0, AAPTR_TRACER);
     if (CheckInventory("PiercingDamageFlag") == 0) {
         GiveInventory("PiercingDamageFlag", 1);
-        Thing_Damage2(0, damageToDeal*2, "Piercing");
+        Thing_Damage2(0, damageToDeal*3, "Piercing");
         PlaySound(0, "agge/scythehit", CHAN_AUTO);
-        Delay(18);
+        Delay(1);
         TakeInventory("PiercingDamageFlag", 1);
     }
 }
@@ -910,8 +910,33 @@ script "setTracerToPlayer" (void) {
 }
 
 script "getChargedAttackTime" (void) {
-    int factor = FixedMul(0.23 * ACS_NamedExecuteWithResult("getFireRateBoost"), 1.5);
+    int frboost = ACS_NamedExecuteWithResult("getFireRateBoost");
+    
+    if (CheckInventory("BrimstoneGiver") == 1) {
+        frboost = 0.33 * frboost;
+    }
+    else {
+        if (CheckInventory("MonstrosLungGiver") == 1) {
+            frboost = 0.23 * frboost;
+        }
+    }
+
+    int factor = FixedMul(frboost, 1.5);
     int maxTime = 87.5;
     int result = FixedDiv(maxTime, factor) >> 16;
     SetResultValue(result);
+}
+
+script "setBrimstoneAsMainWeapon" (void) {
+    if (CheckInventory("IsaacHands") == 1) {
+        TakeInventory("IsaacHands", 1);
+    }
+
+    if (CheckInventory("BlackIsaacHands") == 1) {
+        TakeInventory("BlackIsaacHands", 1);
+    }
+
+    GiveInventory("BrimstoneHands", 1);
+    Delay(35);
+    PlaySound(0, "agge/brimgrowl", CHAN_AUTO);
 }

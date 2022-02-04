@@ -141,3 +141,45 @@ Frame SKUDI { Light BlueLostSoul3 }
 Frame SKUDJ { Light BlueLostSoul4 }
 Frame SKUDK { Light BlueLostSoul5 }
 }
+
+//Laser shot afanado del dead-wire (para ametralladora laser)
+pointlight PLASMABALL2
+{
+    color 1.0 0.1 0.0
+    size 56
+}
+
+flickerlight PLASMA1_X1
+{
+    color 0.9 0.2 0.2
+    size 64
+    secondarySize 72
+    chance 0.4
+}
+
+flickerlight PLASMA1_X2
+{
+    color 0.6 0.2 0.2
+    size 80
+    secondarySize 88
+    chance 0.4
+}
+
+flickerlight PLASMA1_X3
+{
+    color 0.2 0.0 0.0
+    size 8
+    secondarySize 16
+    chance 0.4
+}
+
+object LaserShot
+{
+    frame BFS1A { light PLASMABALL2 }
+    frame BFS1B { light PLASMABALL2 }
+
+    frame BFE2A { light PLASMA1_X1 }
+    frame BFE2B { light PLASMA1_X2 }
+    frame BFE2C { light PLASMA1_X1 }
+    frame BFE2D { light PLASMA1_X3 }
+}
