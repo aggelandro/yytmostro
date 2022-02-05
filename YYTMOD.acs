@@ -759,13 +759,27 @@ script "activateTemporalPowerup" (int option) {
             ACS_NamedExecuteAlways("addTearBoost", 0, 6, -2);
             ACS_NamedExecuteAlways("addTearBoost", 0, 4, -90);
             //ACS_NamedExecuteAlways("addTearBoost", 0, 1, 2); //Más height (para cuando zandro lo soporte)
-        }
+        }; break;
         case 33: {
             ACS_NamedExecuteWithResult("addTearBoost", 0, 3, 5);
             //ACS_NamedExecuteWithResult("addTearBoost", 0, 1, 1);
             //ACS_NamedExecuteWithResult("addTearBoost", 0, 0, 1);
             //ACS_NamedExecuteWithResult("addTearBoost", 0, 5, 1);
-        }
+        }; break;
+        case 38: {
+            if (CheckInventory("IsaacHands") == 1) {
+                TakeInventory("IsaacHands", 1);
+            }
+
+            if (CheckInventory("BlackIsaacHands") == 1) {
+                TakeInventory("BlackIsaacHands", 1);
+            }
+
+            GiveInventory("BrimstoneHands", 1);
+            SetWeapon("BrimstoneHands");
+            Delay(35);
+            PlaySound(0, "agge/brimgrowl", CHAN_AUTO);
+        }; break;
     }
 
     Delay(5250);
@@ -776,13 +790,24 @@ script "activateTemporalPowerup" (int option) {
             ACS_NamedExecuteAlways("addTearBoost", 0, 6, 2);
             ACS_NamedExecuteAlways("addTearBoost", 0, 4, 90);
             //ACS_NamedExecuteAlways("addTearBoost", 0, 1, -2); //Más height (para cuando zandro lo soporte)
-        }
+        }; break;
         case 33: {
             ACS_NamedExecuteWithResult("addTearBoost", 0, 3, -5);
             //ACS_NamedExecuteWithResult("addTearBoost", 0, 1, -1);
             //ACS_NamedExecuteWithResult("addTearBoost", 0, 0, -1);
             //ACS_NamedExecuteWithResult("addTearBoost", 0, 5, -1);
-        }
+        }; break;
+        case 38: {
+            TakeInventory("BrimstoneHands", 1);
+            if (CheckInventory("DarkMatterGiver") == 1) {
+                GiveInventory("BlackIsaacHands", 1);
+                SetWeapon("BlackIsaacHands");
+            }
+            else {
+                GiveInventory("IsaacHands", 1);
+                SetWeapon("IsaacHands");
+            }
+        }; break;
     }
 
     TakeInventory(powerup, 1);
@@ -927,16 +952,13 @@ script "getChargedAttackTime" (void) {
     SetResultValue(result);
 }
 
-script "setBrimstoneAsMainWeapon" (void) {
-    if (CheckInventory("IsaacHands") == 1) {
-        TakeInventory("IsaacHands", 1);
-    }
+script "getBrimstoneDamage" (void) {
+    int pnum = PlayerNumber();
+    int damage = TEARS_STATS_BY_PLAYER[pnum][2];
+    damage = applyGiversToDamage(damage, SV_PLAYERS_NUMBERS_2_TIDS[pnum]);
+    SetResultValue(damage);
+}
 
-    if (CheckInventory("BlackIsaacHands") == 1) {
-        TakeInventory("BlackIsaacHands", 1);
-    }
-
-    GiveInventory("BrimstoneHands", 1);
-    Delay(35);
-    PlaySound(0, "agge/brimgrowl", CHAN_AUTO);
+script "setRenderNormal" (void) {
+    SetActorProperty(0, APROP_RenderStyle, STYLE_Normal);
 }
