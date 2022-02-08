@@ -4,7 +4,7 @@
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
 #define DISPLAYABLE_POWERUP_MAX 39
-#define TEAR_STATS 7
+#define TEAR_STATS 8
 #define TEMPORAL_POWERUPS 7
 
 int  SV_PLAYERS_NUMBERS_2_TIDS[PLAYER_MAX];
@@ -80,6 +80,8 @@ script "printMyPointers" (void) {
 
 script 332 OPEN {
     //Translations
+
+    //Tears
     CreateTranslation (2, 128:225=[0,0,0]:[24,13,2], 3:4=[0,0,0]:[24,13,2], 80:96=[0,0,0]:[24,13,2]); // A Lump of Coal
     CreateTranslation (3, 192:193=[0,0,0]:[238,25,34], 194:197=[0,0,0]:[158,6,12], 3:4=[0,0,0]:[158,6,12], 80:96=[0,0,0]:[158,6,12]); // Blood of the Martyr
     CreateTranslation (4, 192:193=[0,0,0]:[42,42,42], 194:224=[0,0,0]:[23,23,23], 3:4=[0,0,0]:[42,42,42], 80:96=[0,0,0]:[23,23,23]); // Dark Matter
@@ -89,6 +91,17 @@ script 332 OPEN {
     CreateTranslation (10, 192:193=[0,0,0]:[83,115,168], 194:197=[0,0,0]:[81,116,174], 198:224=[0,0,0]:[76,115,178], 3:4=[0,0,0]:[83,115,168], 80:96=[0,0,0]:[81,116,174]); // Lost Contact
     CreateTranslation (11, 128:225=[0,0,0]:[85,154,117], 3:4=[0,0,0]:[85,154,117], 80:96=[0,0,0]:[85,154,117]); // The Common Cold
     CreateTranslation (13, 192:193=[0,0,0]:[187,98,69], 194:197=[0,0,0]:[154,78,40], 198:224=[0,0,0]:[128,71,43], 3:4=[0,0,0]:[187,98,69], 80:96=[0,0,0]:[154,78,40]); // The Parasite
+
+    //Red Beams
+    //CreateTranslation (14, 16:47=[0,0,0]:[64,39,15], 169:191=[0,0,0]:[64,39,15]); // A Lump of Coal
+    CreateTranslation (14, 16:47=[0,0,0]:[64,36,4], 169:191=[0,0,0]:[64,36,4]); // A Lump of Coal
+    //CreateTranslation (15, 16:47=[0,0,0]:[36,77,147], 169:191=[0,0,0]:[36,77,147]); // Lost Contact
+    CreateTranslation (15, 16:47=[0,0,0]:[13,83,233], 169:191=[0,0,0]:[13,83,233]); // Lost Contact
+    CreateTranslation (16, 16:47=[0,0,0]:[13,233,83], 169:191=[0,0,0]:[13,233,83]); // The Common Cold
+    CreateTranslation (17, 16:47=[0,0,0]:[158,158,158], 169:191=[0,0,0]:[158,158,158]); // Sacred Heart
+    CreateTranslation (18, 16:47=[0,0,0]:[205,13,233], 169:191=[0,0,0]:[205,13,233]); // Spoon Bender
+    //CreateTranslation (19, 16:47=[0,0,0]:[213,113,80], 169:191=[0,0,0]:[213,113,80]); // The Parasite
+    CreateTranslation (19, 16:47=[0,0,0]:[233,131,13], 169:191=[0,0,0]:[233,131,13]); // The Parasite
 }
 
 Script 333 (void) NET {
@@ -200,7 +213,7 @@ script "loadChargedAttack" (int fullyCharged) {
         progressC = (progressFactor * chargedTime) >> 16;
         ACS_NamedExecuteWithResult("showProgressChargeBar", progressC);
 
-        if (chargedTime < fullyCharged) { chargedTime++; }
+        if (chargedTime < fullyCharged) chargedTime++;
         else {
             if (playFeedbackSound) {
                 PlaySound(0, "agge/charged", CHAN_AUTO);
@@ -211,12 +224,8 @@ script "loadChargedAttack" (int fullyCharged) {
     }
 
     ACS_NamedExecuteWithResult("displayChargeBar", 0);
-    if (chargedTime == fullyCharged) {
-        SetUserVariable(0, "user_charge_state", 1);
-    }
-    else {
-        SetUserVariable(0, "user_charge_state", 2);
-    }
+    if (chargedTime == fullyCharged) SetUserVariable(0, "user_charge_state", 1);
+    else SetUserVariable(0, "user_charge_state", 2);
 }
 
 script "stopAndPositionPlayer" (void) {
@@ -245,9 +254,7 @@ script "pausePlayer" (int activeFlag) {
         Thing_Stop(0);
         SetPlayerProperty(0, activeFlag, PROP_TOTALLYFROZEN);
     }
-    else {
-        SetPlayerProperty(0, activeFlag, PROP_TOTALLYFROZEN);
-    }
+    else SetPlayerProperty(0, activeFlag, PROP_TOTALLYFROZEN);
 }
 
 script "getChargeState" (void) {
@@ -313,6 +320,7 @@ script "applyEffect" (int option, int dur) {
     int mtid, ptid;
     switch(option) {
         case 1: {
+            // Fear: El enemigo huye del jugador pero tiene chance de contraatacar en medio
             mtid = UniqueTID();
             int ftid = UniqueTID();
 
@@ -331,11 +339,12 @@ script "applyEffect" (int option, int dur) {
             Thing_ChangeTID(ftid, 0);
         }; break;
         case 2: {
+            // Araña aliada
             while(GetActorProperty(0, APROP_Health) > 0.0) { Delay(1); }
             Spawn("FriendlyMiniArachnotron", GetActorX(0), GetActorY(0), GetActorZ(0));
         }; break;
         case 3: {
-            //No puede atacar ni moverse pero tampoco se le puede hacer daño
+            // Petrifying: no puede atacar ni moverse pero tampoco se le puede hacer daño
             mtid = UniqueTID();
             ptid = UniqueTID();
 
@@ -354,8 +363,9 @@ script "applyEffect" (int option, int dur) {
             Thing_ChangeTID(ptid, 0);
         }; break;
         case 4: {
+            // Knock-back
             int angle = GetActorAngle(0) >> 8;
-            if (angle < 128) { angle = angle + 128; } else { angle = angle - 128; }
+            if (angle < 128) angle = angle + 128; else angle = angle - 128;
             // IMPORTANTE: Si es piercing tear tiene que knockbackear menos
             ThrustThing(angle, 7, 0, 0);
         }; break;
@@ -397,7 +407,6 @@ script "applyEffect" (int option, int dur) {
             SetActivator(mtid);
             Thing_ChangeTID(mtid, 0);
 
-            //LA SUPERCLASE DEL MONSTER TIENE QUE TENER user_max_health SETEADO
             while (GetActorProperty(0, APROP_Health) > 0.0) {
                 Thing_Damage2(0, multiplyValue(GetUserVariable(0, "user_max_healh"), 0.1), "Bleeding");
                 Delay(175);
@@ -406,6 +415,18 @@ script "applyEffect" (int option, int dur) {
             SetActorState(btid, "Death");
             TakeInventory("BleedingDebuffGiver", 1);
             Thing_ChangeTID(btid, 0);
+        }; break;
+        case 7: {
+            // Daño añadido por distancia recorrida (solo usable por laseres)
+            // +20% daño cada 300 espacios
+            ptid = GetActorProperty(0, APROP_TargetTID);
+            int distance = fdistance(0, ptid);
+            int factor = distance / 300 >> 16;
+            if (factor > 0) {
+                int addDmg = (GetActorProperty(0, APROP_Damage) * (20 * factor)) / 100;
+                SetActivator(0, AAPTR_TRACER);
+                Thing_Damage2(0, addDmg, "None");
+            }
         }; break;
     }
 }
@@ -431,6 +452,23 @@ script "shells" (void) {
     SetResultValue(CheckInventory("Shell"));
 }
 
+function int fdistance (int tid1, int tid2) {
+    int len;
+    int y = GetActorY(tid1) - GetActorY(tid2);
+    int x = GetActorX(tid1) - GetActorX(tid2);
+    int z = GetActorZ(tid1) - GetActorZ(tid2);
+
+    int ang = VectorAngle(x,y);
+    if (((ang+0.125)%0.5) > 0.25) len = FixedDiv(y, sin(ang));
+    else len = FixedDiv(x, cos(ang));
+
+    ang = VectorAngle(len, z);
+    if (((ang+0.125)%0.5) > 0.25) len = FixedDiv(z, sin(ang));
+    else len = FixedDiv(len, cos(ang));
+
+    return len;
+}
+
 
 
 
@@ -447,7 +485,7 @@ script "shells" (void) {
 // La intención es usar la DB para mantener el progreso de los stats IN-GAME. Por ahora, no
 // hay planes de dejar persistida la data una vez se cierra el server.
 str TEARS_STATS_TABLE[TEAR_STATS] = {
-    "0Radius", "1Height", "2Damage", "3Range", "4Speed Boost", "5Scale", "6Fire Rate Boost"
+    "0Radius", "1Height", "2Damage", "3Range", "4Speed Boost", "5Scale", "6Fire Rate Boost", "7Brimstone Color"
 };
 
 script "saveTearStatsData" (void) {
@@ -478,9 +516,7 @@ script "loadTearStatsData" (int pnum) {
 
     for (i=0; i<TEAR_STATS; i++) {
         TEARS_STATS_BY_PLAYER[pnum][i] = GetDBResultValue(tearStats, i);
-        if (IsNetworkGame()) {
-            ACS_NamedExecuteAlways("sendToClient", 0, pnum, i, TEARS_STATS_BY_PLAYER[pnum][i]);
-        }
+        if (IsNetworkGame()) ACS_NamedExecuteAlways("sendToClient", 0, pnum, i, TEARS_STATS_BY_PLAYER[pnum][i]);
     }
 
     FreeDBResults(tearStats);
@@ -506,6 +542,7 @@ script 334 (void) NET CLIENTSIDE {
     Log(s:"Speed Boost: ", i:TEARS_STATS_BY_PLAYER[pnum][4]);
     Log(s:"Scale: ", i:TEARS_STATS_BY_PLAYER[pnum][5]);
     Log(s:"Fire Rate Boost: ", i:TEARS_STATS_BY_PLAYER[pnum][6]);
+    Log(s:"Brimstone Translation: ", i:TEARS_STATS_BY_PLAYER[pnum][7]); //Para el trail que vive en Marte
 }
 
 script 330 UNLOADING {
@@ -523,6 +560,7 @@ script "resetTearStats" (void) {
     TEARS_STATS_BY_PLAYER[pnum][4] = 0;  //Speed Boost
     TEARS_STATS_BY_PLAYER[pnum][5] = 1;  //Scale
     TEARS_STATS_BY_PLAYER[pnum][6] = 1;  //Fire Rate Boost
+    TEARS_STATS_BY_PLAYER[pnum][7] = 0;  //Brimstone Translation
 
     if (IsNetworkGame()) {
         for (int i=0; i<TEAR_STATS; i++) {
@@ -543,9 +581,7 @@ script "addTearBoost" (int boostType, int bonus) {
         ACS_NamedExecuteAlways("sendToClient", 0, pnum, boostType, TEARS_STATS_BY_PLAYER[pnum][boostType]);
     }
 
-    if (GetUserVariable(0, "user_isaac_hands_is_active")) {
-        ACS_NamedExecuteAlways("showStats", 0, 1);
-    }
+    if (GetUserVariable(0, "user_isaac_hands_is_active")) ACS_NamedExecuteAlways("showStats", 0, 1);
 }
 
 script "setTearStats" (void) {
@@ -563,25 +599,11 @@ script "setTearStats" (void) {
         ACS_NamedExecuteAlways("setDamageBoostPerTime", 0, 1, 35, 10);
     }
 
-    if (CheckActorInventory(ptid, "BloodOfTheMartyrGiver") == 1) {
-        Thing_SetTranslation(0, 3);
-    }
-
-    if (CheckActorInventory(ptid, "LostContactGiver") == 1) {
-        Thing_SetTranslation(0, 10);
-    }
-
-    if (CheckActorInventory(ptid, "SacredHeartGiver") == 1) {
-        Thing_SetTranslation(0, 8);
-    }
-
-    if (CheckActorInventory(ptid, "SpoonBenderGiver") == 1) {
-        Thing_SetTranslation(0, 9);
-    }
-
-    if (CheckActorInventory(ptid, "TheParasiteGiver") == 1) {
-        Thing_SetTranslation(0, 13);
-    }
+    if (CheckActorInventory(ptid, "BloodOfTheMartyrGiver") == 1) Thing_SetTranslation(0, 3);
+    if (CheckActorInventory(ptid, "LostContactGiver") == 1) Thing_SetTranslation(0, 10);
+    if (CheckActorInventory(ptid, "SacredHeartGiver") == 1) Thing_SetTranslation(0, 8);
+    if (CheckActorInventory(ptid, "SpoonBenderGiver") == 1) Thing_SetTranslation(0, 9);
+    if (CheckActorInventory(ptid, "TheParasiteGiver") == 1) Thing_SetTranslation(0, 13);
 }
 
 script "setRadius" (int radius) {
@@ -620,12 +642,8 @@ function int multiplyValue(int value, int multiplier) {
     // Ej: 0.5 tiene 50% chance de redondear a 1 y 50% chance de redondear a 0.
     int dmgCutDec = (multiplier * value) & 0x0000FFFF;
     int rand = Random(0x00000000, 0x0000FFFF);
-    if (dmgCutDec <= rand) {
-        value = ((multiplier * value) >> 16);
-    }
-    else {
-        value = ((multiplier * value) >> 16) + 1;
-    }
+    if (dmgCutDec <= rand) value = ((multiplier * value) >> 16);
+    else value = ((multiplier * value) >> 16) + 1;
 
     return value;
 }
@@ -636,7 +654,7 @@ script "setRange" (int range, int ptid) {
     }
 
     while (range > 0) {
-        if (GetUserVariable(0, "user_deadflag")) { terminate; }
+        if (GetUserVariable(0, "user_deadflag")) terminate;
 
         range--;
         SetUserVariable(0, "user_remaining_range", range);
@@ -649,9 +667,7 @@ script "setRange" (int range, int ptid) {
 }
 
 script "setSpeed" (int boost, int ptid) {
-    if (CheckActorInventory(ptid, "MyReflectionGiver") == 1) {
-        boost = multiplyValue(boost, 1.6);
-    }
+    if (CheckActorInventory(ptid, "MyReflectionGiver") == 1) boost = multiplyValue(boost, 1.6);
 
     if (boost != 0) {
         int newVelX = ((GetActorVelX(0) * boost) / 100) + GetActorVelX(0);
@@ -708,16 +724,11 @@ script "showPowerups" (int displayFlag) CLIENTSIDE {
     for (int i=1; i<=DISPLAYABLE_POWERUP_MAX; i++) {
         if (displayFlag) {
             SetFont(StrRight(SV_DISPLAYABLE_POWERUPS[i-1], 6));
-            if (CheckInventory(StrLeft(SV_DISPLAYABLE_POWERUPS[i-1], StrLen(SV_DISPLAYABLE_POWERUPS[i-1])-6)) == 1) {
+            if (CheckInventory(StrLeft(SV_DISPLAYABLE_POWERUPS[i-1], StrLen(SV_DISPLAYABLE_POWERUPS[i-1])-6)) == 1)
                 HudMessage(s:"A"; HUDMSG_PLAIN, i, 0, FixedDiv(i << 16, 65.0), 0.05, 0);
-            }
-            else {
-                HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA, i, 0, FixedDiv(i << 16, 65.0), 0.05, 0, 0.25);
-            }
+            else HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA, i, 0, FixedDiv(i << 16, 65.0), 0.05, 0, 0.25);
         }
-        else {
-            HudMessage(s:""; HUDMSG_PLAIN, i, 0, 0, 0, 1);
-        }
+        else HudMessage(s:""; HUDMSG_PLAIN, i, 0, 0, 0, 1);
     }
 
     ACS_NamedExecuteAlways("showStats", 0, displayFlag);
@@ -726,16 +737,14 @@ script "showPowerups" (int displayFlag) CLIENTSIDE {
 script "showStats" (int displayFlag) CLIENTSIDE {
     int pnum = PlayerNumber();
     int idFrom = DISPLAYABLE_POWERUP_MAX+1;
-    for (int i=0; i<TEAR_STATS; i++) {
+    for (int i=0; i<TEAR_STATS-1; i++) {
         if (displayFlag) {
             str stat = StrRight(TEARS_STATS_TABLE[i], StrLen(TEARS_STATS_TABLE[i])-1);
             if (i == 4 || i == 6) { stat = StrLeft(stat, StrLen(stat)-6); }
             SetFont("BIGFONT");
             HudMessage(s:stat, s:": ", i:TEARS_STATS_BY_PLAYER[pnum][i]; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP, idFrom+i, CR_ORANGE, 0.007, FixedDiv((i << 16) + 1.0 , 60.0) + 0.74, 0);
         }
-        else {
-            HudMessage(s:""; HUDMSG_PLAIN, idFrom+i, 0, 0, 0, 1);
-        }
+        else HudMessage(s:""; HUDMSG_PLAIN, idFrom+i, 0, 0, 0, 1);
     }
 }
 
@@ -827,7 +836,7 @@ script "setParasiteChildrenStats" (int ctid) {
     SetActorProperty(0, APROP_ScaleX, masterScaleX / 2);
     SetActorProperty(0, APROP_ScaleY, masterScaleY / 2);
 
-    if (masterRange < 5) { masterRange = 5; }
+    if (masterRange < 5) masterRange = 5;
     ACS_NamedExecuteAlways("setRange", 0, masterRange);
     Thing_ChangeTID(ctid, 0);
 }
@@ -919,12 +928,8 @@ script "setTracerToPlayer" (void) {
     SetActorVelocity(0, 0, 0, 0, false, false);
     int currAngle = GetActorAngle(0);
     int newAngle;
-    if (currAngle > 0.5) {
-        newAngle = currAngle - 0.5;
-    }
-    else {
-        newAngle = currAngle + 0.5;
-    }
+    if (currAngle > 0.5) newAngle = currAngle - 0.5;
+    else newAngle = currAngle + 0.5;
 
     SetActorAngle(0, newAngle);
     PlaySound(0, "agge/reflactivated", CHAN_AUTO);
@@ -937,14 +942,8 @@ script "setTracerToPlayer" (void) {
 script "getChargedAttackTime" (void) {
     int frboost = ACS_NamedExecuteWithResult("getFireRateBoost");
     
-    if (CheckInventory("BrimstoneGiver") == 1) {
-        frboost = 0.33 * frboost;
-    }
-    else {
-        if (CheckInventory("MonstrosLungGiver") == 1) {
-            frboost = 0.23 * frboost;
-        }
-    }
+    if (CheckInventory("BrimstoneGiver") == 1) frboost = 0.33 * frboost;
+    else if (CheckInventory("MonstrosLungGiver") == 1) frboost = 0.23 * frboost;
 
     int factor = FixedMul(frboost, 1.5);
     int maxTime = 87.5;
@@ -953,12 +952,67 @@ script "getChargedAttackTime" (void) {
 }
 
 script "getBrimstoneDamage" (void) {
+    if (CheckActorClass(0, "PlayerDoppelganger")) SetActivator(GetActorProperty(0, APROP_MasterTID));
     int pnum = PlayerNumber();
     int damage = TEARS_STATS_BY_PLAYER[pnum][2];
     damage = applyGiversToDamage(damage, SV_PLAYERS_NUMBERS_2_TIDS[pnum]);
     SetResultValue(damage);
 }
 
-script "setRenderNormal" (void) {
-    SetActorProperty(0, APROP_RenderStyle, STYLE_Normal);
+script "setBrimstoneColor" (void) CLIENTSIDE {
+    int pnum = PlayerNumber();
+    if (CheckInventory("ALumpOfCoalGiver") == 1) TEARS_STATS_BY_PLAYER[pnum][7] = 14;
+    if (CheckInventory("LostContactGiver") == 1) TEARS_STATS_BY_PLAYER[pnum][7] = 15;
+    if (CheckInventory("TheCommonColdGiver") == 1) TEARS_STATS_BY_PLAYER[pnum][7] = 16;
+    if (CheckInventory("SacredHeartGiver") == 1) TEARS_STATS_BY_PLAYER[pnum][7] = 17;
+    if (CheckInventory("SpoonBenderGiver") == 1) TEARS_STATS_BY_PLAYER[pnum][7] = 18;
+    if (CheckInventory("TheParasiteGiver") == 1) TEARS_STATS_BY_PLAYER[pnum][7] = 19;
+
+    ACS_NamedExecuteAlways("sendToClient", 0, pnum, 7, TEARS_STATS_BY_PLAYER[pnum][7]);
+}
+
+script "showBrimstoneTranslation" (void) CLIENTSIDE {
+    int utid = UniqueTID();
+    Thing_ChangeTID(0, utid);
+    log(i:GetActorProperty(0, APROP_TargetTID));
+    SetActivator(GetActorProperty(0, APROP_TargetTID));
+    int pnum = PlayerNumber();
+    SetActivator(utid);
+    int brimstoneColor = TEARS_STATS_BY_PLAYER[pnum][7];
+    Thing_SetTranslation(0, brimstoneColor);
+    if (brimstoneColor == 16 || brimstoneColor == 17 || brimstoneColor == 18) {
+        if (CheckActorClass(0, "BrimstoneBeam")) SetActorProperty(0, APROP_Alpha, 0.2);
+    }
+    if (brimstoneColor == 15) SetActorProperty(0, APROP_Alpha, 0.2);
+    if (brimstoneColor == 14) SetActorProperty(0, APROP_RenderStyle, STYLE_Translucent);
+    Thing_ChangeTID(utid, 0);
+}
+
+script "setBrimstoneDeathRender" (void) CLIENTSIDE {
+    int utid = UniqueTID();
+    Thing_ChangeTID(0, utid);
+    SetActivator(0, AAPTR_TARGET);
+    int pnum = PlayerNumber();
+    SetActivator(utid);
+    int brimstoneColor = TEARS_STATS_BY_PLAYER[pnum][7];
+    if (!brimstoneColor || brimstoneColor == 16 || 
+        brimstoneColor == 15 || brimstoneColor == 17 ||
+        brimstoneColor == 18 || brimstoneColor == 19) {
+        SetActorProperty(0, APROP_RenderStyle, STYLE_Translucent);
+    }
+    else SetActorProperty(0, APROP_RenderStyle, STYLE_Add);
+    Thing_ChangeTID(utid, 0);
+}
+
+script "setBrimstonePoisonDamage" (void) {
+    int tempTid = UniqueTID();
+    Thing_ChangeTID(0, tempTid);
+    SetActivator(0, AAPTR_TARGET);
+    int damage = ACS_NamedExecuteWithResult("getBrimstoneDamage");
+    SetActorProperty(tempTid, APROP_Damage, damage);
+    Thing_ChangeTID(tempTid, 0);
+}
+
+script "userIsaacHandsLaserFromBehingIsActive" (void) {
+    SetResultValue(GetUserVariable(0, "user_isaac_hands_laser_from_behind"));
 }
