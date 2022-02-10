@@ -4,12 +4,13 @@
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
 #define DISPLAYABLE_POWERUP_MAX 39
-#define TEAR_STATS 8
+#define TEAR_STATS 7
 #define TEMPORAL_POWERUPS 7
 
 int  SV_PLAYERS_NUMBERS_2_TIDS[PLAYER_MAX];
 bool ENERGY_SHIELD_RELOAD = true;
 int TEARS_STATS_BY_PLAYER[PLAYER_MAX][TEAR_STATS];
+str BRIMSTONE_COLOR = 0; //Para el trail que vive en Marte
 
 str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "CONTGiverP000A0", "GrowthHormonesGiverP001A0", "JesusJuiceGiverP002A0", "MomsHeelsGiverP003A0", "MomsLipstickGiverP004A0", 
@@ -316,7 +317,7 @@ script "isEffectChanceSuccessful" (int chance) {
 
 // Obligado a usar switch a causa de que ACS no se banca otras variables que
 // no sean int como parametros y que admite una cantidad limitada de ellos
-script "applyEffect" (int option, int dur) {
+script "applyEffect" (int option, int dur, int force) {
     int mtid, ptid;
     switch(option) {
         case 1: {
@@ -364,10 +365,10 @@ script "applyEffect" (int option, int dur) {
         }; break;
         case 4: {
             // Knock-back
+            SetActivator(GetActorProperty(0, APROP_TracerTID));
             int angle = GetActorAngle(0) >> 8;
             if (angle < 128) angle = angle + 128; else angle = angle - 128;
-            // IMPORTANTE: Si es piercing tear tiene que knockbackear menos
-            ThrustThing(angle, 7, 0, 0);
+            ThrustThing(angle, force, 0, 0);
         }; break;
         case 5: {
             // Poison hace el daño de la lágrima al monstruo cada 2 segundos una X cantidad de veces
@@ -485,7 +486,7 @@ function int fdistance (int tid1, int tid2) {
 // La intención es usar la DB para mantener el progreso de los stats IN-GAME. Por ahora, no
 // hay planes de dejar persistida la data una vez se cierra el server.
 str TEARS_STATS_TABLE[TEAR_STATS] = {
-    "0Radius", "1Height", "2Damage", "3Range", "4Speed Boost", "5Scale", "6Fire Rate Boost", "7Brimstone Color"
+    "0Radius", "1Height", "2Damage", "3Range", "4Speed Boost", "5Scale", "6Fire Rate Boost"
 };
 
 script "saveTearStatsData" (void) {
@@ -542,7 +543,6 @@ script 334 (void) NET CLIENTSIDE {
     Log(s:"Speed Boost: ", i:TEARS_STATS_BY_PLAYER[pnum][4]);
     Log(s:"Scale: ", i:TEARS_STATS_BY_PLAYER[pnum][5]);
     Log(s:"Fire Rate Boost: ", i:TEARS_STATS_BY_PLAYER[pnum][6]);
-    Log(s:"Brimstone Translation: ", i:TEARS_STATS_BY_PLAYER[pnum][7]); //Para el trail que vive en Marte
 }
 
 script 330 UNLOADING {
@@ -560,7 +560,6 @@ script "resetTearStats" (void) {
     TEARS_STATS_BY_PLAYER[pnum][4] = 0;  //Speed Boost
     TEARS_STATS_BY_PLAYER[pnum][5] = 1;  //Scale
     TEARS_STATS_BY_PLAYER[pnum][6] = 1;  //Fire Rate Boost
-    TEARS_STATS_BY_PLAYER[pnum][7] = 0;  //Brimstone Translation
 
     if (IsNetworkGame()) {
         for (int i=0; i<TEAR_STATS; i++) {
@@ -737,7 +736,7 @@ script "showPowerups" (int displayFlag) CLIENTSIDE {
 script "showStats" (int displayFlag) CLIENTSIDE {
     int pnum = PlayerNumber();
     int idFrom = DISPLAYABLE_POWERUP_MAX+1;
-    for (int i=0; i<TEAR_STATS-1; i++) {
+    for (int i=0; i<TEAR_STATS; i++) {
         if (displayFlag) {
             str stat = StrRight(TEARS_STATS_TABLE[i], StrLen(TEARS_STATS_TABLE[i])-1);
             if (i == 4 || i == 6) { stat = StrLeft(stat, StrLen(stat)-6); }
@@ -960,48 +959,30 @@ script "getBrimstoneDamage" (void) {
 }
 
 script "setBrimstoneColor" (void) CLIENTSIDE {
-    int pnum = PlayerNumber();
-    if (CheckInventory("ALumpOfCoalGiver") == 1) TEARS_STATS_BY_PLAYER[pnum][7] = 14;
-    if (CheckInventory("LostContactGiver") == 1) TEARS_STATS_BY_PLAYER[pnum][7] = 15;
-    if (CheckInventory("TheCommonColdGiver") == 1) TEARS_STATS_BY_PLAYER[pnum][7] = 16;
-    if (CheckInventory("SacredHeartGiver") == 1) TEARS_STATS_BY_PLAYER[pnum][7] = 17;
-    if (CheckInventory("SpoonBenderGiver") == 1) TEARS_STATS_BY_PLAYER[pnum][7] = 18;
-    if (CheckInventory("TheParasiteGiver") == 1) TEARS_STATS_BY_PLAYER[pnum][7] = 19;
-
-    ACS_NamedExecuteAlways("sendToClient", 0, pnum, 7, TEARS_STATS_BY_PLAYER[pnum][7]);
+    if (CheckInventory("ALumpOfCoalGiver") == 1) BRIMSTONE_COLOR = 14;
+    if (CheckInventory("LostContactGiver") == 1) BRIMSTONE_COLOR = 15;
+    if (CheckInventory("TheCommonColdGiver") == 1) BRIMSTONE_COLOR = 16;
+    if (CheckInventory("SacredHeartGiver") == 1) BRIMSTONE_COLOR = 17;
+    if (CheckInventory("SpoonBenderGiver") == 1) BRIMSTONE_COLOR = 18;
+    if (CheckInventory("TheParasiteGiver") == 1) BRIMSTONE_COLOR = 19;
 }
 
 script "showBrimstoneTranslation" (void) CLIENTSIDE {
-    int utid = UniqueTID();
-    Thing_ChangeTID(0, utid);
-    log(i:GetActorProperty(0, APROP_TargetTID));
-    SetActivator(GetActorProperty(0, APROP_TargetTID));
-    int pnum = PlayerNumber();
-    SetActivator(utid);
-    int brimstoneColor = TEARS_STATS_BY_PLAYER[pnum][7];
-    Thing_SetTranslation(0, brimstoneColor);
-    if (brimstoneColor == 16 || brimstoneColor == 17 || brimstoneColor == 18) {
+    Thing_SetTranslation(0, BRIMSTONE_COLOR);
+    if (BRIMSTONE_COLOR == 16 || BRIMSTONE_COLOR == 17 || BRIMSTONE_COLOR == 18) {
         if (CheckActorClass(0, "BrimstoneBeam")) SetActorProperty(0, APROP_Alpha, 0.2);
     }
-    if (brimstoneColor == 15) SetActorProperty(0, APROP_Alpha, 0.2);
-    if (brimstoneColor == 14) SetActorProperty(0, APROP_RenderStyle, STYLE_Translucent);
-    Thing_ChangeTID(utid, 0);
+    if (BRIMSTONE_COLOR == 15) SetActorProperty(0, APROP_Alpha, 0.2);
+    if (BRIMSTONE_COLOR == 14) SetActorProperty(0, APROP_RenderStyle, STYLE_Translucent);
 }
 
 script "setBrimstoneDeathRender" (void) CLIENTSIDE {
-    int utid = UniqueTID();
-    Thing_ChangeTID(0, utid);
-    SetActivator(0, AAPTR_TARGET);
-    int pnum = PlayerNumber();
-    SetActivator(utid);
-    int brimstoneColor = TEARS_STATS_BY_PLAYER[pnum][7];
-    if (!brimstoneColor || brimstoneColor == 16 || 
-        brimstoneColor == 15 || brimstoneColor == 17 ||
-        brimstoneColor == 18 || brimstoneColor == 19) {
+    if (!BRIMSTONE_COLOR || BRIMSTONE_COLOR == 16 || 
+        BRIMSTONE_COLOR == 15 || BRIMSTONE_COLOR == 17 ||
+        BRIMSTONE_COLOR == 18 || BRIMSTONE_COLOR == 19) {
         SetActorProperty(0, APROP_RenderStyle, STYLE_Translucent);
     }
     else SetActorProperty(0, APROP_RenderStyle, STYLE_Add);
-    Thing_ChangeTID(utid, 0);
 }
 
 script "setBrimstonePoisonDamage" (void) {
@@ -1015,4 +996,30 @@ script "setBrimstonePoisonDamage" (void) {
 
 script "userIsaacHandsLaserFromBehingIsActive" (void) {
     SetResultValue(GetUserVariable(0, "user_isaac_hands_laser_from_behind"));
+}
+
+script "transferMasterEffectsInventory" (void) {
+    int ptid = GetActorProperty(0, APROP_MasterTID);
+
+    if (!ptid) {
+        int utid = UniqueTID();
+        Thing_ChangeTID(0, utid);
+        SetActivator(0, AAPTR_MASTER);
+        ptid = GetActorProperty(0, APROP_TargetTID);
+        SetActivator(utid);
+        SetPointer(AAPTR_MASTER, ptid);
+        Thing_ChangeTID(utid, 0);
+    }
+    
+    int effectsPowerups[8] = {"LostContactGiver", "TheCommonColdGiver", "DarkMatterGiver",
+                                "MomsContactsGiver", "ALumpOfCoalGiver", "Infestation2Giver",
+                                "PiscesGiver", "8InchNailsGiver"};
+
+    for (int i=0; i<8; i++) {
+        if (CheckActorInventory(ptid, effectsPowerups[i])) GiveInventory(effectsPowerups[i], 1);
+    }
+}
+
+script "transferMasterPitch" (void) {
+    SetActorPitch(0, GetActorPitch(GetActorProperty(0, APROP_MasterTID)));
 }
