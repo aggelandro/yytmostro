@@ -198,6 +198,12 @@ crack/death crackdth
 blusoul/see blusosee
 blusoul/death blusodth
 
+//pain elemental del doom64
+pain64/sight PA64SIT
+pain64/active PA64ACT
+pain64/pain PA64PAIN
+pain64/death PA64DTH
+
 //mini arachnotron
 arania/sight ARANISEE
 arania/death ARANIDTH

@@ -58,6 +58,7 @@
 #include "decorate/Enemies/LostSoul/FireSoul/firesoul.dec"
 
 #include "decorate/Enemies/PainElemental/FireElemental/fireelemental.dec"
+#include "decorate/Enemies/PainElemental/Pain64/pain64.dec"
 
 #include "decorate/Enemies/Cacodemons/NeoCacodemon/neocacodemon.dec"
 #include "decorate/Enemies/Cacodemons/CrackoDemon/crackodemon.dec"
@@ -134,8 +135,9 @@ ACTOR HellKnightSpawner : RandomSpawner replaces HellKnight
 }
 ACTOR PainElementalSpawner : RandomSpawner replaces PainElemental
 {
-	DropItem "PainElemental2", 255, 80
-	DropItem "FireElemental", 255, 20
+	DropItem "PainElemental2", 255, 70
+	DropItem "FireElemental", 255, 15
+	dropItem "Pain64", 255, 15
 }
 ACTOR RevenantSpawner : RandomSpawner replaces Revenant
 {
