@@ -453,6 +453,11 @@ script "shells" (void) {
     SetResultValue(CheckInventory("Shell"));
 }
 
+script "targetLoopFlags" (void) {
+    int ptid = GetActorProperty(0, APROP_TargetTID);
+    SetResultValue(CheckActorInventory(ptid, "LoopFlag"));
+}
+
 function int fdistance (int tid1, int tid2) {
     int len;
     int y = GetActorY(tid1) - GetActorY(tid2);
@@ -959,12 +964,13 @@ script "getBrimstoneDamage" (void) {
 }
 
 script "setBrimstoneColor" (void) CLIENTSIDE {
-    if (CheckInventory("ALumpOfCoalGiver") == 1) BRIMSTONE_COLOR = 14;
-    if (CheckInventory("LostContactGiver") == 1) BRIMSTONE_COLOR = 15;
-    if (CheckInventory("TheCommonColdGiver") == 1) BRIMSTONE_COLOR = 16;
-    if (CheckInventory("SacredHeartGiver") == 1) BRIMSTONE_COLOR = 17;
-    if (CheckInventory("SpoonBenderGiver") == 1) BRIMSTONE_COLOR = 18;
-    if (CheckInventory("TheParasiteGiver") == 1) BRIMSTONE_COLOR = 19;
+    BRIMSTONE_COLOR = 0;
+    if (CheckInventory("ALumpOfCoalGiver")) BRIMSTONE_COLOR = 14;
+    if (CheckInventory("LostContactGiver")) BRIMSTONE_COLOR = 15;
+    if (CheckInventory("TheCommonColdGiver")) BRIMSTONE_COLOR = 16;
+    if (CheckInventory("SacredHeartGiver")) BRIMSTONE_COLOR = 17;
+    if (CheckInventory("SpoonBenderGiver")) BRIMSTONE_COLOR = 18;
+    if (CheckInventory("TheParasiteGiver")) BRIMSTONE_COLOR = 19;
 }
 
 script "showBrimstoneTranslation" (void) CLIENTSIDE {
@@ -985,7 +991,7 @@ script "setBrimstoneDeathRender" (void) CLIENTSIDE {
     else SetActorProperty(0, APROP_RenderStyle, STYLE_Add);
 }
 
-script "setBrimstonePoisonDamage" (void) {
+script "setBrimstoneDamage" (void) {
     int tempTid = UniqueTID();
     Thing_ChangeTID(0, tempTid);
     SetActivator(0, AAPTR_TARGET);
@@ -1011,11 +1017,11 @@ script "transferMasterEffectsInventory" (void) {
         Thing_ChangeTID(utid, 0);
     }
     
-    int effectsPowerups[8] = {"LostContactGiver", "TheCommonColdGiver", "DarkMatterGiver",
+    int effectsPowerups[10] = {"LostContactGiver", "TheCommonColdGiver", "DarkMatterGiver",
                                 "MomsContactsGiver", "ALumpOfCoalGiver", "Infestation2Giver",
-                                "PiscesGiver", "8InchNailsGiver"};
+                                "PiscesGiver", "8InchNailsGiver", "TheParasiteGiver", "RubberCementGiver"};
 
-    for (int i=0; i<8; i++) {
+    for (int i=0; i<10; i++) {
         if (CheckActorInventory(ptid, effectsPowerups[i])) GiveInventory(effectsPowerups[i], 1);
     }
 }
