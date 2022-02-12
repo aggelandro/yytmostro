@@ -210,6 +210,7 @@ ACTOR Lucianeto : DoomPlayer
 	DamageFactor "Friendly", 0
 	DamageFactor "AFireF",0
 	DamageFactor "Mina", 0
+	DamageFactor "BrimstonePuff", 0
 	Player.DisplayName "Lucianeto"
 	Player.StartItem "LucianoPistol"
 	Player.StartItem "Fist"
@@ -277,6 +278,7 @@ ACTOR UniversalPlayer : DoomPlayer
   DamageFactor "Friendly", 0
   DamageFactor "AFireF", 0
   DamageFactor "Mina", 0
+	DamageFactor "BrimstonePuff", 0
   Player.CrouchSprite "PLYC"
   Player.StartItem "Fist"
   Player.StartItem "Pistol"
@@ -364,6 +366,7 @@ ACTOR Agge : DoomPlayer
   DamageFactor "Friendly", 0
   DamageFactor "AFireF", 0
   DamageFactor "Mina", 0
+	DamageFactor "BrimstonePuff", 0
   Player.DisplayName "Agge"
   Player.CrouchSprite "PLYC"
   Player.StartItem "AggePistol"
@@ -461,6 +464,7 @@ ACTOR Ron : DoomPlayer
   DamageFactor "Friendly", 0
   DamageFactor "AFireF", 0
   DamageFactor "Mina", 0
+	DamageFactor "BrimstonePuff", 0
   Player.DisplayName "Steve"
   Player.CrouchSprite "PLYC"
   Player.StartItem "RonPistol"
@@ -553,6 +557,7 @@ ACTOR zLayer : DoomPlayer
   DamageFactor "Friendly", 0
   DamageFactor "AFireF", 0
   DamageFactor "Mina", 0
+	DamageFactor "BrimstonePuff", 0
   Player.DisplayName "zLayer"
   Player.CrouchSprite "PLYC"
   Player.StartItem "zLayerPistol"

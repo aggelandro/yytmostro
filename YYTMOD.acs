@@ -780,16 +780,18 @@ script "activateTemporalPowerup" (int option) {
             //ACS_NamedExecuteWithResult("addTearBoost", 0, 5, 1);
         }; break;
         case 38: {
-            if (CheckInventory("IsaacHands") == 1) {
+            if (CheckInventory("IsaacHands")) {
                 TakeInventory("IsaacHands", 1);
             }
 
-            if (CheckInventory("BlackIsaacHands") == 1) {
+            if (CheckInventory("BlackIsaacHands")) {
                 TakeInventory("BlackIsaacHands", 1);
             }
 
             GiveInventory("BrimstoneHands", 1);
+            Delay(10);
             SetWeapon("BrimstoneHands");
+            ACS_NamedExecuteAlways("setClientBrimstoneHands", 0);
             Delay(35);
             PlaySound(0, "agge/brimgrowl", CHAN_AUTO);
         }; break;
@@ -812,18 +814,34 @@ script "activateTemporalPowerup" (int option) {
         }; break;
         case 38: {
             TakeInventory("BrimstoneHands", 1);
-            if (CheckInventory("DarkMatterGiver") == 1) {
+            if (CheckInventory("DarkMatterGiver")) {
                 GiveInventory("BlackIsaacHands", 1);
+                Delay(10);
                 SetWeapon("BlackIsaacHands");
+                ACS_NamedExecuteAlways("setClientBlackIsaacHands", 0);
             }
             else {
                 GiveInventory("IsaacHands", 1);
+                Delay(10);
                 SetWeapon("IsaacHands");
+                ACS_NamedExecuteAlways("setClientIsaacHands", 0);
             }
         }; break;
     }
 
     TakeInventory(powerup, 1);
+}
+
+script "setClientBrimstoneHands" (void) CLIENTSIDE {
+    SetWeapon("BrimstoneHands");
+}
+
+script "setClientBlackIsaacHands" (void) CLIENTSIDE {
+    SetWeapon("BlackIsaacHands");
+}
+
+script "setClientIsaacHands" (void) CLIENTSIDE {
+    SetWeapon("IsaacHands");
 }
 
 script "setParasiteChildrenStats" (int ctid) {
