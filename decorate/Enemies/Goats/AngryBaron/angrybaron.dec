@@ -1,73 +1,43 @@
-ACTOR AngryBaron : YYTMonster
+ACTOR AngryBaron : BaronOfHell2
 {
   Health 1200
-  Radius 24
-  Height 64
-  Mass 1000
-  Speed 8
-  PainChance 50
-  Monster
-  +FLOORCLIP
-  +BOSSDEATH
-  SeeSound "baron/sight"
-  PainSound "baron/pain"
-  DeathSound "baron/death"
-  ActiveSound "baron/active"
   Obituary "%o got a baron mad."
   HitObituary "%o pissed off the wrong baron."
-  States
-  {
-  SpawnLoop:
-    BOSS AB 10 A_Look
-    Loop
-  See:
-	BOSS A 0 A_JumpIf(health < 600,"AngrySee")
-    BOSS AA 3 A_Chase
-	BOSS A 0 A_JumpIf(health < 600,"AngrySee")
-	BOSS BB 3 A_Chase
-	BOSS A 0 A_JumpIf(health < 600,"AngrySee")
-	BOSS CC 3 A_Chase
-	BOSS A 0 A_JumpIf(health < 600,"AngrySee")
-	BOSS DD 3 A_Chase
-    Loop
-  AngrySee:
-	BOSS AABBCCDD 2 Fast A_Chase
-	BOSS A 0 Fast A_PlaySound("baron/sight")
-	Loop
-  Melee:
-  Missile:
-    BOSS A 0 A_JumpIf(health < 600,"AngryMissile")
-    BOSS EF 8 A_FaceTarget
-    BOSS G 8 A_BruisAttack
-    Goto See
-  AngryMissile:
-	BOSS EF 5 Fast A_FaceTarget
-	BOSS G 5 Fast A_BruisAttack
-	BOSS EF 3 Fast A_FaceTarget
-	BOSS G 3 Fast A_BruisAttack
-	BOSS EF 2 Fast A_FaceTarget
-	BOSS G 2 Fast A_BruisAttack
-	Goto AngrySee
-  Pain:
-    BOSS H 2
-    BOSS H 2 A_Pain
-	BOSS A 0 A_JumpIf(health < 600,"AngrySee")
-    Goto See
-	Pain.Lightning:
-		TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.5),0,0,0,0)
-		TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.5),0,0,0,0)
-    Goto Pain
-  Death:
-    BOSS I 8
-    BOSS J 8 A_Scream
-    BOSS K 8
-    BOSS L 8 A_NoBlocking
-    BOSS MN 8
-    BOSS O -1 A_BossDeath
-    Stop
-  Raise:
-    BOSS O 8
-    BOSS NMLKJI 8
-    Goto See
+  States {
+		See:
+			BOSS A 0 A_JumpIf(health < 600,"AngrySee")
+			BOSS AA 3 A_Chase
+			BOSS A 0 A_JumpIf(health < 600,"AngrySee")
+			BOSS BB 3 A_Chase
+			BOSS A 0 A_JumpIf(health < 600,"AngrySee")
+			BOSS CC 3 A_Chase
+			BOSS A 0 A_JumpIf(health < 600,"AngrySee")
+			BOSS DD 3 A_Chase
+			Loop
+		
+		AngrySee:
+			BOSS AABBCCDD 2 Fast A_Chase
+			BOSS A 0 Fast A_PlaySound("baron/sight")
+			Loop
+			
+		Melee:
+		Missile:
+			BOSS A 0 A_JumpIf(health < 600,"AngryMissile")
+			Goto Super::Missile
+			
+		AngryMissile:
+			BOSS EF 5 Fast A_FaceTarget
+			BOSS G 5 Fast A_BruisAttack
+			BOSS EF 3 Fast A_FaceTarget
+			BOSS G 3 Fast A_BruisAttack
+			BOSS EF 2 Fast A_FaceTarget
+			BOSS G 2 Fast A_BruisAttack
+			Goto AngrySee
+			
+		Pain:
+			BOSS H 2
+			BOSS H 2 A_Pain
+			BOSS A 0 A_JumpIf(health < 600,"AngrySee")
+			Goto See
   }
 }

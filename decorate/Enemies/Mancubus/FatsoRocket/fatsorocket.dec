@@ -1,60 +1,28 @@
-ACTOR FatsoRocket : YYTMonster
+ACTOR FatsoRocket : Fatso2
 {
   Translation "48:79=96:111", "144:152=96:111"
   Health 800
-  Radius 48
-  Height 64
-  Mass 1000
-  Speed 8
-  PainChance 80
-  Monster
-  +FLOORCLIP
-  +BOSSDEATH
-  SeeSound "fatso/sight"
-  PainSound "fatso/pain"
-  DeathSound "fatso/death"
-  ActiveSound "fatso/active"
   Obituary "%o was obliterated by a black mancubus"
   var int user_tiros;
-  States
-  {
-  SpawnLoop:
-    FATT AB 15 A_Look
-    Loop
-  See:
-	FATT A 0 A_SetUserVar("user_tiros",0)
-    FATT AABBCCDDEEFF 4 A_Chase
-    Loop
-  Missile:
-    FATT G 20 A_FatRaise
-	FATT H 0 A_FaceTarget
-	FATT H 0 A_CustomMissile("MediumRocket",16,-25,1)
-	FATT H 0 A_CustomMissile("MediumRocket",16,25,-1)
-    FATT H 1 Bright
-    FATT IG 1
-	FATT A 0 A_SetUserVar(user_tiros,user_tiros+1)
-	FATT A 0 A_JumpIf(user_tiros >= 5,"See")
-    Goto Missile+1
-  Pain:
-	FATT J 0 A_SetUserVar(user_tiros,0)
-    FATT J 3
-    FATT J 3 A_Pain
-    Goto See
-	Pain.Lightning:
-		TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.5),0,0,0,0)
-		TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.5),0,0,0,0)
-    Goto Pain
-  Death:
-    FATT K 6
-    FATT L 6 A_Scream
-    FATT M 6 A_NoBlocking
-    FATT NOPQRS 6
-    FATT T -1 A_BossDeath
-    Stop
-  Raise:
-    FATT R 5
-    FATT QPONMLK 5
-    Goto See
+  States {
+		See:
+			FATT A 0 A_SetUserVar("user_tiros",0)
+			Goto Super::See
+		
+		Missile:
+			FATT G 20 A_FatRaise
+			FATT H 0 A_FaceTarget
+			FATT H 0 A_CustomMissile("MediumRocket",16,-25,1)
+			FATT H 0 A_CustomMissile("MediumRocket",16,25,-1)
+			FATT H 1 Bright
+			FATT IG 1
+			FATT A 0 A_SetUserVar(user_tiros,user_tiros+1)
+			FATT A 0 A_JumpIf(user_tiros >= 5,"See")
+			Goto Missile+1
+			
+		Pain:
+			FATT J 0 A_SetUserVar(user_tiros,0)
+			Goto Super::Pain
   }
 }
 

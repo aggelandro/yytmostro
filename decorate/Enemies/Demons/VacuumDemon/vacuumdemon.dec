@@ -1,4 +1,4 @@
-ACTOR VacuumDemon : Demon
+ACTOR VacuumDemon : Pinky2
 {
 	Translation "16:47=224:231"
 	Health 200
@@ -13,10 +13,6 @@ ACTOR VacuumDemon : Demon
 		SARG G 0 Fast A_CustomMeleeAttack(1)
 		SARG G 0 Fast A_SpidRefire
 		Goto Melee+1
-		Pain.Lightning:
-			TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.5),0,0,0,0)
-			TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.5),0,0,0,0)
-			Goto Pain
 	}
 }
 

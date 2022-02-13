@@ -1,27 +1,25 @@
-ACTOR CrackoDemon : YYTMonster
+ACTOR CrackoDemon : Cacodemon2
 {
-	Health 1200
+	Health 800
 	Speed 10
 	Radius 32
 	Height 52
 	PainChance 64
-    BloodColor "FF 00 00"
+  BloodColor "FF 00 00"
 	Mass 1000
-    Meleedamage 10
+  Meleedamage 10
 	SeeSound "Cracko/See"
-	ActiveSound "Caco/Active"
 	PainSound "Cracko/Pain"
-	DeathSound "Caco/Death"
-    MeleeSound "Caco/Melee"
 	Obituary "%o Was Shocked By The Cracko Demon"
-    HitObituary "%o Was Crounched By The Cracko Demon"
-	MONSTER
-    +DONTHURTSPECIES
-    +Missilemore
-    +NOGRAVITY
+  HitObituary "%o Was Crounched By The Cracko Demon"
+	
+  +DONTHURTSPECIES
+  +MISSILEMORE
+  +NOGRAVITY
 	+FLOAT
-    +FLOATBOB
-    States 
+  +FLOATBOB
+	
+  States 
 	{ 
 	SpawnLoop: 
       HED9 A 10 A_Look 
@@ -71,10 +69,6 @@ ACTOR CrackoDemon : YYTMonster
       HED9 E 3 A_Pain 
       HED9 F 6 
       Goto See
-   Pain.Lightning:
-	  TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.5),0,0,0,0)
-	  TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.5),0,0,0,0)
-	  Goto Pain
    Death: 
       HED9 G 8 A_ChangeFlag(FLOATBOB,0)
       HED9 H 8 A_Scream 

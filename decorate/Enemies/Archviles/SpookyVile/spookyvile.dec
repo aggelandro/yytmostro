@@ -21,8 +21,6 @@ ACTOR SpookyVile : Archvile2
 	StencilColor Grey
 	Alpha 0.3
 	Health 400
-	Radius 20
-	Height 56
 	Mass 100
 	-SOLID
 	Obituary "%o was killed by a spooky archvile."

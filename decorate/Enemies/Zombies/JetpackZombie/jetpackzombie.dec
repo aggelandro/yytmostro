@@ -1,9 +1,8 @@
-Actor JetpackZombie : YYTMonster
+Actor JetpackZombie : AbstractYYTZombie
 {
   Obituary "%o was picked off by a Jetpack Zombie"
   Health 70
   Radius 24
-  Height 56
   Mass 0x7fffffff
   Speed 6
   PainChance 32
@@ -14,8 +13,24 @@ Actor JetpackZombie : YYTMonster
   Damagefactor "JZombie", 0
   DropItem "Clip"
   DropItem "Stimpack"
-  Monster
-  +FloorClip
+	DropItem "Cat-O-Nine-Tails" 10
+	DropItem "GrowthHormones" 10
+	DropItem "JesusJuice" 10
+	DropItem "MomsHeels" 10
+	DropItem "MomsLipstick" 10
+	DropItem "MomsUnderwear" 10
+	DropItem "RoidRage" 10
+	DropItem "SafetyPin" 10
+	DropItem "Synthoil" 10
+	DropItem "SpeedBall" 10
+	DropItem "Magic8Ball" 10
+	DropItem "Screw" 10
+	DropItem "Toothpicks" 10
+	DropItem "TornPhoto" 10
+	DropItem "BloodOfTheMartyr" 10
+	DropItem "MomsEye" 10
+	DropItem "Adrenaline" 7
+	
   +DontHurtSpecies
   +Float
   +NoGravity
