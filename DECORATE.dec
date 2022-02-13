@@ -5,7 +5,6 @@
 #include "decorate/Misc/casing.dec"
 #include "decorate/Misc/debuffs.dec"
 #include "decorate/Misc/powerups.dec"
-#include "decorate/Misc/monsters.dec"
 
 //universal weapons and items
 #include "decorate/Misc/Weapons/HookShot/hookshot.dec"
@@ -48,6 +47,8 @@
 #include "decorate/Classes/Terro/SuperShotgun/supershotgun.dec"
 
 //monsters
+#include "decorate/Enemies/monsters.dec"
+
 #include "decorate/Enemies/Zombies/JetpackZombie/jetpackzombie.dec"
 #include "decorate/Enemies/Zombies/FlamethrowerGuy/flamethrowerguy.dec"
 
