@@ -94,14 +94,11 @@ script 332 OPEN {
     CreateTranslation (13, 192:193=[0,0,0]:[187,98,69], 194:197=[0,0,0]:[154,78,40], 198:224=[0,0,0]:[128,71,43], 3:4=[0,0,0]:[187,98,69], 80:96=[0,0,0]:[154,78,40]); // The Parasite
 
     //Red Beams
-    //CreateTranslation (14, 16:47=[0,0,0]:[64,39,15], 169:191=[0,0,0]:[64,39,15]); // A Lump of Coal
     CreateTranslation (14, 16:47=[0,0,0]:[64,36,4], 169:191=[0,0,0]:[64,36,4]); // A Lump of Coal
-    //CreateTranslation (15, 16:47=[0,0,0]:[36,77,147], 169:191=[0,0,0]:[36,77,147]); // Lost Contact
     CreateTranslation (15, 16:47=[0,0,0]:[13,83,233], 169:191=[0,0,0]:[13,83,233]); // Lost Contact
     CreateTranslation (16, 16:47=[0,0,0]:[13,233,83], 169:191=[0,0,0]:[13,233,83]); // The Common Cold
     CreateTranslation (17, 16:47=[0,0,0]:[158,158,158], 169:191=[0,0,0]:[158,158,158]); // Sacred Heart
     CreateTranslation (18, 16:47=[0,0,0]:[205,13,233], 169:191=[0,0,0]:[205,13,233]); // Spoon Bender
-    //CreateTranslation (19, 16:47=[0,0,0]:[213,113,80], 169:191=[0,0,0]:[213,113,80]); // The Parasite
     CreateTranslation (19, 16:47=[0,0,0]:[233,131,13], 169:191=[0,0,0]:[233,131,13]); // The Parasite
 }
 
@@ -142,9 +139,14 @@ script 336 DEATH {
     if (classNum == 0) {
         ACS_NamedExecuteAlways("resetTearStats", 0);
 
-        if (!ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 18)) {
+        if (CheckInventory("DarkMatterGiver")) {
             TakeInventory("BlackIsaacHands", 1);
             GiveInventory("IsaacHands", 1);
+        }
+
+        if (CheckInventory("BrimstoneGiver")) {
+            TakeInventory("BrimstoneHands", 1);
+            if (!CheckInventory("IsaacHands")) GiveInventory("IsaacHands", 1);
         }
 
         for (int i=0; i<DISPLAYABLE_POWERUP_MAX; i++) {
@@ -964,8 +966,8 @@ script "setTracerToPlayer" (void) {
 script "getChargedAttackTime" (void) {
     int frboost = ACS_NamedExecuteWithResult("getFireRateBoost");
     
-    if (CheckInventory("BrimstoneGiver") == 1) frboost = 0.33 * frboost;
-    else if (CheckInventory("MonstrosLungGiver") == 1) frboost = 0.23 * frboost;
+    if (CheckInventory("BrimstoneGiver")) frboost = 0.33 * frboost;
+    else if (CheckInventory("MonstrosLungGiver")) frboost = 0.23 * frboost;
 
     int factor = FixedMul(frboost, 1.5);
     int maxTime = 87.5;

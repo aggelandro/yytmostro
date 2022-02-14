@@ -2,7 +2,7 @@ ACTOR HookShotgun : Weapon
 {
   Weapon.AmmoUse 2
   Weapon.AmmoUse2 10
-  Weapon.SlotNumber 3
+  //Weapon.SlotNumber 3
   Weapon.AmmoGive 8
   Weapon.AmmoGive2 10
   Weapon.AmmoType "Shell"
