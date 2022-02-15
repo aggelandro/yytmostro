@@ -69,6 +69,7 @@
 
 #include "decorate/Enemies/Goats/MirrorKnight/mirrorknight.dec"
 #include "decorate/Enemies/Goats/AngryBaron/angrybaron.dec"
+#include "decorate/Enemies/Goats/literalhellknight.dec"
 
 #include "decorate/Enemies/Arachnotrons/Bouncetron/bouncetron.dec"
 
@@ -131,8 +132,9 @@ ACTOR CacodemonSpawner : RandomSpawner replaces Cacodemon
 }
 ACTOR HellKnightSpawner : RandomSpawner replaces HellKnight
 {
-	DropItem "HellKnight2", 255, 80
+	DropItem "HellKnight2", 255, 60
 	DropItem "MirrorKnight", 255, 20
+	DropItem "LiteralHellKnight", 255, 20
 }
 ACTOR PainElementalSpawner : RandomSpawner replaces PainElemental
 {

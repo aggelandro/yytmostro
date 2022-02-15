@@ -477,6 +477,14 @@ function int fdistance (int tid1, int tid2) {
     return len;
 }
 
+script "checkProjectileProximity" (int distance, int count) {
+    int res = CheckProximity(0, "DoomImp2", 256.0, count);
+    log(i:res, s:" ", i:distance, s:" ", i:count);
+    SetResultValue(CheckProximity(0, "PlayerPawn", distance, count, CPXF_ANCESTOR|CPXF_CHECKSIGHT|CPXF_CLOSEST|CPXF_SETTRACER));
+}
+
+
+
 
 
 

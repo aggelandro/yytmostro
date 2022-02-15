@@ -1,5 +1,6 @@
 ACTOR YYTMonster
 {
+	Monster
 	var int user_max_healh;
 	
 	States 
@@ -19,7 +20,6 @@ ACTOR YYTMonster
 ACTOR AbstractYYTZombie : YYTMonster {
 	Height 56
 	Speed 8
-	Monster
   +FLOORCLIP
 	
 	States 
@@ -287,7 +287,6 @@ ACTOR DoomImp2 : YYTMonster
   Mass 100
   Speed 8
   PainChance 200
-  Monster
   +FLOORCLIP
   SeeSound "imp/sight"
   PainSound "imp/pain"
@@ -358,7 +357,6 @@ ACTOR Pinky2 : YYTMonster
   Radius 30
   Height 56
   Mass 400
-  Monster
   +FLOORCLIP
   SeeSound "demon/sight"
   AttackSound "demon/melee"
@@ -434,7 +432,6 @@ ACTOR Cacodemon2 : YYTMonster
   Mass 400
   Speed 8
   PainChance 128
-  Monster
   +FLOAT
   +NOGRAVITY
   SeeSound "caco/sight"
@@ -513,7 +510,6 @@ ACTOR Revenant2 : YYTMonster
   Mass 500
   Speed 10
   PainChance 100
-  Monster
   MeleeThreshold 196
   +MISSILEMORE 
   +FLOORCLIP
@@ -601,7 +597,6 @@ ACTOR Arachnotron2 : YYTMonster
   Mass 600
   Speed 12
   PainChance 128
-  Monster
   +FLOORCLIP
   +BOSSDEATH
   SeeSound "baby/sight"
@@ -674,7 +669,6 @@ ACTOR Fatso2 : YYTMonster
   Mass 1000
   Speed 8
   PainChance 80
-  Monster
   +FLOORCLIP
   +BOSSDEATH
   SeeSound "fatso/sight"
@@ -763,7 +757,6 @@ ACTOR PainElemental2 : YYTMonster
   Mass 400
   Speed 8
   PainChance 128
-  Monster
   +FLOAT
   +NOGRAVITY
   SeeSound "pain/sight"
@@ -833,7 +826,6 @@ ACTOR LostSoul2 : YYTMonster
   Damage 3
   PainChance 256
   BloodType None
-  Monster
   +FLOAT
   +NOGRAVITY
   +MISSILEMORE
@@ -880,7 +872,6 @@ ACTOR BaronOfHell2 : YYTMonster
   Mass 1000
   Speed 8
   PainChance 50
-  Monster
   +FLOORCLIP
   +BOSSDEATH
   SeeSound "baron/sight"
@@ -1037,7 +1028,6 @@ ACTOR Archvile2 : YYTMonster
   Mass 500
   Speed 15
   PainChance 10
-  Monster
   MaxTargetRange 896
   +QUICKTORETALIATE
   +FLOORCLIP
@@ -1092,7 +1082,6 @@ ACTOR Cyberdemon2 : YYTMonster
   Mass 1000
   Speed 16
   PainChance 20
-  Monster
   MinMissileChance 160
   DamageFactor "AfireF", 0.9
 	PainChance "AfireF", 0
@@ -1194,7 +1183,6 @@ ACTOR SpiderMastermind2 : YYTMonster
   Mass 1000
   Speed 12
   PainChance 40
-  Monster
   MinMissileChance 160
   DamageFactor "AFire", 0.01
 	DamageFactor "AFireF", 0.01

@@ -5,7 +5,6 @@ ACTOR CouncilOfTheSeven : YYTMonster
 	Height 56
 	Mass 100
 	Speed 25
-	Monster
 	+FLOORCLIP
 	+THRUSPECIES
 	+MISSILEMORE

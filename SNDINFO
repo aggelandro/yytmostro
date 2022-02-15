@@ -209,3 +209,9 @@ arania/sight ARANISEE
 arania/death ARANIDTH
 arania/active ARANIACT
 vacuum/idle VACIDLE
+
+//literal hellknight
+LHK/sight  DSLKNSIT
+LHK/act    DSLKNACT
+LHK/death  DSLKNDTH
+LHK/flame  DSLKNBAL

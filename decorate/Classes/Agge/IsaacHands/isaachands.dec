@@ -660,6 +660,7 @@ ACTOR BrimstoneHands : IsaacHands {
 			Loop
 			
 		FireCharged:
+			// NOTA: Monstro's Lung agregaría 3-5 laseres más pero creo que ya son demasiados laseres para el engine...
 			TNT1 A 0 A_JumpIfInventory("SacredHeartGiver", 1, "FireHoming")
 			TNT1 A 0 A_JumpIfInventory("SpoonBenderGiver", 1, "FireHoming")
 			TNT1 A 0 A_SetUserVar("user_isaac_hands_laser_from_behind", 0)

@@ -167,7 +167,7 @@ ACTOR EnergyShield {
 			// Swapea el target con el master para poder guardar al jugador actual en el master.
 			// Nota: El puntero a target cambia internamente cuando la bala es reflejada (pain state).
 			TNT1 A 0 NoDelay A_RearrangePointers(AAPTR_MASTER, AAPTR_TARGET, AAPTR_TRACER)
-			Goto SpawnLoop
+			TNT1 A -1 A_Jump(256, "SpawnLoop")
 	 
 		SpawnLoop:
 			TNT1 A 1 A_Warp(AAPTR_MASTER, 45, 5, 38, 0, WARPF_NOCHECKPOSITION)
@@ -177,7 +177,7 @@ ACTOR EnergyShield {
 	 
 		Pain:
 			TNT1 A 3 A_SpawnItemEx("ShieldHit", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
-			Goto SpawnLoop
+			TNT1 A -1 A_Jump(256, "SpawnLoop")
 	 
 		Death:
 			TNT1 A 2
