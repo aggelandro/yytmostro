@@ -130,7 +130,7 @@ ACTOR LHKShieldHit : ShieldHit {
 	
 	States {
 		Spawn:
-			TNT1 A 0 NoDelay A_PlaySound("agge/visor", CHAN_AUTO)
+			TNT1 A 0 NoDelay A_PlaySound("LHK/block", CHAN_AUTO)
 			RES0 ABCDEFGHIJKLMNOPQRST 2 BRIGHT A_Warp(AAPTR_MASTER, 15, 0, 32)
 			Stop
 	}

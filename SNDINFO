@@ -215,3 +215,7 @@ LHK/sight  DSLKNSIT
 LHK/act    DSLKNACT
 LHK/death  DSLKNDTH
 LHK/flame  DSLKNBAL
+LHK/block  LHKBLOCK
+
+//toxigi
+toxigi/breath SIGIBREA

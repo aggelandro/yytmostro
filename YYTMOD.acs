@@ -449,8 +449,6 @@ script "applyEffectOnPlayer" (int option, int duration, int arg2) {
                 int mtid = UniqueTID();
                 Thing_ChangeTID(0, mtid);
             }
-            log(i:ptid);
-
 
             int ntid = UniqueTID();
             Spawn("PoisonEffect", GetActorX(0), GetActorY(0), GetActorZ(0), ntid);
