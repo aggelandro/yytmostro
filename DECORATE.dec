@@ -158,7 +158,7 @@ ACTOR DemonSpawner : RandomSpawner replaces Demon
 {
 	DropItem "Pinky2", 255, 60
 	DropItem "VacuumDemon", 255, 20
-	DropItem "ToxicDemon", 255, 20
+	DropItem "Toxigi", 255, 20
 } 
 ACTOR SpectreSpawner : RandomSpawner replaces Spectre
 {

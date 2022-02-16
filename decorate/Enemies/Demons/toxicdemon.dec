@@ -132,6 +132,6 @@ ACTOR ToxicBreathTrail {
 ACTOR PoisonCounter : Inventory {
 	-INVBAR
   +UNDROPPABLE
-  Inventory.MaxAmount 8
+  Inventory.MaxAmount 10
 	Inventory.Amount 1
 }
