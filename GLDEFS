@@ -141,3 +141,119 @@ Frame SKUDI { Light BlueLostSoul3 }
 Frame SKUDJ { Light BlueLostSoul4 }
 Frame SKUDK { Light BlueLostSoul5 }
 }
+
+Pointlight ToxicBreath1
+{
+Color 0.4 0.6 0.0
+Size 8
+}
+
+Pointlight ToxicBreath2
+{
+Color 0.4 0.6 0.0
+Size 12
+}
+
+Pointlight ToxicBreath3
+{
+Color 0.4 0.6 0.0
+Size 16
+}
+
+Pointlight ToxicBreath4
+{
+Color 0.4 0.6 0.0
+Size 20
+}
+
+Pointlight ToxicBreath5
+{
+Color 0.4 0.6 0.0
+Size 24
+}
+
+Pointlight ToxicBreath6
+{
+Color 0.2 0.4 0.0
+Size 28
+}
+
+Pointlight ToxicBreath7
+{
+Color 0.2 0.4 0.0
+Size 32
+}
+
+Pointlight ToxicBreath8
+{
+Color 0.2 0.4 0.0
+Size 36
+}
+
+Pointlight ToxicBreath9
+{
+Color 0.2 0.4 0.0
+Size 40
+}
+
+Pointlight ToxicBreath10
+{
+Color 0.2 0.4 0.0
+Size 44
+}
+
+Pointlight ToxicBreath11
+{
+Color 0.1 0.2 0.0
+Size 40
+}
+
+Pointlight ToxicBreath12
+{
+Color 0.1 0.2 0.0
+Size 38
+}
+
+Pointlight ToxicBreath13
+{
+Color 0.1 0.2 0.0
+Size 36
+}
+
+Pointlight ToxicBreath14
+{
+Color 0.1 0.2 0.0
+Size 34
+}
+
+Pointlight ToxicBreath15
+{
+Color 0.1 0.2 0.0
+Size 32
+}
+
+Pointlight ToxicBreath16
+{
+Color 0.1 0.2 0.0
+Size 24
+}
+
+Object ToxicBreath
+{
+Frame DTBAA { Light ToxicBreath1 }
+Frame DTBAB { Light ToxicBreath2 }
+Frame DTBAC { Light ToxicBreath3 }
+Frame DTBAD { Light ToxicBreath4 }
+Frame DTBAE { Light ToxicBreath5 }
+Frame DTBAF { Light ToxicBreath6 }
+Frame DTBAG { Light ToxicBreath7 }
+Frame DTBAH { Light ToxicBreath8 }
+Frame DTBAI { Light ToxicBreath9 }
+Frame DTBAJ { Light ToxicBreath10 }
+Frame DTBAK { Light ToxicBreath11 }
+Frame DTBAL { Light ToxicBreath12 }
+Frame DTBAM { Light ToxicBreath13 }
+Frame DTBAN { Light ToxicBreath14 }
+Frame DTBAO { Light ToxicBreath15 }
+Frame DTBAP { Light ToxicBreath16 }
+}

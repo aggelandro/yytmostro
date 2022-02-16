@@ -55,6 +55,7 @@
 #include "decorate/Enemies/Imps/SpiderImp/spiderimp.dec"
 
 #include "decorate/Enemies/Demons/VacuumDemon/vacuumdemon.dec"
+#include "decorate/Enemies/Demons/toxicdemon.dec"
 
 #include "decorate/Enemies/LostSoul/FireSoul/firesoul.dec"
 
@@ -155,8 +156,9 @@ ACTOR FatsoSpawner : RandomSpawner replaces Fatso
 }
 ACTOR DemonSpawner : RandomSpawner replaces Demon
 {
-	DropItem "Pinky2", 255,70
-	DropItem "VacuumDemon", 255, 30
+	DropItem "Pinky2", 255, 60
+	DropItem "VacuumDemon", 255, 20
+	DropItem "ToxicDemon", 255, 20
 } 
 ACTOR SpectreSpawner : RandomSpawner replaces Spectre
 {

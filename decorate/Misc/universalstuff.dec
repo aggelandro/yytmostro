@@ -195,6 +195,7 @@ ACTOR StatusEffect {
 	+NOGRAVITY
 	+NOINTERACTION
 	+SEEKERMISSILE
+	+CLIENTSIDEONLY
 	var int user_se_monster_height;
 	
 	States {

@@ -434,6 +434,51 @@ script "applyEffect" (int option, int dur, int force) {
     }
 }
 
+script "applyEffectOnPlayer" (int option, int duration, int arg2) {
+    // Efectos de los monstruos al jugador
+    // NOTA: Puede pasar que un monstruo le pegue a otro en el medio, ese caso se tiene en cuenta
+    // arg2, etc. son comodines
+    switch(option) {
+        case 1: {
+            int ptid = GetActorProperty(0, APROP_TracerTID);
+            int poisonDmg = GetActorProperty(0, APROP_Damage);
+            if (poisonDmg > 10000) poisonDmg = Random(0, 1);
+            int lapse = duration / arg2;
+            SetActivator(0, AAPTR_TRACER);
+            if (!ptid) {
+                int mtid = UniqueTID();
+                Thing_ChangeTID(0, mtid);
+            }
+            log(i:ptid);
+
+
+            int ntid = UniqueTID();
+            Spawn("PoisonEffect", GetActorX(0), GetActorY(0), GetActorZ(0), ntid);
+            SetActivator(ntid);
+            if (ptid) {
+                SetPointer(AAPTR_TRACER, ptid);
+                SetUserVariable(0, "user_se_monster_height", GetActorProperty(ptid, APROP_Height) >> 16);
+                SetActivator(ptid);
+            }
+            else {
+                SetPointer(AAPTR_TRACER, mtid);
+                SetUserVariable(0, "user_se_monster_height", GetActorProperty(mtid, APROP_Height) >> 16);
+                SetActivator(mtid);
+                Thing_ChangeTID(mtid, 0);
+            }
+
+            for (int i=0; i<arg2; i++) {
+                Thing_Damage2(0, poisonDmg, "Poison");
+                Delay(lapse);
+            }
+
+            SetActorState(ntid, "Death");
+            TakeInventory("PoisonCounter", 1);
+            Thing_ChangeTID(ntid, 0);
+        }; break;
+    }
+}
+
 script "showTranslation" (int option) CLIENTSIDE {
     Thing_SetTranslation(0, option);
 }
@@ -475,12 +520,6 @@ function int fdistance (int tid1, int tid2) {
     else len = FixedDiv(len, cos(ang));
 
     return len;
-}
-
-script "checkProjectileProximity" (int distance, int count) {
-    int res = CheckProximity(0, "DoomImp2", 256.0, count);
-    log(i:res, s:" ", i:distance, s:" ", i:count);
-    SetResultValue(CheckProximity(0, "PlayerPawn", distance, count, CPXF_ANCESTOR|CPXF_CHECKSIGHT|CPXF_CLOSEST|CPXF_SETTRACER));
 }
 
 
