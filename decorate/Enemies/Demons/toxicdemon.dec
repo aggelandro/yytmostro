@@ -1,4 +1,5 @@
 ACTOR Toxigi : Pinky2 {
+	DamageFactor "Poison", 0
 	Obituary "%o was poisoned to death by a Toxiiiigiiii."
 	
 	States {

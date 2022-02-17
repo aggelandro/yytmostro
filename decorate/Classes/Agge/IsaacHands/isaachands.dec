@@ -88,22 +88,22 @@ ACTOR IsaacHands : Weapon {
 			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 11) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 10) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("TwentyTwentyGiver", 1, 4) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 60, TRUE, -15)
-			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 300, FALSE, 15)
+			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 30, TRUE, -15)
+			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 330, FALSE, 15)
 			CFLM F -1 A_Jump(256, 36) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 60, TRUE, -25)
-			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 60, FALSE, -5)
-			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 300, FALSE, 25)
-			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 300, FALSE, 5)
+			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 30, TRUE, -25)
+			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 30, FALSE, -5)
+			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 330, FALSE, 25)
+			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 330, FALSE, 5)
 			CFLM F -1 A_Jump(256, 31) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 60, TRUE, -15)
-			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 300, FALSE, 15)
+			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 30, TRUE, -15)
+			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 330, FALSE, 15)
 			CFLM E 2 Bright
 			CFLM F 2 Bright
-			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 60, FALSE, -1)
-			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 60, FALSE, -30)
-			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 300, FALSE, 30)
-			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 300, FALSE, 1)
+			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 30, FALSE, -1)
+			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 30, FALSE, -30)
+			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 330, FALSE, 30)
+			TNT1 A 0 A_FireCustomMissile("NormalTearProjectile", 330, FALSE, 1)
 			CFLM F -1 A_Jump(256, 22) //OFFSET
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 15), 6) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 6) //OFFSET
@@ -144,22 +144,22 @@ ACTOR IsaacHands : Weapon {
 			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 11) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 10) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("TwentyTwentyGiver", 1, 4) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 60, TRUE, -15)
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 300, FALSE, 15)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 30, TRUE, -15)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 330, FALSE, 15)
 			CFLM F -1 A_Jump(256, 36) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 60, TRUE, -25)
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 60, FALSE, -5)
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 300, FALSE, 25)
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 300, FALSE, 5)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 30, TRUE, -25)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 30, FALSE, -5)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 330, FALSE, 25)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 330, FALSE, 5)
 			CFLM F -1 A_Jump(256, 31) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 60, TRUE, -15)
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 300, FALSE, 15)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 30, TRUE, -15)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 330, FALSE, 15)
 			CFLM E 2 Bright
 			CFLM F 2 Bright
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 60, FALSE, -1)
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 60, FALSE, -30)
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 300, FALSE, 30)
-			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 300, FALSE, 1)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 30, FALSE, -1)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 30, FALSE, -30)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 330, FALSE, 30)
+			TNT1 A 0 A_FireCustomMissile("BouncingTearProjectile", 330, FALSE, 1)
 			CFLM F -1 A_Jump(256, 22) //OFFSET
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 15), 6) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 6) //OFFSET
@@ -388,22 +388,22 @@ ACTOR BlackIsaacHands : IsaacHands {
 			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 11) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 10) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("TwentyTwentyGiver", 1, 4) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 60, TRUE, -15)
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 300, FALSE, 15)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 30, TRUE, -15)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 330, FALSE, 15)
 			CFLB F -1 A_Jump(256, 36) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 60, TRUE, -25)
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 60, FALSE, -5)
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 300, FALSE, 25)
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 300, FALSE, 5)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 30, TRUE, -25)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 30, FALSE, -5)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 330, FALSE, 25)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 330, FALSE, 5)
 			CFLB F -1 A_Jump(256, 31) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 60, TRUE, -15)
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 300, FALSE, 15)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 30, TRUE, -15)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 330, FALSE, 15)
 			CFLB E 2 Bright
 			CFLB F 2 Bright
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 60, FALSE, -1)
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 60, FALSE, -30)
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 300, FALSE, 30)
-			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 300, FALSE, 1)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 30, FALSE, -1)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 30, FALSE, -30)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 330, FALSE, 30)
+			TNT1 A 0 A_FireCustomMissile("FearTearProjectile", 330, FALSE, 1)
 			CFLB F -1 A_Jump(256, 22) //OFFSET
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 15), 6) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 6) //OFFSET
@@ -444,22 +444,22 @@ ACTOR BlackIsaacHands : IsaacHands {
 			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 11) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 10) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("TwentyTwentyGiver", 1, 4) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 60, TRUE, -15)
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 300, FALSE, 15)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 30, TRUE, -15)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 330, FALSE, 15)
 			CFLB F -1 A_Jump(256, 36) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 60, TRUE, -25)
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 60, FALSE, -5)
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 300, FALSE, 25)
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 300, FALSE, 5)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 30, TRUE, -25)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 30, FALSE, -5)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 330, FALSE, 25)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 330, FALSE, 5)
 			CFLB F -1 A_Jump(256, 31) //OFFSET
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 60, TRUE, -15)
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 300, FALSE, 15)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 30, TRUE, -15)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 330, FALSE, 15)
 			CFLB E 2 Bright
 			CFLB F 2 Bright
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 60, FALSE, -1)
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 60, FALSE, -30)
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 300, FALSE, 30)
-			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 300, FALSE, 1)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 30, FALSE, -1)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 30, FALSE, -30)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 330, FALSE, 30)
+			TNT1 A 0 A_FireCustomMissile("BouncingFearTearProjectile", 330, FALSE, 1)
 			CFLB F -1 A_Jump(256, 22) //OFFSET
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 15), 6) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 6) //OFFSET
@@ -1038,6 +1038,7 @@ ACTOR NormalTearProjectile {
 			
 		SpawnHomingTear:
 			TNT1 A 0 A_ChangeFlag("SEEKERMISSILE", TRUE)
+			TNT1 A 0 A_ChangeFlag("SCREENSEEKER", TRUE)
 			TNT1 A 0 A_JumpIfInventory("LostContactGiver", 1, "SpawnShieldedTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("MomsContactsGiver", 1, "SpawnPetrifyingTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("TheCommonColdGiver", 1, "SpawnPoisonTear", AAPTR_TARGET)

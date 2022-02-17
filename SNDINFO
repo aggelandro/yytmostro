@@ -219,3 +219,10 @@ LHK/block  LHKBLOCK
 
 //toxigi
 toxigi/breath SIGIBREA
+
+//skeleton
+skel/see		SKELSEE
+skel/die		SKELDIE
+skel/hit		GENHIT
+skel/throw	SKELTRW
+skel/bondie	TBONE

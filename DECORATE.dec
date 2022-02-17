@@ -67,6 +67,7 @@
 
 #include "decorate/Enemies/Revenants/HoloRevenant/holorevenant.dec"
 #include "decorate/Enemies/Revenants/VayneAurelius/vayneaurelius.dec"
+#include "decorate/Enemies/Revenants/skeleton.dec"
 
 #include "decorate/Enemies/Goats/MirrorKnight/mirrorknight.dec"
 #include "decorate/Enemies/Goats/AngryBaron/angrybaron.dec"
@@ -146,8 +147,9 @@ ACTOR PainElementalSpawner : RandomSpawner replaces PainElemental
 ACTOR RevenantSpawner : RandomSpawner replaces Revenant
 {
 	DropItem "Revenant2", 255, 60
-	DropItem "HoloRevenant", 255, 30
+	DropItem "HoloRevenant", 255, 15
 	DropItem "VayneAurelius", 255, 10
+	DropItem "Skeleton", 255, 15
 }
 ACTOR FatsoSpawner : RandomSpawner replaces Fatso
 {

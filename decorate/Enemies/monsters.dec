@@ -20,6 +20,7 @@ ACTOR YYTMonster
 ACTOR AbstractYYTZombie : YYTMonster {
 	Height 56
 	Speed 8
+	Species "Zombie"
   +FLOORCLIP
 	
 	States 
@@ -287,6 +288,7 @@ ACTOR DoomImp2 : YYTMonster
   Mass 100
   Speed 8
   PainChance 200
+	Species "Imp"
   +FLOORCLIP
   SeeSound "imp/sight"
   PainSound "imp/pain"
@@ -358,6 +360,7 @@ ACTOR Pinky2 : YYTMonster
   Height 56
   Mass 400
   +FLOORCLIP
+	Species "Demon"
   SeeSound "demon/sight"
   AttackSound "demon/melee"
   PainSound "demon/pain"
@@ -432,6 +435,7 @@ ACTOR Cacodemon2 : YYTMonster
   Mass 400
   Speed 8
   PainChance 128
+	Species "Cacodemon"
   +FLOAT
   +NOGRAVITY
   SeeSound "caco/sight"
@@ -506,11 +510,12 @@ ACTOR Revenant2 : YYTMonster
 {
   Health 300
   Radius 20
-  Height 56
+  Height 60
   Mass 500
   Speed 10
   PainChance 100
   MeleeThreshold 196
+	Species "Revenant"
   +MISSILEMORE 
   +FLOORCLIP
   SeeSound "skeleton/sight"
@@ -597,6 +602,7 @@ ACTOR Arachnotron2 : YYTMonster
   Mass 600
   Speed 12
   PainChance 128
+	Species "Arachnotron"
   +FLOORCLIP
   +BOSSDEATH
   SeeSound "baby/sight"
@@ -669,6 +675,7 @@ ACTOR Fatso2 : YYTMonster
   Mass 1000
   Speed 8
   PainChance 80
+	Species "Mancubus"
   +FLOORCLIP
   +BOSSDEATH
   SeeSound "fatso/sight"
@@ -757,6 +764,7 @@ ACTOR PainElemental2 : YYTMonster
   Mass 400
   Speed 8
   PainChance 128
+	Species "Elemental"
   +FLOAT
   +NOGRAVITY
   SeeSound "pain/sight"
@@ -826,6 +834,7 @@ ACTOR LostSoul2 : YYTMonster
   Damage 3
   PainChance 256
   BloodType None
+	Species "Soul"
   +FLOAT
   +NOGRAVITY
   +MISSILEMORE
@@ -872,6 +881,7 @@ ACTOR BaronOfHell2 : YYTMonster
   Mass 1000
   Speed 8
   PainChance 50
+	Species "Goat"
   +FLOORCLIP
   +BOSSDEATH
   SeeSound "baron/sight"
@@ -881,7 +891,6 @@ ACTOR BaronOfHell2 : YYTMonster
   Obituary "$OB_BARON"
   HitObituary "$OB_BARONHIT"
   BloodColor "00 64 00"
-	Species Goat
 	DropItem "Cat-O-Nine-Tails" 38
 	DropItem "GrowthHormones" 38
 	DropItem "JesusJuice" 38
@@ -956,7 +965,7 @@ ACTOR HellKnight2 : BaronOfHell2
 {
   Health 500
   BloodColor "00 64 00"
-  Species Goat
+  Species "Goat"
   -BOSSDEATH
   SeeSound "knight/sight"
   ActiveSound "knight/active"
@@ -1029,6 +1038,7 @@ ACTOR Archvile2 : YYTMonster
   Speed 15
   PainChance 10
   MaxTargetRange 896
+	Species "Archvile"
   +QUICKTORETALIATE
   +FLOORCLIP
   +NOTARGET
@@ -1086,6 +1096,7 @@ ACTOR Cyberdemon2 : YYTMonster
   DamageFactor "AfireF", 0.9
 	PainChance "AfireF", 0
 	PainChance "Afire", 0
+	Species "Cyberdemon"
   +BOSS
   +MISSILEMORE
   +FLOORCLIP
@@ -1190,6 +1201,7 @@ ACTOR SpiderMastermind2 : YYTMonster
 	PainChance "Afire", 0
 	PainChance "AfireF", 0
 	PainChance "Ripper", 0
+	Species "Spider"
   +BOSS
   +MISSILEMORE
   +FLOORCLIP

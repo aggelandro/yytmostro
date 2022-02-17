@@ -575,6 +575,24 @@ script "loadTearStatsData" (int pnum) {
     FreeDBResults(tearStats);
 }
 
+script "homingAtNegativeZVelocity" (void) {
+    int velz;
+    while (velz >= 0) {
+        velz = GetActorVelZ(0);
+        Delay(1);
+    }
+
+    int ttid = UniqueTID();
+    Thing_ChangeTID(0, ttid);
+    SetActivatorToTarget(0);
+    int ptid = GetActorProperty(0, APROP_TargetTID);
+    SetActivator(ttid);
+    // Si es un monstruo no interesa que sea target
+    if (ptid) SetPointer(AAPTR_TRACER, ptid);
+    SetUserVariable(0, "user_homing_flag", 1);
+    Thing_ChangeTID(ttid, 0);
+}
+
 
 
 

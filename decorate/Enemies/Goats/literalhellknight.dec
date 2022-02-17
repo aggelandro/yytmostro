@@ -2,6 +2,7 @@ ACTOR LiteralHellKnight : HellKnight2 {
 	Speed 14
 	MeleeRange 64
 	Species Goat
+	DamageFactor "Poison", 0
 	Obituary "%o was literally diced to bits by a Literal Knight."
 	SeeSound "LHK/sight"
   PainSound "demon/pain"
