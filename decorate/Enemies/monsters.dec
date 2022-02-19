@@ -515,6 +515,7 @@ ACTOR Revenant2 : YYTMonster
   Speed 10
   PainChance 100
   MeleeThreshold 196
+	DamageFactor "Poison", 0
 	Species "Revenant"
   +MISSILEMORE 
   +FLOORCLIP

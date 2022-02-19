@@ -253,7 +253,7 @@ ACTOR GreenBlood : Blood {
 ACTOR MiniArachnotron
 {
   RenderStyle Stencil
-  StencilColor Black
+  StencilColor Red
   Species Spider
   Health 1
   Radius 6

@@ -2,7 +2,6 @@ ACTOR Skeleton : Revenant2 {
 	Speed 5
 	Health 250
 	GibHealth 20
-	DamageFactor "Poison", 0
 	SeeSound "skel/see"
   PainSound "skel/hit"
   DeathSound "skel/die"

@@ -23,7 +23,7 @@
 
 #include "decorate/Classes/Agge/SuperShotgun/supershotgun.dec"
 #include "decorate/Classes/Agge/Flamethrower/flamethrower.dec"
-#include "decorate/Classes/Agge/Unique/unique.dec"
+#include "decorate/Classes/Agge/OkuuCannon/okuucannon.dec"
 #include "decorate/Classes/Agge/Shield/shield.dec"
 #include "decorate/Classes/Agge/IsaacHands/isaachands.dec"
 #include "decorate/Classes/Agge/Pistol/pistol.dec"
@@ -389,7 +389,7 @@ ACTOR Agge : DoomPlayer
   Player.WeaponSlot 5, Motumbo
   Player.WeaponSlot 6, AggeFlamethrower
   Player.WeaponSlot 7, BFG9000
-  Player.WeaponSlot 8, AggeUnique
+  Player.WeaponSlot 8, OkuuCannon
   Player.ColorRange 112, 127
   Player.ColorSet 0, "Green",         0x70, 0x7F,  0x72
   Player.ColorSet 1, "Gray",          0x60, 0x6F,  0x62 // Called "Indigo" originally so as to have a unique initial
@@ -959,7 +959,7 @@ ACTOR UniqueWeaponSpawner : CustomInventory
 			Stop
 		PickupAgge:
 			TNT1 A 0 A_JumpIfInventory("CargaAgge",10,"Spawn")
-			TNT1 A 0 A_GiveInventory("AggeUnique",1)
+			TNT1 A 0 A_GiveInventory("OkuuCannon",1)
 			TNT1 A 0 A_GiveInventory("CargaAgge",10)
 			TNT1 A 0 A_PlaySound("misc/w_pkup")
 			Stop

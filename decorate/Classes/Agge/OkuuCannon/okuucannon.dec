@@ -1,4 +1,4 @@
-ACTOR AggeUnique : DoomWeapon
+ACTOR OkuuCannon : DoomWeapon
 {
   Weapon.SelectionOrder 3700
   Weapon.Kickback 100
@@ -9,20 +9,20 @@ ACTOR AggeUnique : DoomWeapon
   States
   {
   Ready:
-    MISG A 1 A_WeaponReady
+    OKUU A 1 A_WeaponReady
     Loop
   Deselect:
-    MISG A 1 A_Lower
+    OKUU A 1 A_Lower
     Loop
   Select:
-    MISG A 1 A_Raise
+    OKUU A 1 A_Raise
     Loop
   Fire:
-    MISG B 8 A_GunFlash
-	MISG B 0 A_FireCustomMissile("AggeInfernoAttack",5,0,-35)
-	MISG B 0 A_FireCustomMissile("AggeInfernoAttack",-5,0,35)
-    MISG B 12 A_FireCustomMissile("AggeInfernoAttack")
-    MISG B 0 A_ReFire
+    OKUU A 8 A_GunFlash
+	OKUU A 0 A_FireCustomMissile("AggeInfernoAttack",5,0,-35)
+	OKUU A 0 A_FireCustomMissile("AggeInfernoAttack",-5,0,35)
+    OKUU A 12 A_FireCustomMissile("AggeInfernoAttack")
+    OKUU A 0 A_ReFire
     Goto Ready
   Flash:
     MISF A 3 Bright A_Light1

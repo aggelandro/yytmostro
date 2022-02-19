@@ -44,10 +44,10 @@ ACTOR FlamethrowerGuy : AbstractYYTZombie {
 		Melee:
 			FLMZ E 10 A_FaceTarget
 			FLMZ F 0 Bright A_PlaySound("agge/flamet", CHAN_WEAPON)
-			FLMZ F 4 Bright A_CustomMissile("FlameThrowerFireF", 16, 0, random(-4, 4))
+			FLMZ F 10 Bright A_CustomMissile("FlameThrowerFireF", 16, 0, random(-4, 4))
 			FLMZ E 1 A_FaceTarget
 			FLMZ E 0 A_PlaySound("agge/flamet", CHAN_WEAPON)
-			FLMZ F 4 Bright A_CustomMissile("FlameThrowerFireF", 16, 0, random(-4, 4))
+			FLMZ F 10 Bright A_CustomMissile("FlameThrowerFireF", 16, 0, random(-4, 4))
 			FLMZ F 1 A_CPosRefire
 			Goto Melee+1
 		
