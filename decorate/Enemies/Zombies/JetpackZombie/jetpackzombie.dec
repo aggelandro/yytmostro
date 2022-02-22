@@ -120,6 +120,14 @@ Actor JetpackZombie : AbstractYYTZombie
     JPZM AAAAAAAAAAA 0 A_SpawnItemEx("JetpackZombieExplosion", Random(-30, 30), Random(-30, 30), Random(20, 40), 0, 0, 0, 0, 128)
     JPZM AAA 0 A_SpawnItemEx("JetpackZombieGoreSpawner", Random(-15, 15), Random(-15, 15), Random(20, 30), 0, 0, 0, 0, 128)
     Stop
+		
+	Death.AfireF:
+	Death.Afire:
+		TNT1 A 0 A_ChangeFlag("DONTFALL", FALSE)
+		TNT1 A 0 A_ChangeFlag("FLOAT", FALSE)
+		TNT1 A 0 A_ChangeFlag("NOGRAVITY", FALSE)
+		TNT1 A 0 A_ChangeFlag("FLOATBOB", FALSE)
+		Goto Super::Death.Afire
    }
 }
 

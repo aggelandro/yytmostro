@@ -50,7 +50,7 @@ ACTOR AggeNewFire
 	Radius 8
     Height 40
     RenderStyle "Add"
-    DamageType "AfireF"
+    DamageType "FireBF"
     Alpha 0.90
     Projectile
 	+PAINLESS
@@ -107,7 +107,7 @@ ACTOR FlameThrowerFire : PlasmaBall
 {
 	Translation "208:231=192:207","248:249=192:207","160:167=192:207"
 	+NODAMAGETHRUST
-	DamageType "AFireF"
+	DamageType "FireBF"
 	RenderStyle "Add"
 	Alpha 1
 	Damage 1
@@ -195,7 +195,6 @@ ACTOR StatusEffect {
 	+NOGRAVITY
 	+NOINTERACTION
 	+SEEKERMISSILE
-	+CLIENTSIDEONLY
 	var int user_se_monster_height;
 	
 	States {
@@ -238,6 +237,26 @@ ACTOR PetrifyingEffect : StatusEffect {
 	States {
 	  Spawn:
 			PETR ABCB 20 A_Warp(AAPTR_TRACER, 0, 0, user_se_monster_height, 0, WARPF_NOCHECKPOSITION)
+			Loop
+	}
+}
+
+ACTOR BurnEffect : StatusEffect {
+	
+	States {
+	  Spawn:
+			BUR2 ABCDEF 2 A_Warp(AAPTR_TRACER, 0, 0, user_se_monster_height, 0, WARPF_NOCHECKPOSITION)
+			Loop
+	}
+}
+
+ACTOR LightFollower : StatusEffect {
+
+	States {
+	  Spawn:
+			TNT1 A 1 A_Warp(AAPTR_TRACER, 0, 0, user_se_monster_height, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A 0 ACS_NamedExecuteWithResult("killIfPlayerIsDead")
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTracerInventory", 39), "Death")
 			Loop
 	}
 }

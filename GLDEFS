@@ -257,3 +257,147 @@ Frame DTBAN { Light ToxicBreath14 }
 Frame DTBAO { Light ToxicBreath15 }
 Frame DTBAP { Light ToxicBreath16 }
 }
+
+Pointlight FireTearProjectile1
+{
+Color 1.0 0.58 0.28
+Size 48
+}
+
+Object FireTearProjectile { Frame FBA2 { Light FireTearProjectile1 } }
+
+Pointlight IsaacExplosion1
+{
+Color 1.0 0.58 0.28
+Size 8
+}
+
+Pointlight IsaacExplosion2
+{
+Color 1.0 0.58 0.28
+Size 12
+}
+
+Pointlight IsaacExplosion3
+{
+Color 1.0 0.58 0.28
+Size 20
+}
+
+Pointlight IsaacExplosion4
+{
+Color 1.0 0.58 0.28
+Size 28
+}
+
+Pointlight IsaacExplosion5
+{
+Color 1.0 0.58 0.28
+Size 36
+}
+
+Pointlight IsaacExplosion6
+{
+Color 1.0 0.58 0.28
+Size 32
+}
+
+Pointlight IsaacExplosion7
+{
+Color 1.0 0.58 0.28
+Size 28
+}
+
+Pointlight IsaacExplosion8
+{
+Color 1.0 0.58 0.28
+Size 24
+}
+
+Pointlight IsaacExplosion9
+{
+Color 1.0 0.58 0.28
+Size 20
+}
+
+Pointlight IsaacExplosion10
+{
+Color 1.0 0.58 0.28
+Size 16
+}
+
+Pointlight IsaacExplosion11
+{
+Color 1.0 0.58 0.28
+Size 12
+}
+
+Pointlight IsaacExplosion12
+{
+Color 1.0 0.58 0.28
+Size 8
+}
+
+Pointlight IsaacExplosion5
+{
+Color 1.0 0.58 0.28
+Size 24
+}
+
+Object IsaacExplosion
+{
+Frame EXP1A { Light IsaacExplosion1 }
+Frame EXP1B { Light IsaacExplosion2 }
+Frame EXP1C { Light IsaacExplosion3 }
+Frame EXP1D { Light IsaacExplosion4 }
+Frame EXP1E { Light IsaacExplosion5 }
+Frame EXP1F { Light IsaacExplosion6 }
+Frame EXP1G { Light IsaacExplosion7 }
+Frame EXP1H { Light IsaacExplosion8 }
+Frame EXP1I { Light IsaacExplosion9 }
+Frame EXP1J { Light IsaacExplosion10 }
+Frame EXP1K { Light IsaacExplosion11 }
+Frame EXP1L { Light IsaacExplosion12 }
+}
+
+Pulselight FireMindLight
+{
+Color 1.0 0.58 0.28
+Size 48
+SecondarySize 64
+Interval 5
+}
+
+Object LightFollower { Frame TNT1 { Light FireMindLight } }
+
+FlickerLight2 FlameThrowerFire1
+{
+Offset 0 2 0
+Color 0.3 0.31 0.65
+Size 40
+SecondarySize 60
+Interval 2.0
+}
+
+Object FlameThrowerFire { Frame FRFX { Light FlameThrowerFire1 } }
+
+FlickerLight2 DropFlame1
+{
+Offset 0 0 0
+Color 0.15 0.04 0.0
+Size 20
+SecondarySize 30
+Interval 2.0
+}
+
+FlickerLight2 DropFlame2
+{
+Offset 0 0 0
+Color 0.3 0.31 0.65
+Size 20
+SecondarySize 30
+Interval 2.0
+}
+
+Object FireMindFire { Frame FLME { Light DropFlame1 } }
+Object AggeNewFire { Frame FLME { Light DropFlame2 } }

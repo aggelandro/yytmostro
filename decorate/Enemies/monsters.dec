@@ -25,55 +25,27 @@ ACTOR AbstractYYTZombie : YYTMonster {
 	
 	States 
 	{
-
+		Death.FireBF:
 		Death.AfireF:
-			REEB A 3 Bright A_PlaySound("grunt/pain")
-			REEB B 3 Bright
-			REEB C 3 Bright A_NoBlocking
-			REEB D 3 Bright
-			REEB E 3 Bright
-			REEB F 3 Bright
-			REEB G 3 Bright
-			REEB H 3 Bright
-			REEB I 3 Bright A_PlaySound("grunt/pain")
-			REEB J 3 Bright
-			REEB K 3 Bright
-			REEB L 3 Bright
-			REEB M 3 Bright
-			REEB N 3 Bright
-			REEB O 3 Bright A_PlaySound("grunt/pain")
-			REEB P 3 Bright
-			REEB Q 3 Bright
-			REEB R 3 Bright
-			REEB S 3 Bright A_PlaySound("grunt/death")
-			REEB T 3 Bright
-			REEB W 3 Bright
-			REEB V -1 
-			Stop
 		Death.Afire:
 			REEB A 3 Bright A_PlaySound("grunt/pain")
 			REEB B 3 Bright
 			REEB C 3 Bright A_NoBlocking
-			REEB D 3 Bright
-			REEB E 3 Bright
-			REEB F 3 Bright
-			REEB G 3 Bright
-			REEB H 3 Bright
+			REEB DEFGH 3 Bright
 			REEB I 3 Bright A_PlaySound("grunt/pain")
-			REEB J 3 Bright
-			REEB K 3 Bright
-			REEB L 3 Bright
-			REEB M 3 Bright
-			REEB N 3 Bright
+			REEB JKLMN 3 Bright
 			REEB O 3 Bright A_PlaySound("grunt/pain")
-			REEB P 3 Bright
-			REEB Q 3 Bright
-			REEB R 3 Bright
+			REEB PQR 3 Bright
 			REEB S 3 Bright A_PlaySound("grunt/death")
-			REEB T 3 Bright
-			REEB W 3 Bright
-			REEB V -1
+			REEB TW 3 Bright
+			REEB V -1 
 			Stop
+			
+		Death.FireRF:
+		Death.FireR:
+			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 20)
+			TNT1 A -1 A_Jump(256, "Death.Afire")
+			Wait
 	}
 }
 
@@ -475,6 +447,7 @@ ACTOR Cacodemon2 : YYTMonster
 	DropItem "DeathsTouch" 2
 	DropItem "MyReflection" 2
 	DropItem "MonstrosLung" 2
+	DropItem "FireMind" 2
 	DropItem "Brimstone" 2
   States
   {
@@ -558,6 +531,7 @@ ACTOR Revenant2 : YYTMonster
 	DropItem "MyReflection" 2
 	DropItem "MonstrosLung" 2
 	DropItem "Brimstone" 2
+	DropItem "FireMind" 2
   States
   {
   SpawnLoop:
@@ -723,6 +697,7 @@ ACTOR Fatso2 : YYTMonster
 	DropItem "MyReflection" 5
 	DropItem "MonstrosLung" 5
 	DropItem "Brimstone" 5
+	DropItem "FireMind" 5
   States
   {
   SpawnLoop:
@@ -931,6 +906,7 @@ ACTOR BaronOfHell2 : YYTMonster
 	DropItem "MyReflection" 10
 	DropItem "MonstrosLung" 10
 	DropItem "Brimstone" 10
+	DropItem "FireMind" 10
   States
   {
   SpawnLoop:
@@ -1097,6 +1073,9 @@ ACTOR Cyberdemon2 : YYTMonster
   DamageFactor "AfireF", 0.9
 	PainChance "AfireF", 0
 	PainChance "Afire", 0
+	PainChance "FireR", 0
+	PainChance "FireRF", 0
+	PainChance "FireBF", 0
 	Species "Cyberdemon"
   +BOSS
   +MISSILEMORE
@@ -1148,6 +1127,7 @@ ACTOR Cyberdemon2 : YYTMonster
 	DropItem "MyReflection" 50
 	DropItem "MonstrosLung" 50
 	DropItem "Brimstone" 50
+	DropItem "FireMind" 50
   States
   {
   SpawnLoop:
@@ -1197,10 +1177,13 @@ ACTOR SpiderMastermind2 : YYTMonster
   PainChance 40
   MinMissileChance 160
   DamageFactor "AFire", 0.01
-	DamageFactor "AFireF", 0.01
+	DamageFactor "AFireF", 0.9
 	DamageFactor "Ripper", 0.25
 	PainChance "Afire", 0
 	PainChance "AfireF", 0
+	PainChance "FireR", 0
+	PainChance "FireRF", 0
+	PainChance "FireBF", 0
 	PainChance "Ripper", 0
 	Species "Spider"
   +BOSS
@@ -1254,6 +1237,7 @@ ACTOR SpiderMastermind2 : YYTMonster
 	DropItem "MyReflection" 35
 	DropItem "MonstrosLung" 35
 	DropItem "Brimstone" 35
+	DropItem "FireMind" 35
   States
   {
   SpawnLoop:

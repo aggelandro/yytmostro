@@ -60,3 +60,4 @@ ACTOR InfestationDebuffGiver : AbstractDebuffGiver {}
 ACTOR PetrifyingDebuffGiver : AbstractDebuffGiver {}
 ACTOR PoisonDebuffGiver : AbstractDebuffGiver { Inventory.MaxAmount 3 }
 ACTOR BleedingDebuffGiver : AbstractDebuffGiver {}
+ACTOR BurnDebuffGiver : AbstractDebuffGiver {}

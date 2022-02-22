@@ -31,6 +31,11 @@ agge/brimroar BRROAR
 agge/brimlaser BRLASER
 elect/spark LHTSPARK
 
+agge/expl1 TEAREXP1
+agge/expl2 TEAREXP2
+agge/expl3 TEAREXP3
+$random agge/tearexpl { agge/expl1 agge/expl2 agge/expl3 }
+
 agge/pedo1 AGGEPED1
 agge/pedo2 AGGEPED2
 agge/pedo3 AGGEPED3
