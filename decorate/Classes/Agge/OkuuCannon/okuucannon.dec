@@ -18,16 +18,17 @@ ACTOR OkuuCannon : DoomWeapon
     OKUU A 1 A_Raise
     Loop
   Fire:
-    OKUU A 8 A_GunFlash
-	OKUU A 0 A_FireCustomMissile("AggeInfernoAttack",5,0,-35)
-	OKUU A 0 A_FireCustomMissile("AggeInfernoAttack",-5,0,35)
-    OKUU A 12 A_FireCustomMissile("AggeInfernoAttack")
-    OKUU A 0 A_ReFire
+    OKUU B 8 A_GunFlash
+		OKUU B 65
+		TNT1 A 0 A_FireCustomMissile("AggeInfernoAttack",5,0,-35)
+		TNT1 A 0 A_FireCustomMissile("AggeInfernoAttack",-5,0,35)
+    TNT1 A 0 A_FireCustomMissile("AggeInfernoAttack")
+    OKUU B 0 A_ReFire
     Goto Ready
   Flash:
-    MISF A 3 Bright A_Light1
-    MISF B 4 Bright
-    MISF CD 4 Bright A_Light2
+    OKUX A 2 Bright A_Light1
+    OKUX B 3 Bright
+    OKUX CDEFGHIJKLMNOPQRSTUV 3 Bright A_Light2
     Goto LightDone
   Spawn:
     ULTR A -1
@@ -64,6 +65,7 @@ ACTOR HellfireUltra : Hellfire
 {
   Scale 1.5
   Translation "208:231=176:191","248:249=176:191","161:167=32:47"
+	DamageType "FireRF"
   States
   {
   Spawn:
