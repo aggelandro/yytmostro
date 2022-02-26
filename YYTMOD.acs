@@ -3,14 +3,16 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 40
+#define DISPLAYABLE_POWERUP_MAX 41
 #define TEAR_STATS 7
-#define TEMPORAL_POWERUPS 8
+#define TEMPORAL_POWERUPS 9
 
 int  SV_PLAYERS_NUMBERS_2_TIDS[PLAYER_MAX];
 bool ENERGY_SHIELD_RELOAD = true;
 int TEARS_STATS_BY_PLAYER[PLAYER_MAX][TEAR_STATS];
-str BRIMSTONE_COLOR = 0; //Para el trail que vive en Marte
+str BRIMSTONE_COLOR = 0; //Para el trail que vive en Marte.
+int UNIVERSAL_ARG = 0; //Usado para pasar argumentos entre actores que no tienen relación directa.
+int IPECAC_FLAT_BONUS_DMG = 20;
 
 str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "CONTGiverP000A0", "GrowthHormonesGiverP001A0", "JesusJuiceGiverP002A0", "MomsHeelsGiverP003A0", "MomsLipstickGiverP004A0", 
@@ -20,7 +22,8 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "LostContactGiverP020A0", "MomsContactsGiverP021A0", "MomsEyeGiverP022A0", "MutantSpiderGiverP023A0", "PiscesGiverP024A0",
     "RubberCementGiverP025A0", "SacredHeartGiverP026A0", "SpoonBenderGiverP027A0", "TheCommonColdGiverP028A0", "TheInnerEyeGiverP029A0",
     "TheParasiteGiverP030A0", "TheWizGiverP031A0", "BackstabberGiverP032A0", "CompoundFractureGiverP033A0", "8InchNailsGiverP034A0",
-    "DeathsTouchGiverP035A0", "MyReflectionGiverP036A0", "MonstrosLungGiverP037A0", "BrimstoneGiverP038A0", "FireMindGiverP039A0"
+    "DeathsTouchGiverP035A0", "MyReflectionGiverP036A0", "MonstrosLungGiverP037A0", "BrimstoneGiverP038A0", "FireMindGiverP039A0",
+    "IpecacGiverP040A0"
 };
 
 str SV_DRAWABLE_CHARGE_BAR[40] = {
@@ -31,7 +34,8 @@ str SV_DRAWABLE_CHARGE_BAR[40] = {
 };
 
 str SV_TEMPORAL_POWERUPS[TEMPORAL_POWERUPS] = {
-    "RubberCementGiver", "SacredHeartGiver", "SpoonBenderGiver", "TheParasiteGiver", "CompoundFractureGiver", "MonstrosLungGiver", "BrimstoneGiver", "FireMindGiver"
+    "RubberCementGiver", "SacredHeartGiver", "SpoonBenderGiver", "TheParasiteGiver", "CompoundFractureGiver", "MonstrosLungGiver", "BrimstoneGiver",
+    "FireMindGiver", "IpecacGiver"
 };
 
 script "yytmod_mensajesalida" DEATH
@@ -93,6 +97,7 @@ script 332 OPEN {
     CreateTranslation (11, 128:225=[0,0,0]:[85,154,117], 3:4=[0,0,0]:[85,154,117], 80:96=[0,0,0]:[85,154,117]); // The Common Cold
     CreateTranslation (13, 192:193=[0,0,0]:[187,98,69], 194:197=[0,0,0]:[154,78,40], 198:224=[0,0,0]:[128,71,43], 3:4=[0,0,0]:[187,98,69], 80:96=[0,0,0]:[154,78,40]); // The Parasite
     CreateTranslation (20, 192:193=[0,0,0]:[255,148,73], 194:197=[0,0,0]:[239,104,11], 198:224=[0,0,0]:[218,95,10], 3:4=[0,0,0]:[255,148,73], 80:96=[0,0,0]:[239,104,11]); // Fire Mind
+    CreateTranslation (21, 192:193=[0,0,0]:[119,136,89], 194:197=[0,0,0]:[140,176,109], 198:224=[0,0,0]:[202,239,190], 3:4=[0,0,0]:[119,136,89], 80:96=[0,0,0]:[140,176,109]); // Ipecac
 
     //Red Beams
     CreateTranslation (14, 16:47=[0,0,0]:[64,36,4], 169:191=[0,0,0]:[64,36,4]); // A Lump of Coal
@@ -376,27 +381,33 @@ script "applyEffect" (int option, int dur, int force) {
         case 5: {
             // Poison hace el daño de la lágrima al monstruo cada 2 segundos una X cantidad de veces
             times = dur / 35;
-            int poisonDmg = GetActorProperty(0, APROP_Damage);
-            if (SetActivator(0, AAPTR_TRACER)) {
-                mtid = UniqueTID();
-                ptid = UniqueTID();
-
-                Thing_ChangeTID(0, mtid);
-                Spawn("PoisonEffect", GetActorX(0), GetActorY(0), GetActorZ(0), ptid);
-                SetActivator(ptid);
-                SetPointer(AAPTR_TRACER, mtid);
-                SetUserVariable(0, "user_se_monster_height", GetActorProperty(mtid, APROP_Height) >> 16);
-                SetActivator(mtid);
-                Thing_ChangeTID(mtid, 0);
-                for (i=0; i<times; i++) {
-                    Thing_Damage2(0, poisonDmg, "Poison");
-                    Delay(70);
-                }
-
-                SetActorState(ptid, "Death");
-                TakeInventory("PoisonDebuffGiver", 1);
-                Thing_ChangeTID(ptid, 0);
+            int poisonDmg;
+            if (CheckFlag(0, "ISMONSTER")) {
+                poisonDmg = UNIVERSAL_ARG;
             }
+            else {
+                poisonDmg = GetActorProperty(0, APROP_Damage);
+                if (!SetActivator(0, AAPTR_TRACER)) { break; }
+            }
+
+            mtid = UniqueTID();
+            ptid = UniqueTID();
+
+            Thing_ChangeTID(0, mtid);
+            Spawn("PoisonEffect", GetActorX(0), GetActorY(0), GetActorZ(0), ptid);
+            SetActivator(ptid);
+            SetPointer(AAPTR_TRACER, mtid);
+            SetUserVariable(0, "user_se_monster_height", GetActorProperty(mtid, APROP_Height) >> 16);
+            SetActivator(mtid);
+            Thing_ChangeTID(mtid, 0);
+            for (i=0; i<times; i++) {
+                Thing_Damage2(0, poisonDmg, "Poison");
+                Delay(70);
+            }
+
+            SetActorState(ptid, "Death");
+            TakeInventory("PoisonDebuffGiver", 1);
+            Thing_ChangeTID(ptid, 0);
         }; break;
         case 6: {
             // Bleeding hace 10% de su salud maxima de daño al monstruo cada 5 segundos y no tiene limite de tiempo.
@@ -547,9 +558,15 @@ function int fdistance (int tid1, int tid2) {
     return len;
 }
 
-script "setChildrenDamage" (int ctid) {
+script "setChildrenStats" (int ctid) {
     int masterDmg = GetActorProperty(0, APROP_Damage);
     SetUserVariable(ctid, "user_explosion_damage", masterDmg);
+    if (CheckActorInventory(GetActorProperty(0, APROP_TargetTID), "IpecacGiver")) {
+        int masterExplRange = GetUserVariable(0, "user_explosion_range");
+        int masterFMFlag = CheckActorInventory(GetActorProperty(0, APROP_TargetTID), "FireMindGiver");
+        SetUserVariable(ctid, "user_explosion_range", masterExplRange);
+        SetUserVariable(ctid, "user_fire_flag", masterFMFlag);
+    }
 }
 
 script "setPlayerLight" (int isOn) {
@@ -577,10 +594,12 @@ script "killIfPlayerIsDead" (void) {
     if (!ptid) SetActorState(0, "Death");
 }
 
-script "hasHitAProjectile" (void) {
-    SetActivator(0, AAPTR_TRACER);
-    Log(s:GetActorClass(0));
-    SetResultValue(CheckFlag(0, "MISSILE"));
+script "saveTemporalArg" (int argToSave) {
+    UNIVERSAL_ARG = argToSave;
+}
+
+script "cleanTemporalArg" (void) {
+    UNIVERSAL_ARG = 0;
 }
 
 
@@ -726,7 +745,7 @@ script "setTearStats" (void) {
     ACS_NamedExecuteAlways("setSpeed", 0, TEARS_STATS_BY_PLAYER[pnum][4], ptid);
     ACS_NamedExecuteAlways("setScale", 0, TEARS_STATS_BY_PLAYER[pnum][5]);
 
-    if (CheckActorInventory(ptid, "ALumpOfCoalGiver") == 1) {
+    if (CheckActorInventory(ptid, "ALumpOfCoalGiver")) {
         Thing_SetTranslation(0, 2);
         ACS_NamedExecuteAlways("setDamageBoostPerTime", 0, 1, 35, 10);
     }
@@ -735,11 +754,11 @@ script "setTearStats" (void) {
         CheckActorClass(0, "MonstroTearProjectile") ||
         CheckActorClass(0, "BouncingTearProjectile") ||
         CheckActorClass(0, "MonstroBouncingTearProjectile")) {
-        if (CheckActorInventory(ptid, "BloodOfTheMartyrGiver") == 1) Thing_SetTranslation(0, 3);
-        if (CheckActorInventory(ptid, "LostContactGiver") == 1) Thing_SetTranslation(0, 10);
-        if (CheckActorInventory(ptid, "SacredHeartGiver") == 1) Thing_SetTranslation(0, 8);
-        if (CheckActorInventory(ptid, "SpoonBenderGiver") == 1) Thing_SetTranslation(0, 9);
-        if (CheckActorInventory(ptid, "TheParasiteGiver") == 1) Thing_SetTranslation(0, 13);
+        if (CheckActorInventory(ptid, "BloodOfTheMartyrGiver")) Thing_SetTranslation(0, 3);
+        if (CheckActorInventory(ptid, "LostContactGiver")) Thing_SetTranslation(0, 10);
+        if (CheckActorInventory(ptid, "SacredHeartGiver")) Thing_SetTranslation(0, 8);
+        if (CheckActorInventory(ptid, "SpoonBenderGiver")) Thing_SetTranslation(0, 9);
+        if (CheckActorInventory(ptid, "TheParasiteGiver")) Thing_SetTranslation(0, 13);
     }
 }
 
@@ -757,16 +776,22 @@ script "setDamage" (int damage, int ptid) {
 }
 
 function int applyGiversToDamage(int damage, int ptid) {
-    if (CheckActorInventory(ptid, "SacredHeartGiver") == 1) {
+    if (CheckActorInventory(ptid, "SacredHeartGiver")) {
         damage = multiplyValue(damage, 2.3);
     }
 
-    if (CheckActorInventory(ptid, "AdrenalineGiver") == 1 && GetActorProperty(ptid, APROP_Health) <= 100) {
+    if (CheckActorInventory(ptid, "AdrenalineGiver") && GetActorProperty(ptid, APROP_Health) <= 100) {
         damage = damage + (2 * ((GetActorProperty(ptid, APROP_Health) - 100) / -10)); // +2 damage cada -10 de HP, máximo +18 con menos de 10 HP
     }
 
-    if (CheckActorInventory(ptid, "TwentyTwentyGiver") == 1) {
+    if (CheckActorInventory(ptid, "TwentyTwentyGiver")) {
         damage = multiplyValue(damage, 0.75);
+    }
+
+    // Flat damage siempre se aplica al final luego de todos los multipliers
+    if (CheckActorInventory(ptid, "IpecacGiver")) {
+        if (CheckActorInventory(ptid, "BrimstoneGiver")) damage = damage + 2;
+        else damage = damage + IPECAC_FLAT_BONUS_DMG;
     }
 
     return damage;
@@ -816,6 +841,7 @@ script "setSpeed" (int boost, int ptid) {
 
 // Al ser algo puramente visual queda del lado del cliente
 script "setScale" (int scale) CLIENTSIDE {
+    if (scale < 1) scale = 1;
     switch(scale) {
         case 1: {
             SetActorProperty(0, APROP_ScaleX, 0.125);
@@ -921,6 +947,7 @@ script "activateTemporalPowerup" (int option) {
             if (CheckInventory("IsaacHands")) TakeInventory("IsaacHands", 1);
             if (CheckInventory("BlackIsaacHands")) TakeInventory("BlackIsaacHands", 1);
             if (CheckInventory("OrangeIsaacHands")) TakeInventory("OrangeIsaacHands", 1);
+            if (CheckInventory("GreenIsaacHands")) TakeInventory("GreenIsaacHands", 1);
 
             GiveInventory("BrimstoneHands", 1);
             Delay(10);
@@ -930,6 +957,8 @@ script "activateTemporalPowerup" (int option) {
             PlaySound(0, "agge/brimgrowl", CHAN_AUTO);
         }; break;
         case 39: {
+            if (CheckInventory("BrimstoneHands")) break;
+            if (CheckInventory("GreenIsaacHands")) break;
             if (CheckInventory("IsaacHands")) TakeInventory("IsaacHands", 1);
             if (CheckInventory("BlackIsaacHands")) TakeInventory("BlackIsaacHands", 1);
 
@@ -937,6 +966,23 @@ script "activateTemporalPowerup" (int option) {
             Delay(10);
             SetWeapon("OrangeIsaacHands");
             ACS_NamedExecuteAlways("setClientOrangeIsaacHands", 0);
+        }; break;
+        case 40: {
+            if (CheckInventory("BrimstoneHands")) break;
+            ACS_NamedExecuteAlways("addTearBoost", 0, 6, -3);
+            //ACS_NamedExecuteAlways("addTearBoost", 0, 1, -3);
+            //ACS_NamedExecuteAlways("addTearBoost", 0, 0, -3);
+            ACS_NamedExecuteAlways("addTearBoost", 0, 5, -3);
+            ACS_NamedExecuteAlways("addTearBoost", 0, 3, -10);
+            ACS_NamedExecuteAlways("addTearBoost", 0, 4, -75);
+            if (CheckInventory("IsaacHands")) TakeInventory("IsaacHands", 1);
+            if (CheckInventory("BlackIsaacHands")) TakeInventory("BlackIsaacHands", 1);
+            if (CheckInventory("OrangeIsaacHands")) TakeInventory("OrangeIsaacHands", 1);
+
+            GiveInventory("GreenIsaacHands", 1);
+            Delay(10);
+            SetWeapon("GreenIsaacHands");
+            ACS_NamedExecuteAlways("setClientGreenIsaacHands", 0);
         }; break;
     }
 
@@ -957,6 +1003,58 @@ script "activateTemporalPowerup" (int option) {
         }; break;
         case 38: {
             TakeInventory("BrimstoneHands", 1);
+            if (CheckInventory("IpecacGiver")) {
+                GiveInventory("GreenIsaacHands", 1);
+                Delay(10);
+                SetWeapon("GreenIsaacHands");
+                ACS_NamedExecuteAlways("setClientGreenIsaacHands", 0);
+            }
+            else {
+                if (CheckInventory("FireMindGiver")) {
+                    GiveInventory("OrangeIsaacHands", 1);
+                    Delay(10);
+                    SetWeapon("OrangeIsaacHands");
+                    ACS_NamedExecuteAlways("setClientOrangeIsaacHands", 0);
+                }
+                else {
+                    if (CheckInventory("DarkMatterGiver")) {
+                        GiveInventory("BlackIsaacHands", 1);
+                        Delay(10);
+                        SetWeapon("BlackIsaacHands");
+                        ACS_NamedExecuteAlways("setClientBlackIsaacHands", 0);
+                    }
+                    else {
+                        GiveInventory("IsaacHands", 1);
+                        Delay(10);
+                        SetWeapon("IsaacHands");
+                        ACS_NamedExecuteAlways("setClientIsaacHands", 0);
+                    }
+                }
+            }
+        }; break;
+        case 39: {
+            TakeInventory("OrangeIsaacHands", 1);
+            if (CheckInventory("DarkMatterGiver")) {
+                GiveInventory("BlackIsaacHands", 1);
+                Delay(10);
+                SetWeapon("BlackIsaacHands");
+                ACS_NamedExecuteAlways("setClientBlackIsaacHands", 0);
+            }
+            else {
+                GiveInventory("IsaacHands", 1);
+                Delay(10);
+                SetWeapon("IsaacHands");
+                ACS_NamedExecuteAlways("setClientIsaacHands", 0);
+            }
+        }; break;
+        case 40: {
+            ACS_NamedExecuteAlways("addTearBoost", 0, 6, 3);
+            //ACS_NamedExecuteAlways("addTearBoost", 0, 1, 3);
+            //ACS_NamedExecuteAlways("addTearBoost", 0, 0, 3);
+            ACS_NamedExecuteAlways("addTearBoost", 0, 5, 3);
+            ACS_NamedExecuteAlways("addTearBoost", 0, 3, 10);
+            ACS_NamedExecuteAlways("addTearBoost", 0, 4, 75);
+            TakeInventory("GreenIsaacHands", 1);
             if (CheckInventory("FireMindGiver")) {
                 GiveInventory("OrangeIsaacHands", 1);
                 Delay(10);
@@ -978,21 +1076,6 @@ script "activateTemporalPowerup" (int option) {
                 }
             }
         }; break;
-        case 39: {
-            TakeInventory("OrangeIsaacHands", 1);
-            if (CheckInventory("DarkMatterGiver")) {
-                GiveInventory("BlackIsaacHands", 1);
-                Delay(10);
-                SetWeapon("BlackIsaacHands");
-                ACS_NamedExecuteAlways("setClientBlackIsaacHands", 0);
-            }
-            else {
-                GiveInventory("IsaacHands", 1);
-                Delay(10);
-                SetWeapon("IsaacHands");
-                ACS_NamedExecuteAlways("setClientIsaacHands", 0);
-            }
-        }; break;
     }
 
     TakeInventory(powerup, 1);
@@ -1000,6 +1083,10 @@ script "activateTemporalPowerup" (int option) {
 
 script "setClientBrimstoneHands" (void) CLIENTSIDE {
     SetWeapon("BrimstoneHands");
+}
+
+script "setClientGreenIsaacHands" (void) CLIENTSIDE {
+    SetWeapon("GreenIsaacHands");
 }
 
 script "setClientOrangeIsaacHands" (void) CLIENTSIDE {
@@ -1019,9 +1106,19 @@ script "setParasiteChildrenStats" (int ctid) {
     int masterScaleX = GetActorProperty(0, APROP_ScaleX);
     int masterScaleY = GetActorProperty(0, APROP_ScaleY);
     int masterRange = GetUserVariable(0, "user_remaining_range");
+
     int masterExplosionFlag;
-    if (CheckActorClass(0, "FireTearProjectile") && GetUserVariable(0, "user_explosion_flag")) {
+    if (CheckActorClass(0, "FireTearProjectile") && GetUserVariable(0, "user_explosion_flag") ||
+        CheckActorClass(0, "BouncingFireTearProjectile") && GetUserVariable(0, "user_explosion_flag") ||
+        CheckActorClass(0, "MonstroBouncingFireTearProjectile") && GetUserVariable(0, "user_explosion_flag")) {
         masterExplosionFlag = 1;
+    }
+
+    int masterGravity;
+    if (CheckActorClass(0, "ExplosiveTearProjectile") ||
+        CheckActorClass(0, "BouncingExplosiveTearProjectile")) {
+        masterGravity = GetActorProperty(0, APROP_Gravity);
+        int masterExplosionRange = GetUserVariable(0, "user_explosion_range");
     }
 
     SetActivator(ctid);
@@ -1031,6 +1128,13 @@ script "setParasiteChildrenStats" (int ctid) {
     //Lo mismo sería para height y radius
     SetActorProperty(0, APROP_ScaleX, masterScaleX / 2);
     SetActorProperty(0, APROP_ScaleY, masterScaleY / 2);
+
+    if (masterGravity != 0) {
+        SetActorProperty(0, APROP_Gravity, masterGravity);
+        SetUserVariable(0, "user_explosion_range", masterExplosionRange);
+        Thing_ChangeTID(ctid, 0);
+        terminate;
+    }
 
     if (masterRange < 5) masterRange = 5;
     ACS_NamedExecuteAlways("setRange", 0, masterRange);
@@ -1213,15 +1317,55 @@ script "transferMasterEffectsInventory" (void) {
         Thing_ChangeTID(utid, 0);
     }
     
-    int effectsPowerups[10] = {"LostContactGiver", "TheCommonColdGiver", "DarkMatterGiver",
+    int effectsPowerups[12] = {"LostContactGiver", "TheCommonColdGiver", "DarkMatterGiver",
                                 "MomsContactsGiver", "ALumpOfCoalGiver", "Infestation2Giver",
-                                "PiscesGiver", "8InchNailsGiver", "TheParasiteGiver", "RubberCementGiver"};
+                                "PiscesGiver", "8InchNailsGiver", "TheParasiteGiver", "RubberCementGiver",
+                                "FireMindGiver", "IpecacGiver"};
 
-    for (int i=0; i<10; i++) {
+    for (int i=0; i<12; i++) {
         if (CheckActorInventory(ptid, effectsPowerups[i])) GiveInventory(effectsPowerups[i], 1);
     }
 }
 
 script "transferMasterPitch" (void) {
     SetActorPitch(0, GetActorPitch(GetActorProperty(0, APROP_MasterTID)));
+}
+
+script "setIpecacStats" (void) {
+    Thing_SetTranslation(0, 21);
+    int ptid = GetActorProperty(0, APROP_TargetTID);
+    int pnum = ACS_NamedExecuteWithResult("getPlayerNumberFromTID", ptid);
+    ACS_NamedExecuteAlways("setRadius", 0, TEARS_STATS_BY_PLAYER[pnum][0]);
+    ACS_NamedExecuteAlways("setHeight", 0, TEARS_STATS_BY_PLAYER[pnum][1]);
+    ACS_NamedExecuteAlways("setDamage", 0, TEARS_STATS_BY_PLAYER[pnum][2], ptid);
+    ACS_NamedExecuteAlways("setGravity", 0, TEARS_STATS_BY_PLAYER[pnum][3], ptid);
+    ACS_NamedExecuteAlways("setSpeed", 0, TEARS_STATS_BY_PLAYER[pnum][4], ptid);
+    ACS_NamedExecuteAlways("setScale", 0, TEARS_STATS_BY_PLAYER[pnum][5]);
+    ACS_NamedExecuteAlways("setExplosionRange", 0, TEARS_STATS_BY_PLAYER[pnum][5]);
+
+    if (CheckActorInventory(ptid, "ALumpOfCoalGiver")) {
+        Thing_SetTranslation(0, 2);
+        ACS_NamedExecuteAlways("setDamageBoostPerTime", 0, 1, 35, 10);
+    }
+
+    if (CheckActorInventory(ptid, "BloodOfTheMartyrGiver")) Thing_SetTranslation(0, 3);
+    if (CheckActorInventory(ptid, "LostContactGiver")) Thing_SetTranslation(0, 10);
+    if (CheckActorInventory(ptid, "SacredHeartGiver")) Thing_SetTranslation(0, 8);
+    if (CheckActorInventory(ptid, "SpoonBenderGiver")) Thing_SetTranslation(0, 9);
+    if (CheckActorInventory(ptid, "TheParasiteGiver")) Thing_SetTranslation(0, 13);
+}
+
+script "setGravity" (int gravity) {
+    gravity = 0.5 - (FixedMul(0.1, FixedDiv(gravity << 16, 35.0)));
+    SetActorProperty(0, APROP_Gravity, gravity);
+}
+
+script "setExplosionRange" (int range) {
+    if (range < 1) range = 1;
+    range = range * 32;
+    SetUserVariable(0, "user_explosion_range", range);
+}
+
+script "hasHitAnEnemy" (void) {
+    SetResultValue(SetActivator(0, AAPTR_TRACER));
 }

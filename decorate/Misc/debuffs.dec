@@ -44,6 +44,18 @@ ACTOR PetrifyingDebuff : AbstractMonsterDebuff 4202 {
 	}
 }
 
+ACTOR PoisonDebuff : AbstractMonsterDebuff 4203 {
+	//Válido para veneno en área
+	
+	States {
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("PoisonDebuffGiver", 3, "AlreadyActive")
+			TNT1 A 0 A_GiveInventory("PoisonDebuffGiver", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 5, 140)
+			Stop
+	}
+}
+
 
 
 //=========

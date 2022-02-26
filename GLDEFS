@@ -367,8 +367,28 @@ Size 48
 SecondarySize 64
 Interval 5
 }
+Pulselight BrimstoneLight
+{
+Color 0.98 0.11 0.11
+Size 48
+SecondarySize 64
+Interval 5
+}
+Pulselight IpecacLight
+{
+Color 0.41 0.55 0.29
+Size 48
+SecondarySize 64
+Interval 5
+}
 
-Object LightFollower { Frame TNT1 { Light FireMindLight } }
+Object LightFollower
+{
+Frame TNT1A { Light FireMindLight }
+Frame TNT1B { Light BrimstoneLight }
+Frame TNT1C { Light IpecacLight }
+}
+
 
 FlickerLight2 FlameThrowerFire1
 {

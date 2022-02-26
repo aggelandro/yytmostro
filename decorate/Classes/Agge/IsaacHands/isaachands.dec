@@ -901,6 +901,294 @@ ACTOR OrangeIsaacHands : IsaacHands {
 	}
 }
 
+ACTOR GreenIsaacHands : IsaacHands {
+	Weapon.AmmoUse 5
+	
+	States {
+	
+		Ready:
+		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 1)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 39), 2) //OFFSET
+			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayerLight", 1)
+			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, "MLReadyLoop")
+			CFLG A -1 A_Jump(256, "ReadyLoop")
+		  Wait
+			
+		ReadyLoop:
+		  CFLG AAAABBBBCCCC 1 A_WeaponReady
+		  Loop
+			
+		Deselect:
+		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 0)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 39), 2) //OFFSET
+			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayerLight", 0)
+			CFLG A -1 A_Jump(256, "DeselectLoop")
+		  Wait
+			
+		DeselectLoop:
+			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, 2)
+		  CFLG A 1 A_Lower
+		  Loop
+			CFLR A 1 A_Lower
+		  Loop
+
+		Select:
+			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, 2)
+		  CFLG A 1 A_Raise
+		  Loop
+			CFLR A 1 A_Raise
+		  Loop
+			
+		Fire:
+			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, "MLFire")
+			CFLG A 1 Offset (0, 40)
+			CFLG D 2 Offset (0, 50)
+			CFLG D 2 Offset (0, 36)
+			CFLG E 4 Bright
+			TNT1 A 0 A_JumpIfInventory("RubberCementGiver", 1, "FireBouncingShot")
+			Goto FireShot
+			
+		FireShot:
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			TNT1 A 0 A_PlaySound("agge/buah", CHAN_WEAPON)
+			CFLG E 1 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLG F 1 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 22), 3) //OFFSET
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 20) == 0, 2)
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 180, FALSE, 0, 20, 0, 45)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 31), 21) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 11) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 10) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("TwentyTwentyGiver", 1, 4) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 30, TRUE, -15, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 330, FALSE, 15, 0, 0, 45)
+			CFLG F -1 A_Jump(256, 36) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 30, TRUE, -25, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 30, FALSE, -5, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 330, FALSE, 25, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 330, FALSE, 5, 0, 0, 45)
+			CFLG F -1 A_Jump(256, 31) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 30, TRUE, -15, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 330, FALSE, 15, 0, 0, 45)
+			CFLG E 2 Bright
+			CFLG F 2 Bright
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 30, FALSE, -1, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 30, FALSE, -30, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 330, FALSE, 30, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 330, FALSE, 1, 0, 0, 45)
+			CFLG F -1 A_Jump(256, 22) //OFFSET
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 15), 6) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 6) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 13) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 0, TRUE, -10, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 0, FALSE, 10, 0, 0, 45)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 16) //OFFSET
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 29), 8) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 8) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 0, TRUE, 0, 0, 0, 45)
+			CFLG E 2 Bright
+			CFLG F 2 Bright
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 0, FALSE, 15, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 0, FALSE, -15, 0, 0, 45)
+			CFLG F -1 A_Jump(256, 8) //OFFSET
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 8) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 0, TRUE, -10, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 0, FALSE, 10, 0, 0, 45)
+			CFLG E 2 Bright
+			CFLG F 2 Bright
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 0, FALSE, -20, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 0, FALSE, 20, 0, 0, 45)
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 1, "FireEnd")
+			Loop
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", 0, TRUE, 0, 0, 0, 45)
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 1, "FireEnd")
+			Loop
+			
+		FireBouncingShot:
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			TNT1 A 0 A_PlaySound("agge/buah", CHAN_WEAPON)
+			CFLG E 1 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			CFLG F 1 Bright A_SetTics(10 / ACS_NamedExecuteWithResult("getFireRateBoost"))
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 22), 3) //OFFSET
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 20) == 0, 2)
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 180, FALSE, 0, 20, 0, 45)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 31), 21) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 11) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 10) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("TwentyTwentyGiver", 1, 4) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 30, TRUE, -15, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 330, FALSE, 15, 0, 0, 45)
+			CFLG F -1 A_Jump(256, 36) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 30, TRUE, -25, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 30, FALSE, -5, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 330, FALSE, 25, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 330, FALSE, 5, 0, 0, 45)
+			CFLG F -1 A_Jump(256, 31) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 30, TRUE, -15, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 330, FALSE, 15, 0, 0, 45)
+			CFLG E 2 Bright
+			CFLG F 2 Bright
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 30, FALSE, -1, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 30, FALSE, -30, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 330, FALSE, 30, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 330, FALSE, 1, 0, 0, 45)
+			CFLG F -1 A_Jump(256, 22) //OFFSET
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 15), 6) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 6) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 13) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 0, TRUE, -10, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 0, FALSE, 10, 0, 0, 45)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 16) //OFFSET
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 29), 8) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 8) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 0, TRUE, 0, 0, 0, 45)
+			CFLG E 2 Bright
+			CFLG F 2 Bright
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 0, FALSE, 15, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 0, FALSE, -15, 0, 0, 45)
+			CFLG F -1 A_Jump(256, 8) //OFFSET
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 8) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 0, TRUE, -10, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 0, FALSE, 10, 0, 0, 45)
+			CFLG E 2 Bright
+			CFLG F 2 Bright
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 0, FALSE, -20, 0, 0, 45)
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 0, FALSE, 20, 0, 0, 45)
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 1, "FireEnd")
+			Loop
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", 0, TRUE, 0, 0, 0, 45)
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 1, "FireEnd")
+			Loop
+			
+		FireCharged:
+			TNT1 A 0 A_PlaySound("agge/chargedatkml", CHAN_WEAPON)
+			CFLR E 2 Bright
+			CFLR F 2 Bright
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 15), 18) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 4) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 4) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 6) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 29), 9) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 3) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 3) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("ExplosiveTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0
+			Goto FireChargedEnd
+			
+		FireBouncingCharged:
+			TNT1 A 0 A_PlaySound("agge/chargedatkml", CHAN_WEAPON)
+			CFLR E 2 Bright
+			CFLR F 2 Bright
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(0, 22), TRUE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 15), 18) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("TheInnerEyeGiver", 1, 4) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 4) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 6) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 29), 9) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("MutantSpiderGiver", 1, 3) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(23, 45), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(315, 337), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 3) //OFFSET
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(338, 359), FALSE, 0, 0, 0, random(0, 60))
+			TNT1 A 0 A_FireCustomMissile("BouncingExplosiveTearProjectile", random(0, 22), FALSE, 0, 0, 0, random(0, 60))
+			Goto FireChargedEnd
+			TNT1 A 0
+			Goto FireChargedEnd
+		 
+		FireEnd:
+			TNT1 A 0 A_TakeInventory("LoopFlag", 70)
+			CFLG F 4 Bright
+			CFLG E 4 Bright
+			CFLG G 1
+			CFLG G 1 Offset (0, 40)
+			CFLG G 1 A_Refire
+			Goto Ready
+	}
+}
+
 ACTOR BrimstoneHands : IsaacHands {
 	Weapon.AmmoUse 10
 	
@@ -909,6 +1197,8 @@ ACTOR BrimstoneHands : IsaacHands {
 		Ready:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 1)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 1)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 39), 2) //OFFSET
+			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayerLight", 1)
 			CLID A -1 A_Jump(256, "ReadyLoop")
 		  Wait
 	
@@ -919,6 +1209,8 @@ ACTOR BrimstoneHands : IsaacHands {
 		Deselect:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 0)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 39), 2) //OFFSET
+			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayerLight", 0)
 			CLID A -1 A_Jump(256, "DeselectLoop")
 		  Wait
 
@@ -1467,7 +1759,8 @@ ACTOR NormalTearProjectile {
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x - cos(Angle+90)*4, user_vel_y - sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
-			Goto DeathEnd
+			TNT1 A -1 A_Jump(256, "DeathEnd")
+			Wait
 		
 		DeathEnd:
 			TNT1 A 0 A_JumpIfInventory("DeathsTouchGiver", 1, "DeathScytheTearEnd", AAPTR_TARGET)
@@ -1550,12 +1843,12 @@ ACTOR NormalTearProjectile {
 
 ACTOR MonstroTearProjectile : NormalTearProjectile {
 	Gravity 0.5
+	-NOGRAVITY
 
 	States {
 	
 		Spawn:
-			TNT1 A 0 NoDelay A_ChangeFlag("NOGRAVITY", FALSE)
-			TNT1 A 0 A_SetScale(scalex * frandom(0.9, 1.33))
+			TNT1 A 0 NoDelay A_SetScale(scalex * frandom(0.9, 1.33))
 			Goto Super::Spawn
 		
 		SpawnLoop:
@@ -1737,7 +2030,7 @@ ACTOR FireTearProjectile : NormalTearProjectile {
 			Goto Super::DeathEnd
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("IsaacExplosion", 0, 0, 0, 0, 0, 0, 0, 0, 0, user_spawn_tid)
-			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenDamage", user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
 			TNT1 A 0 A_SpawnItemEx("SmokePuff")
 			Stop
 			
@@ -1747,9 +2040,9 @@ ACTOR FireTearProjectile : NormalTearProjectile {
 			Goto Super::DeathBoneTearEnd
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("IsaacExplosion", 0, 0, 0, 0, 0, 0, 0, 0, 0, user_spawn_tid)
-			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenDamage", user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
 			TNT1 A 0 A_SpawnItemEx("SmokePuff")
-			Goto Super::DeathBoneTearEnd
+			Stop
 			
 		DeathNailTearEnd:
 			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 20)
@@ -1757,9 +2050,9 @@ ACTOR FireTearProjectile : NormalTearProjectile {
 			Goto Super::DeathNailTearEnd
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("IsaacExplosion", 0, 0, 0, 0, 0, 0, 0, 0, 0, user_spawn_tid)
-			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenDamage", user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
 			TNT1 A 0 A_SpawnItemEx("SmokePuff")
-			Goto Super::DeathNailTearEnd
+			Stop
 			
 		DeathScytheTearEnd:
 			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 20)
@@ -1767,30 +2060,122 @@ ACTOR FireTearProjectile : NormalTearProjectile {
 			Goto Super::DeathScytheTearEnd
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("IsaacExplosion", 0, 0, 0, 0, 0, 0, 0, 0, 0, user_spawn_tid)
-			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenDamage", user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
 			TNT1 A 0 A_SpawnItemEx("SmokePuff")
-			Goto Super::DeathScytheTearEnd
+			Stop
+	}
+}
+
+ACTOR ExplosiveTearProjectile : NormalTearProjectile {
+	Speed 5
+	DamageType "Poison"
+	var int user_explosion_range;
+	-NOGRAVITY
+	
+	States {
+		
+		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("setIpecacStats")
+			TNT1 A 0
+			Goto Super::Spawn+1
+			
+		SpawnLoopScytheTear:
+			TNT1 A 0 A_SeekerMissile(user_seeker_threshold, user_seeker_maxturnangle, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			SCHT ABCDE 1 FAST
+			TNT1 A 0 A_SeekerMissile(user_seeker_threshold, user_seeker_maxturnangle, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			SCHT FGHIJ 1 FAST
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 36), 2)
+			TNT1 A 0 A_JumpIfInventory("WeaponSpecialAction", 1, "ReturnToPlayer", AAPTR_TARGET)
+			TNT1 A 0 
+			Loop
+			
+		Death:
+			TNT1 A 0 A_SetUserVar("user_deadflag", 1)
+			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "DeathBoneTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIf(Z <= FloorZ+5, "DeathEnd") //Si toca el piso
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("hasHitAnEnemy"), "DeathEnd")
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd")
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteExplosiveTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteExplosiveTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x - cos(Angle+90)*4, user_vel_y - sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A -1 A_Jump(256, "DeathEnd")
+			Wait
+			
+		DeathBoneTear:
+			TNT1 A 0 A_JumpIf(Z <= FloorZ+5, "DeathBoneTearEnd")
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("hasHitAnEnemy"), "DeathBoneTearEnd")
+			TNT1 A 0 A_JumpIfInventory("TheParasiteGiver", 1, "DeathParasiteBoneTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isParasiteProjectile"), "DeathBoneTearEnd")
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteExplosiveTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x + cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y + sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(90, 135))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteExplosiveTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A -1 A_Jump(256, "DeathBoneTearEnd")
+			Wait
+			
+		DeathEnd:
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("IsaacIpecacExplosion", 0, 0, 0, 0, 0, 0, 0, 0, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SpawnItemEx("SmokePuff")
+			Stop
+			
+		DeathParasiteBoneTear:
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathBoneTearEnd")
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteExplosiveTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteExplosiveTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x - cos(Angle+90)*4, user_vel_y - sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteExplosiveTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x + cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y + sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(90, 135))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteExplosiveTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A -1 A_Jump(256, "DeathBoneTearEnd")
+			Wait
+			
+		DeathBoneTearEnd:
+			Goto DeathEnd
+			
+		DeathNailTearEnd:
+			Goto DeathEnd
+			
+		DeathScytheTearEnd:
+			Goto DeathEnd
 	}
 }
 
 ACTOR MonstroFearTearProjectile : FearTearProjectile {
 	Gravity 0.5
-
-	States {
+	-NOGRAVITY
 	
+	States {
 		Spawn:
-			TNT1 A 0 NoDelay A_ChangeFlag("NOGRAVITY", FALSE)
+			TNT1 A 0 NoDelay A_SetScale(scalex * frandom(0.9, 1.33))
 			Goto Super::Spawn
 	}
 }
 
 ACTOR MonstroFireTearProjectile : FireTearProjectile {
 	Gravity 0.5
-
-	States {
+	-NOGRAVITY
 	
+	States {
 		Spawn:
-			TNT1 A 0 NoDelay A_ChangeFlag("NOGRAVITY", FALSE)
+			TNT1 A 0 NoDelay A_SetScale(scalex * frandom(0.9, 1.33))
 			Goto Super::Spawn
 	}
 }
@@ -2023,13 +2408,90 @@ ACTOR BouncingFireTearProjectile : FireTearProjectile {
 	}
 }
 
+ACTOR BouncingExplosiveTearProjectile : ExplosiveTearProjectile {
+	BounceType "Doom"
+	
+	-BOUNCEONFLOORS
+	-BOUNCEONACTORS
+	+CANBOUNCEWATER
+	+USEBOUNCESTATE
+	
+	States {
+	
+		Bounce.Actor.Creature:
+			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, 3, AAPTR_TARGET) //OFFSET
+			TNT1 A 0 A_JumpIfInventory("DeathsTouchGiver", 1, "SpawnLoopScytheTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "SpawnLoopNailTear", AAPTR_TARGET)
+			Goto SpawnLoop
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x + cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y + sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(90, 135))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_JumpIfInventory("DeathsTouchGiver", 1, "SpawnLoopScytheTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "SpawnLoopNailTear", AAPTR_TARGET)
+			Goto SpawnLoopBoneTear
+	
+		Death:
+			TNT1 A 0 A_SetUserVar("user_deadflag", 1)
+			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "DeathBoneTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIf(Z <= FloorZ+5, "DeathEnd")
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd")
+			TNT1 A 0 A_ChangeFlag("BOUNCEONACTORS", FALSE)
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x - cos(Angle+90)*4, user_vel_y - sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			Goto DeathEnd
+			
+		DeathBoneTear:
+			TNT1 A 0 A_JumpIf(Z <= FloorZ+5, "DeathBoneTearEnd")
+			TNT1 A 0 A_JumpIfInventory("TheParasiteGiver", 1, "DeathParasiteBoneTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isParasiteProjectile"), "DeathBoneTearEnd")
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x + cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y + sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(90, 135))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			Goto DeathBoneTearEnd
+			
+		DeathParasiteBoneTear:
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathBoneTearEnd")
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x - cos(Angle+90)*4, user_vel_y - sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x + cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y + sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(90, 135))
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
+			Goto DeathBoneTearEnd
+	}
+}
+
 ACTOR MonstroBouncingTearProjectile : BouncingTearProjectile {
 	Gravity 0.5
+	-NOGRAVITY
 
 	States {
 	
 		Spawn:
-			TNT1 A 0 NoDelay A_ChangeFlag("NOGRAVITY", FALSE)
+			TNT1 A 0 NoDelay A_SetScale(scalex * frandom(0.9, 1.33))
 			Goto Super::Spawn
 		
 		SpawnLoop:
@@ -2048,22 +2510,22 @@ ACTOR MonstroBouncingTearProjectile : BouncingTearProjectile {
 
 ACTOR MonstroBouncingFearTearProjectile : BouncingFearTearProjectile {
 	Gravity 0.5
-
-	States {
+	-NOGRAVITY
 	
+	States {
 		Spawn:
-			TNT1 A 0 NoDelay A_ChangeFlag("NOGRAVITY", FALSE)
+			TNT1 A 0 NoDelay A_SetScale(scalex * frandom(0.9, 1.33))
 			Goto Super::Spawn
 	}
 }
 
 ACTOR MonstroBouncingFireTearProjectile : BouncingFireTearProjectile {
 	Gravity 0.5
-
-	States {
+	-NOGRAVITY
 	
+	States {
 		Spawn:
-			TNT1 A 0 NoDelay A_ChangeFlag("NOGRAVITY", FALSE)
+			TNT1 A 0 NoDelay A_SetScale(scalex * frandom(0.9, 1.33))
 			Goto Super::Spawn
 	}
 }
@@ -2220,6 +2682,8 @@ ACTOR IsaacEffectPuff {
 	SeeSound "misc/nothing"
 	Species "Player"
 	DamageType "BrimstonePuff"
+	var int user_spawn_tid;
+	var int user_explosion_range;
 	
 	+PUFFONACTORS
 	+PUFFGETSOWNER
@@ -2240,6 +2704,7 @@ ACTOR IsaacEffectPuff {
 			TNT1 A 0 A_JumpIfInventory("Infestation2Giver", 1, "InfestationCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("PiscesGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("FireMindGiver", 1, "BurnCheck", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("IpecacGiver", 1, "ExplosionCheck", AAPTR_TARGET)
 			Stop
 			
 		PetrifyingCheck:
@@ -2252,6 +2717,7 @@ ACTOR IsaacEffectPuff {
 			TNT1 A 0 A_JumpIfInventory("PiscesGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("FireMindGiver", 1, "BurnCheck", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("IpecacGiver", 1, "ExplosionCheck", AAPTR_TARGET)
 			Stop
 			
 		PoisonCheck:
@@ -2265,6 +2731,7 @@ ACTOR IsaacEffectPuff {
 			TNT1 A 0 A_JumpIfInventory("PiscesGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("FireMindGiver", 1, "BurnCheck", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("IpecacGiver", 1, "ExplosionCheck", AAPTR_TARGET)
 			Stop
 			
 		FearCheck:
@@ -2275,6 +2742,7 @@ ACTOR IsaacEffectPuff {
 			TNT1 A 0 A_JumpIfInventory("PiscesGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("FireMindGiver", 1, "BurnCheck", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("IpecacGiver", 1, "ExplosionCheck", AAPTR_TARGET)
 			Stop
 			
 		DmgBonusByDistance:
@@ -2283,6 +2751,7 @@ ACTOR IsaacEffectPuff {
 			TNT1 A 0 A_JumpIfInventory("PiscesGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("FireMindGiver", 1, "BurnCheck", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("IpecacGiver", 1, "ExplosionCheck", AAPTR_TARGET)
 			Stop
 			
 		InfestationCheck:
@@ -2290,18 +2759,27 @@ ACTOR IsaacEffectPuff {
 			TNT1 A 0 A_JumpIfInventory("PiscesGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("FireMindGiver", 1, "BurnCheck", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("IpecacGiver", 1, "ExplosionCheck", AAPTR_TARGET)
 			Stop
 			
 		KnockBackCheck:
 			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 4, 0, 3)
 			TNT1 A 0 A_JumpIfInventory("FireMindGiver", 1, "BurnCheck", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("IpecacGiver", 1, "ExplosionCheck", AAPTR_TARGET)
 			Stop
 			
 		BurnCheck:
 			TNT1 A 0 A_JumpIfInventory("BurnDebuffGiver", 1, 3, AAPTR_TRACER) //OFFSET
 			TNT1 A 0 A_GiveInventory("BurnDebuffGiver", 1, AAPTR_TRACER)
 			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 8, 175)
-			TNT1 A 0
+			TNT1 A 0 A_JumpIfInventory("IpecacGiver", 1, "ExplosionCheck", AAPTR_TARGET)
+			Stop
+			
+		ExplosionCheck:
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("IsaacIpecacExplosion", 0, 0, 0, 0, 0, 0, 0, 0, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
+			TNT1 A 0 A_SpawnItemEx("SmokePuff")
 			Stop
 	}
 }
@@ -2331,6 +2809,18 @@ ACTOR ParasiteFearTearProjectile : FearTearProjectile {
 }
 
 ACTOR ParasiteFireTearProjectile : FireTearProjectile {
+	States {
+		Spawn:
+			Goto Super::Spawn+1 //OFFSET
+			
+		SpawnLoopBoneTear:
+			TBAA A 2 A_SeekerMissile(5, 8, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			TBAA BAB 2
+			Loop
+	}
+}
+
+ACTOR ParasiteExplosiveTearProjectile : ExplosiveTearProjectile {
 	States {
 		Spawn:
 			Goto Super::Spawn+1 //OFFSET
@@ -2505,6 +2995,30 @@ ACTOR IsaacExplosion {
 			EXP1 ABCDE 2
 			TNT1 A 0 A_SpawnItemEx("FireMindFire", 2, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			EXP1 FGHIJKL 2
+			Stop
+	}
+}
+
+ACTOR IsaacIpecacExplosion : IsaacExplosion {
+	DamageType "Poison"
+	var int user_explosion_range;
+	var int user_fire_flag;
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay A_PlaySound("agge/tearexpl", CHAN_AUTO)
+			TNT1 A 0 A_Quake(4,12,0,200)
+			TNT1 A 0 A_Quake(2,12,0,400)
+			TNT1 A 0 A_Explode(user_explosion_damage, user_explosion_range)
+			TNT1 A 0 ACS_NamedExecuteWithResult("saveTemporalArg", user_explosion_damage-18) // Se le aplica un bono de +2
+			// Cubre un poco más que la explosión ya que la forma que tiene la función de validar a un actor dentro del area es rara
+			TNT1 A 0 A_RadiusGive("PoisonDebuff", user_explosion_range+64, RGF_MONSTERS|RGF_NOSIGHT|RGF_CUBE)
+			EXP2 A 1 ACS_NamedExecuteWithResult("cleanTemporalArg")
+			EXP2 A 1
+			EXP2 BCDE 2
+			TNT1 A 0 A_JumpIf(!user_fire_flag, 2)
+			TNT1 A 0 A_SpawnItemEx("FireMindFire", 2, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+			EXP2 FGHIJKL 2
 			Stop
 	}
 }
