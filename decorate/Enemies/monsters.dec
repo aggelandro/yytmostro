@@ -449,6 +449,7 @@ ACTOR Cacodemon2 : YYTMonster
 	DropItem "MonstrosLung" 2
 	DropItem "FireMind" 2
 	DropItem "Brimstone" 2
+	DropItem "Ipecac" 2
   States
   {
   SpawnLoop:
@@ -532,6 +533,7 @@ ACTOR Revenant2 : YYTMonster
 	DropItem "MonstrosLung" 2
 	DropItem "Brimstone" 2
 	DropItem "FireMind" 2
+	DropItem "Ipecac" 2
   States
   {
   SpawnLoop:
@@ -698,6 +700,7 @@ ACTOR Fatso2 : YYTMonster
 	DropItem "MonstrosLung" 5
 	DropItem "Brimstone" 5
 	DropItem "FireMind" 5
+	DropItem "Ipecac" 5
   States
   {
   SpawnLoop:
@@ -907,6 +910,7 @@ ACTOR BaronOfHell2 : YYTMonster
 	DropItem "MonstrosLung" 10
 	DropItem "Brimstone" 10
 	DropItem "FireMind" 10
+	DropItem "Ipecac" 10
   States
   {
   SpawnLoop:
@@ -1128,6 +1132,7 @@ ACTOR Cyberdemon2 : YYTMonster
 	DropItem "MonstrosLung" 50
 	DropItem "Brimstone" 50
 	DropItem "FireMind" 50
+	DropItem "Ipecac" 50
   States
   {
   SpawnLoop:
@@ -1238,6 +1243,7 @@ ACTOR SpiderMastermind2 : YYTMonster
 	DropItem "MonstrosLung" 35
 	DropItem "Brimstone" 35
 	DropItem "FireMind" 35
+	DropItem "Ipecac" 35
   States
   {
   SpawnLoop:
