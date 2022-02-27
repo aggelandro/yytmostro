@@ -451,7 +451,7 @@ ACTOR Shotgun2 : Shotgun {}
 ACTOR ShotgunSpawner : CustomInventory replaces Shotgun
 {
 	Inventory.PickUpSound "$GOTSHOTGUN"
-	Scale 0.8
+	Scale 0.5
 	States
 	{
 		Spawn:
@@ -487,7 +487,7 @@ ACTOR ShotgunSpawner : CustomInventory replaces Shotgun
 ACTOR ChainGun2 : ChainGun {}
 ACTOR ChainGunSpawner : CustomInventory replaces ChainGun
 {
-	Scale 0.8
+	Scale 0.5
 	Inventory.PickUpSound "$GOTSHOTGUN"
 	States
 	{
@@ -528,6 +528,7 @@ ACTOR ChainGunSpawner : CustomInventory replaces ChainGun
 ACTOR RocketLauncher2 : RocketLauncher{}
 ACTOR RocketSpawner : CustomInventory replaces RocketLauncher
 {
+	Scale 0.5
 	Inventory.PickupMessage "$GOTLAUNCHER"
 	States
 	{
@@ -580,7 +581,7 @@ ACTOR RocketSpawner : CustomInventory replaces RocketLauncher
 ACTOR SuperShotgun2 : SuperShotgun{}
 ACTOR SSGSpawner : CustomInventory replaces SuperShotgun
 {
-	Scale 0.8
+	Scale 0.5
 	Inventory.PickupMessage "$GOTLAUNCHER"
 	States
 	{
@@ -629,7 +630,7 @@ ACTOR SSGSpawner : CustomInventory replaces SuperShotgun
 ACTOR PlasmaRifle2 : PlasmaRifle{}
 ACTOR PlasmaSpawner : CustomInventory replaces PlasmaRifle
 {
-	Scale 0.8
+	Scale 0.5
 	Inventory.PickupMessage "$GOTLAUNCHER"
 	States
 	{
@@ -670,7 +671,7 @@ ACTOR PlasmaSpawner : CustomInventory replaces PlasmaRifle
 ACTOR Chainsaw2 : Chainsaw{}
 ACTOR ChainsawSpawner : CustomInventory replaces Chainsaw
 {
-	Scale 0.8
+	Scale 0.5
 	Inventory.PickupMessage "$GOTLAUNCHER"
 	States
 	{
