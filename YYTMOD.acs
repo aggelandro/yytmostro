@@ -622,6 +622,12 @@ script "killIfPlayerIsDead" (void) {
     if (!ptid) SetActorState(0, "Death");
 }
 
+script "getTargetRadius" (void) {
+    if (SetActivator(0, AAPTR_TARGET)) {
+        SetResultValue(GetActorProperty(0, APROP_Radius));
+    }
+    else log(s:"Doesnt work");
+}
 
 
 

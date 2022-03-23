@@ -231,3 +231,13 @@ skel/die		SKELDIE
 skel/hit		GENHIT
 skel/throw	SKELTRW
 skel/bondie	TBONE
+
+//belphegor
+belph/see1	BELSEE1
+belph/see2	BELSEE2
+$random belph/see { belph/see1 belph/see2 }
+belph/melee			BELMELEE
+belph/pain			BELPAIN
+belph/death			BELDEATH
+belph/fire			BELFIRE
+belph/teleport	BELTP
