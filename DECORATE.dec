@@ -494,7 +494,7 @@ ACTOR ChainGunSpawner : CustomInventory replaces ChainGun
 	States
 	{
 		Spawn:
-			CAJA D -1
+			CAJA E -1
 			Stop
 		Pickup:
 			TNT1 A 0 A_JumpIfInventory("LucianoID",1,"PickupAgge")
@@ -535,7 +535,7 @@ ACTOR RocketSpawner : CustomInventory replaces RocketLauncher
 	States
 	{
 		Spawn:
-			CAJA E -1
+			CAJA F -1
 			Stop
 		Pickup:
 			TNT1 A 0 A_JumpIfInventory("LucianoID",1,"PickupLuciano")
@@ -588,7 +588,7 @@ ACTOR SSGSpawner : CustomInventory replaces SuperShotgun
 	States
 	{
 		Spawn:
-			CAJA H -1
+			CAJA D -1
 			Stop
 		Pickup:
 			TNT1 A 0 A_JumpIfInventory("LucianoID",1,"PickupLuciano")
@@ -637,7 +637,7 @@ ACTOR PlasmaSpawner : CustomInventory replaces PlasmaRifle
 	States
 	{
 		Spawn:
-			CAJA F -1
+			CAJA G -1
 			Stop
 		Pickup:
 			TNT1 A 0 A_JumpIfInventory("LucianoID",1,"PickupGeneric")

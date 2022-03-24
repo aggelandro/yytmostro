@@ -127,6 +127,25 @@ script 335 ENTER {
             if (CheckInventory(SV_TEMPORAL_POWERUPS[i])) {
                 TakeInventory(SV_TEMPORAL_POWERUPS[i], 1);
             }
+
+            // Obligado a hacer esto para actualizar el cliente en el cambio de mapa
+            str powerup = StrLeft(SV_TEMPORAL_POWERUPS[i], StrLen(SV_TEMPORAL_POWERUPS[i])-5);
+            if (CheckInventory(powerup)) {
+                TakeInventory(powerup, 1);
+                GiveInventory(powerup, 1);
+            }
+        }
+
+        TakeInventory("OrangeIsaacHands", 1);
+        TakeInventory("GreenIsaacHands", 1);
+        TakeInventory("BrimstoneHands", 1);
+        if (CheckInventory("DarkMatterGiver")) {
+            TakeInventory("IsaacHands", 1);
+            if (!CheckInventory("BlackIsaacHands")) GiveInventory("BlackIsaacHands", 1);
+        }
+        else {
+            TakeInventory("BlackIsaacHands", 1);
+            if (!CheckInventory("IsaacHands")) GiveInventory("IsaacHands", 1);
         }
                 
         while (true) {
@@ -626,7 +645,6 @@ script "getTargetRadius" (void) {
     if (SetActivator(0, AAPTR_TARGET)) {
         SetResultValue(GetActorProperty(0, APROP_Radius));
     }
-    else log(s:"Doesnt work");
 }
 
 
@@ -1135,6 +1153,7 @@ script "setParasiteChildrenStats" (int ctid) {
     int masterScaleX = GetActorProperty(0, APROP_ScaleX);
     int masterScaleY = GetActorProperty(0, APROP_ScaleY);
     int masterRange = GetUserVariable(0, "user_remaining_range");
+    //int masterCount = GetUserVariable(0, "user_parasite_count");
 
     int masterExplosionFlag;
     if (CheckActorClass(0, "FireTearProjectile") && GetUserVariable(0, "user_explosion_flag") ||
@@ -1170,6 +1189,8 @@ script "setParasiteChildrenStats" (int ctid) {
 
     if (masterExplosionFlag) SetUserVariable(0, "user_explosion_flag", 1);
     Thing_ChangeTID(ctid, 0);
+
+    //SetUserVariable(0, "user_parasite_count", masterCount+1);
 }
 
 script "isDamageTooLow" (int threshold) {
