@@ -10,7 +10,6 @@ ACTOR HoloRevenant : Revenant2
     SKEL H 10 A_CustomMissile("RevenantPunch")
     SKEL I 10 A_FaceTarget
     Goto See
-    Stop
   }
 }
 ACTOR RevenantPunch : FastProjectile

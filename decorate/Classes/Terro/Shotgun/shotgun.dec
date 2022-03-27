@@ -41,7 +41,7 @@ actor TerroShotgun : Weapon
    AltFire:
     SAWD A 1
 	TNT1 AAAAAAAAAA 0 A_FireCustomMissile ("TracerRoundShotgun", random(-8,8)*0.4, 0, 0, -2, 0, random(-8,8)*0.4)
-    SAWD A 0 A_FireBullets (8, 8, 10, 4, "SSTWeakShotgunPuff", 1) //nerfed from 5 DMG to 4
+    SAWD A 0 A_FireBullets (8, 8, 10, 3, "SSTWeakShotgunPuff", 1) //nerfed from 5 DMG to 4
 	TNT1 A 0 Radius_Quake(2,4,0,1, 0)
     SHT2 A 0 A_PlaySoundEx("weapons/slamfire", CHAN_WEAPON)
     SAWD C 0 BRIGHT A_Light2
@@ -70,24 +70,24 @@ actor TerroShotgun : Weapon
     Goto Ready
   Flash:
     TNT1 A 0 A_Jump(104, "Flash2")
-    SAWD A 0 A_FireBullets (2, 2.5, 1, random(4,6), "SSTShotgunPuff",0) 
-    SAWD A 0 A_FireBullets (2, 2.5, 2, random(5,6), "SSTShotgunPuff",0) 
-    SAWD A 0 A_FireBullets (2.2, random(3,4), 1, random(5,6), "SSTShotgunPuff",0)
-    SAWD A 0 A_FireBullets (2.2, random(2,3), 1, random(6,7), "SSTShotgunPuff",0) 
-    SAWD A 0 A_FireBullets (3, random(3,4), 2, random(3,4), "SSTShotgunPuff",0) 
-    SAWD A 0 A_FireBullets (3, random(3,4), 3, random(2,3), "SSTShotgunPuff",1) 
+    SAWD A 0 A_FireBullets (2, 2.5, 1, random(2,4), "SSTShotgunPuff",0) 
+    SAWD A 0 A_FireBullets (2, 2.5, 2, random(3,4), "SSTShotgunPuff",0) 
+    SAWD A 0 A_FireBullets (2.2, random(3,4), 1, random(3,4), "SSTShotgunPuff",0)
+    SAWD A 0 A_FireBullets (2.2, random(2,3), 1, random(5,6), "SSTShotgunPuff",0) 
+    SAWD A 0 A_FireBullets (3, random(3,4), 2, random(2,3), "SSTShotgunPuff",0) 
+    SAWD A 0 A_FireBullets (3, random(3,4), 3, random(1,2), "SSTShotgunPuff",1) 
 	TNT1 AAAAAAAAAA 0 A_FireCustomMissile ("TracerRoundShotgun", random(-3,3)*0.4, 0, 0, -2, 0, random(-4,4)*0.4)
     Goto FlashEnd
   Flash2:
     TNT1 A 0 A_Jump(64, "Flash3")
     TNT1 A 0
-    SAWD A 0 A_FireBullets (2.75, 2.75, 10, 5, "SSTShotgunPuff", 1)
+    SAWD A 0 A_FireBullets (2.75, 2.75, 10, 3, "SSTShotgunPuff", 1)
 	TNT1 AAAAAAAAAA 0 A_FireCustomMissile ("TracerRoundShotgun", random(-3,3)*0.4, 0, 0, -2, 0, random(-3,3)*0.4)
     Goto FlashEnd
   Flash3:
     TNT1 A 0
-    SAWD A 0 A_FireBullets (1, 2, random(4,5), 5, "SSTShotgunPuff", 0)
-    SAWD A 0 A_FireBullets (2, 2, 5, 5, "SSTShotgunPuff", 1)
+    SAWD A 0 A_FireBullets (1, 2, random(4,5), 3, "SSTShotgunPuff", 0)
+    SAWD A 0 A_FireBullets (2, 2, 5, 3, "SSTShotgunPuff", 1)
 	TNT1 AAAAAAAAAA 0 A_FireCustomMissile ("TracerRoundShotgun", random(-3,3)*0.4, 0, 0, -2, 0, random(-3,3)*0.4)
     Goto FlashEnd
   FlashEnd:

@@ -33,47 +33,39 @@ ACTOR FlamethrowerGuy : AbstractYYTZombie {
 	States {
 	
 		SpawnLoop:
-			FLMZ AB 10 A_Look
+			FUEG E 10 A_Look
 			Loop
 			
 		See:
-			FLMZ A 4 A_Chase("", "")
-			FLMZ ABBCCDD 4 A_Chase
+			FUEG A 4 A_Chase("", "")
+			FUEG ABBCCDD 4 A_Chase
 			Loop
 		
 		Melee:
-			FLMZ E 10 A_FaceTarget
-			FLMZ F 0 Bright A_PlaySound("agge/flamet", CHAN_WEAPON)
-			FLMZ F 10 Bright A_CustomMissile("FlameThrowerFireF", 16, 0, random(-4, 4))
-			FLMZ E 1 A_FaceTarget
-			FLMZ E 0 A_PlaySound("agge/flamet", CHAN_WEAPON)
-			FLMZ F 10 Bright A_CustomMissile("FlameThrowerFireF", 16, 0, random(-4, 4))
-			FLMZ F 1 A_CPosRefire
+			FUEG E 10 A_FaceTarget
+			FUEG F 0 Bright A_PlaySound("agge/flamet", CHAN_WEAPON)
+			FUEG F 10 Bright A_CustomMissile("FlameThrowerFireF", 16, 0, random(-4, 4))
+			FUEG E 1 A_FaceTarget
+			FUEG E 0 A_PlaySound("agge/flamet", CHAN_WEAPON)
+			FUEG F 10 Bright A_CustomMissile("FlameThrowerFireF", 16, 0, random(-4, 4))
+			FUEG F 1 A_CPosRefire
 			Goto Melee+1
 		
 		Pain:
-			FLMZ G 3
-			FLMZ G 3 A_Pain
+			FUEG G 3
+			FUEG G 3 A_Pain
 			Goto See
 			
 		Death:
-			FLMZ H 5
-			FLMZ I 5 A_Scream
-			FLMZ J 5 A_Fall
-			FLMZ K 5
-			FLMZ L -1
-			Stop
-			
-		XDeath:
-			FLMZ O 5
-			FLMZ P 5 A_XScream
-			FLMZ Q 5 A_Fall
-			FLMZ RSTU 5
-			FLMZ V -1
+			FUEG H 5
+			FUEG I 5 A_Scream
+			FUEG J 5 A_Fall
+			FUEG KLMNOPQ 5
+			FUEG R -1
 			Stop
 			
 		Raise:
-			FLMZ KJIH 5
+			FUEG QPONMLKJIH 5
 			Goto See
 	}
 }

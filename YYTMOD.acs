@@ -3,9 +3,9 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 41
+#define DISPLAYABLE_POWERUP_MAX 42
 #define TEAR_STATS 7
-#define TEMPORAL_POWERUPS 9
+#define TEMPORAL_POWERUPS 10
 
 int  SV_PLAYERS_NUMBERS_2_TIDS[PLAYER_MAX];
 bool ENERGY_SHIELD_RELOAD = true;
@@ -22,7 +22,7 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "RubberCementGiverP025A0", "SacredHeartGiverP026A0", "SpoonBenderGiverP027A0", "TheCommonColdGiverP028A0", "TheInnerEyeGiverP029A0",
     "TheParasiteGiverP030A0", "TheWizGiverP031A0", "BackstabberGiverP032A0", "CompoundFractureGiverP033A0", "8InchNailsGiverP034A0",
     "DeathsTouchGiverP035A0", "MyReflectionGiverP036A0", "MonstrosLungGiverP037A0", "BrimstoneGiverP038A0", "FireMindGiverP039A0",
-    "IpecacGiverP040A0"
+    "IpecacGiverP040A0", "UranusGiverP041A0"
 };
 
 str SV_DRAWABLE_CHARGE_BAR[40] = {
@@ -34,7 +34,7 @@ str SV_DRAWABLE_CHARGE_BAR[40] = {
 
 str SV_TEMPORAL_POWERUPS[TEMPORAL_POWERUPS] = {
     "RubberCementGiver", "SacredHeartGiver", "SpoonBenderGiver", "TheParasiteGiver", "CompoundFractureGiver", "MonstrosLungGiver", "BrimstoneGiver",
-    "FireMindGiver", "IpecacGiver"
+    "FireMindGiver", "IpecacGiver", "UranusGiver"
 };
 
 script "yytmod_mensajesalida" DEATH
@@ -496,6 +496,30 @@ script "applyEffect" (int option, int dur, int force) {
                 Thing_ChangeTID(ptid, 0);
             }
         }; break;
+        case 9: {
+            // Slow mengua la velocidad del monstruo a la mitad
+            if (GetActorProperty(0, APROP_TracerTID) >= 1000 && GetActorProperty(0, APROP_TracerTID) <= 1020)
+                terminate; // Si es jugador
+            if (SetActivator(0, AAPTR_TRACER)) {
+                mtid = UniqueTID();
+                ptid = UniqueTID();
+
+                Thing_ChangeTID(0, mtid);
+                Spawn("SlowEffect", GetActorX(0), GetActorY(0), GetActorZ(0), ptid);
+                SetActivator(ptid);
+                SetPointer(AAPTR_TRACER, mtid);
+                SetUserVariable(0, "user_se_monster_height", GetActorProperty(mtid, APROP_Height) >> 16);
+                SetActivator(mtid);
+                Thing_ChangeTID(mtid, 0);
+                SetActorProperty(0, APROP_Speed, FixedDiv(GetActorProperty(0, APROP_Speed), 2.0));
+                //SetActorVelocity(0, GetActorVelX(0)/2, GetActorVelY(0)/2, GetActorVelZ(0)/2, false, false);
+                Delay(dur);
+                SetActorProperty(0, APROP_Speed, FixedMul(GetActorProperty(0, APROP_Speed), 2.0));
+                //SetActorVelocity(0, GetActorVelX(0)*2, GetActorVelY(0)*2, GetActorVelZ(0)*2, false, false);
+                SetActorState(ptid, "Death");
+                Thing_ChangeTID(ptid, 0);
+            }
+        }
     }
 }
 
@@ -1367,12 +1391,12 @@ script "transferMasterEffectsInventory" (void) {
         Thing_ChangeTID(utid, 0);
     }
     
-    int effectsPowerups[12] = {"LostContactGiver", "TheCommonColdGiver", "DarkMatterGiver",
+    int effectsPowerups[13] = {"LostContactGiver", "TheCommonColdGiver", "DarkMatterGiver",
                                 "MomsContactsGiver", "ALumpOfCoalGiver", "Infestation2Giver",
                                 "PiscesGiver", "8InchNailsGiver", "TheParasiteGiver", "RubberCementGiver",
-                                "FireMindGiver", "IpecacGiver"};
+                                "FireMindGiver", "IpecacGiver", "UranusGiver"};
 
-    for (int i=0; i<12; i++) {
+    for (int i=0; i<13; i++) {
         if (CheckActorInventory(ptid, effectsPowerups[i])) GiveInventory(effectsPowerups[i], 1);
     }
 }
@@ -1418,4 +1442,10 @@ script "setExplosionRange" (int range) {
 
 script "hasHitAnEnemy" (void) {
     SetResultValue(SetActivator(0, AAPTR_TRACER));
+}
+
+script "brimstoneFreezeCheck" (void) {
+    SetActivator(0, AAPTR_TRACER);
+    Delay(1);
+    if (GetActorProperty(0, APROP_Health) <= 0) SetActorState(0, "Death.IsaacIce");
 }

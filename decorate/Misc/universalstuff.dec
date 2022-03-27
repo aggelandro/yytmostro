@@ -250,6 +250,15 @@ ACTOR BurnEffect : StatusEffect {
 	}
 }
 
+ACTOR SlowEffect : StatusEffect {
+	
+	States {
+	  Spawn:
+			SLO2 AB 5 A_Warp(AAPTR_TRACER, 0, 0, user_se_monster_height, 0, WARPF_NOCHECKPOSITION)
+			Loop
+	}
+}
+
 ACTOR LightFollower : StatusEffect {
 
 	States {

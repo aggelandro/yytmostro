@@ -220,6 +220,7 @@ ACTOR Lucianeto : DoomPlayer
 	DamageFactor "AFireF",0
 	DamageFactor "Mina", 0
 	DamageFactor "BrimstonePuff", 0
+	DamageFactor "IsaacIce", 0
 	Player.DisplayName "Lucianeto"
 	Player.StartItem "LucianoPistol"
 	Player.StartItem "Fist"
@@ -288,6 +289,7 @@ ACTOR UniversalPlayer : DoomPlayer
   DamageFactor "AFireF", 0
   DamageFactor "Mina", 0
 	DamageFactor "BrimstonePuff", 0
+	DamageFactor "IsaacIce", 0
 	DamageFactor "FireRF", 0
 	DamageFactor "FireBF", 0
   Player.CrouchSprite "PLYC"

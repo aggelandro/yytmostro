@@ -1,7 +1,11 @@
 ACTOR YYTMonster
+/*
+// Clase abstracta para todos los monstruos del juego.
+// IMPORTANTE: Spawn states pasan a ser SpawnLoop para cada monstruo específico.
+*/
 {
 	Monster
-	var int user_max_healh;
+	var int user_max_healh; // Guarda el total de HP de un monstruo
 	
 	States 
 	{
@@ -15,6 +19,23 @@ ACTOR YYTMonster
 			TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.5),0,0,0,0)
 			TNT1 A -1 A_Jump (256, "Pain")
 			Wait
+			
+		Death.IsaacIce:
+			"####" "#" 0 A_CheckFlag("BOSS", "Death") // No afecta a los bosses
+			"####" "#" 0 A_GenericFreezeDeath
+			"####" "#" 175
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 0, SXF_MULTIPLYSPEED)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 36, SXF_MULTIPLYSPEED)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 72, SXF_MULTIPLYSPEED)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 108, SXF_MULTIPLYSPEED)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 144, SXF_MULTIPLYSPEED)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 180, SXF_MULTIPLYSPEED)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 216, SXF_MULTIPLYSPEED)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 252, SXF_MULTIPLYSPEED)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 288, SXF_MULTIPLYSPEED)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 324, SXF_MULTIPLYSPEED)
+			"####" "#" 0 A_IceGuyDie
+			Stop
   }
 }
 ACTOR AbstractYYTZombie : YYTMonster {
@@ -250,7 +271,7 @@ ACTOR ZombieMan2 : AbstractYYTZombie
     POSS K 5
     POSS JIH 5
     Goto See
-  }
+	}
 }
 ACTOR DoomImp2 : YYTMonster
 {
@@ -1156,11 +1177,11 @@ ACTOR Cyberdemon2 : YYTMonster
     CYBR G 10 A_Pain
     Goto See
   Pain.Lightning:
-	TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.25),0,0,0,0)
-	TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(Height*0.35,Height*0.6),0,0,0,0)
-	TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.25),0,0,0,0)
-	TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(Height*0.35,Height*0.6),0,0,0,0)
-	Goto Pain
+		TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.25),0,0,0,0)
+		TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(Height*0.35,Height*0.6),0,0,0,0)
+		TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.25),0,0,0,0)
+		TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(Height*0.35,Height*0.6),0,0,0,0)
+		Goto Pain
   Death:
     CYBR H 10
     CYBR I 10 A_Scream
@@ -1268,11 +1289,11 @@ ACTOR SpiderMastermind2 : YYTMonster
     SPID I 3 A_Pain
     Goto See
   Pain.Lightning:
-	TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.25),0,0,0,0)
-	TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(Height*0.35,Height*0.6),0,0,0,0)
-	TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.25),0,0,0,0)
-	TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(Height*0.35,Height*0.6),0,0,0,0)
-	Goto Pain
+		TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.25),0,0,0,0)
+		TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(Height*0.35,Height*0.6),0,0,0,0)
+		TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.25),0,0,0,0)
+		TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(Height*0.35,Height*0.6),0,0,0,0)
+		Goto Pain
   Death:
     SPID J 20 A_Scream
     SPID K 10 A_NoBlocking

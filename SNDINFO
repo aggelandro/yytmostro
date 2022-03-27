@@ -67,6 +67,17 @@ agge/waskadeath SPLAT12
 agge/explosion  KRLDTH
 agge/dropfire   WLS2D
 agge/droppuij   MTMS2D
+
+misc/freeze1	FREEZE1
+misc/freeze2	FREEZE2
+misc/freeze3	FREEZE3
+$random misc/freeze { misc/freeze1 misc/freeze2 misc/freeze3 }
+
+misc/icebreak1	FREEZES1
+misc/icebreak2	FREEZES2
+misc/icebreak3	FREEZES3
+$random misc/icebreak { misc/icebreak1 misc/icebreak2 misc/icebreak3 }
+
 ron/click PCLICK
 ron/error PERROR
 ron/SSGload XSSGCHAR
