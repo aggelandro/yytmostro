@@ -78,6 +78,11 @@ misc/icebreak2	FREEZES2
 misc/icebreak3	FREEZES3
 $random misc/icebreak { misc/icebreak1 misc/icebreak2 misc/icebreak3 }
 
+misc/rockcrumble1	ROCKCR1
+misc/rockcrumble2	ROCKCR2
+misc/rockcrumble3	ROCKCR3
+$random misc/rockcrumble { misc/rockcrumble1 misc/rockcrumble2 misc/rockcrumble3 }
+
 ron/click PCLICK
 ron/error PERROR
 ron/SSGload XSSGCHAR

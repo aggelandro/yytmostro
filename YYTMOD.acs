@@ -3,15 +3,16 @@
  
 #define PLAYER_TID_START 1000
 #define PLAYER_MAX 20
-#define DISPLAYABLE_POWERUP_MAX 42
+#define DISPLAYABLE_POWERUP_MAX 43
 #define TEAR_STATS 7
-#define TEMPORAL_POWERUPS 10
+#define TEMPORAL_POWERUPS 11
 
 int  SV_PLAYERS_NUMBERS_2_TIDS[PLAYER_MAX];
 bool ENERGY_SHIELD_RELOAD = true;
 int TEARS_STATS_BY_PLAYER[PLAYER_MAX][TEAR_STATS];
 str BRIMSTONE_COLOR = 0; //Para el trail que vive en Marte.
 int IPECAC_FLAT_BONUS_DMG = 20;
+int SV_SEMAPHORE_TOKEN; //Para scripts con mucha concurrencia
 
 str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "CONTGiverP000A0", "GrowthHormonesGiverP001A0", "JesusJuiceGiverP002A0", "MomsHeelsGiverP003A0", "MomsLipstickGiverP004A0", 
@@ -22,7 +23,7 @@ str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "RubberCementGiverP025A0", "SacredHeartGiverP026A0", "SpoonBenderGiverP027A0", "TheCommonColdGiverP028A0", "TheInnerEyeGiverP029A0",
     "TheParasiteGiverP030A0", "TheWizGiverP031A0", "BackstabberGiverP032A0", "CompoundFractureGiverP033A0", "8InchNailsGiverP034A0",
     "DeathsTouchGiverP035A0", "MyReflectionGiverP036A0", "MonstrosLungGiverP037A0", "BrimstoneGiverP038A0", "FireMindGiverP039A0",
-    "IpecacGiverP040A0", "UranusGiverP041A0"
+    "IpecacGiverP040A0", "UranusGiverP041A0", "OcularRiftGiverP042A0"
 };
 
 str SV_DRAWABLE_CHARGE_BAR[40] = {
@@ -34,7 +35,7 @@ str SV_DRAWABLE_CHARGE_BAR[40] = {
 
 str SV_TEMPORAL_POWERUPS[TEMPORAL_POWERUPS] = {
     "RubberCementGiver", "SacredHeartGiver", "SpoonBenderGiver", "TheParasiteGiver", "CompoundFractureGiver", "MonstrosLungGiver", "BrimstoneGiver",
-    "FireMindGiver", "IpecacGiver", "UranusGiver"
+    "FireMindGiver", "IpecacGiver", "UranusGiver", "OcularRiftGiver"
 };
 
 script "yytmod_mensajesalida" DEATH
@@ -97,6 +98,7 @@ script 332 OPEN {
     CreateTranslation (13, 192:193=[0,0,0]:[187,98,69], 194:197=[0,0,0]:[154,78,40], 198:224=[0,0,0]:[128,71,43], 3:4=[0,0,0]:[187,98,69], 80:96=[0,0,0]:[154,78,40]); // The Parasite
     CreateTranslation (20, 192:193=[0,0,0]:[255,148,73], 194:197=[0,0,0]:[239,104,11], 198:224=[0,0,0]:[218,95,10], 3:4=[0,0,0]:[255,148,73], 80:96=[0,0,0]:[239,104,11]); // Fire Mind
     CreateTranslation (21, 192:193=[0,0,0]:[119,136,89], 194:197=[0,0,0]:[140,176,109], 198:224=[0,0,0]:[202,239,190], 3:4=[0,0,0]:[119,136,89], 80:96=[0,0,0]:[140,176,109]); // Ipecac
+    CreateTranslation (22, 128:225=[0,0,0]:[1,1,2], 3:4=[0,0,0]:[1,1,2], 80:96=[0,0,0]:[1,1,2]); // Ocular Rift
 
     //Red Beams
     CreateTranslation (14, 16:47=[0,0,0]:[64,36,4], 169:191=[0,0,0]:[64,36,4]); // A Lump of Coal
@@ -670,6 +672,22 @@ script "getTargetRadius" (void) {
         SetResultValue(GetActorProperty(0, APROP_Radius));
     }
 }
+
+script "setPlayersDontThrusting" (void) {
+    SV_SEMAPHORE_TOKEN++;
+    for (int i=PLAYER_TID_START; i<PLAYER_TID_START+PLAYER_MAX; i++) {
+        if (SetActivator(i)) SetActorProperty(0, APROP_Mass, 0x7fffffff);
+    }
+    Delay(75);
+    SV_SEMAPHORE_TOKEN--;
+    for (i=PLAYER_TID_START; i<PLAYER_TID_START+PLAYER_MAX; i++) {
+        if (SetActivator(i)) {
+            if (SV_SEMAPHORE_TOKEN == 0) SetActorProperty(0, APROP_Mass, 100);
+        }
+    }
+}
+
+
 
 
 
@@ -1391,12 +1409,12 @@ script "transferMasterEffectsInventory" (void) {
         Thing_ChangeTID(utid, 0);
     }
     
-    int effectsPowerups[13] = {"LostContactGiver", "TheCommonColdGiver", "DarkMatterGiver",
+    int effectsPowerups[14] = {"LostContactGiver", "TheCommonColdGiver", "DarkMatterGiver",
                                 "MomsContactsGiver", "ALumpOfCoalGiver", "Infestation2Giver",
                                 "PiscesGiver", "8InchNailsGiver", "TheParasiteGiver", "RubberCementGiver",
-                                "FireMindGiver", "IpecacGiver", "UranusGiver"};
+                                "FireMindGiver", "IpecacGiver", "UranusGiver", "OcularRiftGiver"};
 
-    for (int i=0; i<13; i++) {
+    for (int i=0; i<14; i++) {
         if (CheckActorInventory(ptid, effectsPowerups[i])) GiveInventory(effectsPowerups[i], 1);
     }
 }

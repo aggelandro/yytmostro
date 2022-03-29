@@ -471,6 +471,8 @@ ACTOR Cacodemon2 : YYTMonster
 	DropItem "FireMind" 2
 	DropItem "Brimstone" 2
 	DropItem "Ipecac" 2
+	DropItem "Uranus" 2
+	DropItem "OcularRift" 2
   States
   {
   SpawnLoop:
@@ -555,6 +557,8 @@ ACTOR Revenant2 : YYTMonster
 	DropItem "Brimstone" 2
 	DropItem "FireMind" 2
 	DropItem "Ipecac" 2
+	DropItem "Uranus" 2
+	DropItem "OcularRift" 2
   States
   {
   SpawnLoop:
@@ -722,6 +726,8 @@ ACTOR Fatso2 : YYTMonster
 	DropItem "Brimstone" 5
 	DropItem "FireMind" 5
 	DropItem "Ipecac" 5
+	DropItem "Uranus" 5
+	DropItem "OcularRift" 5
   States
   {
   SpawnLoop:
@@ -932,6 +938,8 @@ ACTOR BaronOfHell2 : YYTMonster
 	DropItem "Brimstone" 10
 	DropItem "FireMind" 10
 	DropItem "Ipecac" 10
+	DropItem "Uranus" 10
+	DropItem "OcularRift" 10
   States
   {
   SpawnLoop:
@@ -1154,6 +1162,8 @@ ACTOR Cyberdemon2 : YYTMonster
 	DropItem "Brimstone" 50
 	DropItem "FireMind" 50
 	DropItem "Ipecac" 50
+	DropItem "Uranus" 50
+	DropItem "OcularRift" 50
   States
   {
   SpawnLoop:
@@ -1265,6 +1275,8 @@ ACTOR SpiderMastermind2 : YYTMonster
 	DropItem "Brimstone" 35
 	DropItem "FireMind" 35
 	DropItem "Ipecac" 35
+	DropItem "Uranus" 35
+	DropItem "OcularRift" 35
   States
   {
   SpawnLoop:

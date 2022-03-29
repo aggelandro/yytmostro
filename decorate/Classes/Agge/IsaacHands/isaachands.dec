@@ -1584,7 +1584,8 @@ ACTOR NormalTearProjectile {
 	var int user_remaining_range;
 	var int user_seeker_threshold;
 	var int user_seeker_maxturnangle;
-	//var int user_parasite_count; // Necesario para no romper el server con tantos proyectiles recursivos (limitación de duns)
+	var int user_rift_flag;
+	//var int user_parasite_count; // En Test: posible optimización del parasite
 
 	+BRIGHT
 	+HITTRACER
@@ -1609,6 +1610,7 @@ ACTOR NormalTearProjectile {
 			TNT1 A 0 A_JumpIfInventory("LostContactGiver", 1, "SpawnShieldedTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("MomsContactsGiver", 1, "SpawnPetrifyingTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("TheCommonColdGiver", 1, "SpawnPoisonTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("OcularRiftGiver", 1, "SpawnRiftTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "SpawnIceTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("DeathsTouchGiver", 1, "SpawnLoopScytheTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "SpawnLoopNailTear", AAPTR_TARGET)
@@ -1622,6 +1624,7 @@ ACTOR NormalTearProjectile {
 			TNT1 A 0 A_JumpIfInventory("LostContactGiver", 1, "SpawnShieldedTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("MomsContactsGiver", 1, "SpawnPetrifyingTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("TheCommonColdGiver", 1, "SpawnPoisonTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("OcularRiftGiver", 1, "SpawnRiftTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "SpawnIceTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("DeathsTouchGiver", 1, "SpawnLoopScytheTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "SpawnLoopNailTear", AAPTR_TARGET)
@@ -1634,6 +1637,7 @@ ACTOR NormalTearProjectile {
 			TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", FALSE)
 			TNT1 A 0 A_JumpIfInventory("MomsContactsGiver", 1, "SpawnPetrifyingTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("TheCommonColdGiver", 1, "SpawnPoisonTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("OcularRiftGiver", 1, "SpawnRiftTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "SpawnIceTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("DeathsTouchGiver", 1, "SpawnLoopScytheTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "SpawnLoopNailTear", AAPTR_TARGET)
@@ -1642,17 +1646,11 @@ ACTOR NormalTearProjectile {
 			Wait
 			
 		SpawnPetrifyingTear:
-			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 5), 5) //OFFSET
-			TNT1 A 0 A_JumpIfInventory("TheCommonColdGiver", 1, "SpawnPoisonTear", AAPTR_TARGET)
-			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "SpawnIceTear", AAPTR_TARGET)
-			TNT1 A 0 A_JumpIfInventory("DeathsTouchGiver", 1, "SpawnLoopScytheTear", AAPTR_TARGET)
-			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "SpawnLoopNailTear", AAPTR_TARGET)
-			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "SpawnLoopBoneTear", AAPTR_TARGET)
-			TNT1 A -1 A_Jump(256, "SpawnLoop")
-			Wait
+			TNT1 A 0 A_JumpIf(!ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 5), 3) //OFFSET
 			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 6)
 			TNT1 A 0 A_SetUserVar("user_petrifying_flag", 1)
 			TNT1 A 0 A_JumpIfInventory("TheCommonColdGiver", 1, "SpawnPoisonTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("OcularRiftGiver", 1, "SpawnRiftTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "SpawnIceTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("DeathsTouchGiver", 1, "SpawnLoopScytheTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "SpawnLoopNailTear", AAPTR_TARGET)
@@ -1664,6 +1662,18 @@ ACTOR NormalTearProjectile {
 			TNT1 A 0 A_JumpIf(!ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 5), 3) //OFFSET
 			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 11)
 			TNT1 A 0 A_SetUserVar("user_poison_flag", 1)
+			TNT1 A 0 A_JumpIfInventory("OcularRiftGiver", 1, "SpawnRiftTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "SpawnIceTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("DeathsTouchGiver", 1, "SpawnLoopScytheTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "SpawnLoopNailTear", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "SpawnLoopBoneTear", AAPTR_TARGET)
+			TNT1 A -1 A_Jump(256, "SpawnLoop")
+			Wait
+			
+		SpawnRiftTear:
+			TNT1 A 0 A_JumpIf(!ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 5), 3) //OFFSET
+			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 22)
+			TNT1 A 0 A_SetUserVar("user_rift_flag", 1)
 			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "SpawnIceTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("DeathsTouchGiver", 1, "SpawnLoopScytheTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "SpawnLoopNailTear", AAPTR_TARGET)
@@ -1755,9 +1765,9 @@ ACTOR NormalTearProjectile {
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 34), 3) // OFFSET
 			TNT1 A 0 A_PlaySound("agge/nailhit",CHAN_AUTO)
 			TNT1 A 0 A_SpawnItemEx("BloodSplatter")
-			TNT1 A 0 A_JumpIf(user_petrifying_flag==0, 2) //OFFSET
+			TNT1 A 0 A_JumpIf(!user_petrifying_flag, 2) //OFFSET
 			TNT1 A 0 A_GiveInventory("PetrifyingDebuff", 1, AAPTR_TRACER)
-			TNT1 A 0 A_JumpIf(user_poison_flag==0, 4) //OFFSET
+			TNT1 A 0 A_JumpIf(!user_poison_flag, 4) //OFFSET
 			TNT1 A 0 A_JumpIfInventory("PoisonDebuffGiver", 3, 3, AAPTR_TRACER)
 			TNT1 A 0 A_GiveInventory("PoisonDebuffGiver", 1, AAPTR_TRACER)
 			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 5, 140)
@@ -1772,6 +1782,13 @@ ACTOR NormalTearProjectile {
 			
 		Death:
 			TNT1 A 0 A_SetUserVar("user_deadflag", 1)
+			TNT1 A 0 A_JumpIf(!user_rift_flag, 4) // OFFSET
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_JumpIf(Z > FloorZ+5, 3)
+			TNT1 A 0 A_SpawnItemEx("IsaacRift", -5, 0, Height+30, 0, 0, 0, 0, 0, 0, user_spawn_tid)
+			TNT1 A 0 A_Jump(256, 2)
+			TNT1 A 0 A_SpawnItemEx("IsaacRift", -5, 0, -(Z-FloorZ)+Height+30, 0, 0, 0, 0, 0, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
 			TNT1 A 0 A_JumpIfInventory("CompoundFractureGiver", 1, "DeathBoneTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIf(Z <= FloorZ+5 || Z >= CeilingZ-5, "DeathEnd") //Si toca el piso o el techo
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
@@ -2929,7 +2946,7 @@ ACTOR ParasiteBouncingFireTearProjectile : BouncingFireTearProjectile {
 }
 
 ACTOR AbstractGib {
-	+NOINTERACTION
+	Gravity 0.5
 	+BRIGHT
 	
 	States {
@@ -3098,7 +3115,7 @@ ACTOR FireMindFire : AggeNewFire {
 			TNT1 A 0 A_JumpIfInventory("LoopFlag", 5, 1)
 			Loop
 			TNT1 A 0 A_JumpIf(128, 1)
-			Loop			
+			Loop
 			TNT1 A 0 A_StopSound(CHAN_5)
 			TNT1 A 1
 			Stop
@@ -3245,4 +3262,47 @@ ACTOR IsaacIceShard {
 			TDFI N 2
 			Stop
 	}
-} 
+}
+
+ACTOR IsaacRift {
+	Radius 48
+	Height 48
+	DamageType "Earth"
+	Projectile
+	+PAINLESS
+	+NOINTERACTION
+	+FORCEXYBILLBOARD
+	var int user_explosion_damage;
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay A_PlaySound("misc/rockcrumble", CHAN_AUTO)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayersDontThrusting")
+			EATK A 5 A_RadiusThrust(-2000, 384, RTF_NOIMPACTDAMAGE|RTF_NOTMISSILE, 192)
+			EATK B 1 A_Explode(user_explosion_damage/2, 192, 0, 0, 128)
+			EATK B 4 A_RadiusThrust(-2000, 384, RTF_NOIMPACTDAMAGE|RTF_NOTMISSILE, 192)
+			EATK C 2 A_Explode(user_explosion_damage/2, 192, 0, 0, 128)
+			EATK C 3 A_RadiusThrust(-2000, 384, RTF_NOIMPACTDAMAGE|RTF_NOTMISSILE, 192)
+			EATK D 3 A_Explode(user_explosion_damage/2, 192, 0, 0, 128)
+			EATK D 2 A_RadiusThrust(-2000, 384, RTF_NOIMPACTDAMAGE|RTF_NOTMISSILE, 192)
+			EATK E 4 A_Explode(user_explosion_damage/2, 192, 0, 0, 128)
+			EATK E 1 A_RadiusThrust(-2000, 384, RTF_NOIMPACTDAMAGE|RTF_NOTMISSILE, 192)
+			EATK F 5 A_Explode(user_explosion_damage/2, 192, 0, 0, 128)
+			EATK G 5 A_RadiusThrust(-2000, 384, RTF_NOIMPACTDAMAGE|RTF_NOTMISSILE, 192)
+			EATK H 1 A_Explode(user_explosion_damage/2, 192, 0, 0, 128)
+			EATK H 4 A_RadiusThrust(-2000, 384, RTF_NOIMPACTDAMAGE|RTF_NOTMISSILE, 192)
+			EATK I 2 A_Explode(user_explosion_damage/2, 192, 0, 0, 128)
+			EATK I 3 A_RadiusThrust(-2000, 384, RTF_NOIMPACTDAMAGE|RTF_NOTMISSILE, 192)
+			EATK J 3 A_Explode(user_explosion_damage/2, 192, 0, 0, 128)
+			EATK J 2 A_RadiusThrust(-2000, 384, RTF_NOIMPACTDAMAGE|RTF_NOTMISSILE, 192)
+			EATK K 4 A_Explode(user_explosion_damage/2, 192, 0, 0, 128)
+			EATK K 1 A_RadiusThrust(-2000, 384, RTF_NOIMPACTDAMAGE|RTF_NOTMISSILE, 192)
+			EATK L 5 A_Explode(user_explosion_damage/2, 192, 0, 0, 128)
+			EATK M 5 A_RadiusThrust(-2000, 384, RTF_NOIMPACTDAMAGE|RTF_NOTMISSILE, 192)
+			EATK N 1 A_Explode(user_explosion_damage/2, 192, 0, 0, 128)
+			EATK N 4 A_RadiusThrust(-2000, 384, RTF_NOIMPACTDAMAGE|RTF_NOTMISSILE, 192)
+			EATK O 2 A_Explode(user_explosion_damage/2, 192, 0, 0, 128)
+			EATK O 3 A_RadiusThrust(-2000, 384, RTF_NOIMPACTDAMAGE|RTF_NOTMISSILE, 192)
+			Stop
+	}
+}
