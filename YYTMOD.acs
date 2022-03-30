@@ -1304,10 +1304,14 @@ script "setDamageToChildren" (int tid) {
 
 script "dealPiercingDamage" (void) {
     int damageToDeal = GetUserVariable(0, "user_master_damage");
+    int hasUranus = CheckActorInventory(GetActorProperty(0, APROP_TargetTID), "UranusGiver");
     if (SetActivator(0, AAPTR_TRACER)) {
-        if (CheckInventory("PiercingDamageFlag") == 0) {
+        if (!CheckInventory("PiercingDamageFlag")) {
             GiveInventory("PiercingDamageFlag", 1);
-            Thing_Damage2(0, damageToDeal*3, "Piercing");
+            if (hasUranus)
+                Thing_Damage2(0, damageToDeal*3, "IsaacIce");
+            else
+                Thing_Damage2(0, damageToDeal*3, "Piercing");
             PlaySound(0, "agge/scythehit", CHAN_AUTO);
             Delay(1);
             TakeInventory("PiercingDamageFlag", 1);

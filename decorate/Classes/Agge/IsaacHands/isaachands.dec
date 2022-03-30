@@ -1782,7 +1782,7 @@ ACTOR NormalTearProjectile {
 			
 		Death:
 			TNT1 A 0 A_SetUserVar("user_deadflag", 1)
-			TNT1 A 0 A_JumpIf(!user_rift_flag, 4) // OFFSET
+			TNT1 A 0 A_JumpIf(!user_rift_flag, 7) // OFFSET
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_JumpIf(Z > FloorZ+5, 3)
 			TNT1 A 0 A_SpawnItemEx("IsaacRift", -5, 0, Height+30, 0, 0, 0, 0, 0, 0, user_spawn_tid)
@@ -2758,6 +2758,7 @@ ACTOR IsaacEffectPuff {
 			TNT1 A 0 A_JumpIfInventory("PiscesGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("FireMindGiver", 1, "BurnCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("IpecacGiver", 1, "ExplosionCheck", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("OcularRiftGiver", 1, "RiftCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "FreezeCheck", AAPTR_TARGET)
 			Stop
 			
@@ -2772,6 +2773,7 @@ ACTOR IsaacEffectPuff {
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("FireMindGiver", 1, "BurnCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("IpecacGiver", 1, "ExplosionCheck", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("OcularRiftGiver", 1, "RiftCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "FreezeCheck", AAPTR_TARGET)
 			Stop
 			
@@ -2787,6 +2789,7 @@ ACTOR IsaacEffectPuff {
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("FireMindGiver", 1, "BurnCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("IpecacGiver", 1, "ExplosionCheck", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("OcularRiftGiver", 1, "RiftCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "FreezeCheck", AAPTR_TARGET)
 			Stop
 			
@@ -2799,6 +2802,7 @@ ACTOR IsaacEffectPuff {
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("FireMindGiver", 1, "BurnCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("IpecacGiver", 1, "ExplosionCheck", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("OcularRiftGiver", 1, "RiftCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "FreezeCheck", AAPTR_TARGET)
 			Stop
 			
@@ -2809,6 +2813,7 @@ ACTOR IsaacEffectPuff {
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("FireMindGiver", 1, "BurnCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("IpecacGiver", 1, "ExplosionCheck", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("OcularRiftGiver", 1, "RiftCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "FreezeCheck", AAPTR_TARGET)
 			Stop
 			
@@ -2818,6 +2823,7 @@ ACTOR IsaacEffectPuff {
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "KnockBackCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("FireMindGiver", 1, "BurnCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("IpecacGiver", 1, "ExplosionCheck", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("OcularRiftGiver", 1, "RiftCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "FreezeCheck", AAPTR_TARGET)
 			Stop
 			
@@ -2825,6 +2831,7 @@ ACTOR IsaacEffectPuff {
 			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 4, 0, 3)
 			TNT1 A 0 A_JumpIfInventory("FireMindGiver", 1, "BurnCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("IpecacGiver", 1, "ExplosionCheck", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("OcularRiftGiver", 1, "RiftCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "FreezeCheck", AAPTR_TARGET)
 			Stop
 			
@@ -2833,6 +2840,7 @@ ACTOR IsaacEffectPuff {
 			TNT1 A 0 A_GiveInventory("BurnDebuffGiver", 1, AAPTR_TRACER)
 			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 8, 175)
 			TNT1 A 0 A_JumpIfInventory("IpecacGiver", 1, "ExplosionCheck", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("OcularRiftGiver", 1, "RiftCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "FreezeCheck", AAPTR_TARGET)
 			Stop
 			
@@ -2844,6 +2852,18 @@ ACTOR IsaacEffectPuff {
 			TNT1 A 0 A_SpawnItemEx("IsaacIpecacExplosion", 0, 0, 0, 0, 0, 0, 0, 0, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
 			TNT1 A 0 A_SpawnItemEx("SmokePuff")
+			TNT1 A 0 A_JumpIfInventory("OcularRiftGiver", 1, "RiftCheck", AAPTR_TARGET)
+			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "FreezeCheck", AAPTR_TARGET)
+			Stop
+			
+		RiftCheck:
+			TNT1 A 0 A_JumpIf(!ACS_NamedExecuteWithResult("isEffectChanceSuccessful", 5), 7) //OFFSET
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_JumpIf(Z > FloorZ+5, 3)
+			TNT1 A 0 A_SpawnItemEx("IsaacRift", -5, 0, Height+30, 0, 0, 0, 0, 0, 0, user_spawn_tid)
+			TNT1 A 0 A_Jump(256, 2)
+			TNT1 A 0 A_SpawnItemEx("IsaacRift", -5, 0, -(Z-FloorZ)+Height+30, 0, 0, 0, 0, 0, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
 			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "FreezeCheck", AAPTR_TARGET)
 			Stop
 			
@@ -3141,8 +3161,6 @@ ACTOR PiercingDamageDealer {
 	States {
 	
 		Spawn:
-			TNT1 A 0 NoDelay A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 41), 2)
-			TNT1 A 0 A_SetDamageType("IsaacIce")
 			TNT1 A 5
 			Stop
 	
