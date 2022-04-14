@@ -79,6 +79,7 @@
 #include "decorate/Enemies/Mancubus/FatsoRocket/fatsorocket.dec"
 
 #include "decorate/Enemies/Archviles/SpookyVile/spookyvile.dec"
+#include "decorate/Enemies/Archviles/supportvile.dec"
 
 #include "decorate/Enemies/Cyberdemon/Council/council.dec"
 #include "decorate/Enemies/Cyberdemon/Cryocubus/cryocubus.dec"
@@ -186,8 +187,9 @@ ACTOR ArachnotronSpawner : RandomSpawner replaces Arachnotron
 }
 ACTOR ArchvileSpawner : RandomSpawner replaces Archvile
 {
-	DropItem "Archvile2" 255, 85
+	DropItem "Archvile2" 255, 70
 	DropItem "SpookyVileSpawner" 255, 15
+	DropItem "Archevil" 255, 15
 }
 ACTOR SpiderMastermindSpawner : RandomSpawner replaces SpiderMastermind
 {

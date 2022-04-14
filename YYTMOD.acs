@@ -514,14 +514,28 @@ script "applyEffect" (int option, int dur, int force) {
                 SetActivator(mtid);
                 Thing_ChangeTID(mtid, 0);
                 SetActorProperty(0, APROP_Speed, FixedDiv(GetActorProperty(0, APROP_Speed), 2.0));
-                //SetActorVelocity(0, GetActorVelX(0)/2, GetActorVelY(0)/2, GetActorVelZ(0)/2, false, false);
                 Delay(dur);
                 SetActorProperty(0, APROP_Speed, FixedMul(GetActorProperty(0, APROP_Speed), 2.0));
-                //SetActorVelocity(0, GetActorVelX(0)*2, GetActorVelY(0)*2, GetActorVelZ(0)*2, false, false);
                 SetActorState(ptid, "Death");
                 Thing_ChangeTID(ptid, 0);
             }
-        }
+        }; break;
+        case 10: {
+            // Curación instantanea y buff de velocidad
+            int htid = UniqueTID();
+            mtid = UniqueTID();
+            Spawn("HealEffectArea", GetActorX(0)+5, GetActorY(0), GetActorZ(0), htid);
+            Thing_ChangeTID(0, mtid);
+            SetActivator(htid);
+            SetPointer(AAPTR_TRACER, mtid);
+            SetActivator(mtid);
+            SetActorProperty(0, APROP_Speed, FixedMul(GetActorProperty(0, APROP_Speed), 2.0));
+            Delay(15);
+            Thing_Damage2(0, Random(-200, -100), "Healing");
+            Delay(265);
+            SetActorProperty(0, APROP_Speed, FixedDiv(GetActorProperty(0, APROP_Speed), 2.0));
+            Thing_ChangeTID(mtid, 0);
+        }; break;
     }
 }
 
@@ -684,6 +698,42 @@ script "setPlayersDontThrusting" (void) {
         if (SetActivator(i)) {
             if (SV_SEMAPHORE_TOKEN == 0) SetActorProperty(0, APROP_Mass, 100);
         }
+    }
+}
+
+script "isTargetFullyHealed" (void) {
+    int ttid = UniqueTID();
+    Thing_ChangeTID(0, ttid);
+    if (SetActivator(0, AAPTR_TARGET)) {
+        if (!CheckActorClass(0, "Archvile2") && GetActorProperty(0, APROP_Health) < GetUserVariable(0, "user_max_healh")) {
+            Thing_ChangeTID(ttid, 0);
+            SetResultValue(0);
+            terminate;
+        }
+        else {
+            SetActivator(ttid);
+            SetPointer(AAPTR_TARGET, 0, AAPTR_NULL);
+            Thing_ChangeTID(ttid, 0);
+            SetResultValue(1);
+            terminate;
+        }
+    }
+    // Si no tiene target, no es valido tampoco
+    Thing_ChangeTID(ttid, 0);
+    SetResultValue(1);
+}
+
+script "healTarget" (int amount) {
+    if (SetActivator(0, AAPTR_TARGET)) {
+        int htid = UniqueTID();
+        int mtid = UniqueTID();
+        Spawn("HealEffect", GetActorX(0)+5, GetActorY(0), GetActorZ(0), htid);
+        Thing_ChangeTID(0, mtid);
+        SetActivator(htid);
+        SetPointer(AAPTR_TRACER, mtid);
+        Delay(15);
+        Thing_Damage2(mtid, amount, "Healing");
+        Thing_ChangeTID(mtid, 0);
     }
 }
 

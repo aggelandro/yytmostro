@@ -116,6 +116,8 @@ ando/ytho YTHO
 bruno/minab MINABEEP
 hielo/llama HIELOLLA
 misc/nothing DSEMPTY
+misc/heal HEALEFF
+misc/sanctuary SANCTU
 
 // dinamita afanada del samsara
 TNT/Throw			TNTTOSS
@@ -257,3 +259,12 @@ belph/pain			BELPAIN
 belph/death			BELDEATH
 belph/fire			BELFIRE
 belph/teleport	BELTP
+
+
+//archevil
+archevil/sight  BONELSIT
+archevil/active BONELACT
+archevil/pain   BONELPN
+archevil/death  BONELDTH
+archevil/fire   BONEFIRE
+archevil/hide   BONELTEL

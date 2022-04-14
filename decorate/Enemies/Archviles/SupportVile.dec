@@ -1,0 +1,112 @@
+ACTOR Archevil : Archvile2 {
+	Health 1000
+	-QUICKTORETALIATE
+	+FRIENDLY
+	SeeSound "archevil/sight"
+  PainSound "archevil/pain"
+  DeathSound "archevil/death"
+  ActiveSound "archevil/active"
+	var int user_hidden;
+	
+	States {
+		Spawn:
+			BONL AB 10 A_Look
+			Loop
+			
+		Search:
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			BONL AABB 2 Fast A_Wander
+			TNT1 A 0 A_Look
+			BONL CCDD 2 Fast A_Wander
+			TNT1 A 0 A_Look
+			BONL EEFF 2 Fast A_Wander
+			TNT1 A 0 A_Look
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 5, 1)
+			Loop
+			TNT1 A 0 A_TakeInventory("LoopFlag", 5)
+			Goto Hide
+			
+		See:
+			BONL AABB 2 A_Chase
+			BONL CCDD 2 A_Chase
+			BONL EEFF 2 A_Chase
+			Loop
+			
+		Missile:
+			TNT1 A 0 A_Jump(192, "HealTarget")
+			TNT1 A 0 A_Jump(128, "BuffArea")
+			TNT1 A 0 A_Jump(224, "Hide")
+			Goto See
+			
+		HealTarget:
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isTargetFullyHealed"), "Search")
+			TNT1 A 0 A_FadeTo(1, 1, FALSE)
+			TNT1 A 0 A_SetUserVar("user_hidden", 0)
+			BONL "[]" 10 Bright A_FaceTarget
+			TNT1 A 0 ACS_NamedExecuteWithResult("healTarget", random(-500, -250))
+			BONL "]" 10 Bright A_FaceTarget
+			Goto See
+			
+		BuffArea:
+			TNT1 A 0 A_FadeTo(1, 1, FALSE)
+			TNT1 A 0 A_SetUserVar("user_hidden", 0)
+			TNT1 A 0 A_PlaySound("misc/sanctuary", CHAN_AUTO)
+			BONL G 10 Bright A_FaceTarget
+			BONL HIJKLMN 8 Bright
+			BONL N 8 Bright A_RadiusGive("BuffSpell", 2048, RGF_MONSTERS)
+			BONL N 20 Bright
+			Goto See
+			
+		Hide:
+			TNT1 A 0 A_JumpIf(user_hidden, "Search")
+			TNT1 A 0 A_SetInvulnerable
+			BONL M 2 A_SpawnItemEx("ReaperStealthFire")
+			TNT1 A 0 A_PlaySound("reaper/hide")
+			BONL MMMMMMMMMM 2 A_FadeTo(0, 0.1, FALSE)
+			TNT1 A 0 A_SetUserVar("user_hidden", 1)
+			TNT1 A 0 A_UnSetInvulnerable
+			Goto Search
+			
+		Pain:
+			BONL Q 5
+			BONL Q 5 A_Pain
+			Goto Hide
+			
+		Death:
+			BONL Q 7
+			BONL R 7 A_Scream
+			BONL S 7 A_NoBlocking
+			BONL TUVWXY 7
+			BONL Z -1
+			Stop
+	}
+}
+
+ACTOR BuffSpell : CustomInventory {
+	+INVENTORY.AUTOACTIVATE
+  Inventory.Amount 1
+  Inventory.MaxAmount 1
+	
+	States {
+		Pickup:
+			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 10, 0)
+			TNT1 A 0 A_ChangeFlag("ALWAYSFAST", TRUE)
+			TNT1 A 175
+			TNT1 A 0 A_ChangeFlag("ALWAYSFAST", FALSE)
+			Stop
+	}
+}
+
+ACTOR ReaperStealthFire {
+  Height 78
+  +NOBLOCKMAP
+  +NOGRAVITY
+  RenderStyle Add
+  Translation "Ice"
+	
+  States {
+		Spawn:
+			RESP ABCDEFGH 4 Bright A_Fire
+			Stop
+  }
+}
