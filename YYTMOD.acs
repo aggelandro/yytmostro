@@ -532,7 +532,7 @@ script "applyEffect" (int option, int dur, int force) {
             SetActorProperty(0, APROP_Speed, FixedMul(GetActorProperty(0, APROP_Speed), 2.0));
             Delay(15);
             Thing_Damage2(0, Random(-200, -100), "Healing");
-            Delay(265);
+            Delay(510);
             SetActorProperty(0, APROP_Speed, FixedDiv(GetActorProperty(0, APROP_Speed), 2.0));
             Thing_ChangeTID(mtid, 0);
         }; break;

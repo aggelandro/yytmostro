@@ -90,9 +90,6 @@ ACTOR BuffSpell : CustomInventory {
 	States {
 		Pickup:
 			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 10, 0)
-			TNT1 A 0 A_ChangeFlag("ALWAYSFAST", TRUE)
-			TNT1 A 280
-			TNT1 A 0 A_ChangeFlag("ALWAYSFAST", FALSE)
 			Stop
 	}
 }

@@ -315,9 +315,12 @@ ACTOR DoomImp2 : YYTMonster
     TROO AABBCCDD 3 A_Chase
     Loop
   Melee:
+		TROO EF 8 A_FaceTarget
+    TROO G 6 A_CustomMeleeAttack(3 * random(1, 8), "imp/melee")
+    Goto See
   Missile:
     TROO EF 8 A_FaceTarget
-    TROO G 6 A_TroopAttack
+    TROO G 6 A_CustomMissile("DoomImpBall", 32, 0, random(-10, 10))
     Goto See
   Pain:
     TROO H 2
@@ -481,9 +484,13 @@ ACTOR Cacodemon2 : YYTMonster
   See:
     HEAD A 3 A_Chase
     Loop
+	Melee:
+		HEAD BC 5 A_FaceTarget
+    HEAD D 5 Bright A_CustomMeleeAttack(10 * random(1, 6))
+    Goto See
   Missile:
     HEAD BC 5 A_FaceTarget
-    HEAD D 5 Bright A_HeadAttack
+    HEAD D 5 Bright A_CustomMissile("CacodemonBall", 32, 0, random(-10, 10))
     Goto See
   Pain:
     HEAD E 3
@@ -949,9 +956,12 @@ ACTOR BaronOfHell2 : YYTMonster
     BOSS AABBCCDD 3 A_Chase
     Loop
   Melee:
+		BOSS EF 8 A_FaceTarget
+    BOSS G 8 A_CustomMeleeAttack(10 * random(1, 8), "baron/melee")
+    Goto See
   Missile:
     BOSS EF 8 A_FaceTarget
-    BOSS G 8 A_BruisAttack
+    BOSS G 8 A_CustomMissile("BaronBall", 32, 0, random(-10, 10))
     Goto See
   Pain:
     BOSS H 2
@@ -1015,9 +1025,12 @@ ACTOR HellKnight2 : BaronOfHell2
     BOS2 AABBCCDD 3 A_Chase
     Loop
   Melee:
+		BOS2 EF 8 A_FaceTarget
+    BOS2 G 8 A_CustomMeleeAttack(10 * random(1, 8), "baron/melee")
+    Goto See
   Missile:
     BOS2 EF 8 A_FaceTarget
-    BOS2 G 8 A_BruisAttack
+    BOS2 G 8 A_CustomMissile("BaronBall", 32, 0, random(-10, 10))
     Goto See
   Pain:
     BOS2 H 2
