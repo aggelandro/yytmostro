@@ -38,7 +38,7 @@ Actor BulletTracer : AbstractTracer
  States
  {
   Spawn:
-   TRAC A 1 BRIGHT
+   TRAC A 1 NoDelay BRIGHT
    TNT1 A 0 ThrustThingZ(0,random(-8, 8),0,1)
    TRAC A 1 BRIGHT
    Goto Idle	

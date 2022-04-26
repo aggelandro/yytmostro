@@ -61,8 +61,8 @@ ACTOR PkDoubleShotguns : Weapon
 		Goto LDryFire
     SGDL C 0 A_AlertMonsters
 		SGDL C 0 A_TakeInventory("ClipDoubleLeft",1,1)
-		TNT1 A 0 A_FireCustomMissile("TerrorSSGTracer", random(-6,6), 1, 0, -2, 0, random(-3,3))
-		TNT1 AAAAAA 0 A_FireCustomMissile("TerrorSSGTracer", random(-6,6), 0, 0, -2, 0, random(-3,3))
+		TNT1 A 0 A_FireCustomMissile("TerrorSSGTracer", random(-6,6), 1, -10, -2, 0, random(-3,3))
+		TNT1 AAAAAA 0 A_FireCustomMissile("TerrorSSGTracer", random(-6,6), 0, -10, -2, 0, random(-3,3))
 		TNT1 A 0 A_PlaySound("terro/ssgshot", CHAN_AUTO)
 		SGDL BC 2 BRIGHT
 		SGDL D 2
@@ -151,8 +151,8 @@ ACTOR PkDoubleShotguns : Weapon
 		Goto RDryFire
     SGDR C 0 A_AlertMonsters
 		SGDR C 0 A_TakeInventory("ClipDoubleRight",1,1)
-		TNT1 A 0 A_FireCustomMissile("TerrorSSGTracer", random(-6,6), 1, 0, -2, 0, random(-3,3))
-		TNT1 AAAAAA 0 A_FireCustomMissile("TerrorSSGTracer", random(-6,6), 0, 0, -2, 0, random(-3,3))
+		TNT1 A 0 A_FireCustomMissile("TerrorSSGTracer", random(-6,6), 1, 10, -2, 0, random(-3,3))
+		TNT1 AAAAAA 0 A_FireCustomMissile("TerrorSSGTracer", random(-6,6), 0, 10, -2, 0, random(-3,3))
 		TNT1 A 0 A_PlaySound("terro/ssgshot", CHAN_AUTO)
 		SGDR BC 2 BRIGHT
 		SGDR D 2
