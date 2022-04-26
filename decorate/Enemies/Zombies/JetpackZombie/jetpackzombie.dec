@@ -78,9 +78,9 @@ Actor JetpackZombie : AbstractYYTZombie
     Goto Snipe
     JPZM AAA 6 A_FaceTarget
     JPZM B 0 Bright A_PlaySound("JetpackZombie/Fire")
-    JPZM B 6 Bright A_CustomBulletAttack(16, 12, 1, 4, "JPuff")
+    JPZM B 6 Bright A_CustomMissile("JZombieTracer", 32, 0, frandom(-16, 16), 1)
     JPZM C 0 Bright A_PlayWeaponSound("JetpackZombie/Fire")
-    JPZM C 6 Bright A_CustomBulletAttack(16, 12, 1, 4, "JPuff")
+    JPZM C 6 Bright A_CustomMissile("JZombieTracer", 32, 0, frandom(-16, 16), 1)
     JPZM A 0 A_Jump(64, 1)
     Goto Missile+4
     JPZM A 0
@@ -88,7 +88,8 @@ Actor JetpackZombie : AbstractYYTZombie
   Snipe:
     JPZM AAAAA 6 A_FaceTarget
     JPZM D 0 Bright A_PlaySound("JetpackZombie/Fire")
-    JPZM D 6 Bright A_CustomBulletAttack(2, 2, 2, 4, "JPuff")
+    JPZM D 6 Bright A_CustomMissile("JZombieTracer", 32, 0, frandom(-16, 16), 1)
+		JPZM D 0 Bright A_CustomMissile("JZombieTracer", 32, 0, frandom(-16, 16), 1)
     Goto See
   Pain:
     JPZM A 3
@@ -174,9 +175,4 @@ Actor JetpackZombieGoreSpawner
     TNT1 A 1
     Stop
   }
-}
-
-Actor JPuff : BulletPuff
-{
-Damagetype "JZombie"
 }

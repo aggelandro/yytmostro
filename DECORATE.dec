@@ -5,6 +5,7 @@
 #include "decorate/Misc/casing.dec"
 #include "decorate/Misc/debuffs.dec"
 #include "decorate/Misc/powerups.dec"
+#include "decorate/Misc/projectiles.txt"
 
 //universal weapons and items
 #include "decorate/Misc/Weapons/HookShot/hookshot.dec"
@@ -77,6 +78,7 @@
 #include "decorate/Enemies/Arachnotrons/Bouncetron/bouncetron.dec"
 
 #include "decorate/Enemies/Mancubus/FatsoRocket/fatsorocket.dec"
+#include "decorate/Enemies/Mancubus/armoredmancubus.dec"
 
 #include "decorate/Enemies/Archviles/SpookyVile/spookyvile.dec"
 #include "decorate/Enemies/Archviles/supportvile.dec"
@@ -157,7 +159,8 @@ ACTOR RevenantSpawner : RandomSpawner replaces Revenant
 ACTOR FatsoSpawner : RandomSpawner replaces Fatso
 {
 	DropItem "Fatso2", 255, 70
-	DropItem "FatsoRocket", 255, 30
+	DropItem "FatsoRocket", 255, 15
+	DropItem "ArmoredMancubus", 255, 15
 }
 ACTOR DemonSpawner : RandomSpawner replaces Demon
 {

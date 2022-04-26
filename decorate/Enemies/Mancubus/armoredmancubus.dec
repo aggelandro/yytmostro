@@ -1,0 +1,51 @@
+ACTOR ArmoredMancubus : Fatso2 {
+	Health 1200
+	Speed 6
+	PainChance 0
+	DamageFactor Bullet, 0.15
+	
+	States {
+		SpawnLoop:
+			FATU AB 15 A_Look
+			Loop
+			
+		See:
+			FATU AABBCCDDEEFF 4 A_Chase
+			Loop
+			
+		Missile:
+			FATU G 20 A_FatRaise
+			FATU H 10 Bright A_FatAttack1("GreenFatShot")
+			FATU G 10 A_FaceTarget
+			FATU H 10 Bright A_FatAttack2("GreenFatShot")
+			FATU G 10 A_FaceTarget
+			FATU H 10 Bright A_FatAttack3("GreenFatShot")
+			FATU G 10 A_FaceTarget
+			Goto See
+			
+		Death:
+			FATU K 6
+			FATU L 6 A_Scream
+			FATU M 6 A_NoBlocking
+			FATU NOPQR 6
+			FATU R -1 A_BossDeath
+			Stop
+			
+		Raise:
+			FATU R 5
+			FATU QPONMLK 5
+			Goto See
+  }
+}
+
+ACTOR GreenFatShot : FatShot {
+	Translation "169:191=112:127","213:223=152:159","232:235=112:127","32:47=9:12"
+	RenderStyle Normal
+	Speed 30
+	
+	States {
+		Spawn:
+			MANG AB 4 Bright
+			Loop
+	}
+}
