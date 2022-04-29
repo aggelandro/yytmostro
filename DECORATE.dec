@@ -86,6 +86,7 @@
 #include "decorate/Enemies/Cyberdemon/Council/council.dec"
 #include "decorate/Enemies/Cyberdemon/Cryocubus/cryocubus.dec"
 #include "decorate/Enemies/Cyberdemon/FlameCyber/flamecyber.dec"
+#include "decorate/Enemies/Cyberdemon/commanderofhell.txt"
 
 #include "decorate/Enemies/SpiderMastermind/RocketSpiderMastermind/rocketspidermastermind.dec"
 #include "decorate/Enemies/SpiderMastermind/SpiderLord/spiderlord.dec"
@@ -205,6 +206,7 @@ ACTOR CyberdemonSpawner : RandomSpawner replaces Cyberdemon
 	DropItem "CouncilSpawner", 255,1
 	DropItem "Cryocubus", 255, 5
 	DropItem "FlameCyber" 255, 24
+	DropItem "HellCommander", 255, 40
 	DropItem "Cyberdemon2" 255, 75
 }
 ACTOR IsItAlive : LucianoID{}

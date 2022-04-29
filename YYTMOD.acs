@@ -536,6 +536,16 @@ script "applyEffect" (int option, int dur, int force) {
             SetActorProperty(0, APROP_Speed, FixedDiv(GetActorProperty(0, APROP_Speed), 2.0));
             Thing_ChangeTID(mtid, 0);
         }; break;
+        case 11: {
+            // Buff de fuerza
+            if (!CheckInventory("BuffSTRGiver")) {
+                int currMul = GetActorProperty(0, APROP_DamageMultiplier);
+                SetActorProperty(0, APROP_DamageMultiplier, currMul + 0.5);
+                Delay(dur);
+                SetActorProperty(0, APROP_DamageMultiplier, currMul);
+                TakeInventory("BuffSTRGiver", 1);
+            }
+        }; break;
     }
 }
 
@@ -737,6 +747,44 @@ script "healTarget" (int amount) {
     }
 }
 
+script "holdActorVelocityFor" (int tics) {
+    int currVelX = GetActorVelX(0);
+    int currVelY = GetActorVelY(0);
+    int currVelZ = GetActorVelZ(0);
+    SetActorVelocity(0, 0, 0, 0, false, false);
+    Delay(tics);
+    SetActorVelocity(0, currVelX, currVelY, currVelZ, false, false);
+}
+
+script "killActorWithTID" (int tid) {
+    SetActorState(tid, "Death");
+}
+
+script "setTIDTracerPointerToSelf" (int tid) {
+    int mtid = UniqueTID();
+    Thing_ChangeTID(0, mtid);
+    SetActivator(tid);
+    SetPointer(AAPTR_TRACER, mtid);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -810,6 +858,8 @@ script "homingAtNegativeZVelocity" (void) {
     SetUserVariable(0, "user_homing_flag", 1);
     Thing_ChangeTID(ttid, 0);
 }
+
+
 
 
 
