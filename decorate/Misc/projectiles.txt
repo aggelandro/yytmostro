@@ -55,7 +55,7 @@ Actor ZombieTracer : BulletTracer { damage (random(1,5)*3) }
 Actor ShotgunnerTracer : BulletTracer { damage (random(1,5)*3) }
 Actor ChaingunnerTracer : BulletTracer { damage (random(1,5)*3) }
 Actor JZombieTracer : BulletTracer { damage 4 }
-Actor AggeSSGTracer : BulletTracer { damage 5 }
+Actor AggeSSGTracer : BulletTracer {}
 Actor TerrorPistolTracer : BulletTracer { damage (random(5,7)) }
 
 Actor TerrorWeakShotgunTracer : BulletTracer {
