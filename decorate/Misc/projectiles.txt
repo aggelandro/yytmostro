@@ -59,7 +59,7 @@ Actor AggeSSGTracer : BulletTracer { damage 5 }
 Actor TerrorPistolTracer : BulletTracer { damage (random(5,7)) }
 
 Actor TerrorWeakShotgunTracer : BulletTracer {
-	damage 3
+	Damage (random(4,5))
 	
 	States {
 		Death:
@@ -69,7 +69,7 @@ Actor TerrorWeakShotgunTracer : BulletTracer {
 }
 
 Actor TerrorShotgunTracer : BulletTracer {
-	damage (random(2,5))
+	damage (random(3,6))
 	
 	States {
 		Death:
@@ -78,4 +78,4 @@ Actor TerrorShotgunTracer : BulletTracer {
 	}
 }
 
-Actor TerrorSSGTracer : BulletTracer { damage 4 }
+Actor TerrorSSGTracer : BulletTracer { damage 3 }

@@ -25,15 +25,16 @@ ACTOR AggeSSG : DoomWeapon
     Loop
   
 	Fire:
-		TNT1 A 0 A_JumpIf(CallACS("shellsLeft") == 0, "Empty")
+		TNT1 A 0 A_JumpIf(CallACS("aggeSSGShellsLeft") == 0, "Empty")
+		TNT1 A 0 Radius_Quake(12,9,0,10,0)
     AGGE A 3
 		TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-5.1, 5.1), 1, 0, 0, 0, frandom(-3.55, 3.55))
 		TNT1 A 0 A_GiveInventory("LoopFlag", 1)
 		TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-5.1, 5.1), 0, 0, 0, 0, frandom(-3.55, 3.55))
 		TNT1 A 0 A_JumpIfInventory("LoopFlag", 29, 1)
-		Goto Fire+3
+		Goto Fire+4
 		TNT1 A 0 A_TakeInventory("LoopFlag", 29)
-		TNT1 A 0 A_TakeInventory("ShellsLeft", 2)
+		TNT1 A 0 A_TakeInventory("AggeSSGShellsLeft", 2)
     TNT1 A 0 A_PlaySound("agge/ssgfir", CHAN_AUTO)
     AGGE B 7 A_GunFlash
     AGGE C 5
@@ -45,8 +46,8 @@ ACTOR AggeSSG : DoomWeapon
     Goto Ready
 		
 	Reload:
-		TNT1 A 0 A_JumpIfInventory("ShellsLeft", 4, "Ready")
-		TNT1 A 0 A_JumpIf(CallACS("shellsLeft") == 2, "Reload2")
+		TNT1 A 0 A_JumpIfInventory("AggeSSGShellsLeft", 4, "Ready")
+		TNT1 A 0 A_JumpIf(CallACS("aggeSSGShellsLeft") == 2, "Reload2")
 		TNT1 A 0 A_JumpIf(CallACS("shells") == 2, "Reload2")
 		// Full reload
 		TNT1 AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
@@ -61,7 +62,7 @@ ACTOR AggeSSG : DoomWeapon
     AGGE H 6 A_PlaySound("agge/ssgreload", CHAN_WEAPON)
     AGGE F 5
 		AGGE A 1 A_PlaySound("agge/ssgclose", CHAN_WEAPON)
-		TNT1 A 0 A_GiveInventory("ShellsLeft", 4)
+		TNT1 A 0 A_GiveInventory("AggeSSGShellsLeft", 4)
 		Goto Ready
 		
 	Reload2:
@@ -74,7 +75,7 @@ ACTOR AggeSSG : DoomWeapon
     AGGE H 3 A_PlaySound("agge/ssgreload", CHAN_WEAPON)
     AGGE F 3 
 		AGGE A 1 A_PlaySound("agge/ssgclose", CHAN_WEAPON)
-		TNT1 A 0 A_GiveInventory("ShellsLeft", 2)
+		TNT1 A 0 A_GiveInventory("AggeSSGShellsLeft", 2)
 		Goto Ready
 		
 	Empty:
@@ -82,29 +83,31 @@ ACTOR AggeSSG : DoomWeapon
 		Goto Ready
   
 	Altfire:
-		TNT1 A 0 A_JumpIf(CallACS("shellsLeft") == 0, "Empty")
-		TNT1 A 0 A_JumpIf(CallACS("shellsLeft") < 4, "Fire")
+		TNT1 A 0 A_JumpIf(CallACS("aggeSSGShellsLeft") == 0, "Empty")
+		TNT1 A 0 A_JumpIf(CallACS("aggeSSGShellsLeft") < 4, "Fire")
+		TNT1 A 0 Radius_Quake(12,9,0,10,0)
 		AGGE A 3
 		TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-7.6, 7.6), 1, 0, 0, 0, frandom(-2.55, 2.55))
 		TNT1 A 0 A_GiveInventory("LoopFlag", 1)
 		TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-7.6, 7.6), 0, 0, 0, 0, frandom(-2.55, 2.55))
-		TNT1 A 0 A_JumpIfInventory("LoopFlag", 49, 1)
-		Goto AltFire+4
-		TNT1 A 0 A_TakeInventory("LoopFlag", 49)
-		TNT1 A 0 A_TakeInventory("ShellsLeft", 2)
+		TNT1 A 0 A_JumpIfInventory("LoopFlag", 29, 1)
+		Goto AltFire+5
+		TNT1 A 0 A_TakeInventory("LoopFlag", 29)
+		TNT1 A 0 A_TakeInventory("AggeSSGShellsLeft", 2)
     TNT1 A 0 A_PlaySound("agge/ssgfir", CHAN_AUTO)
 		AGGE B 3 A_GunFlash
+		TNT1 A 0 Radius_Quake(12,9,0,10,0)
     AGGE A 3
 		TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-7.6, 7.6), 1, 0, 0, 0, frandom(-2.55, 2.55))
 		TNT1 A 0 A_GiveInventory("LoopFlag", 1)
 		TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-7.6, 7.6), 0, 0, 0, 0, frandom(-2.55, 2.55))
-		TNT1 A 0 A_JumpIfInventory("LoopFlag", 49, 1)
-		Goto AltFire+13
-		TNT1 A 0 A_TakeInventory("LoopFlag", 49)
-		TNT1 A 0 A_TakeInventory("ShellsLeft", 2)
+		TNT1 A 0 A_JumpIfInventory("LoopFlag", 29, 1)
+		Goto AltFire+15
+		TNT1 A 0 A_TakeInventory("LoopFlag", 29)
+		TNT1 A 0 A_TakeInventory("AggeSSGShellsLeft", 2)
     TNT1 A 0 A_PlaySound("agge/ssgfir", CHAN_AUTO)
 		AGGE B 3 A_GunFlash
-    AGGE C 3
+    AGGE C 3 //A_SetPitch(pitch-random(80,85)*0.1)
     AGGE D 6 
 		AGGE E 7
 		AGGE D 2
@@ -123,4 +126,4 @@ ACTOR AggeSSG : DoomWeapon
   }
 }
 
-ACTOR ShellsLeft : Ammo { Inventory.MaxAmount 4 +IGNORESKILL }
+ACTOR AggeSSGShellsLeft : Ammo { Inventory.MaxAmount 4 +IGNORESKILL }

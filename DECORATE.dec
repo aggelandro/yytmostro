@@ -22,13 +22,14 @@
 #include "decorate/Classes/Ron/Wrench/wrench.dec"
 #include "decorate/Classes/Ron/SuperShotgun/supershotgun.dec"
 
+#include "decorate/Classes/Agge/Shield/shield.dec"
+#include "decorate/Classes/Agge/Pistol/pistol.dec"
+#include "decorate/Classes/Agge/Shotgun/shotgun.txt"
 #include "decorate/Classes/Agge/SuperShotgun/supershotgun.dec"
+#include "decorate/Classes/Agge/IsaacHands/isaachands.dec"
+#include "decorate/Classes/Agge/RocketLauncher/rocketlauncher.dec"
 #include "decorate/Classes/Agge/Flamethrower/flamethrower.dec"
 #include "decorate/Classes/Agge/OkuuCannon/okuucannon.dec"
-#include "decorate/Classes/Agge/Shield/shield.dec"
-#include "decorate/Classes/Agge/IsaacHands/isaachands.dec"
-#include "decorate/Classes/Agge/Pistol/pistol.dec"
-#include "decorate/Classes/Agge/RocketLauncher/rocketlauncher.dec"
 
 #include "decorate/Classes/zLayer/Pistol/pistol.dec"
 #include "decorate/Classes/zLayer/Chaingun/chaingun.dec"
@@ -385,7 +386,7 @@ ACTOR Agge : UniversalPlayer
   Player.StartItem "AggeID"
   Player.WeaponSlot 1, Chainsaw2, AggeShield
   Player.WeaponSlot 2, AggePistol
-  Player.WeaponSlot 3, Shotgun2, AggeSSG
+  Player.WeaponSlot 3, AggeShotgun, AggeSSG
   Player.WeaponSlot 4, IsaacHands, BlackIsaacHands, OrangeIsaacHands, GreenIsaacHands, BrimstoneHands
   Player.WeaponSlot 5, Motumbo
   Player.WeaponSlot 6, AggeFlamethrower
@@ -483,8 +484,8 @@ ACTOR ShotgunSpawner : CustomInventory replaces Shotgun
 			// TNT1 A 0 A_SpawnItemEX("ShotgunSpawner")
 			Fail
 		PickupAgge:
-			TNT1 A 0 A_JumpIfInventory("Shotgun2",1,"Spawn")
-			TNT1 A 0 A_GiveInventory("Shotgun2",1)
+			TNT1 A 0 A_JumpIfInventory("AggeShotgun",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("AggeShotgun",1)
 			TNT1 A 0 A_PlaySound("misc/w_pkup")
 			// TNT1 A 0 A_SpawnItemEX("ShotgunSpawner")
 			Fail
@@ -622,7 +623,7 @@ ACTOR SSGSpawner : CustomInventory replaces SuperShotgun
 		PickupAgge:
 			TNT1 A 0 A_JumpIfInventory("AggeSSG",1,"Spawn")
 			TNT1 A 0 A_GiveInventory("AggeSSG",1)
-			TNT1 A 0 A_GiveInventory("ShellsLeft",4)
+			TNT1 A 0 A_GiveInventory("AggeSSGShellsLeft",4)
 			TNT1 A 0 A_PlaySound("misc/w_pkup")
 			// TNT1 A 0 A_SpawnItemEx("SSGSpawner")
 			Fail

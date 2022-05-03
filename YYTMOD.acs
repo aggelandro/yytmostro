@@ -125,6 +125,20 @@ script 335 ENTER {
     if (classNum == 0) {
         ACS_NamedExecuteAlways("loadTearStatsData", 0, pnum);
 
+        TakeInventory("OrangeIsaacHands", 1);
+        TakeInventory("GreenIsaacHands", 1);
+        TakeInventory("BrimstoneHands", 1);
+        if (CheckInventory("DarkMatterGiver")) {
+            TakeInventory("IsaacHands", 1);
+            if (!CheckInventory("BlackIsaacHands")) GiveInventory("BlackIsaacHands", 1);
+        }
+        else {
+            TakeInventory("BlackIsaacHands", 1);
+            if (!CheckInventory("IsaacHands"))
+                if (CheckInventory("FireMindGiver") || CheckInventory("IpecacGiver") || CheckInventory("BrimstoneGiver"))
+                    GiveInventory("IsaacHands", 1);
+        }
+
         for (int i; i<TEMPORAL_POWERUPS; i++) {
             if (CheckInventory(SV_TEMPORAL_POWERUPS[i])) {
                 TakeInventory(SV_TEMPORAL_POWERUPS[i], 1);
@@ -136,18 +150,6 @@ script 335 ENTER {
                 TakeInventory(powerup, 1);
                 GiveInventory(powerup, 1);
             }
-        }
-
-        TakeInventory("OrangeIsaacHands", 1);
-        TakeInventory("GreenIsaacHands", 1);
-        TakeInventory("BrimstoneHands", 1);
-        if (CheckInventory("DarkMatterGiver")) {
-            TakeInventory("IsaacHands", 1);
-            if (!CheckInventory("BlackIsaacHands")) GiveInventory("BlackIsaacHands", 1);
-        }
-        else {
-            TakeInventory("BlackIsaacHands", 1);
-            if (!CheckInventory("IsaacHands")) GiveInventory("IsaacHands", 1);
         }
                 
         while (true) {
@@ -538,13 +540,21 @@ script "applyEffect" (int option, int dur, int force) {
         }; break;
         case 11: {
             // Buff de fuerza
-            if (!CheckInventory("BuffSTRGiver")) {
-                int currMul = GetActorProperty(0, APROP_DamageMultiplier);
-                SetActorProperty(0, APROP_DamageMultiplier, currMul + 0.5);
-                Delay(dur);
-                SetActorProperty(0, APROP_DamageMultiplier, currMul);
-                TakeInventory("BuffSTRGiver", 1);
-            }
+            ptid = UniqueTID();
+            mtid = UniqueTID();
+            Spawn("DmgUpEffect", GetActorX(0), GetActorY(0), GetActorZ(0), ptid);
+            Thing_ChangeTID(0, mtid);
+            SetActivator(ptid);
+            SetPointer(AAPTR_TRACER, mtid);
+            SetActivator(mtid);
+            int currMul = GetActorProperty(0, APROP_DamageMultiplier);
+            SetActorProperty(0, APROP_DamageMultiplier, currMul + 0.5);
+            Delay(dur);
+            SetActorProperty(0, APROP_DamageMultiplier, currMul);
+            Thing_ChangeTID(mtid, 0);
+            TakeInventory("BuffSTRGiver", 1);
+            SetActorState(ptid, "Death");
+            Thing_ChangeTID(ptid, 0);
         }; break;
     }
 }
@@ -606,8 +616,12 @@ script "getUniqueTID" (void) {
     SetResultValue(UniqueTID());
 }
 
-script "shellsLeft" (void) {
-    SetResultValue(CheckInventory("ShellsLeft"));
+script "aggeSGShellsLeft" (void) {
+    SetResultValue(CheckInventory("AggeSGShellsLeft"));
+}
+
+script "aggeSSGShellsLeft" (void) {
+    SetResultValue(CheckInventory("AggeSSGShellsLeft"));
 }
 
 script "shells" (void) {
@@ -765,6 +779,15 @@ script "setTIDTracerPointerToSelf" (int tid) {
     Thing_ChangeTID(0, mtid);
     SetActivator(tid);
     SetPointer(AAPTR_TRACER, mtid);
+}
+
+script "showShellsInShotgun" (int displayFlag) CLIENTSIDE {
+    int shells = ACS_NamedExecuteWithResult("aggeSGShellsLeft", 0);
+    if (displayFlag) {
+        SetFont("BIGFONT");
+        HudMessage(s:"Loaded shells: ", i:shells, s:"/7"; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP, 1, CR_ORANGE, 0.007, FixedDiv(7.0 , 60.0) + 0.74, 0);
+    }
+    else HudMessage(s:""; HUDMSG_PLAIN, 1, 0, 0, 0, 1);
 }
 
 

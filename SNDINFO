@@ -68,6 +68,11 @@ agge/waskadeath SPLAT12
 agge/explosion  KRLDTH
 agge/dropfire   WLS2D
 agge/droppuij   MTMS2D
+agge/sgfire			SGFIRE
+agge/sgrmove		SGRMOVE
+agge/sgpump			SGPUMP
+agge/sgpump2		SGPUMP2
+agge/sginsert		SGINSERT
 
 misc/freeze1	FREEZE1
 misc/freeze2	FREEZE2

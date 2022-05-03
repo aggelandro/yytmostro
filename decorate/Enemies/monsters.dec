@@ -42,6 +42,7 @@ ACTOR AbstractYYTZombie : YYTMonster {
 	Height 56
 	Speed 8
 	Species "Zombie"
+	+DOHARMSPECIES
   +FLOORCLIP
 	
 	States 
@@ -1141,6 +1142,7 @@ ACTOR Cyberdemon2 : YYTMonster
   PainChance 20
   MinMissileChance 160
   DamageFactor "AfireF", 0.9
+	DamageFactor "Bullet", 0.5
 	PainChance "AfireF", 0
 	PainChance "Afire", 0
 	PainChance "FireR", 0
@@ -1253,6 +1255,7 @@ ACTOR SpiderMastermind2 : YYTMonster
   DamageFactor "AFire", 0.01
 	DamageFactor "AFireF", 0.9
 	DamageFactor "Ripper", 0.25
+	DamageFactor "Bullet", 0.5
 	PainChance "Afire", 0
 	PainChance "AfireF", 0
 	PainChance "FireR", 0
