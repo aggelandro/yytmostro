@@ -1322,13 +1322,13 @@ ACTOR BrimstoneHands : IsaacHands {
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, -30, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 40, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, -40, SXF_NOCHECKPOSITION)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 10, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, -10, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 20, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, -20, SXF_NOCHECKPOSITION)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 7) //OFFSET
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 10, SXF_NOCHECKPOSITION)
@@ -1336,10 +1336,10 @@ ACTOR BrimstoneHands : IsaacHands {
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 20, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, -20, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 30, SXF_NOCHECKPOSITION)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 10, SXF_NOCHECKPOSITION)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 29), 12) //OFFSET
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 8) //OFFSET
@@ -1349,17 +1349,17 @@ ACTOR BrimstoneHands : IsaacHands {
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, -20, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 30, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, -30, SXF_NOCHECKPOSITION)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 10, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, -10, SXF_NOCHECKPOSITION)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 4) //OFFSET
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 10, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, -10, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 20, SXF_NOCHECKPOSITION)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			
 		FireBackwards:
@@ -1383,13 +1383,13 @@ ACTOR BrimstoneHands : IsaacHands {
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 150, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 220, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 140, SXF_NOCHECKPOSITION)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 190, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 170, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 200, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 160, SXF_NOCHECKPOSITION)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 7) //OFFSET
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 190, SXF_NOCHECKPOSITION)
@@ -1397,10 +1397,10 @@ ACTOR BrimstoneHands : IsaacHands {
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 200, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 160, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 210, SXF_NOCHECKPOSITION)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 190, SXF_NOCHECKPOSITION)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 29), 12) //OFFSET
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 8) //OFFSET
@@ -1410,17 +1410,17 @@ ACTOR BrimstoneHands : IsaacHands {
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 160, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 210, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 150, SXF_NOCHECKPOSITION)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 190, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 170, SXF_NOCHECKPOSITION)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 4) //OFFSET
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 190, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 170, SXF_NOCHECKPOSITION)
 			TNT1 A 0 A_SpawnItemEx("PlayerDoppelganger", 0, 0, 0, 0, 0, 0, 200, SXF_NOCHECKPOSITION)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			
 		FireHoming:
@@ -1502,13 +1502,13 @@ ACTOR BrimstoneHands : IsaacHands {
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", -30, FALSE)
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", 40, FALSE)
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", -40, FALSE)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", 10, FALSE)
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", -10, FALSE)
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", 20, FALSE)
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", -20, FALSE)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 7) //OFFSET
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", 10, FALSE)
@@ -1516,10 +1516,10 @@ ACTOR BrimstoneHands : IsaacHands {
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", 20, FALSE)
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", -20, FALSE)
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", 30, FALSE)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", 10, FALSE)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 29), 12) //OFFSET
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 8) //OFFSET
@@ -1529,17 +1529,17 @@ ACTOR BrimstoneHands : IsaacHands {
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", -20, FALSE)
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", 30, FALSE)
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", -30, FALSE)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", 10, FALSE)
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", -10, FALSE)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 23), 4) //OFFSET
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", 10, FALSE)
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", -10, FALSE)
 			TNT1 A 0 A_FireCustomMissile("HomingBrimstoneBeam", 20, FALSE)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, "FireEnd")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 70, "FireEnd")
 			Loop
 			
 		FireEnd:
@@ -1585,7 +1585,7 @@ ACTOR NormalTearProjectile {
 	var int user_seeker_threshold;
 	var int user_seeker_maxturnangle;
 	var int user_rift_flag;
-	//var int user_parasite_count; // En Test: posible optimización del parasite
+	var int user_parasite_count;
 
 	+BRIGHT
 	+HITTRACER
@@ -1793,6 +1793,7 @@ ACTOR NormalTearProjectile {
 			TNT1 A 0 A_JumpIf(Z <= FloorZ+5 || Z >= CeilingZ-5, "DeathEnd") //Si toca el piso o el techo
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd")
+			TNT1 A 0 A_JumpIf(user_parasite_count > 5, "DeathEnd")
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
@@ -1839,6 +1840,7 @@ ACTOR NormalTearProjectile {
 			
 		DeathParasiteBoneTear:
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathBoneTearEnd")
+			TNT1 A 0 A_JumpIf(user_parasite_count > 5, "DeathBoneTearEnd")
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
@@ -1935,6 +1937,7 @@ ACTOR FearTearProjectile : NormalTearProjectile {
 			TNT1 A 0 A_JumpIf(Z <= FloorZ+5 || Z >= CeilingZ-5, "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd")
+			TNT1 A 0 A_JumpIf(user_parasite_count > 5, "DeathEnd")
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
@@ -1963,6 +1966,7 @@ ACTOR FearTearProjectile : NormalTearProjectile {
 			
 		DeathParasiteBoneTear:
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathBoneTearEnd")
+			TNT1 A 0 A_JumpIf(user_parasite_count > 5, "DeathBoneTearEnd")
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
@@ -2024,6 +2028,7 @@ ACTOR FireTearProjectile : NormalTearProjectile {
 			TNT1 A 0 A_JumpIf(Z <= FloorZ+5 || Z >= CeilingZ-5, "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd")
+			TNT1 A 0 A_JumpIf(user_parasite_count > 5, "DeathEnd")
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
@@ -2048,6 +2053,7 @@ ACTOR FireTearProjectile : NormalTearProjectile {
 			
 		DeathParasiteBoneTear:
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathBoneTearEnd")
+			TNT1 A 0 A_JumpIf(user_parasite_count > 5, "DeathBoneTearEnd")
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
@@ -2136,7 +2142,7 @@ ACTOR ExplosiveTearProjectile : NormalTearProjectile {
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("hasHitAnEnemy"), "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd")
-			//TNT1 A 0 A_JumpIf(user_parasite_count > 4, "DeathEnd")
+			TNT1 A 0 A_JumpIf(user_parasite_count > 5, "DeathEnd")
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteExplosiveTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
@@ -2171,7 +2177,7 @@ ACTOR ExplosiveTearProjectile : NormalTearProjectile {
 			
 		DeathParasiteBoneTear:
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathBoneTearEnd")
-			//TNT1 A 0 A_JumpIf(user_parasite_count > 4, "DeathBoneTearEnd")
+			TNT1 A 0 A_JumpIf(user_parasite_count > 5, "DeathBoneTearEnd")
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteExplosiveTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
@@ -2237,6 +2243,7 @@ ACTOR BouncingTearProjectile : NormalTearProjectile {
 			TNT1 A 0 A_JumpIfInventory("DeathsTouchGiver", 1, "SpawnLoopScytheTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "SpawnLoopNailTear", AAPTR_TARGET)
 			Goto SpawnLoop
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isParasiteProjectile"), "SpawnLoopBoneTear")
 			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
@@ -2255,6 +2262,7 @@ ACTOR BouncingTearProjectile : NormalTearProjectile {
 			TNT1 A 0 A_JumpIf(Z <= FloorZ+5 || Z >= CeilingZ-5, "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd")
+			TNT1 A 0 A_JumpIf(user_parasite_count > 5, "DeathEnd")
 			TNT1 A 0 A_ChangeFlag("BOUNCEONACTORS", FALSE)
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
@@ -2280,6 +2288,7 @@ ACTOR BouncingTearProjectile : NormalTearProjectile {
 			
 		DeathParasiteBoneTear:
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathBoneTearEnd")
+			TNT1 A 0 A_JumpIf(user_parasite_count > 5, "DeathBoneTearEnd")
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
@@ -2313,6 +2322,7 @@ ACTOR BouncingFearTearProjectile : FearTearProjectile {
 			TNT1 A 0 A_JumpIfInventory("DeathsTouchGiver", 1, "SpawnLoopScytheTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "SpawnLoopNailTear", AAPTR_TARGET)
 			Goto SpawnLoop
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isParasiteProjectile"), "SpawnLoopBoneTear")
 			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
@@ -2331,6 +2341,7 @@ ACTOR BouncingFearTearProjectile : FearTearProjectile {
 			TNT1 A 0 A_JumpIf(Z <= FloorZ+5 || Z >= CeilingZ-5, "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd")
+			TNT1 A 0 A_JumpIf(user_parasite_count > 5, "DeathEnd")
 			TNT1 A 0 A_ChangeFlag("BOUNCEONACTORS", FALSE)
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
@@ -2356,6 +2367,7 @@ ACTOR BouncingFearTearProjectile : FearTearProjectile {
 			
 		DeathParasiteBoneTear:
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathBoneTearEnd")
+			TNT1 A 0 A_JumpIf(user_parasite_count > 5, "DeathBoneTearEnd")
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFearTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
@@ -2389,6 +2401,7 @@ ACTOR BouncingFireTearProjectile : FireTearProjectile {
 			TNT1 A 0 A_JumpIfInventory("DeathsTouchGiver", 1, "SpawnLoopScytheTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "SpawnLoopNailTear", AAPTR_TARGET)
 			Goto SpawnLoop
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isParasiteProjectile"), "SpawnLoopBoneTear")
 			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
@@ -2407,6 +2420,7 @@ ACTOR BouncingFireTearProjectile : FireTearProjectile {
 			TNT1 A 0 A_JumpIf(Z <= FloorZ+5 || Z >= CeilingZ-5, "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd")
+			TNT1 A 0 A_JumpIf(user_parasite_count > 5, "DeathEnd")
 			TNT1 A 0 A_ChangeFlag("BOUNCEONACTORS", FALSE)
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
@@ -2432,6 +2446,7 @@ ACTOR BouncingFireTearProjectile : FireTearProjectile {
 			
 		DeathParasiteBoneTear:
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathBoneTearEnd")
+			TNT1 A 0 A_JumpIf(user_parasite_count > 5, "DeathBoneTearEnd")
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
@@ -2465,6 +2480,7 @@ ACTOR BouncingExplosiveTearProjectile : ExplosiveTearProjectile {
 			TNT1 A 0 A_JumpIfInventory("DeathsTouchGiver", 1, "SpawnLoopScytheTear", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("8InchNailsGiver", 1, "SpawnLoopNailTear", AAPTR_TARGET)
 			Goto SpawnLoop
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isParasiteProjectile"), "SpawnLoopBoneTear")
 			TNT1 A 0 A_SetUserVar("user_bone_spawn_angle", random(45, 89))
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, (user_vel_x - cos(Angle+user_bone_spawn_angle)*4) * -1, (user_vel_y - sin(Angle+user_bone_spawn_angle)*4) * -1, user_vel_z, user_bone_spawn_angle, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
@@ -2483,6 +2499,7 @@ ACTOR BouncingExplosiveTearProjectile : ExplosiveTearProjectile {
 			TNT1 A 0 A_JumpIf(Z <= FloorZ+5 || Z >= CeilingZ-5, "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 30), "DeathEnd")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathEnd")
+			TNT1 A 0 A_JumpIf(user_parasite_count > 5, "DeathEnd")
 			TNT1 A 0 A_ChangeFlag("BOUNCEONACTORS", FALSE)
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
@@ -2508,6 +2525,7 @@ ACTOR BouncingExplosiveTearProjectile : ExplosiveTearProjectile {
 			
 		DeathParasiteBoneTear:
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isDamageTooLow", 2), "DeathBoneTearEnd")
+			TNT1 A 0 A_JumpIf(user_parasite_count > 5, "DeathBoneTearEnd")
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("ParasiteBouncingFireTearProjectile", 0, cos(pitch)*-25, sin(pitch)*-25, user_vel_x + cos(Angle+90)*4, user_vel_y + sin(Angle+90)*4, user_vel_z, 90, SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setParasiteChildrenStats", user_spawn_tid)
@@ -3143,8 +3161,8 @@ ACTOR FireMindFire : AggeNewFire {
 }
 
 ACTOR PiercingDamageDealer {
-	Radius 3
-  Height 5
+	Radius 6
+  Height 12
 	Projectile
 	Species "Player"
 	var int user_master_damage;

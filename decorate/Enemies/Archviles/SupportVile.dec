@@ -1,67 +1,93 @@
 ACTOR Archevil : Archvile2 {
-	Health 1000
+	Health 1200
 	-QUICKTORETALIATE
 	+FRIENDLY
-	SeeSound "archevil/sight"
+	+MISSILEMORE
+	SeeSound ""
   PainSound "archevil/pain"
   DeathSound "archevil/death"
-  ActiveSound "archevil/active"
+	ActiveSound ""
 	var int user_hidden;
 	
 	States {
-		Spawn:
+		SpawnLoop:
 			BONL AB 10 A_Look
 			Loop
 			
 		Search:
 			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
 			BONL AABB 2 Fast A_Wander
-			TNT1 A 0 A_Look
+			TNT1 A 0 A_LookEx(0, 0, 0, 0, 0, "SeeLoop")
 			BONL CCDD 2 Fast A_Wander
-			TNT1 A 0 A_Look
+			TNT1 A 0 A_LookEx(0, 0, 0, 0, 0, "SeeLoop")
 			BONL EEFF 2 Fast A_Wander
-			TNT1 A 0 A_Look
+			TNT1 A 0 A_LookEx(0, 0, 0, 0, 0, "SeeLoop")
 			TNT1 A 0 A_JumpIfInventory("LoopFlag", 5, 1)
 			Loop
 			TNT1 A 0 A_TakeInventory("LoopFlag", 5)
 			Goto Hide
 			
 		See:
+			TNT1 A 0 A_PlaySound("archevil/sight", CHAN_AUTO)
+			Goto SeeLoop
+			
+		SeeLoop:
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
 			BONL AABB 2 A_Chase
 			BONL CCDD 2 A_Chase
 			BONL EEFF 2 A_Chase
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 5, 1)
 			Loop
+			TNT1 A 0 A_TakeInventory("LoopFlag", 5)
+			Goto SearchResu
+			
+		SearchResu:
+			TNT1 A 0 A_ChangeFlag(FRIENDLY, FALSE)
+			BONL AABB 2 A_VileChase
+			BONL CCDD 2 A_VileChase
+			BONL EEFF 2 A_VileChase
+			TNT1 A 0 A_ChangeFlag(FRIENDLY, TRUE)
+			Goto Hide
+						
+		Heal:
+			BONL "[]]" 10 Bright
+			Goto See
 			
 		Missile:
+			TNT1 A 0 A_CheckFlag("FRIENDLY", 3)
+			TNT1 A 0 A_ChangeFlag(FRIENDLY, TRUE)
+			Goto Hide
 			TNT1 A 0 A_Jump(192, "HealTarget")
 			TNT1 A 0 A_Jump(128, "BuffArea")
 			TNT1 A 0 A_Jump(224, "Hide")
-			Goto See
+			Goto SeeLoop
 			
 		HealTarget:
-			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isTargetFullyHealed"), "Search")
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isTargetFullyHealed"), "BuffArea")
+			TNT1 A 0 A_PlaySound("archevil/active", CHAN_AUTO)
 			TNT1 A 0 A_FadeTo(1, 1, FALSE)
 			TNT1 A 0 A_SetUserVar("user_hidden", 0)
 			BONL "[]" 10 Bright A_FaceTarget
 			TNT1 A 0 ACS_NamedExecuteWithResult("healTarget", random(-500, -250))
 			BONL "]" 10 Bright A_FaceTarget
-			Goto See
+			Goto SeeLoop
 			
 		BuffArea:
+			TNT1 A 0 A_PlaySound("archevil/active", CHAN_AUTO)
 			TNT1 A 0 A_FadeTo(1, 1, FALSE)
 			TNT1 A 0 A_SetUserVar("user_hidden", 0)
 			TNT1 A 0 A_PlaySound("misc/sanctuary", CHAN_AUTO)
 			BONL G 10 Bright A_FaceTarget
-			BONL HIJKLMN 8 Bright
-			BONL N 8 Bright A_RadiusGive("BuffSpell", 2048, RGF_MONSTERS)
+			BONL HIJKLMN 6 Bright
+			BONL N 8 Bright A_RadiusGive("BuffSpell", 1120, RGF_MONSTERS)
 			BONL N 20 Bright
-			Goto See
+			Goto SeeLoop
 			
 		Hide:
 			TNT1 A 0 A_JumpIf(user_hidden, "Search")
 			TNT1 A 0 A_SetInvulnerable
 			BONL M 2 A_SpawnItemEx("ReaperStealthFire")
-			TNT1 A 0 A_PlaySound("reaper/hide")
+			TNT1 A 0 A_PlaySound("archevil/hide")
 			BONL MMMMMMMMMM 2 A_FadeTo(0, 0.1, FALSE)
 			TNT1 A 0 A_SetUserVar("user_hidden", 1)
 			TNT1 A 0 A_UnSetInvulnerable

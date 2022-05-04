@@ -318,31 +318,31 @@ ACTOR DmgUpEffect : StatusEffect {
 	States {
 	  Spawn:
 			TNT1 A 0 NoDelay A_Jump(256, "Sprite1", "Sprite2", "Sprite3", "Sprite4", "Sprite5", "Sprite6")
-			TNT1 A 5
+			TNT1 A 15
 			Loop
 			
 		Sprite1:
-			FURI A 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(0, user_se_monster_height), 0, WARPF_NOCHECKPOSITION)
+			FURI A 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
 			Goto Spawn+1
 			
 		Sprite2:
-			FURI B 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(0, user_se_monster_height), 0, WARPF_NOCHECKPOSITION)
+			FURI B 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
 			Goto Spawn+1
 		
 		Sprite3:
-			FURI C 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(0, user_se_monster_height), 0, WARPF_NOCHECKPOSITION)
+			FURI C 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
 			Goto Spawn+1
 		
 		Sprite4:
-			FURI D 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(0, user_se_monster_height), 0, WARPF_NOCHECKPOSITION)
+			FURI D 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
 			Goto Spawn+1
 			
 		Sprite5:
-			FURI E 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(0, user_se_monster_height), 0, WARPF_NOCHECKPOSITION)
+			FURI E 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
 			Goto Spawn+1
 		
 		Sprite6:
-			FURI F 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(0, user_se_monster_height), 0, WARPF_NOCHECKPOSITION)
+			FURI F 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
 			Goto Spawn+1
 	}
 }

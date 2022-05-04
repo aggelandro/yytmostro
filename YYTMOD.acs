@@ -546,6 +546,7 @@ script "applyEffect" (int option, int dur, int force) {
             Thing_ChangeTID(0, mtid);
             SetActivator(ptid);
             SetPointer(AAPTR_TRACER, mtid);
+            SetUserVariable(0, "user_se_monster_height", GetActorProperty(mtid, APROP_Height) >> 16);
             SetActivator(mtid);
             int currMul = GetActorProperty(0, APROP_DamageMultiplier);
             SetActorProperty(0, APROP_DamageMultiplier, currMul + 0.5);
@@ -1318,7 +1319,7 @@ script "setParasiteChildrenStats" (int ctid) {
     int masterScaleX = GetActorProperty(0, APROP_ScaleX);
     int masterScaleY = GetActorProperty(0, APROP_ScaleY);
     int masterRange = GetUserVariable(0, "user_remaining_range");
-    //int masterCount = GetUserVariable(0, "user_parasite_count");
+    int masterCount = GetUserVariable(0, "user_parasite_count");
 
     int masterExplosionFlag;
     if (CheckActorClass(0, "FireTearProjectile") && GetUserVariable(0, "user_explosion_flag") ||
@@ -1355,7 +1356,7 @@ script "setParasiteChildrenStats" (int ctid) {
     if (masterExplosionFlag) SetUserVariable(0, "user_explosion_flag", 1);
     Thing_ChangeTID(ctid, 0);
 
-    //SetUserVariable(0, "user_parasite_count", masterCount+1);
+    SetUserVariable(0, "user_parasite_count", masterCount+1);
 }
 
 script "isDamageTooLow" (int threshold) {
@@ -1410,8 +1411,11 @@ script "setIsaacHandsSelected" (int isOn) {
 script "isParasiteProjectile" (void) {
     SetResultValue(CheckActorClass(0, "ParasiteTearProjectile")
                 || CheckActorClass(0, "ParasiteFearTearProjectile")
+                || CheckActorClass(0, "ParasiteFireTearProjectile")
+                || CheckActorClass(0, "ParasiteExplosiveTearProjectile")
                 || CheckActorClass(0, "ParasiteBouncingTearProjectile")
-                || CheckActorClass(0, "ParasiteBouncingFearTearProjectile"));
+                || CheckActorClass(0, "ParasiteBouncingFearTearProjectile")
+                || CheckActorClass(0, "ParasiteBouncingFireTearProjectile"));
 }
 
 script "setDamageToChildren" (int tid) {

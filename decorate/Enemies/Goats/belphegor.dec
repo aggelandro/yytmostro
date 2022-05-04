@@ -15,7 +15,7 @@ ACTOR Belphegor : HellKnight2 {
 	+MISSILEMORE
 	
 	States {
-		Spawn:
+		SpawnLoop:
 			BOS3 BD 10 A_Look
 			Loop
 			
