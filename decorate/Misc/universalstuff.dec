@@ -314,6 +314,7 @@ ACTOR HealEffectArea : HealEffect {
 ACTOR DmgUpEffect : StatusEffect {
 	RenderStyle Add
 	Alpha 0.9
+	var int user_se_monster_radius;
 
 	States {
 	  Spawn:
@@ -322,27 +323,27 @@ ACTOR DmgUpEffect : StatusEffect {
 			Loop
 			
 		Sprite1:
-			FURI A 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
+			FURI A 2 A_Warp(AAPTR_TRACER, random(-user_se_monster_radius/2, user_se_monster_radius/2), random(-user_se_monster_radius/2, user_se_monster_radius/2), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
 			Goto Spawn+1
 			
 		Sprite2:
-			FURI B 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
+			FURI B 2 A_Warp(AAPTR_TRACER, random(-user_se_monster_radius/2, user_se_monster_radius/2), random(-user_se_monster_radius/2, user_se_monster_radius/2), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
 			Goto Spawn+1
 		
 		Sprite3:
-			FURI C 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
+			FURI C 2 A_Warp(AAPTR_TRACER, random(-user_se_monster_radius/2, user_se_monster_radius/2), random(-user_se_monster_radius/2, user_se_monster_radius/2), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
 			Goto Spawn+1
 		
 		Sprite4:
-			FURI D 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
+			FURI D 2 A_Warp(AAPTR_TRACER, random(-user_se_monster_radius/2, user_se_monster_radius/2), random(-user_se_monster_radius/2, user_se_monster_radius/2), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
 			Goto Spawn+1
 			
 		Sprite5:
-			FURI E 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
+			FURI E 2 A_Warp(AAPTR_TRACER, random(-user_se_monster_radius/2, user_se_monster_radius/2), random(-user_se_monster_radius/2, user_se_monster_radius/2), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
 			Goto Spawn+1
 		
 		Sprite6:
-			FURI F 2 A_Warp(AAPTR_TRACER, random(-10, 10), random(-15, 15), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
+			FURI F 2 A_Warp(AAPTR_TRACER, random(-user_se_monster_radius/2, user_se_monster_radius/2), random(-user_se_monster_radius/2, user_se_monster_radius/2), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
 			Goto Spawn+1
 	}
 }
@@ -436,6 +437,3 @@ ACTOR FriendlyMiniArachnotron : MiniArachnotron {
 			Goto See
 	}
 }
-
-
-

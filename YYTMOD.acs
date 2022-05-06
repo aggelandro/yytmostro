@@ -277,7 +277,7 @@ script "stopAndPositionPlayer" (void) {
 script "displayChargeBar" (int isOn) CLIENTSIDE {
     if (isOn) {
         SetFont("CHRBAR1");
-        HudMessage(s:"A"; HUDMSG_PLAIN, 2, 0, 0.01, 0.01, 0);
+        HudMessage(s:"A"; HUDMSG_PLAIN, 2, 0, 0.503, 0.503, 0);
     }
     else {
         HudMessage(s:""; HUDMSG_PLAIN, 2, 0, 0, 0, 1);
@@ -287,7 +287,7 @@ script "displayChargeBar" (int isOn) CLIENTSIDE {
 
 script "showProgressChargeBar" (int entry) CLIENTSIDE {
     SetFont(SV_DRAWABLE_CHARGE_BAR[entry]);
-    HudMessage(s:"A"; HUDMSG_PLAIN, 1, 0, 0.013, 0.013, 0);
+    HudMessage(s:"A"; HUDMSG_PLAIN, 1, 0, 0.502, 0.502, 0);
 }
 
 script "pausePlayer" (int activeFlag) {
@@ -531,11 +531,11 @@ script "applyEffect" (int option, int dur, int force) {
             SetActivator(htid);
             SetPointer(AAPTR_TRACER, mtid);
             SetActivator(mtid);
-            SetActorProperty(0, APROP_Speed, FixedMul(GetActorProperty(0, APROP_Speed), 2.0));
+            SetActorProperty(0, APROP_Speed, FixedMul(GetActorProperty(0, APROP_Speed), 1.3));
             Delay(15);
             Thing_Damage2(0, Random(-200, -100), "Healing");
             Delay(510);
-            SetActorProperty(0, APROP_Speed, FixedDiv(GetActorProperty(0, APROP_Speed), 2.0));
+            SetActorProperty(0, APROP_Speed, FixedDiv(GetActorProperty(0, APROP_Speed), 1.3));
             Thing_ChangeTID(mtid, 0);
         }; break;
         case 11: {
@@ -547,6 +547,7 @@ script "applyEffect" (int option, int dur, int force) {
             SetActivator(ptid);
             SetPointer(AAPTR_TRACER, mtid);
             SetUserVariable(0, "user_se_monster_height", GetActorProperty(mtid, APROP_Height) >> 16);
+            SetUserVariable(0, "user_se_monster_radius", GetActorProperty(mtid, APROP_Radius) >> 16);
             SetActivator(mtid);
             int currMul = GetActorProperty(0, APROP_DamageMultiplier);
             SetActorProperty(0, APROP_DamageMultiplier, currMul + 0.5);

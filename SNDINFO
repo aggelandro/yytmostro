@@ -274,16 +274,22 @@ archevil/death  BONELDTH
 archevil/fire   BONEFIRE
 archevil/hide   BONELTEL
 
-//armored mancubus
-AM/attack	ARMMANC
-AM/see		AMSIGHT
-AM/death	AMDEATH
-AM/pain		AMPAIN
-AM/active AMACT
+//armncubus
+AM/attack		ARMMANC
+AM/see			AMSIGHT
+AM/death		AMDEATH
+AM/pain			AMPAIN
+AM/active		AMACT
+AM/step			DSDHYFL
+AM/landing	DSDCYST
 
-//commander of hell
+//hell commander
+$rolloff commander/laugh	 	800 3500
 commander/metal 			CMETAL
 commander/sight				DSDUKSIT
 commander/death				DSDUKDTH
 commander/grenadefire	DSFIRBFI
 commander/grenadebnc	DSCASBAL
+commander/laugh				DSCALAU
+commander/attack			CYFNDATK
+commander/explosion		DSHELLEX

@@ -79,6 +79,7 @@
 #include "decorate/Enemies/Arachnotrons/Bouncetron/bouncetron.dec"
 
 #include "decorate/Enemies/Mancubus/FatsoRocket/fatsorocket.dec"
+#include "decorate/Enemies/Cyberdemon/commanderofhell.txt"
 #include "decorate/Enemies/Mancubus/armoredmancubus.dec"
 
 #include "decorate/Enemies/Archviles/SpookyVile/spookyvile.dec"
@@ -87,7 +88,6 @@
 #include "decorate/Enemies/Cyberdemon/Council/council.dec"
 #include "decorate/Enemies/Cyberdemon/Cryocubus/cryocubus.dec"
 #include "decorate/Enemies/Cyberdemon/FlameCyber/flamecyber.dec"
-#include "decorate/Enemies/Cyberdemon/commanderofhell.txt"
 
 #include "decorate/Enemies/SpiderMastermind/RocketSpiderMastermind/rocketspidermastermind.dec"
 #include "decorate/Enemies/SpiderMastermind/SpiderLord/spiderlord.dec"
@@ -162,7 +162,7 @@ ACTOR FatsoSpawner : RandomSpawner replaces Fatso
 {
 	DropItem "Fatso2", 255, 70
 	DropItem "FatsoRocket", 255, 15
-	DropItem "ArmoredMancubus", 255, 15
+	DropItem "Armncubus", 255, 15
 }
 ACTOR DemonSpawner : RandomSpawner replaces Demon
 {

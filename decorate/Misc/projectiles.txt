@@ -78,4 +78,4 @@ Actor TerrorShotgunTracer : BulletTracer {
 	}
 }
 
-Actor TerrorSSGTracer : BulletTracer { damage 3 }
+Actor TerrorSSGTracer : BulletTracer { damage 2 }

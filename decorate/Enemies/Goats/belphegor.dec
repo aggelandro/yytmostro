@@ -42,10 +42,10 @@ ACTOR Belphegor : HellKnight2 {
 			Goto See+1
 			
 		TeleportSuccess:
-			BOS3 U 2
+			BOS3 U 4
 			TNT1 A 0 A_PlaySound("belph/teleport")
-			BOS3 T 2
-			BOS3 S 2
+			BOS3 T 4
+			BOS3 S 4
 			Goto See+1
 			
 		Melee:
