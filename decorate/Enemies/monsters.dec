@@ -85,23 +85,8 @@ ACTOR ShotgunGuyMod : AbstractYYTZombie
   Obituary "$OB_SHOTGUY"
   DropItem "Shotgun"
 	DropItem "Shell"
-	DropItem "Cat-O-Nine-Tails" 8
-	DropItem "GrowthHormones" 8
-	DropItem "JesusJuice" 8
-	DropItem "MomsHeels" 8
-	DropItem "MomsLipstick" 8
-	DropItem "MomsUnderwear" 8
-	DropItem "RoidRage" 8
-	DropItem "SafetyPin" 8
-	DropItem "Synthoil" 8
-	DropItem "SpeedBall" 8
-	DropItem "Magic8Ball" 8
-	DropItem "Screw" 8
-	DropItem "Toothpicks" 8
-	DropItem "TornPhoto" 8
-	DropItem "BloodOfTheMartyr" 8
-	DropItem "MomsEye" 8
-	DropItem "Adrenaline" 5
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "SpreadGunToken", 10
   States
   {
   SpawnLoop:
@@ -156,23 +141,8 @@ ACTOR ChaingunGuyMod : AbstractYYTZombie
   Obituary "$OB_CHAINGUY"
   Dropitem "Chaingun"
 	Dropitem "Clip"
-	DropItem "Cat-O-Nine-Tails" 10
-	DropItem "GrowthHormones" 10
-	DropItem "JesusJuice" 10
-	DropItem "MomsHeels" 10
-	DropItem "MomsLipstick" 10
-	DropItem "MomsUnderwear" 10
-	DropItem "RoidRage" 10
-	DropItem "SafetyPin" 10
-	DropItem "Synthoil" 10
-	DropItem "SpeedBall" 10
-	DropItem "Magic8Ball" 10
-	DropItem "Screw" 10
-	DropItem "Toothpicks" 10
-	DropItem "TornPhoto" 10
-	DropItem "BloodOfTheMartyr" 10
-	DropItem "MomsEye" 10
-	DropItem "Adrenaline" 7
+	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "HomingGunToken", 10
   States
   {
   SpawnLoop:
@@ -225,23 +195,8 @@ ACTOR ZombieMan2 : AbstractYYTZombie
   ActiveSound "grunt/active"
   Obituary "$OB_ZOMBIE"
   DropItem "Clip"
-	DropItem "Cat-O-Nine-Tails" 3
-	DropItem "GrowthHormones" 3
-	DropItem "JesusJuice" 3
-	DropItem "MomsHeels" 3
-	DropItem "MomsLipstick" 3
-	DropItem "MomsUnderwear" 3
-	DropItem "RoidRage" 3
-	DropItem "SafetyPin" 3
-	DropItem "Synthoil" 3
-	DropItem "SpeedBall" 3
-	DropItem "Magic8Ball" 3
-	DropItem "Screw" 3
-	DropItem "Toothpicks" 3
-	DropItem "TornPhoto" 3
-	DropItem "BloodOfTheMartyr" 3
-	DropItem "MomsEye" 3
-	DropItem "Adrenaline" 2
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "CrusherGunToken", 1
 	
   States
   {
@@ -300,23 +255,8 @@ ACTOR DoomImp2 : YYTMonster
   ActiveSound "imp/active"
   HitObituary "$OB_IMPHIT"
   Obituary "$OB_IMP"
-  DropItem "Cat-O-Nine-Tails" 8
-	DropItem "GrowthHormones" 8
-	DropItem "JesusJuice" 8
-	DropItem "MomsHeels" 8
-	DropItem "MomsLipstick" 8
-	DropItem "MomsUnderwear" 8
-	DropItem "RoidRage" 8
-	DropItem "SafetyPin" 8
-	DropItem "Synthoil" 8
-	DropItem "SpeedBall" 8
-	DropItem "Magic8Ball" 8
-	DropItem "Screw" 8
-	DropItem "Toothpicks" 8
-	DropItem "TornPhoto" 8
-	DropItem "BloodOfTheMartyr" 8
-	DropItem "MomsEye" 8
-	DropItem "Adrenaline" 5
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "FlamethrowerGunToken", 10
   States
   {
   SpawnLoop:
@@ -388,24 +328,8 @@ ACTOR Pinky2 : YYTMonster
   DeathSound "demon/death"
   ActiveSound "demon/active"
   Obituary "$OB_DEMONHIT" // "%o was bit by a demon."
-  DropItem "Cat-O-Nine-Tails" 13
-	DropItem "GrowthHormones" 13
-	DropItem "JesusJuice" 13
-	DropItem "MomsHeels" 13
-	DropItem "MomsLipstick" 13
-	DropItem "MomsUnderwear" 13
-	DropItem "RoidRage" 13
-	DropItem "SafetyPin" 13
-	DropItem "Synthoil" 13
-	DropItem "SpeedBall" 13
-	DropItem "Magic8Ball" 13
-	DropItem "Screw" 13
-	DropItem "Toothpicks" 13
-	DropItem "TornPhoto" 13
-	DropItem "BloodOfTheMartyr" 13
-	DropItem "MomsEye" 13
-	DropItem "Adrenaline" 10
-	DropItem "ALumpOfCoal" 10
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "ContraItemPinkySpawner"
   States
   {
   SpawnLoop:
@@ -466,41 +390,8 @@ ACTOR Cacodemon2 : YYTMonster
   Obituary "$OB_CACO"
   HitObituary "$OB_CACOHIT"
   BloodColor "00 00 CD"
-	DropItem "Cat-O-Nine-Tails" 18
-	DropItem "GrowthHormones" 18
-	DropItem "JesusJuice" 18
-	DropItem "MomsHeels" 18
-	DropItem "MomsLipstick" 18
-	DropItem "MomsUnderwear" 18
-	DropItem "RoidRage" 18
-	DropItem "SafetyPin" 18
-	DropItem "Synthoil" 18
-	DropItem "SpeedBall" 18
-	DropItem "Magic8Ball" 18
-	DropItem "Screw" 18
-	DropItem "Toothpicks" 18
-	DropItem "TornPhoto" 18
-	DropItem "BloodOfTheMartyr" 18
-	DropItem "MomsEye" 18
-	DropItem "Adrenaline" 15
-	DropItem "ALumpOfCoal" 15
-	DropItem "RubberCement" 15
-	DropItem "SacredHeart" 15
-	DropItem "SpoonBender" 15
-	DropItem "TheParasite" 15
-	DropItem "CompoundFracture" 15
-	DropItem "TwentyTwenty" 2
-	DropItem "TheWiz" 2
-	DropItem "Backstabber" 2
-	DropItem "8InchNails" 2
-	DropItem "DeathsTouch" 2
-	DropItem "MyReflection" 2
-	DropItem "MonstrosLung" 2
-	DropItem "FireMind" 2
-	DropItem "Brimstone" 2
-	DropItem "Ipecac" 2
-	DropItem "Uranus" 2
-	DropItem "OcularRift" 2
+	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "IsaacItemsTier2LowChanceSpawner"
   States
   {
   SpawnLoop:
@@ -556,41 +447,10 @@ ACTOR Revenant2 : YYTMonster
   HitObituary "$OB_UNDEADHIT" // "%o was punched by a revenant."
   Obituary "$OB_UNDEAD" // "%o couldn't evade a revenant's fireball."
   BloodColor "80 14 0A"
-	DropItem "Cat-O-Nine-Tails" 18
-	DropItem "GrowthHormones" 18
-	DropItem "JesusJuice" 18
-	DropItem "MomsHeels" 18
-	DropItem "MomsLipstick" 18
-	DropItem "MomsUnderwear" 18
-	DropItem "RoidRage" 18
-	DropItem "SafetyPin" 18
-	DropItem "Synthoil" 18
-	DropItem "SpeedBall" 18
-	DropItem "Magic8Ball" 18
-	DropItem "Screw" 18
-	DropItem "Toothpicks" 18
-	DropItem "TornPhoto" 18
-	DropItem "BloodOfTheMartyr" 18
-	DropItem "MomsEye" 18
-	DropItem "Adrenaline" 15
-	DropItem "ALumpOfCoal" 15
-	DropItem "RubberCement" 15
-	DropItem "SacredHeart" 15
-	DropItem "SpoonBender" 15
-	DropItem "TheParasite" 15
-	DropItem "CompoundFracture" 15
-	DropItem "TwentyTwenty" 2
-	DropItem "TheWiz" 2
-	DropItem "Backstabber" 2
-	DropItem "8InchNails" 2
-	DropItem "DeathsTouch" 2
-	DropItem "MyReflection" 2
-	DropItem "MonstrosLung" 2
-	DropItem "Brimstone" 2
-	DropItem "FireMind" 2
-	DropItem "Ipecac" 2
-	DropItem "Uranus" 2
-	DropItem "OcularRift" 2
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier2MidChanceSpawner"
+	DropItem "HomingGunToken", 64
   States
   {
   SpawnLoop:
@@ -644,29 +504,10 @@ ACTOR Arachnotron2 : YYTMonster
   DeathSound "baby/death"
   ActiveSound "baby/active"
   Obituary "$OB_BABY"
-  DropItem "Cat-O-Nine-Tails" 18
-	DropItem "GrowthHormones" 18
-	DropItem "JesusJuice" 18
-	DropItem "MomsHeels" 18
-	DropItem "MomsLipstick" 18
-	DropItem "MomsUnderwear" 18
-	DropItem "RoidRage" 18
-	DropItem "SafetyPin" 18
-	DropItem "Synthoil" 18
-	DropItem "SpeedBall" 18
-	DropItem "Magic8Ball" 18
-	DropItem "Screw" 18
-	DropItem "Toothpicks" 18
-	DropItem "TornPhoto" 18
-	DropItem "BloodOfTheMartyr" 18
-	DropItem "MomsEye" 18
-	DropItem "Adrenaline" 15
-	DropItem "ALumpOfCoal" 15
-	DropItem "RubberCement" 15
-	DropItem "SacredHeart" 15
-	DropItem "SpoonBender" 15
-	DropItem "TheParasite" 15
-	DropItem "CompoundFracture" 15
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier2MidChanceSpawner"
+	DropItem "LaserGunToken", 64
   States
   {
   SpawnLoop:
@@ -717,49 +558,11 @@ ACTOR Fatso2 : YYTMonster
   DeathSound "fatso/death"
   ActiveSound "fatso/active"
   Obituary "$OB_FATSO"
-  DropItem "Cat-O-Nine-Tails" 26
-	DropItem "GrowthHormones" 26
-	DropItem "JesusJuice" 26
-	DropItem "MomsHeels" 26
-	DropItem "MomsLipstick" 26
-	DropItem "MomsUnderwear" 26
-	DropItem "RoidRage" 26
-	DropItem "SafetyPin" 26
-	DropItem "Synthoil" 26
-	DropItem "SpeedBall" 26
-	DropItem "Magic8Ball" 26
-	DropItem "Screw" 26
-	DropItem "Toothpicks" 26
-	DropItem "TornPhoto" 26
-	DropItem "BloodOfTheMartyr" 26
-	DropItem "MomsEye" 26
-	DropItem "Adrenaline" 22
-	DropItem "ALumpOfCoal" 22
-	DropItem "RubberCement" 22
-	DropItem "SacredHeart" 22
-	DropItem "SpoonBender" 22
-	DropItem "TheParasite" 22
-	DropItem "CompoundFracture" 22
-	DropItem "TwentyTwenty" 5
-	DropItem "DarkMatter" 5
-	DropItem "Infestation2" 5
-	DropItem "LostContact" 5
-	DropItem "MomsContacts" 5
-	DropItem "MutantSpider" 5
-	DropItem "Pisces" 8
-	DropItem "TheCommonCold" 5
-	DropItem "TheInnerEye" 5
-	DropItem "TheWiz" 5
-	DropItem "Backstabber" 5
-	DropItem "8InchNails" 5
-	DropItem "DeathsTouch" 5
-	DropItem "MyReflection" 5
-	DropItem "MonstrosLung" 5
-	DropItem "Brimstone" 5
-	DropItem "FireMind" 5
-	DropItem "Ipecac" 5
-	DropItem "Uranus" 5
-	DropItem "OcularRift" 5
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier2MidChanceSpawner"
+	DropItem "ContraItemMancubusSpawner"
   States
   {
   SpawnLoop:
@@ -809,29 +612,8 @@ ACTOR PainElemental2 : YYTMonster
   PainSound "pain/pain"
   DeathSound "pain/death"
   ActiveSound "pain/active"
-  DropItem "Cat-O-Nine-Tails" 26
-	DropItem "GrowthHormones" 26
-	DropItem "JesusJuice" 26
-	DropItem "MomsHeels" 26
-	DropItem "MomsLipstick" 26
-	DropItem "MomsUnderwear" 26
-	DropItem "RoidRage" 26
-	DropItem "SafetyPin" 26
-	DropItem "Synthoil" 26
-	DropItem "SpeedBall" 26
-	DropItem "Magic8Ball" 26
-	DropItem "Screw" 26
-	DropItem "Toothpicks" 26
-	DropItem "TornPhoto" 26
-	DropItem "BloodOfTheMartyr" 26
-	DropItem "MomsEye" 26
-	DropItem "Adrenaline" 22
-	DropItem "ALumpOfCoal" 22
-	DropItem "RubberCement" 22
-	DropItem "SacredHeart" 22
-	DropItem "SpoonBender" 22
-	DropItem "TheParasite" 22
-	DropItem "CompoundFracture" 22
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "IsaacItemsTier2HighChanceSpawner"
   States
   {
   SpawnLoop:
@@ -929,49 +711,11 @@ ACTOR BaronOfHell2 : YYTMonster
   Obituary "$OB_BARON"
   HitObituary "$OB_BARONHIT"
   BloodColor "00 64 00"
-	DropItem "Cat-O-Nine-Tails" 38
-	DropItem "GrowthHormones" 38
-	DropItem "JesusJuice" 38
-	DropItem "MomsHeels" 38
-	DropItem "MomsLipstick" 38
-	DropItem "MomsUnderwear" 38
-	DropItem "RoidRage" 38
-	DropItem "SafetyPin" 38
-	DropItem "Synthoil" 38
-	DropItem "SpeedBall" 38
-	DropItem "Magic8Ball" 38
-	DropItem "Screw" 38
-	DropItem "Toothpicks" 38
-	DropItem "TornPhoto" 38
-	DropItem "BloodOfTheMartyr" 38
-	DropItem "MomsEye" 38
-	DropItem "Adrenaline" 32
-	DropItem "ALumpOfCoal" 32
-	DropItem "RubberCement" 32
-	DropItem "SacredHeart" 32
-	DropItem "SpoonBender" 32
-	DropItem "TheParasite" 32
-	DropItem "CompoundFracture" 32
-	DropItem "TwentyTwenty" 10
-	DropItem "DarkMatter" 10
-	DropItem "Infestation2" 10
-	DropItem "LostContact" 10
-	DropItem "MomsContacts" 10
-	DropItem "MutantSpider" 10
-	DropItem "Pisces" 10
-	DropItem "TheCommonCold" 10
-	DropItem "TheInnerEye" 10
-	DropItem "TheWiz" 10
-	DropItem "Backstabber" 10
-	DropItem "8InchNails" 10
-	DropItem "DeathsTouch" 10
-	DropItem "MyReflection" 10
-	DropItem "MonstrosLung" 10
-	DropItem "Brimstone" 10
-	DropItem "FireMind" 10
-	DropItem "Ipecac" 10
-	DropItem "Uranus" 10
-	DropItem "OcularRift" 10
+	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "IsaacItemsTier2HighChanceSpawner"
+	DropItem "IsaacItemsTier2MidChanceSpawner"
+	DropItem "CrusherGunToken", 64
   States
   {
   SpawnLoop:
@@ -1018,29 +762,10 @@ ACTOR HellKnight2 : BaronOfHell2
   DeathSound "knight/death"
   HitObituary "$OB_KNIGHTHIT"
   Obituary "$OB_KNIGHT"
-  DropItem "Cat-O-Nine-Tails" 18
-	DropItem "GrowthHormones" 18
-	DropItem "JesusJuice" 18
-	DropItem "MomsHeels" 18
-	DropItem "MomsLipstick" 18
-	DropItem "MomsUnderwear" 18
-	DropItem "RoidRage" 18
-	DropItem "SafetyPin" 18
-	DropItem "Synthoil" 18
-	DropItem "SpeedBall" 18
-	DropItem "Magic8Ball" 18
-	DropItem "Screw" 18
-	DropItem "Toothpicks" 18
-	DropItem "TornPhoto" 18
-	DropItem "BloodOfTheMartyr" 18
-	DropItem "MomsEye" 18
-	DropItem "Adrenaline" 15
-	DropItem "ALumpOfCoal" 15
-	DropItem "RubberCement" 15
-	DropItem "SacredHeart" 15
-	DropItem "SpoonBender" 15
-	DropItem "TheParasite" 15
-	DropItem "CompoundFracture" 15
+	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "IsaacItemsTier2LowChanceSpawner"
+	DropItem "CrusherGunToken", 24
   States
   {
   SpawnLoop:
@@ -1096,6 +821,9 @@ ACTOR Archvile2 : YYTMonster
   ActiveSound "vile/active"
   MeleeSound "vile/stop"
   Obituary "$OB_VILE"
+	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "IsaacItemsTier2MidChanceSpawner"
+	DropItem "IsaacItemsTier3LowChanceSpawner"
   States
   {
   SpawnLoop:
@@ -1160,49 +888,13 @@ ACTOR Cyberdemon2 : YYTMonster
   DeathSound "cyber/death"
   ActiveSound "cyber/active"
   Obituary "$OB_CYBORG"
-	DropItem "Cat-O-Nine-Tails" 64
-	DropItem "GrowthHormones" 64
-	DropItem "JesusJuice" 64
-	DropItem "MomsHeels" 64
-	DropItem "MomsLipstick" 64
-	DropItem "MomsUnderwear" 64
-	DropItem "RoidRage" 64
-	DropItem "SafetyPin" 64
-	DropItem "Synthoil" 64
-	DropItem "SpeedBall" 64
-	DropItem "Magic8Ball" 64
-	DropItem "Screw" 64
-	DropItem "Toothpicks" 64
-	DropItem "TornPhoto" 64
-	DropItem "BloodOfTheMartyr" 64
-	DropItem "MomsEye" 64
-	DropItem "Adrenaline" 60
-	DropItem "ALumpOfCoal" 60
-	DropItem "RubberCement" 60
-	DropItem "SacredHeart" 60
-	DropItem "SpoonBender" 60
-	DropItem "TheParasite" 60
-	DropItem "CompoundFracture" 60
-	DropItem "TwentyTwenty" 50
-	DropItem "DarkMatter" 50
-	DropItem "Infestation2" 50
-	DropItem "LostContact" 50
-	DropItem "MomsContacts" 50
-	DropItem "MutantSpider" 50
-	DropItem "Pisces" 50
-	DropItem "TheCommonCold" 50
-	DropItem "TheInnerEye" 50
-	DropItem "TheWiz" 50
-	DropItem "Backstabber" 50
-	DropItem "8InchNails" 50
-	DropItem "DeathsTouch" 50
-	DropItem "MyReflection" 50
-	DropItem "MonstrosLung" 50
-	DropItem "Brimstone" 50
-	DropItem "FireMind" 50
-	DropItem "Ipecac" 50
-	DropItem "Uranus" 50
-	DropItem "OcularRift" 50
+	DropItem "IsaacItemsTier1Spawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier2HighChanceSpawner"
+	DropItem "IsaacItemsTier2LowChanceSpawner"
+	DropItem "IsaacItemsTier3HighChanceSpawner"
+	DropItem "PrototypeGunToken", 128
   States
   {
   SpawnLoop:
@@ -1275,49 +967,13 @@ ACTOR SpiderMastermind2 : YYTMonster
   DeathSound "spider/death"
   ActiveSound "spider/active"
   Obituary "$OB_SPIDER"
-	DropItem "Cat-O-Nine-Tails" 51
-	DropItem "GrowthHormones" 51
-	DropItem "JesusJuice" 51
-	DropItem "MomsHeels" 51
-	DropItem "MomsLipstick" 51
-	DropItem "MomsUnderwear" 51
-	DropItem "RoidRage" 51
-	DropItem "SafetyPin" 51
-	DropItem "Synthoil" 51
-	DropItem "SpeedBall" 51
-	DropItem "Magic8Ball" 51
-	DropItem "Screw" 51
-	DropItem "Toothpicks" 51
-	DropItem "TornPhoto" 51
-	DropItem "BloodOfTheMartyr" 51
-	DropItem "MomsEye" 51
-	DropItem "Adrenaline" 46
-	DropItem "ALumpOfCoal" 46
-	DropItem "RubberCement" 46
-	DropItem "SacredHeart" 46
-	DropItem "SpoonBender" 46
-	DropItem "TheParasite" 46
-	DropItem "CompoundFracture" 46
-	DropItem "TwentyTwenty" 35
-	DropItem "DarkMatter" 35
-	DropItem "Infestation2" 35
-	DropItem "LostContact" 35
-	DropItem "MomsContacts" 35
-	DropItem "MutantSpider" 35
-	DropItem "Pisces" 35
-	DropItem "TheCommonCold" 35
-	DropItem "TheInnerEye" 35
-	DropItem "TheWiz" 35
-	DropItem "Backstabber" 35
-	DropItem "8InchNails" 35
-	DropItem "DeathsTouch" 35
-	DropItem "MyReflection" 35
-	DropItem "MonstrosLung" 35
-	DropItem "Brimstone" 35
-	DropItem "FireMind" 35
-	DropItem "Ipecac" 35
-	DropItem "Uranus" 35
-	DropItem "OcularRift" 35
+	DropItem "IsaacItemsTier1Spawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier2HighChanceSpawner"
+	DropItem "IsaacItemsTier2LowChanceSpawner"
+	DropItem "IsaacItemsTier3HighChanceSpawner"
+	DropItem "PrototypeGunToken", 128
   States
   {
   SpawnLoop:

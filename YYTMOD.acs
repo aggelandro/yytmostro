@@ -160,6 +160,10 @@ script 335 ENTER {
             Delay(1);
         }
     }
+
+    if (classNum == 1) {
+        TakeInventory("CrusherCooldown", 3);
+    }
 }
  
 script 336 DEATH {
@@ -190,6 +194,16 @@ script 336 DEATH {
         for (int i=0; i<DISPLAYABLE_POWERUP_MAX; i++) {
             TakeInventory(StrLeft(SV_DISPLAYABLE_POWERUPS[i], StrLen(SV_DISPLAYABLE_POWERUPS[i])-6), 1);
         }
+    }
+
+    if (classNum == 1) {
+        TakeInventory("CrusherCooldown", 3);
+        TakeInventory("SpreadGunGiver", 2);
+        TakeInventory("HomingGunGiver", 2);
+        TakeInventory("PrototypeGunGiver", 2);
+        TakeInventory("LaserGunGiver", 2);
+        TakeInventory("FlamethrowerGunGiver", 2);
+        TakeInventory("CrusherGunGiver", 2);
     }
 
     SV_PLAYERS_NUMBERS_2_TIDS[PlayerNumber()] = 0;
@@ -783,13 +797,11 @@ script "setTIDTracerPointerToSelf" (int tid) {
     SetPointer(AAPTR_TRACER, mtid);
 }
 
-script "showShellsInShotgun" (int displayFlag) CLIENTSIDE {
-    int shells = ACS_NamedExecuteWithResult("aggeSGShellsLeft", 0);
-    if (displayFlag) {
-        SetFont("BIGFONT");
-        HudMessage(s:"Loaded shells: ", i:shells, s:"/7"; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP, 1, CR_ORANGE, 0.007, FixedDiv(7.0 , 60.0) + 0.74, 0);
-    }
-    else HudMessage(s:""; HUDMSG_PLAIN, 1, 0, 0, 0, 1);
+script "showShellsInShotgun" (void) CLIENTSIDE {
+    int shells = ACS_NamedExecuteWithResult("AggeSGShellsLeft", 0);
+    SetFont("BIGFONT");
+    SetHudSize(320, 200, 0);
+    HudMessage(i:shells; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP|HUDMSG_FADEINOUT, 1, CR_ORANGE, 100.0, 193.0, 3.0, 0.5, 1.0);
 }
 
 

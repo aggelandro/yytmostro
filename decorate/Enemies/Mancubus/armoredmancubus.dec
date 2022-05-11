@@ -1,9 +1,11 @@
 ACTOR Armncubus : Fatso2 {
 	Translation "64:79=117:127","128:151=152:159"
-	Health 2000
+	Health 3000
 	Speed 10
 	PainChance 0
 	DamageFactor Bullet, 0.5
+	DamageFactor "Poison", 0
+	DamageFactor "AfireF", 0.9
 	BloodColor "Green"
 	SeeSound "AM/see"
 	DeathSound "AM/death"
@@ -11,7 +13,18 @@ ACTOR Armncubus : Fatso2 {
 	ActiveSound "AM/active"
 	+MISSILEMORE
 	+MISSILEEVENMORE
+	+NORADIUSDMG
 	+BOSS
+	+DONTMORPH
+  +BOSSDEATH
+	DropItem "IsaacItemsTier3Spawner"
+	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier2HighChanceSpawner"
+	DropItem "IsaacItemsTier2LowChanceSpawner"
+	DropItem "IsaacItemsTier3LowChanceSpawner"
+	DropItem "DualZanzibart", 128
+	var int user_jump_force;
 	
 	States {
 		SpawnLoop:
@@ -36,9 +49,8 @@ ACTOR Armncubus : Fatso2 {
 			Loop
 			
 		Missile:
-			TNT1 A 0 A_JumpIfCloser(384, 3)
-			TNT1 A 0 A_JumpIf(Z+Height+192>CeilingZ, 2)
-			TNT1 A 0 A_Jump(224, "JumpMissile")
+			TNT1 A 0 A_JumpIfCloser(384, 2)
+			TNT1 A 0 A_Jump(224, "JumpMissileStart")
 			TNT1 A 0 A_PlaySound("AM/attack", CHAN_AUTO)
 			TNT1 A 0 A_SpawnItemEx("ArmncubusWalkFire",0,0,0,0,0,0,0,128)
 			FATU G 20 BRIGHT A_FaceTarget
@@ -53,11 +65,40 @@ ACTOR Armncubus : Fatso2 {
 			FATU G 10 BRIGHT A_FaceTarget
 			Goto See
 			
-		JumpMissile:
+		JumpMissileStart:
+			TNT1 A 0 A_JumpIf(Z+Height+192<=CeilingZ, 3)
+			TNT1 A 0 A_JumpIf(Z+Height+128<=CeilingZ, 3)
+			TNT1 A 0 A_JumpIf(Z+Height+64<=CeilingZ, 3)
+			Goto Missile+2
+			TNT1 A 0 A_SetUserVar("user_jump_force", 75)
+			Goto JumpMissile1
+			TNT1 A 0 A_SetUserVar("user_jump_force", 50)
+			Goto JumpMissile2
+			TNT1 A 0 A_SetUserVar("user_jump_force", 25)
+			Goto JumpMissile3
+			
+		JumpMissile1:
 			FATU T 10 BRIGHT A_FaceTarget
 			FATU UV 10 BRIGHT
 			FATU V 0 A_Recoil(-3)
-			FATU V 15 ThrustThingZ(0,75,0,0)
+			FATU V 15 ThrustThingZ(0, user_jump_force, 0, 0)
+			Goto JumpMissileFire
+			
+		JumpMissile2:
+			FATU T 10 BRIGHT A_FaceTarget
+			FATU UV 10 BRIGHT
+			FATU V 0 A_Recoil(-3)
+			FATU V 10 ThrustThingZ(0, user_jump_force, 0, 0)
+			Goto JumpMissileFire
+			
+		JumpMissile3:
+			FATU T 10 BRIGHT A_FaceTarget
+			FATU UV 10 BRIGHT
+			FATU V 0 A_Recoil(-3)
+			FATU V 5 ThrustThingZ(0, user_jump_force, 0, 0)
+			Goto JumpMissileFire
+			
+		JumpMissileFire:
 			TNT1 A 0 A_ChangeFlag("NOGRAVITY", TRUE)
 			TNT1 A 0 A_ChangeFlag("DONTFALL", TRUE)
 			FATU W 15
@@ -88,8 +129,27 @@ ACTOR Armncubus : Fatso2 {
 			TNT1 A 0 A_Recoil(1)
 			TNT1 A 0 A_ChangeFlag("NOGRAVITY", FALSE)
 			TNT1 A 0 A_ChangeFlag("DONTFALL", FALSE)
+			TNT1 A 0 A_JumpIf(user_jump_force == 75, "JumpMissileEnd1")
+			TNT1 A 0 A_JumpIf(user_jump_force == 50, "JumpMissileEnd2")
+			TNT1 A 0 A_JumpIf(user_jump_force == 25, "JumpMissileEnd3")
+			Wait
+			
+		JumpMissileEnd1:
 			FATU V 10
 			FATU U 10
+			Goto Landing
+			
+		JumpMissileEnd2:
+			FATU V 7
+			FATU U 6
+			Goto Landing
+			
+		JumpMissileEnd3:
+			FATU V 3
+			FATU U 3
+			Goto Landing
+			
+		Landing:
 			TNT1 A 0 A_PlaySound("AM/landing", CHAN_BODY)
 			TNT1 A 0 A_SpawnItemEx("ArmncubusWalkFire",0,0,0,0,0,0,0,128)
 			TNT1 A 0 A_SpawnItemEx("ArmncubusWalkFire",0,24,0,0,0,0,0,128)
@@ -124,12 +184,35 @@ ACTOR Armncubus : Fatso2 {
 ACTOR GreenFatShot : FatShot {
 	Translation "169:191=112:127","213:223=152:159","232:235=112:127","32:47=9:12"
 	RenderStyle Normal
-	Speed 30
+	DamageType "Poison"
+	Speed 25
+	+HITTRACER
 	
 	States {
 		Spawn:
 			MANG AB 4 Bright
 			Loop
+			
+		XDeath:
+			TNT1 A 0 A_JumpIfInventory("PoisonCounter", 0, "Death", AAPTR_TRACER)
+			TNT1 A 0 A_GiveInventory("PoisonCounter", 1, AAPTR_TRACER)
+			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffectOnPlayer", 1, 1050, 6)
+			Goto Death
+			
+		Death:
+			TNT1 A 0 A_SpawnItemEx("ArmncubusWalkFire",0,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("ArmncubusWalkFire",0,24,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("ArmncubusWalkFire",0,-24,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("ArmncubusWalkFire",24,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("ArmncubusWalkFire",-24,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("ArmncubusWalkFire",0,48,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("ArmncubusWalkFire",0,-48,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("ArmncubusWalkFire",48,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("ArmncubusWalkFire",-48,0,0,0,0,0,0,128)
+			MISL B 8 BRIGHT
+			MISL C 6 BRIGHT
+			MISL D 4 BRIGHT
+			Stop
 	}
 }
 
@@ -138,7 +221,7 @@ ACTOR ArmncubusWalkFire {
   Speed 0
   RenderStyle Add
   Alpha 0.75
-	DamageType "Fire"
+	DamageType "FireR"
 	+NOCLIP
   +MISSILE
   +DROPOFF
@@ -150,18 +233,20 @@ ACTOR ArmncubusWalkFire {
 	
 		Spawn:
 			TNT1 A 10
-			FRTF ABC 3 Bright A_Explode(1, 10, 0)
+			FRTF ABC 3 Bright A_Explode(Random(0, 2), 10, 0)
 			TNT1 A 0 A_Jump(191,3)
 			TNT1 A 0 A_CustomMissile("ArmncubusWalkFire", 0, 24, 0)
 			TNT1 A 0 A_CustomMissile("ArmncubusWalkFire", 0, -24, 0)
-			FRTF DEFGHIJKLMNO 3 Bright A_Explode(1, 10, 0)
+			FRTF DEFGHIJKLMNO 3 Bright A_Explode(Random(0, 2), 10, 0)
 			Stop
 	}
 }
 
 ACTOR ArmncubusGrenade : HellGrenade {
+	DamageType "Poison"
 	ReactionTime 175
 	BounceCount 6
+	+HITTRACER
 	
 	States {
 		Spawn: 
@@ -169,10 +254,16 @@ ACTOR ArmncubusGrenade : HellGrenade {
 			HBA4 A 0 Bright A_CountDown
 			Loop
 			
+		XDeath:
+			TNT1 A 0 A_JumpIfInventory("PoisonCounter", 0, "Death", AAPTR_TRACER)
+			TNT1 A 0 A_GiveInventory("PoisonCounter", 3, AAPTR_TRACER)
+			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffectOnPlayer", 1, 1050, 6)
+			Goto Death
+			
 		Death:
 			HBA4 D 0 A_NoGravity
 			HBA4 D 3 Bright
-			HBA4 E 3 Bright A_Explode(144,144,1,0,32)
+			HBA4 E 3 Bright A_Explode(Random(80, 120), 144, 1, 0, 32)
 			HBA4 FGHIJKLM 3 Bright
 			Stop
    }

@@ -5,6 +5,9 @@ ACTOR VacuumDemon : Pinky2
 	Speed 20
 	PainChance 85
 	Obituary "%o was sucked in by a vacuum demon."
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier2LowChanceSpawner"
 	States
 	{
 		Melee:

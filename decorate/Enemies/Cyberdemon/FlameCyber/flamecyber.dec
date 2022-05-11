@@ -2,6 +2,13 @@ ACTOR FlameCyber : Cyberdemon2
 {
 	Translation "48:79=88:111"
 	Obituary "%o was annihilated by a flame cyberdemon"
+	DropItem "IsaacItemsTier1Spawner"
+	DropItem "IsaacItemsTier2LowChanceSpawner"
+	DropItem "IsaacItemsTier2MidChanceSpawner"
+	DropItem "IsaacItemsTier3Spawner"
+	DropItem "IsaacItemsTier3LowChanceSpawner"
+	DropItem "IsaacItemsTier3LowChanceSpawner"
+	DropItem "IsaacItemsTier3MidChanceSpawner"
 	States
 	{
 	Missile:

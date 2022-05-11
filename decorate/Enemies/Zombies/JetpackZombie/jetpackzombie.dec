@@ -13,23 +13,8 @@ Actor JetpackZombie : AbstractYYTZombie
   Damagefactor "JZombie", 0
   DropItem "Clip"
   DropItem "Stimpack"
-	DropItem "Cat-O-Nine-Tails" 10
-	DropItem "GrowthHormones" 10
-	DropItem "JesusJuice" 10
-	DropItem "MomsHeels" 10
-	DropItem "MomsLipstick" 10
-	DropItem "MomsUnderwear" 10
-	DropItem "RoidRage" 10
-	DropItem "SafetyPin" 10
-	DropItem "Synthoil" 10
-	DropItem "SpeedBall" 10
-	DropItem "Magic8Ball" 10
-	DropItem "Screw" 10
-	DropItem "Toothpicks" 10
-	DropItem "TornPhoto" 10
-	DropItem "BloodOfTheMartyr" 10
-	DropItem "MomsEye" 10
-	DropItem "Adrenaline" 7
+	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
 	
   +DontHurtSpecies
   +Float

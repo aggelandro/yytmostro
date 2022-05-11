@@ -89,6 +89,7 @@ misc/rockcrumble2	ROCKCR2
 misc/rockcrumble3	ROCKCR3
 $random misc/rockcrumble { misc/rockcrumble1 misc/rockcrumble2 misc/rockcrumble3 }
 
+misc/hellwp	DSHELLWP
 ron/click PCLICK
 ron/error PERROR
 ron/SSGload XSSGCHAR
@@ -116,6 +117,15 @@ terro/puniooff PUNIOOFF
 terro/ssgshot COYOTE
 terro/ssgreload COYOTERE
 terro/ssgshell COYOTESH
+contra/ping S-PING
+contra/gun S-GUN
+contra/spread S-SPREAD
+contra/powerup S-POWUP
+contra/homing	S-HOMING
+contra/crusher S-CRUSH
+contra/laser S-LASER
+contra/flamethrower S-FLAME
+contra/enemydeathbig S-ENMEX2
 zlayer/sniper ZSNIPER
 zlayer/srelo ZSNIPRE
 ando/ytho YTHO
@@ -186,6 +196,8 @@ $random weapons/casing2	{ weapons/shell1 weapons/shell2 weapons/shell3 }
 weapons/shell1			dsshell1
 weapons/shell2			dsshell2
 weapons/shell3			dsshell3
+
+weapons/wepsel	dswepsel
 
 // Efecto de fuego en el piso choreado del complex
 $rolloff weapons/rocklx 600 1800

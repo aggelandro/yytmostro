@@ -7,6 +7,15 @@ ACTOR Archevil : Archvile2 {
   PainSound "archevil/pain"
   DeathSound "archevil/death"
 	ActiveSound ""
+	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier2HighChanceSpawner"
+	DropItem "IsaacItemsTier2LowChanceSpawner"
+	DropItem "IsaacItemsTier2LowChanceSpawner"
+	DropItem "IsaacItemsTier3MidChanceSpawner"
+	DropItem "IsaacItemsTier3LowChanceSpawner"
 	var int user_hidden;
 	
 	States {

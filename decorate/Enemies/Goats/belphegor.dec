@@ -9,6 +9,10 @@ ACTOR Belphegor : HellKnight2 {
 	SeeSound "belph/see"
   PainSound "belph/pain"
   DeathSound "belph/death"
+	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "IsaacItemsTier2LowChanceSpawner"
+	DropItem "IsaacItemsTier2LowChanceSpawner"
+	DropItem "IsaacItemsTier2LowChanceSpawner"
 	
 	+DONTHURTSPECIES
 	+NOICEDEATH

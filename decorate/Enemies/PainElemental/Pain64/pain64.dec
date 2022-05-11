@@ -7,6 +7,10 @@ ACTOR Pain64 : PainElemental2 {
   PainSound "pain64/pain"
   DeathSound "pain64/death"
   ActiveSound "pain64/active"
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier2HighChanceSpawner"
+	DropItem "IsaacItemsTier2MidChanceSpawner"
 	+BRIGHT
 	
 	States {

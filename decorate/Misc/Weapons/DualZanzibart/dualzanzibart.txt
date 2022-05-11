@@ -1,0 +1,132 @@
+ACTOR DualZanzibart : DoomWeapon {	
+	Tag "Zanzibart"
+	Inventory.PickupSound "misc/hellwp"
+	Inventory.PickupMessage "Forgive me... Zanzibart...!"
+	Weapon.AmmoType1 "RocketAmmo"
+	Weapon.AmmoType2 "RocketAmmo"
+	Weapon.AmmoUse1 1
+	Weapon.AmmoUse2 1
+	Weapon.AmmoGive 10
+	Weapon.SelectionOrder 200
+	Weapon.UpSound "weapons/wepsel"
+	Obituary "%o was melted into piles of putrid debris by Zanzibart."
+	+NOALERT
+	
+	States {
+		Spawn:
+			WBAS A -1
+			Stop
+			
+		Deselect:
+			ZANL A 0 A_TakeInventory("SynthFireActive",1)
+			ZANL A 0 A_TakeInventory("SynthFireLeft",1)
+			ZANL A 0 A_TakeInventory("SynthFireRight",1)
+			Goto DS
+			
+		DS:
+			ZANL A 1 A_Lower
+			Loop
+			
+		Select:
+			ZANL A 1 A_Raise
+			ZANL A 0 A_GunFlash
+			Goto SL
+			
+		SL:
+			ZANL A 1 A_Raise
+			Goto Select+1
+			
+		Ready:
+			ZANL A 1
+			TNT1 A 0 A_GiveInventory("SynthFireActive",1)
+			TNT1 A 0 ACS_ExecuteAlways(891,0,0,0,0)
+			TNT1 A 0 ACS_ExecuteAlways(892,0,0,0,0)
+			Goto LIdle
+			
+		LIdle:
+			ZANL A 1 A_WeaponReady(12)
+			TNT1 A 0 A_JumpIfInventory("WeaponSpecialAction", 1, "SpecialLFire")
+			ZANL A 0 A_JumpIfInventory("SynthFireLeft",1,"LFire")
+			Loop
+			
+		LFire:
+			TNT1 A 0 A_JumpIfNoAmmo("LIdle")
+			TNT1 A 0 A_AlertMonsters
+			TNT1 A 0 A_PlaySound("weapons/rocklf", CHAN_WEAPON)
+			ZANL B 5 Bright
+			ZANL C 5 Bright A_FireCustomMissile("GreenFatShot", random(-3,3), 1, -18)
+			ZANL D 5 Bright
+			ZANL E 5
+			SGDL A 0 A_JumpIfInventory("SynthFireLeft",1,"LFire")
+			Goto LIdle
+			
+		Flash:
+			ZANR A 8
+			Goto RIdle
+			
+		RIdle:
+			ZANR A 1
+			TNT1 A 0 A_JumpIfInventory("WeaponSpecialAction", 1, "SpecialRFire")
+			ZANR A 0 A_JumpIfInventory("SynthFireRight",1,"RFire")
+			Loop
+			
+		RFire:
+			TNT1 A 0 A_JumpIfNoAmmo("RIdle")
+			TNT1 A 0 A_AlertMonsters
+			TNT1 A 0 A_PlaySound("weapons/rocklf", CHAN_WEAPON)
+			ZANR B 5 Bright
+			ZANR C 5 Bright A_FireCustomMissile("GreenFatShot", random(-3,3), 1, 18)
+			ZANR D 5 Bright
+			ZANR E 5
+			TNT1 A 0 A_JumpIfInventory("SynthFireRight",1,"RFire")
+			Goto RIdle
+			
+		Fire:
+			TNT1 A 0
+			Goto LIdle
+		
+		AltFire:
+			Stop
+			
+		SpecialLFire:
+			TNT1 A 0 A_JumpIfInventory("RocketAmmo", 6, 2)
+			TNT1 A 0 A_TakeInventory("WeaponSpecialAction", 1)
+			Goto LIdle
+			TNT1 A 0 A_GiveInventory("WeaponSpecialAction", 1)
+			TNT1 A 0 A_TakeInventory("RocketAmmo", 6)
+			TNT1 A 0 A_Quake(2, 45, 0, 5)
+			ZANL A 45
+			TNT1 A 0 A_FireCustomMissile("ArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
+			ZANL G 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
+			ZANL F 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
+			ZANL G 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
+			ZANL F 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
+			ZANL G 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
+			ZANL H 10 Bright
+			Goto LIdle
+			
+		SpecialRFire:
+			TNT1 A 0 A_TakeInventory("WeaponSpecialAction", 2)
+			ZANR A 45
+			TNT1 A 0 A_FireCustomMissile("ArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
+			ZANR G 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
+			ZANR F 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
+			ZANR G 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
+			ZANR F 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
+			ZANR G 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
+			ZANR H 10 Bright
+			Goto RIdle
+	}
+}
+
+ACTOR PGreenFatShot : GreenFatShot {
+	Damage (Random(15, 20))
+	
+	States {
+		XDeath:
+			TNT1 A 0 A_JumpIfInventory("PoisonDebuffGiver", 3, "Death", AAPTR_TRACER)
+			TNT1 A 0 A_GiveInventory("PoisonDebuffGiver", 1, AAPTR_TRACER)
+			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 5, 140)
+			Goto Death
+	}
+}

@@ -2,6 +2,9 @@ ACTOR HoloRevenant : Revenant2
 {
   HitObituary "%o was punched by a revenant."
   Obituary "%o caught some fists."
+	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "IsaacItemsTier2LowChanceSpawner"
   States
   {
   Missile:

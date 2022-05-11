@@ -25,18 +25,15 @@ ACTOR PkDoubleShotguns : Weapon
 		Goto DS
 		
 	DS:
-		SGDL A 0 A_Lower 
 		SGDL A 1 A_Lower
 		Loop
 		
 	Select:
-		SGDL A 0 A_Raise
 		SGDL A 1 A_Raise
 		SGDL A 0 A_GunFlash
 		Goto SL
 		
 	SL:
-		SGDL A 0 A_Raise
 		SGDL A 1 A_Raise
 		Goto Select+1
 		

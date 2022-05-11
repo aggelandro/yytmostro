@@ -3,6 +3,10 @@ ACTOR FatsoRocket : Fatso2
   Translation "48:79=96:111", "144:152=96:111"
   Health 800
   Obituary "%o was obliterated by a black mancubus"
+	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier2MidChanceSpawner"
   var int user_tiros;
   States {
 		See:

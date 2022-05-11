@@ -421,3 +421,10 @@ Interval 2.0
 
 Object FireMindFire { Frame FLME { Light DropFlame1 } }
 Object AggeNewFire { Frame FLME { Light DropFlame2 } }
+
+
+//Armncubus
+brightmap sprite FATUH1
+{
+	map "sprites/Enemies/Mancubus/ArmoredMancubus/brightmaps/FATUH1.png"
+}

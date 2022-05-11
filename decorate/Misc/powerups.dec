@@ -925,3 +925,167 @@ ACTOR FireMindGiver : AbstractTemporalTBOIGiver {}
 ACTOR IpecacGiver : AbstractTemporalTBOIGiver {}
 ACTOR UranusGiver : AbstractTemporalTBOIGiver {}
 ACTOR OcularRiftGiver : AbstractTemporalTBOIGiver {}
+
+
+
+
+
+
+
+
+
+//=================
+// Contra Power Ups
+//=================
+
+ACTOR AbstractContraToken : CustomInventory {
+	Inventory.MaxAmount 1
+	Inventory.InterHubAmount 1
+	Inventory.RestrictedTo "Terro"
+	Inventory.PickupSound "contra/powerup"
+	+INVENTORY.AUTOACTIVATE
+	+DONTGIB
+	
+	States {
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("ContraWeapon", 1, "Success")
+			TNT1 A 0 A_RailWait
+			Stop
+	}
+}
+
+ACTOR SpreadGunToken : AbstractContraToken {
+	Inventory.PickupMessage "Weapon token! Spread Shot!"
+	
+	States {
+	
+		Spawn:
+			CTRP A -1 BRIGHT
+			Stop
+		
+		Success:
+			TNT1 A 0 A_TakeInventory("HomingGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("PrototypeGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("LaserGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("FlamethrowerGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("CrusherGunGiver", 2)
+			TNT1 A 0 A_GiveInventory("SpreadGunGiver", 1)
+			Stop			
+	}
+}
+
+ACTOR HomingGunToken : AbstractContraToken {
+	Inventory.PickupMessage "Weapon token! Homing Missile!"
+	
+	States {
+	
+		Spawn:
+			CTRP B -1 BRIGHT
+			Stop
+			
+		Success:
+			TNT1 A 0 A_TakeInventory("SpreadGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("PrototypeGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("LaserGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("FlamethrowerGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("CrusherGunGiver", 2)
+			TNT1 A 0 A_GiveInventory("HomingGunGiver", 1)
+			Stop
+	}
+}
+
+ACTOR PrototypeGunToken : AbstractContraToken {
+	Inventory.PickupMessage "Weapon token! Prototype Weapon! Let's attack aggresively!"
+	
+	States {
+	
+		Spawn:
+			CTRP J -1 BRIGHT
+			Stop
+			
+		Success:
+			TNT1 A 0 A_TakeInventory("SpreadGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("HomingGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("LaserGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("FlamethrowerGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("CrusherGunGiver", 2)
+			TNT1 A 0 A_GiveInventory("PrototypeGunGiver", 1)
+			Stop
+	}
+}
+
+ACTOR LaserGunToken : AbstractContraToken {
+	Inventory.PickupMessage "Weapon token! Laser!"
+	
+	States {
+		Spawn:
+			CTRP C -1 BRIGHT
+			Stop
+			
+		Success:
+			TNT1 A 0 A_TakeInventory("SpreadGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("HomingGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("PrototypeGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("FlamethrowerGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("CrusherGunGiver", 2)
+			TNT1 A 0 A_GiveInventory("LaserGunGiver", 1)
+			Stop
+	}
+}
+
+ACTOR FlamethrowerGunToken : AbstractContraToken {
+	Inventory.PickupMessage "Weapon token! Flamethrower!"
+	
+	States {
+		Spawn:
+			CTRP H -1 BRIGHT
+			Stop
+			
+		Success:
+			TNT1 A 0 A_TakeInventory("SpreadGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("HomingGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("PrototypeGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("LaserGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("CrusherGunGiver", 2)
+			TNT1 A 0 A_GiveInventory("FlamethrowerGunGiver", 1)
+			Stop
+	}
+}
+
+ACTOR CrusherGunToken : AbstractContraToken {
+	Inventory.PickupMessage "Weapon token! Crusher Missile!"
+	
+	States {
+		Spawn:
+			CTRP H -1 BRIGHT
+			Stop
+			
+		Success:
+			TNT1 A 0 A_TakeInventory("SpreadGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("HomingGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("PrototypeGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("LaserGunGiver", 2)
+			TNT1 A 0 A_TakeInventory("FlamethrowerGunGiver", 2)
+			TNT1 A 0 A_GiveInventory("CrusherGunGiver", 1)
+			Stop
+	}
+}
+
+
+
+
+
+
+
+
+ACTOR AbstractContraGiver : Inventory {
+	Inventory.Amount 1
+  Inventory.MaxAmount 2
+}
+
+ACTOR SpreadGunGiver : AbstractContraGiver {}
+ACTOR HomingGunGiver : AbstractContraGiver {}
+ACTOR PrototypeGunGiver : AbstractContraGiver {}
+ACTOR LaserGunGiver : AbstractContraGiver {}
+ACTOR FlamethrowerGunGiver : AbstractContraGiver {}
+ACTOR CrusherGunGiver : AbstractContraGiver {}
