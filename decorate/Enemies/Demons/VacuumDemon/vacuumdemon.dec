@@ -8,6 +8,7 @@ ACTOR VacuumDemon : Pinky2
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
+	DropItem "ContraItemPinkySpawner"
 	States
 	{
 		Melee:

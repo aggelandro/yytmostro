@@ -1,9 +1,9 @@
-ACTOR Belphegor : HellKnight2 {
+ACTOR Motaro : HellKnight2 {
 	Speed 14
 	Height 88
 	Radius 32
   GibHealth 25
-	Obituary "%o was no match for the great Belphegor."
+	Obituary "Motaro wins. Flawless Victory."
 	MaxStepHeight 24
 	MaxDropOffHeight 32
 	SeeSound "belph/see"
@@ -13,6 +13,7 @@ ACTOR Belphegor : HellKnight2 {
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
+	DropItem "CrusherGunToken", 55
 	
 	+DONTHURTSPECIES
 	+NOICEDEATH

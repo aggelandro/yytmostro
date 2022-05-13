@@ -15,6 +15,7 @@ Actor JetpackZombie : AbstractYYTZombie
   DropItem "Stimpack"
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "CrusherGunToken", 1
 	
   +DontHurtSpecies
   +Float

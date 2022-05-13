@@ -177,6 +177,7 @@ ACTOR MachineGunBullet : FastProjectile {
 	Height 8
 	Speed 60
 	Damage (Random(4, 5))
+	DamageType "Bullet"
 	Projectile
 	+RANDOMIZE
 	+BLOODSPLATTER
@@ -288,6 +289,7 @@ ACTOR SuperLaserShooter : LaserShooter {
 
 ACTOR Laser : MachineGunBullet {
 	Scale 2.8
+	DamageType "Laser"
 	-RANDOMIZE
 	Obituary "%o was pierced by %k's Laser."
 	
@@ -368,6 +370,7 @@ ACTOR FlamethrowerDamager {
 	Radius 4
 	Damage 2
 	Speed 0
+	DamageType "FireR"
 	+BLOODSPLATTER
 	+SPECTRAL
 	-ACTIVATEIMPACT
@@ -470,6 +473,7 @@ ACTOR SuperCrusherMissile : CrusherMissile {
 
 ACTOR CrusherDamager {
 	Damage (Random(15, 20))
+	DamageType "FireR"
 	Radius 32
 	Speed 0
 	Projectile

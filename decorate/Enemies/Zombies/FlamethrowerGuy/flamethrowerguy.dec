@@ -13,6 +13,7 @@ ACTOR FlamethrowerGuy : AbstractYYTZombie {
 	Dropitem "Chaingun"
 	Dropitem "Clip"
 	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "HomingGunToken", 15
 	
 	States {
 	

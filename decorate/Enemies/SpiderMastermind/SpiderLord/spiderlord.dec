@@ -15,6 +15,7 @@ ACTOR SpiderLord : SpiderMastermind2
 	DropItem "IsaacItemsTier2MidChanceSpawner"
 	DropItem "IsaacItemsTier3HighChanceSpawner"
 	DropItem "IsaacItemsTier3LowChanceSpawner"
+	DropItem "PrototypeGunToken"
 	var int user_aranas;
 	States
 	{

@@ -9,6 +9,7 @@
 
 //universal weapons and items
 #include "decorate/Misc/Weapons/HookShot/hookshot.dec"
+#include "decorate/Misc/Weapons/HitscanFixer/hitscanfixer.txt"
 
 //weapons from classes
 #include "decorate/Classes/Luciano/Pistol/pistol.dec"
@@ -67,6 +68,7 @@
 
 #include "decorate/Enemies/Cacodemons/NeoCacodemon/neocacodemon.dec"
 #include "decorate/Enemies/Cacodemons/CrackoDemon/crackodemon.dec"
+#include "decorate/Enemies/Cacodemons/laserpinky.txt"
 
 #include "decorate/Enemies/Revenants/HoloRevenant/holorevenant.dec"
 #include "decorate/Enemies/Revenants/VayneAurelius/vayneaurelius.dec"
@@ -137,16 +139,17 @@ ACTOR ShotgunGuySpawner : RandomSpawner replaces ShotgunGuy
 }
 ACTOR CacodemonSpawner : RandomSpawner replaces Cacodemon
 {
-	DropItem "Cacodemon2", 255, 65
-	DropItem "NeoCacodemon", 255, 25
+	DropItem "Cacodemon2", 255, 60
+	DropItem "NeoCacodemon", 255, 15
 	DropItem "CrackoDemon", 255, 10
+	DropItem "Brimgoyle", 255, 15
 }
 ACTOR HellKnightSpawner : RandomSpawner replaces HellKnight
 {
 	DropItem "HellKnight2", 255, 60
 	DropItem "MirrorKnight", 255, 15
 	DropItem "LiteralHellKnight", 255, 15
-	DropItem "Belphegor", 255, 10
+	DropItem "Motaro", 255, 10
 }
 ACTOR PainElementalSpawner : RandomSpawner replaces PainElemental
 {
@@ -164,8 +167,8 @@ ACTOR RevenantSpawner : RandomSpawner replaces Revenant
 ACTOR FatsoSpawner : RandomSpawner replaces Fatso
 {
 	DropItem "Fatso2", 255, 70
-	DropItem "FatsoRocket", 255, 25
-	DropItem "Armncubus", 255, 5
+	DropItem "FatsoRocket", 255, 28
+	DropItem "Armncubus", 255, 2
 }
 ACTOR DemonSpawner : RandomSpawner replaces Demon
 {
@@ -526,6 +529,7 @@ ACTOR UniversalPlayer : DoomPlayer
   Player.StartItem "Fist"
   Player.StartItem "Pistol"
   Player.StartItem "Clip", 50
+	Player.WeaponSlot 0, Pistol
   Player.WeaponSlot 1, Fist, Chainsaw2
   Player.WeaponSlot 2, Pistol
   Player.WeaponSlot 3, Shotgun2, SuperShotgun2
@@ -606,11 +610,13 @@ ACTOR Agge : UniversalPlayer
   Player.StartItem "Shell", 5
   Player.StartItem "EnergyShieldAmmo", 200
   Player.StartItem "AggeID"
+	Player.StartItem "HitscanFixer"
+	Player.WeaponSlot 0, HitscanFixer
   Player.WeaponSlot 1, Chainsaw2, AggeShield
   Player.WeaponSlot 2, AggePistol
   Player.WeaponSlot 3, AggeShotgun, AggeSSG
   Player.WeaponSlot 4, IsaacHands, BlackIsaacHands, OrangeIsaacHands, GreenIsaacHands, BrimstoneHands
-  Player.WeaponSlot 5, Motumbo, DualZanzibart
+  Player.WeaponSlot 5, DualZanzibart, Motumbo
   Player.WeaponSlot 6, AggeFlamethrower
   Player.WeaponSlot 8, OkuuCannon
 	var int user_charge_state;
@@ -628,6 +634,8 @@ ACTOR Ron : UniversalPlayer
   Player.StartItem  "Shell", 5
   Player.StartItem "RonID"
   Player.StartItem "RonTurretItem", 1
+	Player.StartItem "HitscanFixer"
+	Player.WeaponSlot 0, HitscanFixer
   Player.WeaponSlot 1, RonWrench, Chainsaw2
   Player.WeaponSlot 2, RonPistol
   Player.WeaponSlot 3, Shotgun2, RonSSG
@@ -645,11 +653,13 @@ ACTOR zLayer : UniversalPlayer
   Player.StartItem "Clip", 50
   Player.StartItem "zLayerID"
   Player.StartItem "Backpack"
+	Player.StartItem "HitscanFixer"
+	Player.WeaponSlot 0, HitscanFixer
   Player.WeaponSlot 1, Fist, Chainsaw2
   Player.WeaponSlot 2, zLayerPistol
   Player.WeaponSlot 3, Shotgun2, SuperShotgun2
   Player.WeaponSlot 4, zLayerCG
-  Player.WeaponSlot 5, zLayerRL, DualZanzibart
+  Player.WeaponSlot 5, DualZanzibart, zLayerRL
   Player.WeaponSlot 6, PlasmaRifle2
   Player.WeaponSlot 7, BFG9000
   Player.WeaponSlot 8, zLayerUnique
@@ -662,22 +672,26 @@ ACTOR Thanuris : UniversalPlayer
 	Player.StartItem "BaseballBat"
 	Player.StartItem "Clip", 50
 	Player.StartItem "ThanuID"
+	Player.StartItem "HitscanFixer"
+	Player.WeaponSlot 0, HitscanFixer
 	Player.Weaponslot 1, BaseballBat, Chainsaw2
 	Player.Weaponslot 2, ThanuPistol
-	Player.Weaponslot 5, ThanuRL, DualZanzibart
+	Player.Weaponslot 5, DualZanzibart, ThanuRL
 	Player.WeaponSlot 6, ThanuPL
 	Player.WeaponSlot 3, Shotgun2,ReloadShotgun
 }
 ACTOR Terro : UniversalPlayer
 {
-    Player.DisplayName "Terro"
+	Player.DisplayName "Terro"
 	Player.StartItem "TerroPistol"
 	Player.StartItem "TerroFist"
 	Player.StartItem "Clip", 50
 	Player.StartItem "TerroID"
-	Player.WeaponSlot 1, TerroFist, Chainsaw2
+	Player.StartItem "HitscanFixer"
+	Player.WeaponSlot 0, HitscanFixer
+	Player.WeaponSlot 1, Chainsaw2, TerroFist
 	Player.WeaponSlot 2, TerroPistol
-	Player.WeaponSlot 5, Dynamite, DualZanzibart
+	Player.WeaponSlot 5, DualZanzibart, Dynamite
 	Player.WeaponSlot 4, ContraWeapon
 	Player.WeaponSlot 3, TerroShotgun, PKDoubleShotguns
 }

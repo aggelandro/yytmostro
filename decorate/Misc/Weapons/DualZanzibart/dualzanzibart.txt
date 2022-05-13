@@ -120,7 +120,7 @@ ACTOR DualZanzibart : DoomWeapon {
 }
 
 ACTOR PGreenFatShot : GreenFatShot {
-	Damage (Random(15, 20))
+	Damage (Random(22, 27))
 	
 	States {
 		XDeath:

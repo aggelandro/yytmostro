@@ -1,0 +1,71 @@
+ACTOR Brimgoyle : Cacodemon2 {
+	Radius 34
+	Height 62
+	Health 600
+	Speed 16
+	PainChance 64
+	BloodColor "Red"
+	SeeSound "demon/sight"
+	AttackSound "demon/melee"
+	PainSound "demon/pain"
+	DeathSound "demon/death"
+	ActiveSound "demon/active"
+	Obituary "%o was disintegrated by a brimgoyle."
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "IsaacItemsTier2MidChanceSpawner"
+	DropItem "IsaacItemsTier2LowChanceSpawner"
+	
+	States {
+		Spawn:
+			SARF AABBCCBB 3 A_Look
+			Loop
+			
+		See:
+			SARF AABBCCBB 3 A_Chase
+			Loop
+			
+		Melee:
+		Missile:
+			SARF DE 8 A_FaceTarget
+			SARF F 16 A_FaceTarget
+			SARF G 1 Bright A_FaceTarget
+			TNT1 A 0 A_CustomMissile("BrimstoneBeam", 28)
+			TNT1 A 0 A_PlaySound("agge/brimlaser", CHAN_AUTO)
+			TNT1 A 0 A_CustomRailgun(Random(0,1), 0, None, None, RGF_SILENT, 0)
+			Goto LaserLoop
+			
+		LaserLoop:
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			SARF G 1 Bright A_FaceTarget
+			TNT1 A 0 A_CustomMissile("BrimstoneBeam", 28)
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 34, 3)
+			TNT1 A 0 A_CustomRailgun(Random(0,1), 0, None, None, RGF_SILENT, 0)
+			TNT1 A 0 A_Jump(256, 2)
+			TNT1 A 0 A_CustomRailgun(Random(1,2), 0, None, None, RGF_SILENT, 0)
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 69, 1)
+			Loop
+			TNT1 A 0 A_TakeInventory("LoopFlag", 69)
+			SARF FED 8 A_FaceTarget
+			Goto See
+			
+		Pain:
+			TNT1 A 0 A_TakeInventory("LoopFlag", 69)
+			SARF D 3
+			SARF H 3 A_Pain
+			SARF H 6
+			Goto See
+			
+		Death:
+			SARF I 8
+			SARF J 8 A_Scream
+			SARF KL 8
+			SARF M 8 A_NoBlocking
+			SARF N -1 A_SetFloorClip
+			Stop
+			
+		Raise:
+			SARF N 8 A_UnSetFloorClip
+			SARF MLKJI 8
+			Goto See
+	}
+}
