@@ -24,16 +24,16 @@ ACTOR YYTMonster
 			"####" "#" 0 A_CheckFlag("BOSS", "Death") // No afecta a los bosses
 			"####" "#" 0 A_GenericFreezeDeath
 			"####" "#" 175
-			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 0, SXF_MULTIPLYSPEED)
-			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 36, SXF_MULTIPLYSPEED)
-			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 72, SXF_MULTIPLYSPEED)
-			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 108, SXF_MULTIPLYSPEED)
-			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 144, SXF_MULTIPLYSPEED)
-			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 180, SXF_MULTIPLYSPEED)
-			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 216, SXF_MULTIPLYSPEED)
-			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 252, SXF_MULTIPLYSPEED)
-			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 288, SXF_MULTIPLYSPEED)
-			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 324, SXF_MULTIPLYSPEED)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 0, SXF_MULTIPLYSPEED|SXF_ABSOLUTEANGLE)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 36, SXF_MULTIPLYSPEED|SXF_ABSOLUTEANGLE)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 72, SXF_MULTIPLYSPEED|SXF_ABSOLUTEANGLE)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 108, SXF_MULTIPLYSPEED|SXF_ABSOLUTEANGLE)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 144, SXF_MULTIPLYSPEED|SXF_ABSOLUTEANGLE)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 180, SXF_MULTIPLYSPEED|SXF_ABSOLUTEANGLE)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 216, SXF_MULTIPLYSPEED|SXF_ABSOLUTEANGLE)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 252, SXF_MULTIPLYSPEED|SXF_ABSOLUTEANGLE)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 288, SXF_MULTIPLYSPEED|SXF_ABSOLUTEANGLE)
+			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 324, SXF_MULTIPLYSPEED|SXF_ABSOLUTEANGLE)
 			"####" "#" 0 A_IceGuyDie
 			Stop
   }
