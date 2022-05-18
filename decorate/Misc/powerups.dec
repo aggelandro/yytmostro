@@ -945,6 +945,8 @@ ACTOR AbstractContraToken : CustomInventory {
 	Inventory.PickupSound "contra/powerup"
 	+INVENTORY.AUTOACTIVATE
 	+DONTGIB
+	+FLOATBOB
+	+COUNTITEM
 	
 	States {
 		Pickup:
@@ -970,6 +972,7 @@ ACTOR SpreadGunToken : AbstractContraToken {
 			TNT1 A 0 A_TakeInventory("FlamethrowerGunGiver", 2)
 			TNT1 A 0 A_TakeInventory("CrusherGunGiver", 2)
 			TNT1 A 0 A_GiveInventory("SpreadGunGiver", 1)
+			TNT1 A 0 A_RailWait
 			Stop			
 	}
 }
@@ -990,6 +993,7 @@ ACTOR HomingGunToken : AbstractContraToken {
 			TNT1 A 0 A_TakeInventory("FlamethrowerGunGiver", 2)
 			TNT1 A 0 A_TakeInventory("CrusherGunGiver", 2)
 			TNT1 A 0 A_GiveInventory("HomingGunGiver", 1)
+			TNT1 A 0 A_RailWait
 			Stop
 	}
 }
@@ -1010,6 +1014,7 @@ ACTOR PrototypeGunToken : AbstractContraToken {
 			TNT1 A 0 A_TakeInventory("FlamethrowerGunGiver", 2)
 			TNT1 A 0 A_TakeInventory("CrusherGunGiver", 2)
 			TNT1 A 0 A_GiveInventory("PrototypeGunGiver", 1)
+			TNT1 A 0 A_RailWait
 			Stop
 	}
 }
@@ -1029,6 +1034,7 @@ ACTOR LaserGunToken : AbstractContraToken {
 			TNT1 A 0 A_TakeInventory("FlamethrowerGunGiver", 2)
 			TNT1 A 0 A_TakeInventory("CrusherGunGiver", 2)
 			TNT1 A 0 A_GiveInventory("LaserGunGiver", 1)
+			TNT1 A 0 A_RailWait
 			Stop
 	}
 }
@@ -1048,6 +1054,7 @@ ACTOR FlamethrowerGunToken : AbstractContraToken {
 			TNT1 A 0 A_TakeInventory("LaserGunGiver", 2)
 			TNT1 A 0 A_TakeInventory("CrusherGunGiver", 2)
 			TNT1 A 0 A_GiveInventory("FlamethrowerGunGiver", 1)
+			TNT1 A 0 A_RailWait
 			Stop
 	}
 }
@@ -1067,6 +1074,7 @@ ACTOR CrusherGunToken : AbstractContraToken {
 			TNT1 A 0 A_TakeInventory("LaserGunGiver", 2)
 			TNT1 A 0 A_TakeInventory("FlamethrowerGunGiver", 2)
 			TNT1 A 0 A_GiveInventory("CrusherGunGiver", 1)
+			TNT1 A 0 A_RailWait
 			Stop
 	}
 }

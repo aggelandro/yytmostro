@@ -134,6 +134,7 @@ hielo/llama HIELOLLA
 misc/nothing DSEMPTY
 misc/heal HEALEFF
 misc/sanctuary SANCTU
+imp/attack2 IMPATK2
 
 // dinamita afanada del samsara
 TNT/Throw			TNTTOSS
@@ -268,7 +269,7 @@ skel/hit		GENHIT
 skel/throw	SKELTRW
 skel/bondie	TBONE
 
-//belphegor
+//motaro
 belph/see1	BELSEE1
 belph/see2	BELSEE2
 $random belph/see { belph/see1 belph/see2 }
@@ -305,3 +306,15 @@ commander/grenadebnc	DSCASBAL
 commander/laugh				DSCALAU
 commander/attack			CYFNDATK
 commander/explosion		DSHELLEX
+
+//frost cacodemon
+frostcaco/helsit					dshelsit
+frostcaco/helac1					dshelac1
+frostcaco/helac2					dshelac2
+$random frostcaco/helact	{ frostcaco/helac1 frostcaco/helac2 }
+frostcaco/helpai					dshelpai
+frostcaco/heldth					dsheldth
+frostcaco/melee						dsdembit
+frostcaco/heltel					dsheltel
+frostcaco/iceattack				ICEATK
+frostcaco/icedeath				ICEDTH

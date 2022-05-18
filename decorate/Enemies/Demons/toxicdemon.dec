@@ -83,6 +83,17 @@ ACTOR Toxigi : Pinky2 {
 	}
 }
 
+ACTOR SpectreToxigi : Toxigi {
+	+SHADOW
+	RenderStyle OptFuzzy
+	Alpha 0.5
+	SeeSound "spectre/sight"
+	AttackSound "spectre/melee"
+	PainSound "spectre/pain"
+	DeathSound "spectre/death"
+	ActiveSound "spectre/active"
+}
+
 ACTOR ToxicBreath {
 	Radius 4
 	Height 6

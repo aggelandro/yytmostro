@@ -428,3 +428,293 @@ brightmap sprite FATUH1
 {
 	map "sprites/Enemies/Mancubus/ArmoredMancubus/brightmaps/FATUH1.png"
 }
+
+//Brightmaps FrostCacodemon
+
+BrightMap Sprite HELEA1
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEA1"
+DisableFullBright
+}
+
+BrightMap Sprite HELEA2A8
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEA2"
+DisableFullBright
+}
+
+BrightMap Sprite HELEA3A7
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEA3"
+DisableFullBright
+}
+
+BrightMap Sprite HELEA4A6
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEA4"
+DisableFullBright
+}
+
+BrightMap Sprite HELEA5
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEA5"
+DisableFullBright
+}
+
+BrightMap Sprite HELEB1
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEB1"
+DisableFullBright
+}
+
+BrightMap Sprite HELEB2B8
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEB2"
+DisableFullBright
+}
+
+BrightMap Sprite HELEB3B7
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEB3"
+DisableFullBright
+}
+
+BrightMap Sprite HELEB4B6
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEB4"
+DisableFullBright
+}
+
+BrightMap Sprite HELEB5
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEB5"
+DisableFullBright
+}
+
+BrightMap Sprite HELEC1
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEC1"
+DisableFullBright
+}
+
+BrightMap Sprite HELEC2C8
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEC2"
+DisableFullBright
+}
+
+BrightMap Sprite HELEC3C7
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEC3"
+DisableFullBright
+}
+
+BrightMap Sprite HELEC4C6
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEC4"
+DisableFullBright
+}
+
+BrightMap Sprite HELEC5
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEC5"
+DisableFullBright
+}
+
+BrightMap Sprite HELED1
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELED1"
+DisableFullBright
+}
+
+BrightMap Sprite HELED2D8
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELED2"
+DisableFullBright
+}
+
+BrightMap Sprite HELED3D7
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELED3"
+DisableFullBright
+}
+
+BrightMap Sprite HELED4D6
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELED4"
+DisableFullBright
+}
+
+BrightMap Sprite HELED5
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELED5"
+DisableFullBright
+}
+
+BrightMap Sprite HELEE1
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEE1"
+DisableFullBright
+}
+
+BrightMap Sprite HELEE2E8
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEE2"
+DisableFullBright
+}
+
+BrightMap Sprite HELEE3E7
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEE3"
+DisableFullBright
+}
+
+BrightMap Sprite HELEE4E6
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEE4"
+DisableFullBright
+}
+
+BrightMap Sprite HELEE5
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEE5"
+DisableFullBright
+}
+
+BrightMap Sprite HELEF1
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEF1"
+DisableFullBright
+}
+
+BrightMap Sprite HELEF2F8
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEF2"
+DisableFullBright
+}
+
+BrightMap Sprite HELEF3F7
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEF3"
+DisableFullBright
+}
+
+BrightMap Sprite HELEF4F6
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEF4"
+DisableFullBright
+}
+
+BrightMap Sprite HELEF5
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEF5"
+DisableFullBright
+}
+
+BrightMap Sprite HELEG1
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEG1"
+DisableFullBright
+}
+
+BrightMap Sprite HELEG2G8
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEG2"
+DisableFullBright
+}
+
+BrightMap Sprite HELEG3G7
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEG3"
+DisableFullBright
+}
+
+BrightMap Sprite HELEG4G6
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEG4"
+DisableFullBright
+}
+
+BrightMap Sprite HELEG5
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEG5"
+DisableFullBright
+}
+
+BrightMap Sprite HELEH1
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEH1"
+DisableFullBright
+}
+
+BrightMap Sprite HELEH2H8
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEH2"
+DisableFullBright
+}
+
+BrightMap Sprite HELEH3H7
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEH3"
+DisableFullBright
+}
+
+BrightMap Sprite HELEH4H6
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEH4"
+DisableFullBright
+}
+
+BrightMap Sprite HELEH5
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEH5"
+DisableFullBright
+}
+
+BrightMap Sprite HELEI0
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEI0"
+DisableFullBright
+}
+
+BrightMap Sprite HELEJ0
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEJ0"
+DisableFullBright
+}
+
+BrightMap Sprite HELEK0
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEK0"
+DisableFullBright
+}
+
+BrightMap Sprite HELEL0
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEL0"
+DisableFullBright
+}
+
+BrightMap Sprite HELEM0
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEM0"
+DisableFullBright
+}
+
+BrightMap Sprite HELEN0
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEN0"
+DisableFullBright
+}
+
+BrightMap Sprite HELEO0
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEO0"
+DisableFullBright
+}
+
+BrightMap Sprite HELEP0
+{
+Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEP0"
+DisableFullBright
+}

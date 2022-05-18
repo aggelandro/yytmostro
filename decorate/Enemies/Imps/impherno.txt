@@ -1,0 +1,36 @@
+ACTOR Impherno : DoomImp2 {
+	Translation "64:79=[0,0,0]:[171,166,67]","13:15=[0,0,0]:[171,166,67]","236:239=[0,0,0]:[171,166,67]","140:151=[0,0,0]:[171,166,67]"
+	
+	States {
+		Missile:
+			1MP5 AB 8 A_FaceTarget
+			1MP5 CCCC 6 A_CustomMissile("SkullImpBall", 32, 0, frandom(-10, 10))
+			Goto See
+	}
+}
+
+ACTOR SkullImpBall {
+	Radius 6
+  Height 8
+  Speed 10
+  FastSpeed 20
+  Damage 5
+  Projectile
+  +RANDOMIZE
+  RenderStyle Add
+  Alpha 0.9
+	Scale 0.3
+  SeeSound "imp/attack2"
+  DeathSound "imp/shotx"
+	
+  States {
+	
+		Spawn:
+			SHAN A 4 NoDelay Bright
+			Loop
+			
+		Death:
+			BAL1 CDE 6 Bright
+			Stop
+  }
+}

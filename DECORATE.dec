@@ -57,6 +57,7 @@
 #include "decorate/Enemies/Zombies/FlamethrowerGuy/flamethrowerguy.dec"
 
 #include "decorate/Enemies/Imps/SpiderImp/spiderimp.dec"
+#include "decorate/Enemies/Imps/impherno.txt"
 
 #include "decorate/Enemies/Demons/VacuumDemon/vacuumdemon.dec"
 #include "decorate/Enemies/Demons/toxicdemon.dec"
@@ -68,6 +69,7 @@
 
 #include "decorate/Enemies/Cacodemons/NeoCacodemon/neocacodemon.dec"
 #include "decorate/Enemies/Cacodemons/CrackoDemon/crackodemon.dec"
+#include "decorate/Enemies/Cacodemons/frostcacodemon.txt"
 #include "decorate/Enemies/Cacodemons/laserpinky.txt"
 
 #include "decorate/Enemies/Revenants/HoloRevenant/holorevenant.dec"
@@ -95,6 +97,7 @@
 #include "decorate/Enemies/SpiderMastermind/RocketSpiderMastermind/rocketspidermastermind.dec"
 #include "decorate/Enemies/SpiderMastermind/SpiderLord/spiderlord.dec"
 
+// Dependencia con Armncubus
 #include "decorate/Misc/Weapons/DualZanzibart/dualzanzibart.txt"
 
 // =====================================INCLUDE SPAM ENDS HERE=======================================
@@ -139,10 +142,11 @@ ACTOR ShotgunGuySpawner : RandomSpawner replaces ShotgunGuy
 }
 ACTOR CacodemonSpawner : RandomSpawner replaces Cacodemon
 {
-	DropItem "Cacodemon2", 255, 60
-	DropItem "NeoCacodemon", 255, 15
+	DropItem "Cacodemon2", 255, 55
+	DropItem "NeoCacodemon", 255, 10
 	DropItem "CrackoDemon", 255, 10
 	DropItem "Brimgoyle", 255, 15
+	DropItem "Frostodemon", 255, 10
 }
 ACTOR HellKnightSpawner : RandomSpawner replaces HellKnight
 {
@@ -167,8 +171,8 @@ ACTOR RevenantSpawner : RandomSpawner replaces Revenant
 ACTOR FatsoSpawner : RandomSpawner replaces Fatso
 {
 	DropItem "Fatso2", 255, 70
-	DropItem "FatsoRocket", 255, 28
-	DropItem "Armncubus", 255, 2
+	DropItem "FatsoRocket", 255, 27
+	DropItem "Armncubus", 255, 3
 }
 ACTOR DemonSpawner : RandomSpawner replaces Demon
 {
@@ -178,8 +182,9 @@ ACTOR DemonSpawner : RandomSpawner replaces Demon
 } 
 ACTOR SpectreSpawner : RandomSpawner replaces Spectre
 {
-	DropItem "Spectre2", 255, 85
+	DropItem "Spectre2", 255, 70
 	DropItem "SpectreVacuum", 255, 15
+	DropItem "SpectreToxigi", 255, 15
 }
 ACTOR BaronSpawner : RandomSpawner replaces BaronOfHell
 {
@@ -188,8 +193,9 @@ ACTOR BaronSpawner : RandomSpawner replaces BaronOfHell
 }
 ACTOR ImpSpawner : RandomSpawner replaces DoomImp
 {
-	DropItem "DoomImp2" 255, 75
+	DropItem "DoomImp2" 255, 50
 	DropItem "SpiderImp" 255, 25
+	DropItem "Impherno" 255, 25
 }
 ACTOR ArachnotronSpawner : RandomSpawner replaces Arachnotron
 {
@@ -258,43 +264,43 @@ ACTOR IsaacItemsTier1LowChanceSpawner : RandomSpawner {
 }
 
 ACTOR IsaacItemsTier1MidChanceSpawner : RandomSpawner {
-	DropItem "Cat-O-Nine-Tails", 80, 6
-	DropItem "GrowthHormones", 80, 6
-	DropItem "JesusJuice", 80, 6
-	DropItem "MomsHeels", 80, 6
-	DropItem "MomsLipstick", 80, 6
-	DropItem "MomsUnderwear", 80, 6
-	DropItem "RoidRage", 80, 6
-	DropItem "SafetyPin", 80, 6
-	DropItem "Synthoil", 80, 6
-	DropItem "SpeedBall", 80, 6
-	DropItem "Magic8Ball", 80, 6
-	DropItem "Screw", 80, 6
-	DropItem "Toothpicks", 80, 6
-	DropItem "TornPhoto", 80, 6
-	DropItem "BloodOfTheMartyr", 80, 6
-	DropItem "MomsEye", 80, 6
-	DropItem "Adrenaline", 80, 6
+	DropItem "Cat-O-Nine-Tails", 64, 6
+	DropItem "GrowthHormones", 64, 6
+	DropItem "JesusJuice", 64, 6
+	DropItem "MomsHeels", 64, 6
+	DropItem "MomsLipstick", 64, 6
+	DropItem "MomsUnderwear", 64, 6
+	DropItem "RoidRage", 64, 6
+	DropItem "SafetyPin", 64, 6
+	DropItem "Synthoil", 64, 6
+	DropItem "SpeedBall", 64, 6
+	DropItem "Magic8Ball", 64, 6
+	DropItem "Screw", 64, 6
+	DropItem "Toothpicks", 64, 6
+	DropItem "TornPhoto", 64, 6
+	DropItem "BloodOfTheMartyr", 64, 6
+	DropItem "MomsEye", 64, 6
+	DropItem "Adrenaline", 64, 6
 }
 
 ACTOR IsaacItemsTier1HighChanceSpawner : RandomSpawner {
-	DropItem "Cat-O-Nine-Tails", 128, 6
-	DropItem "GrowthHormones", 128, 6
-	DropItem "JesusJuice", 128, 6
-	DropItem "MomsHeels", 128, 6
-	DropItem "MomsLipstick", 128, 6
-	DropItem "MomsUnderwear", 128, 6
-	DropItem "RoidRage", 128, 6
-	DropItem "SafetyPin", 128, 6
-	DropItem "Synthoil", 128, 6
-	DropItem "SpeedBall", 128, 6
-	DropItem "Magic8Ball", 128, 6
-	DropItem "Screw", 128, 6
-	DropItem "Toothpicks", 128, 6
-	DropItem "TornPhoto", 128, 6
-	DropItem "BloodOfTheMartyr", 128, 6
-	DropItem "MomsEye", 128, 6
-	DropItem "Adrenaline", 128, 6
+	DropItem "Cat-O-Nine-Tails", 96, 6
+	DropItem "GrowthHormones", 96, 6
+	DropItem "JesusJuice", 96, 6
+	DropItem "MomsHeels", 96, 6
+	DropItem "MomsLipstick", 96, 6
+	DropItem "MomsUnderwear", 96, 6
+	DropItem "RoidRage", 96, 6
+	DropItem "SafetyPin", 96, 6
+	DropItem "Synthoil", 96, 6
+	DropItem "SpeedBall", 96, 6
+	DropItem "Magic8Ball", 96, 6
+	DropItem "Screw", 96, 6
+	DropItem "Toothpicks", 96, 6
+	DropItem "TornPhoto", 96, 6
+	DropItem "BloodOfTheMartyr", 96, 6
+	DropItem "MomsEye", 96, 6
+	DropItem "Adrenaline", 96, 6
 }
 
 ACTOR IsaacItemsTier2Spawner : RandomSpawner {
@@ -332,37 +338,37 @@ ACTOR IsaacItemsTier2LowChanceSpawner : RandomSpawner {
 }
 
 ACTOR IsaacItemsTier2MidChanceSpawner : RandomSpawner {
-	DropItem "TwentyTwenty", 80, 7
-	DropItem "ALumpOfCoal", 80, 7
-	DropItem "DarkMatter", 80, 7
-	DropItem "Infestation2", 80, 7
-	DropItem "LostContact", 80, 7
-	DropItem "MomsContacts", 80, 7
-	DropItem "Pisces", 80, 7
-	DropItem "RubberCement", 80, 7
-	DropItem "SacredHeart", 80, 7
-	DropItem "SpoonBender", 80, 7
-	DropItem "TheCommonCold", 80, 7
-	DropItem "TheInnerEye", 80, 7
-	DropItem "TheWiz", 80, 7
-	DropItem "Backstabber", 80, 7	
+	DropItem "TwentyTwenty", 64, 7
+	DropItem "ALumpOfCoal", 64, 7
+	DropItem "DarkMatter", 64, 7
+	DropItem "Infestation2", 64, 7
+	DropItem "LostContact", 64, 7
+	DropItem "MomsContacts", 64, 7
+	DropItem "Pisces", 64, 7
+	DropItem "RubberCement", 64, 7
+	DropItem "SacredHeart", 64, 7
+	DropItem "SpoonBender", 64, 7
+	DropItem "TheCommonCold", 64, 7
+	DropItem "TheInnerEye", 64, 7
+	DropItem "TheWiz", 64, 7
+	DropItem "Backstabber", 64, 7
 }
 
 ACTOR IsaacItemsTier2HighChanceSpawner : RandomSpawner {
-	DropItem "TwentyTwenty", 128, 7
-	DropItem "ALumpOfCoal", 128, 7
-	DropItem "DarkMatter", 128, 7
-	DropItem "Infestation2", 128, 7
-	DropItem "LostContact", 128, 7
-	DropItem "MomsContacts", 128, 7
-	DropItem "Pisces", 128, 7
-	DropItem "RubberCement", 128, 7
-	DropItem "SacredHeart", 128, 7
-	DropItem "SpoonBender", 128, 7
-	DropItem "TheCommonCold", 128, 7
-	DropItem "TheInnerEye", 128, 7
-	DropItem "TheWiz", 128, 7
-	DropItem "Backstabber", 128, 7
+	DropItem "TwentyTwenty", 96, 7
+	DropItem "ALumpOfCoal", 96, 7
+	DropItem "DarkMatter", 96, 7
+	DropItem "Infestation2", 96, 7
+	DropItem "LostContact", 96, 7
+	DropItem "MomsContacts", 96, 7
+	DropItem "Pisces", 96, 7
+	DropItem "RubberCement", 96, 7
+	DropItem "SacredHeart", 96, 7
+	DropItem "SpoonBender", 96, 7
+	DropItem "TheCommonCold", 96, 7
+	DropItem "TheInnerEye", 96, 7
+	DropItem "TheWiz", 96, 7
+	DropItem "Backstabber", 96, 7
 }
 
 ACTOR IsaacItemsTier3Spawner : RandomSpawner {
@@ -396,33 +402,33 @@ ACTOR IsaacItemsTier3LowChanceSpawner : RandomSpawner {
 }
 
 ACTOR IsaacItemsTier3MidChanceSpawner : RandomSpawner {
-	DropItem "MutantSpider", 112, 8
-	DropItem "8InchNails", 112, 8
-	DropItem "DeathsTouch", 112, 8
-	DropItem "MyReflection", 112, 8
-	DropItem "TheParasite", 112, 8
-	DropItem "CompoundFracture", 112, 8
-	DropItem "MonstrosLung", 112, 8
-	DropItem "Brimstone", 112, 8
-	DropItem "FireMind", 112, 8
-	DropItem "Ipecac", 112, 8
-	DropItem "Uranus", 112, 8
-	DropItem "OcularRift", 112, 8
+	DropItem "MutantSpider", 64, 8
+	DropItem "8InchNails", 64, 8
+	DropItem "DeathsTouch", 64, 8
+	DropItem "MyReflection", 64, 8
+	DropItem "TheParasite", 64, 8
+	DropItem "CompoundFracture", 64, 8
+	DropItem "MonstrosLung", 64, 8
+	DropItem "Brimstone", 64, 8
+	DropItem "FireMind", 64, 8
+	DropItem "Ipecac", 64, 8
+	DropItem "Uranus", 64, 8
+	DropItem "OcularRift", 64, 8
 }
 
 ACTOR IsaacItemsTier3HighChanceSpawner : RandomSpawner {
-	DropItem "MutantSpider", 192, 8
-	DropItem "8InchNails", 192, 8
-	DropItem "DeathsTouch", 192, 8
-	DropItem "MyReflection", 192, 8
-	DropItem "TheParasite", 192, 8
-	DropItem "CompoundFracture", 192, 8
-	DropItem "MonstrosLung", 192, 8
-	DropItem "Brimstone", 192, 8
-	DropItem "FireMind", 192, 8
-	DropItem "Ipecac", 192, 8
-	DropItem "Uranus", 192, 8
-	DropItem "OcularRift", 192, 8
+	DropItem "MutantSpider", 96, 8
+	DropItem "8InchNails", 96, 8
+	DropItem "DeathsTouch", 96, 8
+	DropItem "MyReflection", 96, 8
+	DropItem "TheParasite", 96, 8
+	DropItem "CompoundFracture", 96, 8
+	DropItem "MonstrosLung", 96, 8
+	DropItem "Brimstone", 96, 8
+	DropItem "FireMind", 96, 8
+	DropItem "Ipecac", 96, 8
+	DropItem "Uranus", 96, 8
+	DropItem "OcularRift", 96, 8
 }
 
 ACTOR ContraItemMancubusSpawner : RandomSpawner {	

@@ -2640,7 +2640,7 @@ ACTOR BrimstoneBeam : FastProjectile {
 			Wait
 			
 		SpawnLoop:
-			BRS1 ABCD 1
+			BRS0 ABCD 1
 			Loop
 			
 		Death:
@@ -2710,7 +2710,7 @@ ACTOR HomingBrimstoneBeam : BrimstoneBeam {
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("PiercingDamageDealer", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setDamageToChildren", user_spawn_tid)
-			BRS1 ABCDA 1 A_SeekerMissile(45, 90, SMF_LOOK|SMF_CURSPEED|SMF_PRECISE, 256)
+			BRS0 ABCDA 1 A_SeekerMissile(45, 90, SMF_LOOK|SMF_CURSPEED|SMF_PRECISE, 256)
 			TNT1 A 0 A_FaceTracer
 			Loop
 			

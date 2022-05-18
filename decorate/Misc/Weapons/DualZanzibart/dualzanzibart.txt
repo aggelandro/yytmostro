@@ -1,7 +1,7 @@
 ACTOR DualZanzibart : DoomWeapon {	
 	Tag "Zanzibart"
 	Inventory.PickupSound "misc/hellwp"
-	Inventory.PickupMessage "Forgive me... Zanzibart...!"
+	Inventory.PickupMessage "Zanzibart... Forgive me...!"
 	Weapon.AmmoType1 "RocketAmmo"
 	Weapon.AmmoType2 "RocketAmmo"
 	Weapon.AmmoUse1 1

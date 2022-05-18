@@ -1,9 +1,9 @@
 ACTOR Brimgoyle : Cacodemon2 {
 	Radius 34
 	Height 62
-	Health 600
+	Health 700
 	Speed 16
-	PainChance 64
+	PainChance 15
 	BloodColor "Red"
 	SeeSound "demon/sight"
 	AttackSound "demon/melee"
@@ -29,7 +29,7 @@ ACTOR Brimgoyle : Cacodemon2 {
 			SARF DE 8 A_FaceTarget
 			SARF F 16 A_FaceTarget
 			SARF G 1 Bright A_FaceTarget
-			TNT1 A 0 A_CustomMissile("BrimstoneBeam", 28)
+			TNT1 A 0 A_CustomMissile("BrimstoneBeam", 33)
 			TNT1 A 0 A_PlaySound("agge/brimlaser", CHAN_AUTO)
 			TNT1 A 0 A_CustomRailgun(Random(0,1), 0, None, None, RGF_SILENT, 0)
 			Goto LaserLoop
@@ -37,9 +37,12 @@ ACTOR Brimgoyle : Cacodemon2 {
 		LaserLoop:
 			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
 			SARF G 1 Bright A_FaceTarget
-			TNT1 A 0 A_CustomMissile("BrimstoneBeam", 28)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 34, 3)
+			TNT1 A 0 A_CustomMissile("BrimstoneBeam", 33)
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 34, 6)
+			TNT1 A 0 A_Jump(32, 2)
 			TNT1 A 0 A_CustomRailgun(Random(0,1), 0, None, None, RGF_SILENT, 0)
+			TNT1 A 0 A_Jump(256, 4)
+			TNT1 A 0 A_CustomRailgun(Random(1,2), 0, None, None, RGF_SILENT, 0)
 			TNT1 A 0 A_Jump(256, 2)
 			TNT1 A 0 A_CustomRailgun(Random(1,2), 0, None, None, RGF_SILENT, 0)
 			TNT1 A 0 A_JumpIfInventory("LoopFlag", 69, 1)

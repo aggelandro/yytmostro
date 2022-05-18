@@ -579,9 +579,10 @@ script "applyEffectOnPlayer" (int option, int duration, int arg2) {
     // Efectos de los monstruos al jugador
     // NOTA: Puede pasar que un monstruo le pegue a otro en el medio, ese caso se tiene en cuenta
     // arg2, etc. son comodines
+    int ptid, ntid;
     switch(option) {
         case 1: {
-            int ptid = GetActorProperty(0, APROP_TracerTID);
+            ptid = GetActorProperty(0, APROP_TracerTID);
             int poisonDmg = GetActorProperty(0, APROP_Damage);
             if (poisonDmg > 10000) poisonDmg = Random(0, 1);
             int lapse = duration / arg2;
@@ -591,7 +592,7 @@ script "applyEffectOnPlayer" (int option, int duration, int arg2) {
                     Thing_ChangeTID(0, mtid);
                 }
 
-                int ntid = UniqueTID();
+                ntid = UniqueTID();
                 Spawn("PoisonEffect", GetActorX(0), GetActorY(0), GetActorZ(0), ntid);
                 SetActivator(ntid);
                 if (ptid) {
@@ -613,6 +614,27 @@ script "applyEffectOnPlayer" (int option, int duration, int arg2) {
 
                 SetActorState(ntid, "Death");
                 TakeInventory("PoisonCounter", 1);
+                Thing_ChangeTID(ntid, 0);
+            }
+        }; break;
+        case 2: {
+            // Slow mengua la velocidad gradualmente
+            if (SetActivator(0, AAPTR_TRACER)) {
+                ptid = ActivatorTID();
+                ntid = UniqueTID();
+
+                Spawn("SlowEffect", GetActorX(0), GetActorY(0), GetActorZ(0), ntid);
+                SetActivator(ntid);
+                SetPointer(AAPTR_TRACER, ptid);
+                SetUserVariable(0, "user_se_monster_height", GetActorProperty(ptid, APROP_Height) >> 16);
+                SetActivator(ptid);
+
+                SetActorProperty(0, APROP_Speed, FixedDiv(GetActorProperty(0, APROP_Speed), 2.0));
+                Delay(duration);
+                SetActorProperty(0, APROP_Speed, FixedMul(GetActorProperty(0, APROP_Speed), 2.0));
+
+                SetActorState(ntid, "Death");
+                TakeInventory("SlowCounter", 1);
                 Thing_ChangeTID(ntid, 0);
             }
         }; break;
@@ -697,7 +719,7 @@ script "setChildrenStats" (int ctid) {
 }
 
 script "setPlayerLight" (int isOn) {
-    if (!GetUserVariable(0, "user_player_light_tid")) {
+    if (GetUserVariable(0, "user_player_light_tid") == 0) {
         SetUserVariable(0, "user_player_light_tid", UniqueTID());
     }
     int utid = GetUserVariable(0, "user_player_light_tid");
@@ -795,6 +817,11 @@ script "setTIDTracerPointerToSelf" (int tid) {
     Thing_ChangeTID(0, mtid);
     SetActivator(tid);
     SetPointer(AAPTR_TRACER, mtid);
+    if (CheckActorClass(0, "IceOrbitEffect")) {
+        SetUserVariable(0, "user_se_monster_height", GetActorProperty(mtid, APROP_Height) >> 16);
+        SetUserVariable(0, "user_se_monster_radius", GetActorProperty(mtid, APROP_Radius) >> 16);
+    }
+    Thing_ChangeTID(mtid, 0);
 }
 
 script "showShellsInShotgun" (void) CLIENTSIDE {
@@ -802,6 +829,56 @@ script "showShellsInShotgun" (void) CLIENTSIDE {
     SetFont("BIGFONT");
     SetHudSize(320, 200, 0);
     HudMessage(i:shells; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP|HUDMSG_FADEINOUT, 1, CR_ORANGE, 100.0, 193.0, 3.0, 0.5, 1.0);
+}
+
+script "setTIDTracerPointerToSelfTracer" (int tid) {
+    int mtid = UniqueTID();
+    Thing_ChangeTID(0, mtid);
+    SetActivator(tid);
+    SetPointer(AAPTR_TRACER, mtid, AAPTR_TRACER);
+    Thing_ChangeTID(mtid, 0);
+}
+
+script "applySlowEffect" (int duration) {
+    int ttid = UniqueTID();
+    Thing_ChangeTID(0, ttid);
+    if (SetActivator(0, AAPTR_TRACER)) {
+        if (PlayerNumber() >= 0) { //Es un jugador
+            SetActivator(ttid);
+            Thing_ChangeTID(ttid, 0);
+            ACS_NamedExecuteAlways("applyEffectOnPlayer", 0, 2, duration);
+        }
+        else { //Es chobi
+            SetActivator(ttid);
+            Thing_ChangeTID(ttid, 0);
+            ACS_NamedExecuteAlways("applyEffect", 0, 9, duration);
+        }
+    }
+}
+
+script "setTracerToPlayerFromTarget" (void) {
+    int ttid = UniqueTID();
+    Thing_ChangeTID(0, ttid);
+    if (SetActivator(0, AAPTR_TARGET)) {
+        SetActivator(0, AAPTR_TARGET);
+        int ptid = ActivatorTID();
+        if (!ptid) {
+            ptid = UniqueTID();
+            Thing_ChangeTID(0, ptid);
+        }
+        SetActivator(ttid);
+        SetPointer(AAPTR_TRACER, ptid);
+    }
+}
+
+script "killEffectIfMonsterIsDead" (void) {
+    int ttid = UniqueTID();
+    Thing_ChangeTID(0, ttid);
+    if(SetActivator(0, AAPTR_TRACER)) {
+        if (GetUserVariable(0, "user_is_dead"))
+            SetActorState(ttid, "Death");
+            Thing_ChangeTID(ttid, 0);
+    }
 }
 
 
