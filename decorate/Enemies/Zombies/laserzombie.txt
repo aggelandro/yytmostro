@@ -1,0 +1,52 @@
+ACTOR LaserZombie : AbstractYYTZombie {
+  Health 20
+  Radius 20
+  PainChance 0
+	Scale 0.85
+  SeeSound "lzombie/see"
+  PainSound "lzombie/pain"
+  DeathSound "lzombie/die"
+  ActiveSound "lzombie/idle"
+  Obituary "%o was shot by a Laser Zombie"
+  DropItem "Clip"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "CrusherGunToken", 1
+	
+  States {
+		SpawnLoop:
+			BRU5 AB 10 A_Look
+			Loop
+			
+		See:
+			BRU5 AABBCCDD 4 A_Chase
+			Loop
+			
+		Melee:
+			BRU5 GH 5 A_FaceTarget
+			BRU5 I 5 A_CustomMeleeAttack(6 * random(1, 3), "skeleton/melee")
+			Goto See
+			
+		Missile:
+			BRU5 E 10 A_FaceTarget
+			BRU5 F 3 Bright A_CustomMissile("BlasterShot", 32, 0, frandom(-2, 2), 1)
+			BRU5 E 2 A_FaceTarget
+			BRU5 F 3 Bright A_CustomMissile("BlasterShot", 32, 0, frandom(-2, 2), 1)
+			BRU5 E 2 A_FaceTarget
+			BRU5 F 3 Bright A_CustomMissile("BlasterShot", 32, 0, frandom(-2, 2), 1)
+			BRU5 E 8
+			Goto See
+			
+		Death:
+			BRU5 K 5
+			BRU5 L 5 A_Scream
+			BRU5 N 5 A_NoBlocking
+			BRU5 O -1
+			Stop
+			
+		Raise:
+			BRU5 K 5
+			BRU5 JIH 5
+			Goto See
+	}
+}

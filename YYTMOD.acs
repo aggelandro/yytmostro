@@ -881,6 +881,22 @@ script "killEffectIfMonsterIsDead" (void) {
     }
 }
 
+script "setActorSpeed" (int value) {
+    value = value << 16;
+    SetActorProperty(0, APROP_Speed, value);
+}
+
+script "transferHealthTo" (int tid) {
+    int currHealth = GetActorProperty(0, APROP_Health);
+    SetActorProperty(tid, APROP_Health, currHealth);
+}
+
+script "setInvokedTo" (int tid) {
+    SetUserVariable(tid, "user_invoked", 1);
+}
+
+
+
 
 
 

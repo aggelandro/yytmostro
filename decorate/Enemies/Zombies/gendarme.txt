@@ -1,0 +1,73 @@
+ACTOR Gendarme : ShotgunGuyMod {
+	Obituary "A %o lo balaceo el gendarme como a Maldonado."
+	var int user_spawn_tid;
+	var int user_invoked;
+	
+  States {
+		SpawnLoop:
+			TNT1 A 0 A_JumpIf(user_invoked, "See")
+			ZSEC AB 10 A_Look
+			Goto SpawnLoop+1
+			
+		See:
+			ZSEC AABBCCDD 3 A_Chase
+			Loop
+			
+		Missile:
+			TNT1 A -1 A_Jump(256, "Missile1", "Missile2")
+			Wait
+			
+		Missile1:
+			ZSEC E 10 A_FaceTarget
+			ZSEC F 0 A_CustomMissile("ShotgunnerTracer", 32, 0, frandom(-16, 16), 1)
+			ZSEC F 0 A_CustomMissile("ShotgunnerTracer", 32, 0, frandom(-16, 16), 1)
+			ZSEC F 0 A_CustomMissile("ShotgunnerTracer", 32, 0, frandom(-16, 16), 1)
+			ZSEC F 10 Bright A_PlaySound("zombie/shotgun",CHAN_BODY)
+			ZSEC E 10
+			Goto See
+			
+		Missile2:
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("Gendarme2", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION|SXF_TRANSFERPOINTERS, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("transferHealthTo", user_spawn_tid)
+			Stop
+			
+		Pain:
+			ZSEC G 3
+			ZSEC G 3 A_Pain
+			Goto See
+			
+		Death:
+			ZSEC H 5
+			ZSEC I 5 A_Scream
+			ZSEC J 5 A_NoBlocking
+			ZSEC K 5
+			ZSEC L -1
+			Stop
+			
+		Raise:
+			ZSEC L 5
+			ZSEC KJIH 5
+			Goto See
+  }
+}
+
+ACTOR Gendarme2 : Gendarme {
+	Height 42
+
+	States {
+		Spawn:
+			ZPOC A 5
+			ZPOC E 5 A_FaceTarget
+			ZPOC F 0 A_CustomMissile("ShotgunnerTracer", 21, 0, frandom(-8, 8), 1)
+			ZPOC F 0 A_CustomMissile("ShotgunnerTracer", 21, 0, frandom(-8, 8), 1)
+			ZPOC F 0 A_CustomMissile("ShotgunnerTracer", 21, 0, frandom(-8, 8), 1)
+			ZPOC F 10 Bright A_PlaySound("zombie/shotgun",CHAN_BODY)
+			ZPOC E 10
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("Gendarme", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION|SXF_TRANSFERPOINTERS, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("transferHealthTo", user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setInvokedTo", user_spawn_tid)
+			Stop
+	}
+}

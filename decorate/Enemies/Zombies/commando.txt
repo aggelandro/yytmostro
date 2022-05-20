@@ -1,0 +1,28 @@
+ACTOR Commando : ShotgunGuyMod {
+	Translation "0:8=[0,0,0]:[59,54,51]","16:47=[0,0,0]:[32,68,42]"
+	Health 50
+	Obituary "$OB_SHOTGUY"
+	DropItem "Shotgun"
+	DropItem "Shell"
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "SpreadGunToken", 10
+	
+	States {
+		Missile:
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			SPOS E 10 A_FaceTarget
+			SPOS F 0 A_CustomMissile("ShotgunnerTracer", 32, 0, frandom(-16, 16), 1)
+			SPOS F 0 A_CustomMissile("ShotgunnerTracer", 32, 0, frandom(-16, 16), 1)
+			SPOS F 0 A_CustomMissile("ShotgunnerTracer", 32, 0, frandom(-16, 16), 1)
+			SPOS F 10 Bright A_PlaySound("zombie/shotgun",CHAN_AUTO)
+			SPSR A 5
+			SPSR B 5 A_PlaySound("zombie/reload",CHAN_AUTO)
+			SPSR A 5
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 7, 1)
+			Loop
+			TNT1 A 0 A_TakeInventory("LoopFlag", 7)
+			SPSR C 10
+			Goto See
+	}
+}

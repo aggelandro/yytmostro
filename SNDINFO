@@ -213,6 +213,16 @@ exp7					DSLAGEX7
 
 //ENEMIGOS
 
+$Random zombie/pistol { zombie/pistol1 zombie/pistol2 zombie/pistol3 }
+zombie/pistol1	P1ST0L1
+zombie/pistol2	P1ST0L2
+zombie/pistol3	P1ST0L3
+$Random zombie/shotgun { zombie/shotgun1 zombie/shotgun2 zombie/shotgun3 }
+zombie/shotgun1	REMINGZ1
+zombie/shotgun2	REMINGZ2
+zombie/shotgun3	REMINGZ3
+zombie/reload		REMIPUMP
+
 // jetpackzombie afanado de realm667
 $Random JetpackZombie/Sight	{ JPZMSIG1 JPZMSIG2 JPZMSIG3 }
 JPZMSIG1			JPZMSIG1
@@ -307,7 +317,7 @@ commander/laugh				DSCALAU
 commander/attack			CYFNDATK
 commander/explosion		DSHELLEX
 
-//frost cacodemon
+//frostodemon
 frostcaco/helsit					dshelsit
 frostcaco/helac1					dshelac1
 frostcaco/helac2					dshelac2
@@ -318,3 +328,29 @@ frostcaco/melee						dsdembit
 frostcaco/heltel					dsheltel
 frostcaco/iceattack				ICEATK
 frostcaco/icedeath				ICEDTH
+
+//enforcer
+$Random enforcer/step { AUTOBOT1 AUTOBOT2 AUTOBOT3 AUTOBOT4 }
+AUTOBOT1				AUTOBOT1
+AUTOBOT2				AUTOBOT2
+AUTOBOT3				AUTOBOT3
+AUTOBOT4				AUTOBOT4
+enforcer/sight	DSBLDSIT
+enforcer/pain		DSBLDPAI
+enforcer/active	DSBLDACT
+$random enforcer/fire		{ enforcer/fire1 enforcer/fire2 }
+enforcer/fire1	LRIFLE1
+enforcer/fire2	LRIFLE2
+blaster/hit			BLASTHIT
+
+//laser zombie
+$random lzombie/die { lzombie/die1 lzombie/die2 lzombie/die3 }
+lzombie/die1	zsggdie1
+lzombie/die2	zsggdie2
+lzombie/die3	zsggdie3
+$random lzombie/see { lzombie/see1 lzombie/see2 lzombie/see3 }
+lzombie/see1	zsggsee1
+lzombie/see2	zsggsee2
+lzombie/see3	zsggsee3
+lzombie/pain	zsggpain
+lzombie/idle	zsggidle

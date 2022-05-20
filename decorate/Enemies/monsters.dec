@@ -78,7 +78,7 @@ ACTOR ShotgunGuyMod : AbstractYYTZombie
   Mass 100
   PainChance 170
   SeeSound "shotguy/sight"
-  AttackSound "shotguy/attack"
+  AttackSound "zombie/shotgun"
   PainSound "shotguy/pain"
   DeathSound "shotguy/death"
   ActiveSound "shotguy/active"
@@ -100,7 +100,7 @@ ACTOR ShotgunGuyMod : AbstractYYTZombie
     SPOS F 0 A_CustomMissile("ShotgunnerTracer", 32, 0, frandom(-16, 16), 1)
 		SPOS F 0 A_CustomMissile("ShotgunnerTracer", 32, 0, frandom(-16, 16), 1)
 		SPOS F 0 A_CustomMissile("ShotgunnerTracer", 32, 0, frandom(-16, 16), 1)
-		SPOS F 10 Bright A_PlaySound("shotguy/attack",CHAN_AUTO)
+		SPOS F 10 Bright A_PlaySound("zombie/shotgun",CHAN_AUTO)
     SPOS E 10
     Goto See
   Pain:
@@ -189,7 +189,7 @@ ACTOR ZombieMan2 : AbstractYYTZombie
   Radius 20
   PainChance 200
   SeeSound "grunt/sight"
-  AttackSound "grunt/attack"
+  AttackSound "zombie/pistol"
   PainSound "grunt/pain"
   DeathSound "grunt/death"
   ActiveSound "grunt/active"
@@ -208,10 +208,10 @@ ACTOR ZombieMan2 : AbstractYYTZombie
     Loop
   Missile:
     POSS E 10 A_FaceTarget
-		TNT1 A 0 A_PlaySound("grunt/attack",CHAN_AUTO)
+		TNT1 A 0 A_PlaySound("zombie/pistol",CHAN_AUTO)
     POSS F 3 Bright A_CustomMissile("ZombieTracer", 32, 0, frandom(-16, 16), 1)
 		POSS E 2 A_FaceTarget
-		TNT1 A 0 A_PlaySound("grunt/attack",CHAN_AUTO)
+		TNT1 A 0 A_PlaySound("zombie/pistol",CHAN_AUTO)
     POSS F 3 Bright A_CustomMissile("ZombieTracer", 32, 0, frandom(-16, 16), 1)
     POSS E 8
     Goto See

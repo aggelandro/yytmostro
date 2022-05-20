@@ -55,12 +55,16 @@
 
 #include "decorate/Enemies/Zombies/JetpackZombie/jetpackzombie.dec"
 #include "decorate/Enemies/Zombies/FlamethrowerGuy/flamethrowerguy.dec"
+#include "decorate/Enemies/Zombies/laserzombie.txt"
+#include "decorate/Enemies/Zombies/gendarme.txt"
+#include "decorate/Enemies/Zombies/commando.txt"
 
 #include "decorate/Enemies/Imps/SpiderImp/spiderimp.dec"
 #include "decorate/Enemies/Imps/impherno.txt"
 
 #include "decorate/Enemies/Demons/VacuumDemon/vacuumdemon.dec"
 #include "decorate/Enemies/Demons/toxicdemon.dec"
+#include "decorate/Enemies/Demons/enforcer.txt"
 
 #include "decorate/Enemies/LostSoul/FireSoul/firesoul.dec"
 
@@ -128,8 +132,9 @@ actor TerroID : LucianoID{}
 
 ACTOR ZombieManSpawner : RandomSpawner replaces ZombieMan
 {
-	DropItem "Zombieman2", 255, 90
+	DropItem "Zombieman2", 255, 80
 	DropItem "JetpackZombie", 255, 10
+	DropItem "LaserZombie", 255, 10
 }
 ACTOR ChaingunGuySpawner : RandomSpawner replaces ChaingunGuy
 {
@@ -138,7 +143,9 @@ ACTOR ChaingunGuySpawner : RandomSpawner replaces ChaingunGuy
 }
 ACTOR ShotgunGuySpawner : RandomSpawner replaces ShotgunGuy
 {
-	DropItem "ShotgunGuyMod", 255, 100
+	DropItem "ShotgunGuyMod", 255, 45
+	DropItem "Gendarme", 255, 45
+	DropItem "Commando", 255, 10
 }
 ACTOR CacodemonSpawner : RandomSpawner replaces Cacodemon
 {
@@ -176,9 +183,10 @@ ACTOR FatsoSpawner : RandomSpawner replaces Fatso
 }
 ACTOR DemonSpawner : RandomSpawner replaces Demon
 {
-	DropItem "Pinky2", 255, 60
+	DropItem "Pinky2", 255, 50
 	DropItem "VacuumDemon", 255, 20
 	DropItem "Toxigi", 255, 20
+	DropItem "Enforcer", 255, 10
 } 
 ACTOR SpectreSpawner : RandomSpawner replaces Spectre
 {
