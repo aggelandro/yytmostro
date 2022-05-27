@@ -85,6 +85,7 @@
 #include "decorate/Enemies/Goats/AngryBaron/angrybaron.dec"
 #include "decorate/Enemies/Goats/literalhellknight.dec"
 #include "decorate/Enemies/Goats/belphegor.dec"
+#include "decorate/Enemies/Goats/terminator.txt"
 
 #include "decorate/Enemies/Arachnotrons/Bouncetron/bouncetron.dec"
 

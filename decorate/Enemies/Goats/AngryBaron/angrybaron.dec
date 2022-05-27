@@ -28,22 +28,22 @@ ACTOR AngryBaron : BaronOfHell2 {
 			
 		AngryMissile:
 			BOS4 EF 5 Fast A_FaceTarget
-			BOS4 G 10 Fast A_BruisAttack
+			BOS4 G 10 Fast A_CustomMissile("AngryBall", 32, 0, 0)
 			BOS4 EF 3 Fast A_FaceTarget
-			BOS4 G 6 Fast A_BruisAttack
+			BOS4 G 6 Fast A_CustomMissile("AngryBall", 32, 0, -5)
 			BOS4 EF 2 Fast A_FaceTarget
-			BOS4 G 4 Fast A_BruisAttack
-			TNT1 A 0 A_Jump(87, "AngryMissile2", "BurstComet")
+			BOS4 G 4 Fast A_CustomMissile("AngryBall", 32, 0, 5)
+			TNT1 A 0 A_Jump(128, "AngryMissile2", "BurstComet")
 			Goto AngrySee
 			
 		AngryMissile2:
 			BOS4 IJ 5 Fast A_FaceTarget
-			BOS4 K 10 Fast A_BruisAttack
+			BOS4 K 10 Fast A_CustomMissile("AngryBall", 32, 0, 0)
 			BOS4 IJ 3 Fast A_FaceTarget
-			BOS4 K 6 Fast A_BruisAttack
+			BOS4 K 6 Fast A_CustomMissile("AngryBall", 32, 0, -5)
 			BOS4 IJ 2 Fast A_FaceTarget
-			BOS4 K 4 Fast A_BruisAttack
-			TNT1 A 0 A_Jump(87, "BurstComet")
+			BOS4 K 4 Fast A_CustomMissile("AngryBall", 32, 0, 5)
+			TNT1 A 0 A_Jump(128, "BurstComet")
 			Goto AngrySee
 			
 		BurstComet:
@@ -59,8 +59,23 @@ ACTOR AngryBaron : BaronOfHell2 {
 			
 		AngryPain:
 			BOS4 Q 2
+			TNT1 A 0 A_Jump(104, "AngryPainMissile", "AngryPainRage")
 			BOS4 Q 2 A_Pain
 			Goto AngrySee
+			
+		AngryPainMissile:
+			BOS4 Q 10 Bright A_Pain
+			Goto AngryMissile
+			
+		AngryPainRage:
+			BOS4 Q 10 Bright A_Pain
+			TNT1 A 0 A_JumpIfCloser(400,1)
+			Goto AngrySee
+			TNT1 A 0 Bright A_PlaySound("brain/spit")
+			BOS4 ON 5 Bright
+			BOS4 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM 1 Bright A_SpawnItemEx("GreenSpike",Random(400,-400),Random(400,-400),0,0,0,0,SXF_NOCHECKPOSITION)
+			BOS4 N 5 Bright
+			Goto AngrySee 
 			
 		Death:
 			TNT1 A 0 A_JumpIf(user_angry, "AngryDeath")
@@ -177,6 +192,88 @@ ACTOR CometDeath {
 			TNT1 AAA 0 NoDelay A_CustomMissile("Kaboom2", 0, 0, random(0,360), 2, random(0,360))	
 			TNT1 AAA 0 A_CustomMissile("SmokeFX", 0, 0, random(0,360), 2, random(0,360))
 			HCMT JKLMN 3 Bright A_FadeOut(0.1)
+			Stop
+	}
+}
+
+ACTOR AngryBall : BaronBall {
+	States {
+		Spawn:
+			BAL7 AB 1 Bright A_SpawnItemEx("AngryBallTrail",0,0,0,0,0,0,0,128,0)
+			Loop
+			
+		Death:
+			TNT1 A 0
+			TNT1 A 0 A_SpawnItemEx("GreenParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			TNT1 AAA 0 A_CustomMissile("Kaboom3", 0, 0, random(0,360), 2, random(0,360))
+			TNT1 AAA 0 A_CustomMissile("SmokeFX2", 0, 0, random(0,360), 2, random(0,360))	
+			BAL7 CDE 3 Bright
+			Stop
+	}
+}
+
+ACTOR AngryBallTrail {
+	RenderStyle Add
+	+CLIENTSIDEONLY
+	+NOBLOCKMAP
+	+DONTSPLASH
+	+NOCLIP
+	+NOINTERACTION
+	+THRUACTORS
+	Scale 0.85
+	
+	States {
+		Spawn:
+			TNT1 A 1
+			BAL7 AB 1 A_FadeOut(0.25)
+			Goto Spawn+1
+  }
+}
+
+ACTOR Kaboom3 : Kaboom2 {
+	Speed 1
+	Scale 0.45
+	
+	States {
+		Spawn:
+			FXPG AABBCDEFGHIJKLM 1 Bright NoDelay A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR SmokeFX2 : SmokeFX {
+	Scale 0.35
+	Speed 1
+	Renderstyle Add
+	Alpha 0.75
+	
+	States {
+		Spawn:
+			SMK3 ABCDEFGHIJKLM 3 NoDelay A_FadeOut(0.025)
+			Stop
+	}
+}
+
+ACTOR GreenSpike {
+	Radius 1
+	Height 1
+	Speed 0
+	Scale 2
+	Projectile
+	DamageType "BaronComet"
+	RenderStyle Add
+	Alpha 0.95
+	+FLOORHUGGER
+	+NODAMAGETHRUST
+	+FORCERADIUSDMG
+	Obituary "%o no terminó el mod."
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay A_PlaySound("AM/step")
+			FTRD AB 2 Bright
+			FTRD C 10 Bright A_Explode(38,92,0)
+			FTRD DEFGHIJ 1 Bright 
 			Stop
 	}
 }

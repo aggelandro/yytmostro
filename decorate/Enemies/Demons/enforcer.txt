@@ -9,7 +9,7 @@ ACTOR Enforcer : Pinky2 {
   PainSound "enforcer/pain"
   DeathSound "weapons/rocklx"
   ActiveSound "enforcer/active"
-	Obituary "%o got crunched by an Enforcer"
+	Obituary "%o got pium pium by an Enforcer"
 	+NOFEAR
 	var int user_calm;
 	

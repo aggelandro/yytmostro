@@ -375,3 +375,11 @@ kimp/attack	KIMPATT
 kimp/death	KIMPDIE
 kimp/pain		KIMPHIT
 kimp/sight	KIMPSEE
+
+//terminator
+cydes/sight CDSBSIT
+cydes/death CDSBDTH
+cydes/pain CDSBPAIN
+smissile/fire DSRLAUNC
+cydes/laugh METLLGH
+cydes/mischrg 8FSGCHRG
