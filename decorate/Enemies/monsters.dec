@@ -707,6 +707,7 @@ ACTOR BaronOfHell2 : YYTMonster
   Height 64
   Mass 1000
   Speed 8
+	DamageFactor "BaronComet", 0
   PainChance 50
 	Species "Goat"
   +FLOORCLIP
@@ -742,7 +743,8 @@ ACTOR BaronOfHell2 : YYTMonster
   Pain:
     BOSS H 2
     BOSS H 2 A_Pain
-    Goto See
+		TNT1 A -1 A_Jump(256, "See")
+    Wait
   Death:
     BOSS I 8
     BOSS J 8 A_Scream

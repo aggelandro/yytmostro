@@ -1477,7 +1477,7 @@ actor PlayerTNT1 {
   reactiontime 52
   painsound "Napalm/Explode"
   activesound "TNT/Fuse"
-  DamageType "Friendly"
+  DamageType "FriendlyTerro"
   PROJECTILE
   Species "Dynamite"
   +THRUSPECIES
@@ -1554,7 +1554,7 @@ Actor PlayerTNT1OnFloor {
   reactiontime 20
   painsound "Napalm/Explode"
   activesound "TNT/Fuse"
-  DamageType "Friendly"
+  DamageType "FriendlyTerro"
   Species "Dynamite"
   +MISSILE
   +NEVERFAST
@@ -1767,7 +1767,7 @@ actor PlayerTNT1_Coop : PlayerTNT1 {
   +DONTHARMCLASS
   +DONTHARMSPECIES
   +MTHRUSPECIES
-  DamageType "Friendly"  
+  DamageType "FriendlyTerro"  
   States {
 	Spawn:
 		TNT1 A 0 A_Countdown
@@ -1825,7 +1825,7 @@ Actor PlayerTNT1OnFloor_Coop : PlayerTNT1OnFloor {
   +DONTHARMCLASS
   +DONTHARMSPECIES
   +MTHRUSPECIES
-  DamageType "Friendly"
+  DamageType "FriendlyTerro"
   States {
 	Spawn:
 		TNT1 A 0

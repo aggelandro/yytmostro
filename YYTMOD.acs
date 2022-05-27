@@ -155,7 +155,7 @@ script 335 ENTER {
         while (true) {
             if (ENERGY_SHIELD_RELOAD) {
                 GiveInventory("EnergyShieldAmmo",1);
-                Delay(1);
+                if (!CheckInventory("PowerStrength")) Delay(1);
             }
             Delay(1);
         }
@@ -579,7 +579,7 @@ script "applyEffectOnPlayer" (int option, int duration, int arg2) {
     // Efectos de los monstruos al jugador
     // NOTA: Puede pasar que un monstruo le pegue a otro en el medio, ese caso se tiene en cuenta
     // arg2, etc. son comodines
-    int ptid, ntid;
+    int ptid, ntid, i;
     switch(option) {
         case 1: {
             ptid = GetActorProperty(0, APROP_TracerTID);
@@ -607,7 +607,7 @@ script "applyEffectOnPlayer" (int option, int duration, int arg2) {
                     Thing_ChangeTID(mtid, 0);
                 }
 
-                for (int i=0; i<arg2; i++) {
+                for (i=0; i<arg2; i++) {
                     Thing_Damage2(0, poisonDmg, "Poison");
                     Delay(lapse);
                 }
@@ -630,7 +630,15 @@ script "applyEffectOnPlayer" (int option, int duration, int arg2) {
                 SetActivator(ptid);
 
                 SetActorProperty(0, APROP_Speed, FixedDiv(GetActorProperty(0, APROP_Speed), 2.0));
-                Delay(duration);
+                for (i=0; i<duration; i++) {
+                    Delay(1);
+                    if (GetUserVariable(0, "user_is_dead")) {
+                        SetActorState(ntid, "Death");
+                        TakeInventory("SlowCounter", 1);
+                        Thing_ChangeTID(ntid, 0);
+                        terminate;
+                    }
+                }
                 SetActorProperty(0, APROP_Speed, FixedMul(GetActorProperty(0, APROP_Speed), 2.0));
 
                 SetActorState(ntid, "Death");
@@ -895,6 +903,10 @@ script "setInvokedTo" (int tid) {
     SetUserVariable(tid, "user_invoked", 1);
 }
 
+script "setAlphaTo" (int amount) {
+    amount = amount << 16;
+    SetActorProperty(0, APROP_Alpha, amount);
+}
 
 
 

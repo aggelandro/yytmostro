@@ -1,5 +1,5 @@
 ACTOR Commando : ShotgunGuyMod {
-	Translation "0:8=[0,0,0]:[59,54,51]","16:47=[0,0,0]:[32,68,42]"
+	Translation "16:47=112:127","96:111=64:79"
 	Health 50
 	Obituary "$OB_SHOTGUY"
 	DropItem "Shotgun"

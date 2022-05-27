@@ -1,0 +1,265 @@
+ACTOR AxeShield : Weapon
+{
+  Weapon.AmmoType2 "EnergyShieldAmmo"
+  Weapon.Kickback 100
+  Obituary "$OB_MPFIST"
+  Tag "Fist"
+  +WEAPON.WIMPY_WEAPON
+  +WEAPON.MELEEWEAPON
+	
+  States {
+	
+		Ready:
+			TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, 3)
+			CONE AB 4 A_WeaponReady
+			Loop
+			CONB AB 4 A_WeaponReady
+			Loop
+			
+		Deselect:
+			TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, 3)
+			CONE AB 1 A_Lower
+			Loop
+			CONB AB 1 A_Lower
+			Loop
+			
+		Select:
+			TNT1 A 0 A_PlaySound("agge/summon", CHAN_WEAPON)
+			//Los saltos en los states de armas se cuentan por sprite+comando, no por statement como en los otros lados
+			TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, 11)
+			CONE TUVWXYZ 3 A_Raise
+			CONF ABC 2
+			Goto Ready
+			CONB TUVWXYZ 3 A_Raise
+			CONC ABC 2
+			Goto Ready
+			
+		Fire:
+			TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, "Berserked")
+			TNT1 A -1 A_Jump(256, "VSwing", "HSwing")
+			Wait
+			
+		VSwing:
+			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
+			CONE GH 3
+			CONE I 4 A_CustomPunch(3 * random(1, 10), TRUE,0,"ShieldPuff")
+			CONE I 3 Offset(20, 70)
+			CONE J 4
+			CONE K 3
+			Goto Ready
+			
+		HSwing:
+			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
+			CONE LM 3
+			CONE N 4 A_CustomPunch(3 * random(1, 10), TRUE,0,"ShieldPuff")
+			CONE O 3
+			CONE P 4
+			CONE K 3
+			Goto Ready
+			
+		Berserked:
+			TNT1 A 0 A_Refire("BerserkedHold")
+			TNT1 A -1 A_Jump(256, "BerserkedVSwing", "BerserkedHSwing")
+			Wait
+			
+		BerserkedVSwing:
+			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
+			CONB GH 3
+			CONB I 2 A_CustomPunch(20 * random(1, 10), TRUE, 0, "ShieldPuff")
+			CONB I 2 Offset(20, 70)
+			CONB J 2
+			CONB K 2
+			Goto Ready
+			
+		BerserkedHSwing:
+			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
+			CONE L 3
+			CONB M 3
+			CONB N 1 A_CustomPunch(20 * random(1, 10), TRUE,0,"ShieldPuff")
+			CONB O 2
+			CONB P 3
+			CONB K 2
+			Goto Ready
+			
+		BerserkedHold:
+			TNT1 A 0 ACS_NamedExecuteWithResult("loadChargedAttack", 35)
+			Goto BerserkedLoop
+			
+		BerserkedLoop:
+			CONB G 1 
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("getChargeState") == 2, "Berserked")
+			Loop
+			
+		FireCharged:
+			TNT1 A 0 ACS_NamedExecuteWithResult("stopAndPositionPlayer")
+			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
+			CONB GH 2
+			CONB I 2
+			CONB I 2 Offset(20, 70)
+			CONB I 2
+			CONB I 10 A_SpawnItemEx("AxeFloorFire", 40)
+			CONB I 2
+			CONB I 2
+			CONB IH 2
+			CONB G 3 Offset(1, 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("pausePlayer", 0)
+			Goto Ready
+		
+		Altfire:
+			TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, "AltBerserked")
+			CONE KCDE 3
+			TNT1 A 0 ACS_NamedExecuteWithResult("setEnergyShieldReload", 0)
+			CONE F 1 A_SpawnItemEx("EnergyShield", 0, 15, 38)
+			Goto AltHold
+			
+		AltHold:
+			CONE F 1 A_TakeInventory("EnergyShieldAmmo", 1)
+			CONE C 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoAmmoInInventory", 1), "ShieldEnd")
+			CONE C 0 A_Refire("AltHold")
+			CONE EDCK 3
+			TNT1 A 0 ACS_NamedExecuteWithResult("setEnergyShieldReload", 1)
+			Goto Ready
+			
+		AltBerserked:
+			CONB K 2
+			CONE C 2
+			CONB DE 2
+			TNT1 A 0 ACS_NamedExecuteWithResult("setEnergyShieldReload", 0)
+			CONB F 1 A_SpawnItemEx("EnergyShield", 0, 15, 38)
+			Goto AltBerserkedHold
+			
+		AltBerserkedHold:
+			CONB F 1 A_TakeInventory("EnergyShieldAmmo", 1)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoAmmoInInventory", 1), "BerserkedShieldEnd")
+			TNT1 A 0 A_Refire("AltBerserkedHold")
+			CONB EDCK 2
+			TNT1 A 0 ACS_NamedExecuteWithResult("setEnergyShieldReload", 1)
+			Goto Ready
+			
+		ShieldEnd:
+			TNT1 A 0 A_PlaySound("agge/shildbrk",CHAN_WEAPON)
+			CONE EDCK 3
+			TNT1 A 0 ACS_NamedExecuteWithResult("setEnergyShieldReload", 1)
+			Goto Ready
+			
+		BerserkedShieldEnd:
+			TNT1 A 0 A_PlaySound("agge/shildbrk", CHAN_WEAPON)
+			CONB EDCK 2
+			TNT1 A 0 ACS_NamedExecuteWithResult("setEnergyShieldReload", 1)
+			Goto Ready	 
+  }
+}
+
+ACTOR EnergyShield {
+
+  Health 999999
+  Radius 20
+  Height 10
+  DamageFactor "Friendly", 0
+  PainChance 255
+	Projectile
+	
+  +SHOOTABLE
+	-NOBLOCKMAP
+  +NODAMAGE
+  +DONTRIP
+  +NOBLOOD
+  +REFLECTIVE
+	+SEEKERMISSILE
+	
+  States {
+	
+		Spawn:
+			// Swapea el target con el master para poder guardar al jugador actual en el master.
+			// Nota: El puntero a target cambia internamente cuando la bala es reflejada (pain state).
+			TNT1 A 0 NoDelay A_RearrangePointers(AAPTR_MASTER, AAPTR_TARGET, AAPTR_TRACER)
+			TNT1 A -1 A_Jump(256, "SpawnLoop")
+	 
+		SpawnLoop:
+			TNT1 A 1 A_Warp(AAPTR_MASTER, 45, 5, 38, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoAmmoInPointerInventory", 1), "Death")
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isMasterPressingAltFire") == 0, "Death")
+			Loop
+	 
+		Pain:
+			TNT1 A 3 A_SpawnItemEx("ShieldHit", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+			TNT1 A -1 A_Jump(256, "SpawnLoop")
+	 
+		Death:
+			TNT1 A 2
+			Stop
+  }
+}
+
+ACTOR ShieldHit {
+
+  Scale 0.2
+  Renderstyle Add
+	
+  +NOGRAVITY
+  +NOINTERACTION
+  +SEEKERMISSILE
+	
+  States {
+		Spawn:
+			TNT1 A 0 NoDelay A_PlaySound("agge/visor", CHAN_AUTO)
+			SHIE ABCDEFGHIJKLMNOPQRST 2 BRIGHT A_Warp(AAPTR_MASTER, 10, 0, 38)
+			stop
+  }
+}
+
+ACTOR EnergyShieldAmmo : Ammo
+{
+    Inventory.MaxAmount 200
+	  Inventory.Icon "SHICOA0"
+}
+
+ACTOR ShieldPuff
+{
+	+NOGRAVITY
+	+NOINTERACTION
+	+PUFFONACTORS
+	States
+	{
+	XDeath:
+		FAXE R 0 A_PlaySound("agge/hachazo",CHAN_WEAPON)
+		FAXE RSTUVWX 2
+		Stop
+	Melee:
+		FAXE R 0 A_PlaySound("agge/pared",CHAN_WEAPON)
+		FAXE RSTUVWX 2
+		Stop
+	Crash:
+		FAXE R 0 A_PlaySound("agge/pared",CHAN_WEAPON)
+		FAXE RSTUVWX 2
+		Stop
+	}
+}
+
+ACTOR AxeFloorFire {
+
+  Radius 1
+  Height 1
+  Speed 0
+  Damage 8
+  Projectile
+  RenderStyle Add
+	Scale 1.5
+  +NOCLIP
+  +FLOORHUGGER
+  +FORCERADIUSDMG
+	DamageType "Friendly"
+	
+  States {
+	
+		Spawn:
+			TNT1 A 0 NoDelay A_PlaySound("weapons/rocklx", CHAN_AUTO)
+			TNT1 A 0 A_Quake(4,12,0,400)
+			TNT1 A 0 A_Quake(2,12,0,800)
+			XXBF AB 2 Bright
+			XXBF C 2 Bright A_Explode(100, 110, 0)
+			XXBF DEFGHIJKLMNOPQRS 2 Bright
+			Stop       
+   }
+}

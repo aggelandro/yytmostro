@@ -52,6 +52,7 @@ ACTOR HellCommander : Cyberdemon2 {
 			COMM F 12 Bright A_CustomMissile("HellRocket", 43, -10, frandom(-10, 10))
 			COMM E 12 A_FaceTarget
 			COMM F 12 Bright A_CustomMissile("HellRocket", 43, -10, frandom(-10, 10))
+			TNT1 A 0 A_Jump(87, "Missile2", "Missile3")
 			Goto SeeLoop
 			
 		Missile2:    
@@ -64,6 +65,7 @@ ACTOR HellCommander : Cyberdemon2 {
 			COMM R 12 Bright A_CustomMissile("HellGrenade", 78, -27, 0, CMF_ABSOLUTEPITCH, user_launch_angle)
 			COMM Q 12 A_FaceTarget
 			COMM R 12 Bright A_CustomMissile("HellGrenade", 78, -27, 0, CMF_ABSOLUTEPITCH, user_launch_angle)
+			TNT1 A 0 A_Jump(87, "Missile3")
 			Goto SeeLoop
 			
 		Missile3:
@@ -103,7 +105,7 @@ Actor HCFlame : LHKFlame { Scale 2.0 }
 
 Actor HellRocket : Rocket {
 	Speed 25
-	Scale 0.3
+	Scale 0.8
   Renderstyle Normal
 	Decal BaronScorch
 	-ROCKETTRAIL
@@ -112,13 +114,13 @@ Actor HellRocket : Rocket {
 	
   States {
 		Spawn:
-			TNT1 A 0 NoDelay Bright A_SpawnItemEx("HellRocketTrail")
-      BL44 B 2 Bright
+			//TNT1 A 0 NoDelay Bright A_SpawnItemEx("HellRocketTrail")
+      MELF AB 2 NoDelay Bright
       Loop
 			
     Death:
-	    BL44 C 5 A_Explode
-      BL44 DE 5 Bright
+	    MEL2 C 5 A_Explode
+      MEL2 DE 5 Bright
       Stop
 	}
 }
@@ -137,7 +139,7 @@ Actor HellRocketTrail {
 		Spawn:
 		Death:
 			TNT1 A 0 A_SetTranslucent(0.5)
-			BL44 BBBBB 5 A_Fadeout
+			MELF BBBBB 5 A_Fadeout
 			Stop
 	}
 }

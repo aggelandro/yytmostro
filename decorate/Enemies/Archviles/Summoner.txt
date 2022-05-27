@@ -1,0 +1,67 @@
+ACTOR Summoner : Archvile2 {
+	Scale 0.75
+	SeeSound "summoner/see"
+  PainSound "summoner/pain"
+  DeathSound "summoner/death"
+  ActiveSound "summoner/active"
+  MeleeSound "vile/stop"
+	+NORADIUSDMG
+	
+	States {
+		SpawnLoop:
+			OMNI AB 10 A_Look
+			Loop
+			
+		See:
+			TNT1 A 0 A_SpawnItemEx("RedWalkFire",0,0,0,0,0,0,0,128)
+			OMNI AA 2 A_Chase
+			TNT1 A 0 A_SpawnItemEx("RedWalkFire",0,0,0,0,0,0,0,128)
+			OMNI BB 2 A_Chase
+			TNT1 A 0 A_SpawnItemEx("RedWalkFire",0,0,0,0,0,0,0,128)
+			OMNI CC 2 A_Chase
+			TNT1 A 0 A_SpawnItemEx("RedWalkFire",0,0,0,0,0,0,0,128)
+			OMNI DD 2 A_Chase
+			Loop
+			
+		Missile:
+			OMNI E 10 Bright A_FaceTarget
+			TNT1 A 0 A_SpawnItemEx("RedWalkFire",0,0,0,0,0,0,0,128)
+			OMNI F 8 Bright A_FaceTarget
+			OMNI FFFFFF 8 Bright A_FaceTarget
+			TNT1 A 0 A_SpawnItemEx("RedWalkFire",0,0,0,0,0,0,0,128)
+			OMNI F 8 Bright
+			OMNI E 20 Bright
+			Goto See
+			
+		Heal:
+			OMNI GH 10 Bright
+			Goto See
+			
+		Pain:
+			OMNI M 5   
+			OMNI M 5 A_Pain
+			Goto See
+			
+		Death:
+			OMNI M 7
+			OMNI N 7 A_Scream
+			OMNI O 7 A_NoBlocking
+			OMNI PQRSTU 7
+			OMNI V -1
+			Stop
+  }
+}
+
+ACTOR RedWalkFire : ArmncubusWalkFire {
+	Alpha 1
+	States {
+		Spawn:
+			TNT1 A 10
+			FRTR ABC 3 Bright A_Explode(Random(0, 2), 10, 0)
+			TNT1 A 0 A_Jump(191,3)
+			TNT1 A 0 A_CustomMissile("RedWalkFire", 0, 24, 0)
+			TNT1 A 0 A_CustomMissile("RedWalkFire", 0, -24, 0)
+			FRTR DEFGHIJKLMNO 3 Bright A_Explode(Random(0, 2), 10, 0)
+			Stop
+	}
+}

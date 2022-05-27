@@ -1734,6 +1734,7 @@ ACTOR NormalTearProjectile {
 		SpawnLoopScytheTear:
 			TNT1 A 0 A_ChangeFlag("THRUACTORS", TRUE)
 			TNT1 A 0 A_SeekerMissile(user_seeker_threshold, user_seeker_maxturnangle, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			TNT1 A 5
 			SCHT A 1 A_SpawnItemEx("ScytheTrail1", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERSCALE|SXF_TRANSFERTRANSLATION)
 			SCHT B 1 A_SpawnItemEx("ScytheTrail2", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERSCALE|SXF_TRANSFERTRANSLATION)
 			SCHT C 1 A_SpawnItemEx("ScytheTrail3", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERSCALE|SXF_TRANSFERTRANSLATION)
@@ -1755,7 +1756,7 @@ ACTOR NormalTearProjectile {
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("PiercingDamageDealer", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setDamageToChildren", user_spawn_tid)
-			Loop
+			Goto SpawnLoopScytheTear+3
 			
 		ReturnToPlayer:
 			TNT1 A 0 ACS_NamedExecuteWithResult("setTracerToPlayer")
@@ -3093,7 +3094,7 @@ ACTOR SmokePuff {
 	
 	States {
 		Spawn:
-			SMO1 A 12 NoDelay
+			SMO1 A 12 NoDelay A_FadeOut(0.02)
 			Stop
 	}
 }

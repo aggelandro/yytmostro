@@ -36,8 +36,11 @@ ACTOR Frostodemon : Cacodemon2 {
 			
 		SeeLoop:
 			TNT1 A 0 A_SpawnItemEx("IceTrail",0,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("BlueParticleSpawner2", 0, 0, 32, 0, 0, 0, 0, 128)
 			HELE A 3 A_Chase
+			TNT1 A 0 A_SpawnItemEx("BlueParticleSpawner2", 0, 0, 32, 0, 0, 0, 0, 128)
 			HELE A 3 A_Chase
+			TNT1 A 0 A_SpawnItemEx("BlueParticleSpawner2", 0, 0, 32, 0, 0, 0, 0, 128)
 			HELE A 3 A_Chase
 			Loop
 			
@@ -168,6 +171,7 @@ ACTOR FrostCacoBall : CacodemonBall {
 			Goto Death
 			
 		Death:
+			TNT1 A 0 A_SpawnItemEx("BlueParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
 			FROM EFGHI 6 Bright
 			Stop
   }
@@ -211,9 +215,11 @@ ACTOR FrostTPCacoBall : FrostCacoBall {
 			
 		TPSuccess:
 			TNT1 A 0 A_PlaySound("frostcaco/heltel", CHAN_AUTO)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setAlphaTo", 0)
 			FROM C 1 BRIGHT A_FaceTracer
 			TNT1 A 0 A_SeekerMissile(8, 10, SMF_LOOK|SMF_CURSPEED)
-			FROM CD 2 BRIGHT A_SpawnItemEx("IceBallTrail",0,0,-11,0,0,0,0,128)
+			FROM CD 2 BRIGHT A_SpawnItemEx("SpawningIceBallTrail",0,0,-11,0,0,0,0,128)
+			TNT1 A 0 A_FadeIn
 			Goto TPSuccess+2
   }
 }
@@ -235,9 +241,52 @@ ACTOR IceBallTrail {
 	}
 }
 
+ACTOR SpawningIceBallTrail : IceBallTrail {
+	Alpha 0
+	
+	States {
+		Spawn:
+			TNT1 A 2
+			GG4S ABCDEFGHI 1 Bright A_FadeIn
+			Stop
+	}
+}
+
 ACTOR SlowCounter : Inventory {
 	-INVBAR
   +UNDROPPABLE
   Inventory.MaxAmount 1
 	Inventory.Amount 1
 }
+
+ACTOR BlueParticleSpawner2 : GreenParticleSpawner {	
+  States {
+		Spawn:
+			TNT1 A 0 A_SpawnItemEx("ESB1",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("ESB2",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("ESB3",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("ESB4",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("ESB5",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("ESB6",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 1
+			Stop
+	}
+}
+
+ACTOR EnergySparkBlue : EnergyProjectileSparkGreen {
+	+NOGRAVITY
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay ThrustThingZ(0, 5, 0, 0)
+			SPKB A 2 Bright A_FadeOut(0.08)
+			Loop
+	}
+}
+
+ACTOR ESB1 : EnergySparkBlue { Scale 0.06 }
+ACTOR ESB2 : EnergySparkBlue { Speed 1 Scale 0.05 }
+ACTOR ESB3 : EnergySparkBlue { Speed 2 Scale 0.04 }
+ACTOR ESB4 : EnergySparkBlue { Speed 3 Scale 0.03 }
+ACTOR ESB5 : EnergySparkBlue { Speed 4 Scale 0.02 }
+ACTOR ESB6 : EnergySparkBlue { Speed 5 Scale 0.01 }

@@ -1064,7 +1064,7 @@ ACTOR CrusherGunToken : AbstractContraToken {
 	
 	States {
 		Spawn:
-			CTRP H -1 BRIGHT
+			CTRP I -1 BRIGHT
 			Stop
 			
 		Success:

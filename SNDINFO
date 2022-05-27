@@ -30,6 +30,7 @@ agge/chargedatkml CHARGEDM
 agge/brimgrowl BRGROWL
 agge/brimroar BRROAR
 agge/brimlaser BRLASER
+agge/warning UNYUALAR
 elect/spark LHTSPARK
 
 agge/expl1 TEAREXP1
@@ -135,6 +136,7 @@ misc/nothing DSEMPTY
 misc/heal HEALEFF
 misc/sanctuary SANCTU
 imp/attack2 IMPATK2
+
 
 // dinamita afanada del samsara
 TNT/Throw			TNTTOSS
@@ -354,3 +356,22 @@ lzombie/see2	zsggsee2
 lzombie/see3	zsggsee3
 lzombie/pain	zsggpain
 lzombie/idle	zsggidle
+
+//summoner
+summoner/active	CALAACT
+summoner/attack	CALAATK
+summoner/death	CALADTH
+summoner/pain		CALAPAI
+summoner/see		CALASIT
+
+//angry baron
+$random angrybaron/death { angrybaron/death1 angrybaron/death2 }
+angrybaron/death1	ABAROND1
+angrybaron/death2	ABAROND2
+
+//kimp
+kimp/active	KIMPACT
+kimp/attack	KIMPATT
+kimp/death	KIMPDIE
+kimp/pain		KIMPHIT
+kimp/sight	KIMPSEE
