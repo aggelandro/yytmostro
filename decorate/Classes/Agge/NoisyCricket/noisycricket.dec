@@ -230,3 +230,45 @@ ACTOR EPSR3 : EnergyProjectileSparkRed { Speed 2 Scale 0.04 }
 ACTOR EPSR4 : EnergyProjectileSparkRed { Speed 3 Scale 0.03 }
 ACTOR EPSR5 : EnergyProjectileSparkRed { Speed 4 Scale 0.02 }
 ACTOR EPSR6 : EnergyProjectileSparkRed { Speed 5 Scale 0.01 }
+
+ACTOR EnergyProjectileSparkOrange : EnergyProjectileSparkRed {
+	+NOGRAVITY
+	
+	States {
+		Spawn:
+			SPKO A 3 NoDelay Bright A_FadeOut(0.1)
+			Loop
+	}
+}
+
+ACTOR ProjectileTrailParticleOrange :  EnergyProjectileSparkOrange {
+	+NOGRAVITY
+	Scale 0.02
+	
+	States {
+		Spawn:
+			SPKO A 1 NoDelay Bright A_FadeOut(0.08)
+			Loop
+	}
+}
+
+ACTOR OrangeParticleSpawner : GreenParticleSpawner {
+  States {
+		Spawn:
+			TNT1 A 0 A_SpawnItemEx("EPSO1",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("EPSO2",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("EPSO3",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("EPSO4",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("EPSO5",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("EPSO6",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 1
+			Stop
+  }
+}
+
+ACTOR EPSO1 : EnergyProjectileSparkOrange { Scale 0.065 }
+ACTOR EPSO2 : EnergyProjectileSparkOrange { Scale 0.055 }
+ACTOR EPSO3 : EnergyProjectileSparkOrange { Scale 0.045 }
+ACTOR EPSO4 : EnergyProjectileSparkOrange { Scale 0.035 }
+ACTOR EPSO5 : EnergyProjectileSparkOrange { Scale 0.025 }
+ACTOR EPSO6 : EnergyProjectileSparkOrange { Scale 0.015 }

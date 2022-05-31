@@ -1,16 +1,15 @@
-ACTOR DarkTerminator : BaronOfHell2 {
+ACTOR T-800 : BaronOfHell2 {
 	Health 2000
-	Speed 10
 	Bloodcolor Green
-	PainChance 5
+	PainChance 20
 	+BOSS
 	+MISSILEMORE
-	+MISSILEEVENMORE
 	+QUICKTORETALIATE
 	SeeSound "cydes/sight" 
   PainSound "cydes/pain"
   DeathSound "cydes/death"
   Obituary "Hasta la vista, bb"
+	var int user_laser_duration;
 	
 	States {
 		SpawnLoop:
@@ -30,43 +29,148 @@ ACTOR DarkTerminator : BaronOfHell2 {
 		Boost:
 			DB2S A 1 A_Chase
 			TNT1 A 0 A_Chase
-			TNT1 A 0 A_SpawnItemEx("DarkTerminatorGhostA",0,0,0,0,0,0,0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,0)
+			TNT1 A 0 A_SpawnItemEx("TerminatorGhostA",0,0,0,0,0,0,0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,0)
 			DB2S A 1 A_Chase
 			TNT1 A 0 A_Chase
-			TNT1 A 0 A_SpawnItemEx("DarkTerminatorGhostA",0,0,0,0,0,0,0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,0)
+			TNT1 A 0 A_SpawnItemEx("TerminatorGhostA",0,0,0,0,0,0,0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,0)
 			DB2S B 1 A_Chase
 			TNT1 A 0 A_Chase
-			TNT1 A 0 A_SpawnItemEx("DarkTerminatorGhostB",0,0,0,0,0,0,0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,0)
+			TNT1 A 0 A_SpawnItemEx("TerminatorGhostB",0,0,0,0,0,0,0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,0)
 			DB2S B 1 A_Chase
 			TNT1 A 0 A_Chase
-			TNT1 A 0 A_SpawnItemEx("DarkTerminatorGhostB",0,0,0,0,0,0,0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,0)
+			TNT1 A 0 A_SpawnItemEx("TerminatorGhostB",0,0,0,0,0,0,0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,0)
 			TNT1 A 0 A_PlaySound("commander/metal", CHAN_BODY)
 			DB2S C 1 A_Chase
 			TNT1 A 0 A_Chase
-			TNT1 A 0 A_SpawnItemEx("DarkTerminatorGhostC",0,0,0,0,0,0,0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,0)
+			TNT1 A 0 A_SpawnItemEx("TerminatorGhostC",0,0,0,0,0,0,0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,0)
 			DB2S C 1 A_Chase
 			TNT1 A 0 A_Chase
-			TNT1 A 0 A_SpawnItemEx("DarkTerminatorGhostC",0,0,0,0,0,0,0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,0)
+			TNT1 A 0 A_SpawnItemEx("TerminatorGhostC",0,0,0,0,0,0,0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,0)
 			DB2S D 1 A_Chase
 			TNT1 A 0 A_Chase
-			TNT1 A 0 A_SpawnItemEx("DarkTerminatorGhostD",0,0,0,0,0,0,0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,0)
+			TNT1 A 0 A_SpawnItemEx("TerminatorGhostD",0,0,0,0,0,0,0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,0)
 			DB2S D 1 A_Chase
 			TNT1 A 0 A_Chase
-			TNT1 A 0 A_SpawnItemEx("DarkTerminatorGhostD",0,0,0,0,0,0,0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,0)
+			TNT1 A 0 A_SpawnItemEx("TerminatorGhostD",0,0,0,0,0,0,0,SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,0)
 			TNT1 A 0 A_PlaySound("commander/metal", CHAN_BODY)
 			TNT1 A 0 A_Jump(50,"See")
 			Loop
 			
 		Melee:
 		Missile:
-			DB2S EF 8 A_FaceTarget
-			DB2S G 8 A_CustomMissile("BaronBall", 32, 0, frandom(-10, 10))
+			TNT1 A 0 A_SetTranslucent(1)
+			//TNT1 A 0 A_JumpIfCloser(150,"Flamethrowers")
+			TNT1 A 0 A_Jump(128, "Rockets", "Grenadier", "GreenLasers")
+			Goto Normal
+			
+		Normal:
+			DB2S E 12 A_FaceTarget
+			DB2S E 4 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyDemonTechProjectile",36,20,frandom(-2,2),0)
+			TNT1 A 0 A_CustomMissile("CyDemonTechProjectile",36,-20,frandom(-2,2),0)
+			DB3S B 2 Bright A_PlaySoundEx("cydes/demontechfire","Weapon")
+			TNT1 A 0 A_Jump(6,"Pause")
+			TNT1 A 0 A_SpidRefire
+			Goto Normal+1
+			
+		Pause:
+			DB2S E 10
+			DB2S E 20 A_PlaySound("cydes/demontechrld")
 			Goto See
+			
+		Rockets:
+			DB2S E 10 A_FaceTarget 
+			DB3S D 0 Bright A_CustomMissile("CyBaronRocket",35,-20,0,0)
+			DB3S D 8 Bright A_CustomMissile("CyBaronRocket",35,20,0,0)
+			DB2S E 10 A_FaceTarget
+			DB3S D 0 Bright A_CustomMissile("CyBaronRocket",35,-20,0,0)
+			DB3S D 8 Bright A_CustomMissile("CyBaronRocket",35,20,0,0)
+			DB2S E 10 A_FaceTarget
+			DB3S D 0 Bright A_CustomMissile("CyBaronRocket",35,-20,0,0)
+			DB3S D 8 Bright A_CustomMissile("CyBaronRocket",35,20,0,0)
+			DB2S E 10
+			TNT1 A 0 A_Jump(16,"RocketSpammingCombo")
+			Goto See
+			
+		RocketSpammingCombo:
+			TNT1 A 0 A_ChangeFlag("NoPain", 1)
+			DB2S E 2 Bright A_PlaySound("cydes/mischrg", CHAN_BODY)
+			DB2S EEEEEEEEEEEEEEEEEEE 2 Bright A_FaceTarget
+			TNT1 A 0 A_PlaySound("cydes/quote1", CHAN_AUTO)
+			TNT1 A 0 A_ChangeFlag("NoPain", 0)
+			Goto FirstWave
+			
+		FirstWave:
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			DB3S E 6 Bright A_CustomMissile("CyShoulderRocket2",60,20,0)
+			DB3S E 1 Bright A_FaceTarget
+			TNT1 A 0 A_PlaySound("smissile/fire")
+			DB3S E 6 Bright A_CustomMissile("CyShoulderRocket2",60,-20,0)
+			TNT1 A 0 Bright A_CustomMissile("CyBaronRocket",35,-20,0,0)
+			DB3S E 1 Bright A_CustomMissile("CyBaronRocket",35,20,0,0)
+			DB3S E 1 Bright A_FaceTarget
+			TNT1 A 0 A_PlaySound("smissile/fire")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 3, 1)
+			Loop
+			TNT1 A 0 A_TakeInventory("LoopFlag", 3)
+			DB3S E 6 Bright A_CustomMissile("CyShoulderRocket2",60,20,0)
+			DB3S E 1 Bright A_FaceTarget
+			TNT1 A 0 A_PlaySound("smissile/fire")
+			DB3S E 6 Bright A_CustomMissile("CyShoulderRocket2",60,-20,0)
+			Goto SecondWave
+			
+		SecondWave:
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			TNT1 A 0 A_PlaySound("smissile/fire")
+			DB3S E 6 Bright A_CustomMissile("CyShoulderRocket",60,20,0)
+			DB3S E 1 Bright A_FaceTarget
+			TNT1 A 0 A_PlaySound("smissile/fire")
+			DB3S E 6 Bright A_CustomMissile("CyShoulderRocket",60,-20,0)
+			TNT1 A 0 Bright A_CustomMissile("CyHomingMissile",35,-20,0,0)
+			DB3S E 1 Bright A_CustomMissile("CyHomingMissile",35,20,0,0)
+			DB3S E 1 Bright A_FaceTarget
+			TNT1 A 0 A_PlaySound("smissile/fire")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 3, 1)
+			Loop
+			TNT1 A 0 A_TakeInventory("LoopFlag", 3)
+			DB3S E 6 Bright A_CustomMissile("CyShoulderRocket",60,20,0)
+			DB3S E 1 Bright A_FaceTarget
+			TNT1 A 0 A_PlaySound("smissile/fire")
+			DB3S E 6 Bright A_CustomMissile("CyShoulderRocket",60,-20,0)
+			DB2S E 20
+			Goto See
+			
+		Grenadier:
+			DB2S E 8 A_FaceTarget
+			TNT1 A 0 A_PlaySound("cydes/grenadefire")
+			TNT1 A 0 Bright A_CustomMissile("CyBaronGrenade",60,-20,Random(4,-4))
+			DB3S A 7 Bright A_CustomMissile("CyBaronGrenade",60,20,Random(4,-4))
+			DB2S E 12 A_FaceTarget
+			TNT1 A 0 A_PlaySound("cydes/grenadefire")
+			TNT1 A 0 Bright A_CustomMissile("CyBaronGrenade",60,-20,Random(4,-4))
+			DB3S A 7 Bright A_CustomMissile("CyBaronGrenade",60,20,Random(4,-4))
+			DB2S E 12 A_FaceTarget
+			TNT1 A 0 A_PlaySound("cydes/grenadefire")
+			TNT1 A 0 Bright A_CustomMissile("CyBaronGrenade",60,-20,Random(4,-4))
+			DB3S A 7 Bright A_CustomMissile("CyBaronGrenade",60,20,Random(4,-4))
+			DB2S E 12 A_FaceTarget		
+			Goto See
+			
+		GreenLasers:
+			DB2S E 10 A_FaceTarget
+			TNT1 A 0 A_SetUserVar("user_laser_duration",0)
+			TNT1 A 0 A_JumpIf(user_laser_duration >= 35,"See")
+			TNT1 A 0 A_SetUserVar("user_laser_duration",user_laser_duration+1)
+			DB3S A 3 Bright A_CustomMissile("CyBaronMiniLaser",66,20,0)
+			TNT1 A 0 A_CustomMissile("CyBaronMiniLaser",66,-20,0)
+			Goto GreenLasers+2  
+			
 		Pain:
 			DB2S H 2
 			DB2S H 2 A_Pain
 			TNT1 A -1 A_Jump(256, "See")
 			Wait
+			
 		Death:
 			DB2S I 8
 			DB2S J 8 A_Scream
@@ -75,6 +179,7 @@ ACTOR DarkTerminator : BaronOfHell2 {
 			DB2S MNOP 8
 			DB2S Q -1 A_BossDeath
 			Stop
+			
 		Raise:
 			DB2S Q 8
 			DB2S PONMLKJI 8
@@ -82,7 +187,418 @@ ACTOR DarkTerminator : BaronOfHell2 {
 	}
 }
 
-ACTOR DarkTerminatorGhostA {
+ACTOR CyBaronRocket : Rocket {
+	Speed 20
+	Damage 20
+	DamageType "BaronComet"
+	Obituary "%o ate %k's Rocket."
+	SeeSound "monster/rocketfire"
+	+SEEKERMISSILE
+	-ROCKETTRAIL
+	
+	States {
+	
+		Spawn:
+			TNT1 A 0 NoDelay A_Jump(128,"Homing")
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(4,6),Random(-2,2)) 
+			TNT1 A 0 Bright A_CustomMissile("ProjectileTrailParticleOrange",Random(4,6),Random(-2,2)) 
+			MIS2 A 1 Bright
+			Goto Spawn+1
+			
+		Homing:
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+			TNT1 A 0 Bright A_CustomMissile("ProjectileTrailParticleOrange",Random(0,2),Random(-2,2))
+			HMIS A 5 BRIGHT A_SeekerMissile(10, 13, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			TNT1 A 0 Bright A_PlaySound("monster/homingrockbeep")
+			Loop
+			
+		Death:
+			TNT1 A 0
+			TNT1 A 0 A_SpawnItemEx("OrangeParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128) 
+			TNT1 AAA 0 A_CustomMissile("Kaboom4", 0, 0, random(0,360), 2, random(0,360))
+			TNT1 AAA 0 A_CustomMissile("SmokeFX2", 0, 0, random(0,360), 2, random(0,360))
+			TNT1 AAAA 0 A_SpawnItemEx("Debris",0,0,0,Random(4,-4),Random(4,-4),Random(4,8),0,128)
+			TNT1 A 0 A_Explode
+			TNT1 A 1 A_SpawnItem("RocketEx")
+			Stop
+	}
+}
+
+ACTOR CyBaronGrenade {
+	Radius 6
+  Height 6
+  Speed 15
+  Damage 20
+  Scale 0.75
+  Projectile
+	FastSpeed 24
+	Gravity 0.4
+	ReactionTime 140
+	BounceType "Hexen"
+	BounceCount 3
+  WallBounceFactor 0.25
+  BounceFactor 0.5
+	DamageType "BaronComet"
+	-NOGRAVITY
+  -GRENADETRAIL
+  -ROCKETTRAIL
+	+THRUGHOST
+	+FORCEXYBILLBOARD
+	SeeSound "cydes/grenadebounce"
+  DeathSound "weapons/rocklx"
+	
+	States {
+		Spawn:
+			GRND A 1 NoDelay A_CustomMissile("GrenadeTrail",Random(-1,1),Random(-1,1))
+			TNT1 A 0 A_CountDown
+			Loop
+		
+		Death:
+			TNT1 A 0 A_SpawnItemEx("OrangeParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128) 
+			TNT1 AAA 0 A_CustomMissile("Kaboom4", 0, 0, random(0,360), 2, random(0,360))
+			TNT1 AAA 0 A_CustomMissile("SmokeFX2", 0, 0, random(0,360), 2, random(0,360))
+			TNT1 AAAA 0 A_SpawnItemEx("Debris",0,0,0,Random(4,-4),Random(4,-4),Random(4,8),0,128)
+			TNT1 A 0 A_Explode(100, 128)
+			TNT1 A 1 A_SpawnItem("RocketEx")
+			Stop	
+	}
+}
+
+Actor CyBaronMiniLaser : FastProjectile {
+	Height 5
+	Radius 5
+	Speed 70
+	Scale 1
+	Renderstyle Add
+	Alpha 0.8
+	Decal "Scorch"
+	Damage 1
+	+RANDOMIZE
+	Missiletype "CyBaronMiniLaserTrail"
+	MissileHeight 8
+	SeeSound "cydes/lasershot"
+	DeathSound "cydes/laserexp"
+	Damagetype "BaronComet"
+	
+	States {
+		Spawn: 
+			TNT1 A 1 NoDelay Bright A_ChangeVelocity(1,0.5*random(-3,3),0.5*random(-2,2),CVF_RELATIVE)
+			Loop
+			
+		Death:
+			TNT1 A 0 A_SpawnItemEx("GreenParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			TNT1 AAA 0 A_CustomMissile("Kaboom3", 0, 0, random(0,360), 2, random(0,360))
+			TNT1 AAA 0 A_CustomMissile("SmokeFX2", 0, 0, random(0,360), 2, random(0,360))  
+			TNT1 A 10
+			Stop
+  }
+}
+
+ACTOR CyBaronMiniLaserTrail {
+  RenderStyle Add
+  Alpha 0.75
+  Scale 0.04
+  +NOGRAVITY
+  +CLIENTSIDEONLY
+  +NOINTERACTION
+  +NOBLOCKMAP
+	
+  States {
+		Spawn:
+		GDLS A 2 NoDelay bright A_FadeOut(0.2)
+		Loop
+  }
+}
+
+ACTOR CyShoulderRocket : CyBaronRocket {
+	Radius 9
+	Height 7
+	Scale 0.75
+	Speed 25
+	FastSpeed 30
+	Damage 3
+	DamageType "BaronComet"
+	ExplosionDamage 54
+	ExplosionRadius 128
+	SeeSound "monster/homingrocket"
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay A_Jump(128,"Homing")
+			Goto Normal
+			
+		Normal:
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",0,Random(-2,2))
+			CYDM A 1 Bright A_CustomMissile("ProjectileTrailParticleOrange",0,Random(-2,2))
+			Loop
+			
+		Homing:
+			TNT1 A 0 Bright A_SeekerMissile(10, 13, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",0,Random(-2,2))
+			CYDM A 1 Bright A_CustomMissile("ProjectileTrailParticleOrange",0,Random(-2,2))
+			TNT1 A 0 Bright A_BishopMissileWeave
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",0,Random(-2,2))
+			CYDM A 1 Bright A_CustomMissile("ProjectileTrailParticleOrange",0,Random(-2,2))
+			TNT1 A 0 Bright A_BishopMissileWeave
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",0,Random(-2,2))
+			CYDM A 1 Bright A_CustomMissile("ProjectileTrailParticleOrange",0,Random(-2,2))
+			TNT1 A 0 Bright A_BishopMissileWeave
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",0,Random(-2,2))
+			CYDM A 1 Bright A_CustomMissile("ProjectileTrailParticleOrange",0,Random(-2,2))
+			TNT1 A 0 Bright A_SeekerMissile(10, 13, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",0,Random(-2,2))
+			CYDM A 1 Bright A_CustomMissile("ProjectileTrailParticleOrange",0,Random(-2,2))
+			TNT1 A 0 Bright A_BishopMissileWeave
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",0,Random(-2,2))
+			CYDM A 1 Bright A_CustomMissile("ProjectileTrailParticleOrange",0,Random(-2,2))
+			TNT1 A 0 Bright A_BishopMissileWeave
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",0,Random(-2,2))
+			CYDM A 1 Bright A_CustomMissile("ProjectileTrailParticleOrange",0,Random(-2,2))
+			TNT1 A 0 Bright A_BishopMissileWeave
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",0,Random(-2,2))
+			CYDM A 1 Bright A_CustomMissile("ProjectileTrailParticleOrange",0,Random(-2,2))		
+			TNT1 A 0 Bright A_PlaySound("monster/homingrockbeep")
+			Loop
+	}
+}
+
+ACTOR CyShoulderRocket2 : CyShoulderRocket {
+	Speed 29
+	FastSpeed 34
+	Damage 2
+	
+	States {
+		Spawn:
+			TNT1 A 0
+			Goto Normal
+    }
+}
+
+ACTOR CyHomingMissile : CyBaronRocket {
+	Radius 11
+	Height 8
+	Scale 1
+	Damage 9
+	Speed 20
+	FastSpeed 24
+	ExplosionDamage 68
+	DamageType "BaronComet"
+	SeeSound "monster/homingrockfire"
+	States {
+		Spawn:
+			TNT1 A 0 Bright A_SeekerMissile(10, 13, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+			HMIS A 2 Bright A_CustomMissile("ProjectileTrailParticleOrange",Random(0,2),Random(-2,2))
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+			HMIS A 2 Bright A_CustomMissile("ProjectileTrailParticleOrange",Random(0,2),Random(-2,2))
+			TNT1 A 0 Bright A_SeekerMissile(10, 13, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+			HMIS A 2 Bright A_CustomMissile("ProjectileTrailParticleOrange",Random(0,2),Random(-2,2))
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+			HMIS A 2 Bright A_CustomMissile("ProjectileTrailParticleOrange",Random(0,2),Random(-2,2))
+			TNT1 A 0 Bright A_SeekerMissile(10, 13, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+			HMIS A 2 Bright A_CustomMissile("ProjectileTrailParticleOrange",Random(0,2),Random(-2,2))
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+			HMIS A 2 Bright A_CustomMissile("ProjectileTrailParticleOrange",Random(0,2),Random(-2,2))
+			TNT1 A 0 Bright A_SeekerMissile(10, 13, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+			HMIS A 2 Bright A_CustomMissile("ProjectileTrailParticleOrange",Random(0,2),Random(-2,2))
+			TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+			HMIS A 2 Bright A_CustomMissile("ProjectileTrailParticleOrange",Random(0,2),Random(-2,2))
+			TNT1 A 0 Bright A_PlaySound("monster/homingrockbeep")
+			Loop
+    }
+}
+
+ACTOR RocketEx {
+	RenderStyle Add
+	Alpha 0.85
+	+CLIENTSIDEONLY
+	+NOGRAVITY
+	
+	States {
+		Spawn:
+			MISL B 6 Bright
+			MISL CD 5 Bright
+			Stop
+	}
+}
+
+ACTOR MissileTrail {
+	RenderStyle Translucent
+	Alpha 0.5
+	Scale 0.2
+	+CLIENTSIDEONLY
+	+NOBLOCKMAP
+	+DONTSPLASH
+	+NOCLIP
+	+NOINTERACTION
+	+THRUACTORS
+	
+	States {
+		Spawn:
+			TNT1 A 2
+			PDBA ABCDEFGHIJKL 1 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR GrenadeTrail : MissileTrail { Scale 0.075 }
+
+ACTOR CyDemonTechProjectile {
+	Height 4
+	Radius 4
+	Speed 40
+	Damage 2
+	Scale 0.06
+	PROJECTILE
+	+FORCERADIUSDMG
+	DeathSound "cydes/demontechex"
+	DamageType "BaronComet"
+	Decal DTRScorch
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay A_Jump(128,"Spawn2")
+			Goto Normal
+		
+		Normal:
+			TNT1 A 0 A_Jump(128,"NormalFX")
+			DTPR A 1 Bright A_SpawnItemEx("DemonTechTrail",Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-20,20),128)
+			Loop
+			
+		NormalFX:
+			TNT1 A 0 A_SpawnItemEx("DTechLightning",Random(1,-1),Random(1,-1),Random(1,-1),0,0,0,0,128)
+			DTPR A 1 Bright A_SpawnItemEx("DemonTechTrail",Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-20,20),128)
+			TNT1 A 0 A_SpawnItemEx("DTechLightning2",Random(1,-1),Random(1,-1),Random(1,-1),0,0,0,0,128)
+			DTPR A 1 Bright A_SpawnItemEx("DemonTechTrail",Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-20,20),128)
+			Goto Normal
+			
+		Spawn2:
+			TNT1 A 0 A_Jump(128,"Spawn2FX")
+			DTPR A 1 Bright A_SpawnItemEx("DemonTechTrail2",Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-20,20),128)
+			Loop
+			
+		Spawn2FX:
+			TNT1 A 0 A_SpawnItemEx("DTechLightning",Random(1,-1),Random(1,-1),Random(1,-1),0,0,0,0,128)
+			DTPR A 1 Bright A_SpawnItemEx("DemonTechTrail",Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-20,20),128)
+			TNT1 A 0 A_SpawnItemEx("DTechLightning2",Random(1,-1),Random(1,-1),Random(1,-1),0,0,0,0,128)
+			DTPR A 1 Bright A_SpawnItemEx("DemonTechTrail",Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-20,20),128)
+			Goto Spawn2
+			
+		Death:
+			TNT1 A 0
+			TNT1 A 0 Bright A_SpawnItemEx("GreenParticleSpawnerDT", 0, 0, 0, 0, 0, 0, 0, 128)
+			TNT1 A 0 Bright A_SpawnItemEx("DemonTechEx",0,0,0,0,0,0,0,128,0)
+			TNT1 AAAA 0 A_CustomMissile("SmokeFX2", 0, 0, random(0,360), 2, random(0,360))
+			TNT1 A 1 Bright A_Explode(2,48)
+			Stop
+	}
+}
+
+ACTOR DemonTechTrail {
+	RenderStyle Add
+	Scale 0.04
+	Alpha 0.65
+	+CLIENTSIDEONLY
+	+NOBLOCKMAP
+	+DONTSPLASH
+	+NOCLIP
+	+NOINTERACTION
+	+THRUACTORS
+	
+	States {
+		Spawn:
+			TNT1 A 2
+			DTRI AAAAAABBBBBBBB 1 Bright A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR DemonTechTrail2 : DemonTechTrail {
+	States {
+		Spawn:
+			TNT1 A 2
+			DTRI AAAAAACCCCCCCC 1 Bright A_FadeOut(0.05)
+			Stop
+  }
+}
+
+ACTOR DemonTechEx {
+	RenderStyle Add
+	Alpha 0.75
+	Scale 0.45
+	PROJECTILE
+	+NOCLIP
+	
+	States {
+		Spawn:
+			FRPG ABCDEFGH 2 Bright A_FadeOut(0.1)
+			Stop
+	}
+}
+
+ACTOR DTechLightning {
+	RenderStyle Add
+	Scale 0.03
+	Alpha 0.5
+	+MISSILE
+	+NOGRAVITY
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOTELEPORT
+	+DONTSPLASH
+	+CLIENTSIDEONLY
+	-SOLID
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay A_Jump(256,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72)
+			GRL1 ABCDEFGHIJKLMNOPQR 0 Bright A_Jump(256,"Death")
+			GRL2 ABCDEFGHIJKLMNOPQR 0 Bright A_Jump(256,"Death")
+			GRL3 ABCDEFGHIJKLMNOPQR 0 Bright A_Jump(256,"Death")
+			GRL4 ABCDEFGHIJKLMNOPQR 0 Bright A_Jump(256,"Death")
+			Goto Death
+			
+		Death:
+			"----" A 1 Bright
+			Stop
+	}
+}
+
+ACTOR DTechLightning2 : DTechLightning { Scale 0.06 }
+
+ACTOR GreenParticleSpawnerDT : RedParticleSpawner {
+  States {
+		Spawn:
+			TNT1 A 0 NoDelay A_SpawnItemEx("EPSG7",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("EPSG8",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("EPSG9",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("EPSG10",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("EPSG11",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("EPSG12",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 1
+			Stop
+  }
+}
+
+ACTOR EnergyProjectileSparkGreenDT : EnergyProjectileSparkGreen {
+	States {
+		Spawn:
+			SPKG A 2 Bright A_FadeOut(0.08)
+			Loop
+	}
+}
+
+ACTOR EPSG7 : EnergyProjectileSparkGreenDT { Scale 0.040 }
+ACTOR EPSG8 : EnergyProjectileSparkGreenDT { Scale 0.035 }
+ACTOR EPSG9 : EnergyProjectileSparkGreenDT { Scale 0.030 }
+ACTOR EPSG10 : EnergyProjectileSparkGreenDT { Scale 0.025 }
+ACTOR EPSG11 : EnergyProjectileSparkGreenDT { Scale 0.020 }
+ACTOR EPSG12 : EnergyProjectileSparkGreenDT { Scale 0.015 }
+
+ACTOR TerminatorGhostA {
 	Radius 2
 	Height 64
 	RENDERSTYLE Translucent
@@ -99,7 +615,7 @@ ACTOR DarkTerminatorGhostA {
   }
 }
 
-Actor DarkTerminatorGhostB : DarkTerminatorGhostA {
+Actor TerminatorGhostB : TerminatorGhostA {
 	States {
 		Spawn:
 			TNT1 A 1 Bright
@@ -108,7 +624,7 @@ Actor DarkTerminatorGhostB : DarkTerminatorGhostA {
   }
 }
 
-Actor DarkTerminatorGhostC : DarkTerminatorGhostA {
+Actor TerminatorGhostC : TerminatorGhostA {
 	States {
 		Spawn:
 			TNT1 A 1 Bright
@@ -117,11 +633,59 @@ Actor DarkTerminatorGhostC : DarkTerminatorGhostA {
   }
 }
 
-Actor DarkTerminatorGhostD : DarkTerminatorGhostA {
+Actor TerminatorGhostD : TerminatorGhostA {
 	States {
 		Spawn:
 			TNT1 A 1 Bright
 			DB2S D 2 A_FadeOut(0.1,1)
 			Goto Spawn+1
   }
+}
+
+ACTOR Kaboom4 : Kaboom2 {
+	Speed 2
+	Scale 0.9
+	
+	States {
+		Spawn:
+			FXPO AABBCDEFGHIJKLM 1 Bright A_FadeOut(0.05)
+			Stop
+	}
+}
+
+
+//================
+// Explosive Junk
+//================
+ACTOR Debris {
+	Radius 3
+	Scale 0.1
+	+MISSILE
+	+CLIENTSIDEONLY
+	+DOOMBOUNCE
+	+NOTELEPORT
+	+FORCEXYBILLBOARD
+	+THRUACTORS
+	+DROPOFF
+	BounceCount 3
+	BounceFactor 0.4
+	WallBounceFactor 0.3
+	
+	States {
+		Spawn:
+			SHRD ABCDEFGH 2
+			Loop
+			
+		Death:
+			TNT1 A 0 A_Jump(128,3,5)
+			SHRD D 50
+			SHRD D 5 A_FadeOut(0.10)
+			Goto Death+2
+			SHRD E 50
+			SHRD E 5 A_FadeOut(0.10)
+			Goto Death+4
+			SHRD H 50
+			SHRD H 5 A_FadeOut(0.10)
+			Goto Death+6
+	}
 }

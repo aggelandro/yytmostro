@@ -17,6 +17,7 @@ ACTOR Archevil : Archvile2 {
 	DropItem "IsaacItemsTier3MidChanceSpawner"
 	DropItem "IsaacItemsTier3LowChanceSpawner"
 	var int user_hidden;
+	var int user_buff_delay;
 	
 	States {
 		SpawnLoop:
@@ -63,11 +64,10 @@ ACTOR Archevil : Archvile2 {
 			Goto See
 			
 		Missile:
-			TNT1 A 0 A_CheckFlag("FRIENDLY", 3)
+			TNT1 A 0 A_CheckFlag("FRIENDLY", 2)
 			TNT1 A 0 A_ChangeFlag(FRIENDLY, TRUE)
 			Goto Hide
-			TNT1 A 0 A_Jump(192, "HealTarget")
-			TNT1 A 0 A_Jump(128, "BuffArea")
+			TNT1 A 0 A_Jump(196, "HealTarget", "BuffArea")
 			TNT1 A 0 A_Jump(224, "Hide")
 			Goto SeeLoop
 			
@@ -82,6 +82,10 @@ ACTOR Archevil : Archvile2 {
 			Goto SeeLoop
 			
 		BuffArea:
+			TNT1 A 0 A_JumpIf(user_buff_delay == 0, 3)
+			TNT1 A 0 A_SetUserVar("user_buff_delay", user_buff_delay-1)
+			TNT1 A 0 A_Jump(224, "Hide")
+			Goto SeeLoop
 			TNT1 A 0 A_PlaySound("archevil/active", CHAN_AUTO)
 			TNT1 A 0 A_FadeTo(1, 1, FALSE)
 			TNT1 A 0 A_SetUserVar("user_hidden", 0)
@@ -90,6 +94,7 @@ ACTOR Archevil : Archvile2 {
 			BONL HIJKLMN 6 Bright
 			BONL N 8 Bright A_RadiusGive("BuffSpell", 1120, RGF_MONSTERS)
 			BONL N 20 Bright
+			TNT1 A 0 A_SetUserVar("user_buff_delay", 3)
 			Goto SeeLoop
 			
 		Hide:
@@ -108,6 +113,8 @@ ACTOR Archevil : Archvile2 {
 			Goto Hide
 			
 		Death:
+			TNT1 A 0 A_FadeTo(1, 1, FALSE)
+			TNT1 A 0 A_SetUserVar("user_hidden", 0)
 			BONL Q 7
 			BONL R 7 A_Scream
 			BONL S 7 A_NoBlocking

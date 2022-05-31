@@ -377,9 +377,21 @@ kimp/pain		KIMPHIT
 kimp/sight	KIMPSEE
 
 //terminator
-cydes/sight CDSBSIT
-cydes/death CDSBDTH
-cydes/pain CDSBPAIN
-smissile/fire DSRLAUNC
-cydes/laugh METLLGH
-cydes/mischrg 8FSGCHRG
+cydes/sight							CDSBSIT
+cydes/death							CDSBDTH
+cydes/pain							CDSBPAIN
+smissile/fire						DSRLAUNC
+cydes/laugh							METLLGH
+cydes/mischrg						8FSGCHRG
+cydes/demontechfire			DECHFI
+cydes/demontechex				DECHXP
+cydes/demontechrld			DS12GCK
+monster/homingrockfire	DSHOMRK
+monster/homingrockbeep	DSHMRKB
+monster/homingrocket		DSSKELR
+monster/rocketfire			DSRLFIRE
+cydes/quote1						T800QUO1
+cydes/grenadebounce			DGLGBNC1
+cydes/grenadefire				DSGRFIRE
+cydes/lasershot   			LRB2FLY
+cydes/laserexp    			LRB2EXP

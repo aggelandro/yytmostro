@@ -46,7 +46,6 @@ ACTOR KnightIllusion : HellKnight2
 	MissileType "GhostBall"
 	RenderStyle Translucent
 	Alpha 0.4
-	Species Goat
 	Painchance 0
 	+NORADIUSDMG
 	+NOBLOOD

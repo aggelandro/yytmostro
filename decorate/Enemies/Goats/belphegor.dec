@@ -139,6 +139,7 @@ ACTOR BelphegorGreenPlasmaBall : BaronBall {
 	RenderStyle Add
 	Alpha 0.9
 	SeeSound "belph/fire"
+	DamageType "BaronComet"
 	+RANDOMIZE
 	+FORCEXYBILLBOARD
   +THRUGHOST

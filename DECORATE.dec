@@ -199,8 +199,9 @@ ACTOR SpectreSpawner : RandomSpawner replaces Spectre
 }
 ACTOR BaronSpawner : RandomSpawner replaces BaronOfHell
 {
-	DropItem "BaronOfHell2" 255, 50
-	DropItem "AngryBaron" 255, 50
+	DropItem "BaronOfHell2" 255, 43
+	DropItem "AngryBaron" 255, 42
+	DropItem "T-800" 255, 5
 }
 ACTOR ImpSpawner : RandomSpawner replaces DoomImp
 {

@@ -538,6 +538,12 @@ script "applyEffect" (int option, int dur, int force) {
         }; break;
         case 10: {
             // Curación instantanea y buff de velocidad
+            if (CheckActorClass(0, "Archvile2") || 
+                CheckActorClass(0, "Archevil") || 
+                CheckActorClass(0, "SpookyVile") || 
+                CheckActorClass(0, "Summoner")) {
+                terminate;
+            }
             int htid = UniqueTID();
             mtid = UniqueTID();
             Spawn("HealEffectArea", GetActorX(0)+5, GetActorY(0), GetActorZ(0), htid);
@@ -545,11 +551,11 @@ script "applyEffect" (int option, int dur, int force) {
             SetActivator(htid);
             SetPointer(AAPTR_TRACER, mtid);
             SetActivator(mtid);
-            SetActorProperty(0, APROP_Speed, FixedMul(GetActorProperty(0, APROP_Speed), 1.3));
+            SetActorProperty(0, APROP_Speed, FixedMul(GetActorProperty(0, APROP_Speed), 1.5));
             Delay(15);
             Thing_Damage2(0, Random(-200, -100), "Healing");
             Delay(510);
-            SetActorProperty(0, APROP_Speed, FixedDiv(GetActorProperty(0, APROP_Speed), 1.3));
+            SetActorProperty(0, APROP_Speed, FixedDiv(GetActorProperty(0, APROP_Speed), 1.5));
             Thing_ChangeTID(mtid, 0);
         }; break;
         case 11: {
