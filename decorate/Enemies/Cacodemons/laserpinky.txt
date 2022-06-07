@@ -31,7 +31,7 @@ ACTOR Brimgoyle : Cacodemon2 {
 			SARF G 1 Bright A_FaceTarget
 			TNT1 A 0 A_CustomMissile("BrimstoneBeam", 33)
 			TNT1 A 0 A_PlaySound("agge/brimlaser", CHAN_AUTO)
-			TNT1 A 0 A_CustomRailgun(Random(0,1), 0, None, None, RGF_SILENT, 0)
+			TNT1 A 0 A_CustomRailgun(Random(0,1), 0, None, None, RGF_SILENT, 0, 0, "BrimgoyleBeamPuff")
 			Goto LaserLoop
 			
 		LaserLoop:
@@ -40,11 +40,11 @@ ACTOR Brimgoyle : Cacodemon2 {
 			TNT1 A 0 A_CustomMissile("BrimstoneBeam", 33)
 			TNT1 A 0 A_JumpIfInventory("LoopFlag", 34, 6)
 			TNT1 A 0 A_Jump(32, 2)
-			TNT1 A 0 A_CustomRailgun(Random(0,1), 0, None, None, RGF_SILENT, 0)
+			TNT1 A 0 A_CustomRailgun(Random(0,1), 0, None, None, RGF_SILENT, 0, 0, "BrimgoyleBeamPuff")
 			TNT1 A 0 A_Jump(256, 4)
-			TNT1 A 0 A_CustomRailgun(Random(1,2), 0, None, None, RGF_SILENT, 0)
+			TNT1 A 0 A_CustomRailgun(Random(1,2), 0, None, None, RGF_SILENT, 0, 0, "BrimgoyleBeamPuff")
 			TNT1 A 0 A_Jump(256, 2)
-			TNT1 A 0 A_CustomRailgun(Random(1,2), 0, None, None, RGF_SILENT, 0)
+			TNT1 A 0 A_CustomRailgun(Random(1,2), 0, None, None, RGF_SILENT, 0, 0, "BrimgoyleBeamPuff")
 			TNT1 A 0 A_JumpIfInventory("LoopFlag", 69, 1)
 			Loop
 			TNT1 A 0 A_TakeInventory("LoopFlag", 69)
@@ -71,4 +71,9 @@ ACTOR Brimgoyle : Cacodemon2 {
 			SARF MLKJI 8
 			Goto See
 	}
+}
+
+ACTOR BrimgoyleBeamPuff {
+	+ALWAYSPUFF
+	DamageType "BrimgoyleBeam"
 }

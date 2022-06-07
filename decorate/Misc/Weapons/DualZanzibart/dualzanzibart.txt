@@ -37,6 +37,7 @@ ACTOR DualZanzibart : DoomWeapon {
 			Goto Select+1
 			
 		Ready:
+			TNT1 A 0 A_TakeInventory("WeaponSpecialAction", 1)
 			ZANL A 1
 			TNT1 A 0 A_GiveInventory("SynthFireActive",1)
 			TNT1 A 0 ACS_ExecuteAlways(891,0,0,0,0)
@@ -96,24 +97,24 @@ ACTOR DualZanzibart : DoomWeapon {
 			TNT1 A 0 A_TakeInventory("RocketAmmo", 6)
 			TNT1 A 0 A_Quake(2, 45, 0, 5)
 			ZANL A 45
-			TNT1 A 0 A_FireCustomMissile("ArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
-			ZANL G 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
-			ZANL F 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
-			ZANL G 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
-			ZANL F 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
-			ZANL G 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
+			TNT1 A 0 A_FireCustomMissile("PArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
+			ZANL G 10 Bright A_FireCustomMissile("PArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
+			ZANL F 10 Bright A_FireCustomMissile("PArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
+			ZANL G 10 Bright A_FireCustomMissile("PArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
+			ZANL F 10 Bright A_FireCustomMissile("PArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
+			ZANL G 10 Bright A_FireCustomMissile("PArmncubusGrenade", frandom(-5,15), 0, -12, 0, 0, 12)
 			ZANL H 10 Bright
 			Goto LIdle
 			
 		SpecialRFire:
 			TNT1 A 0 A_TakeInventory("WeaponSpecialAction", 2)
 			ZANR A 45
-			TNT1 A 0 A_FireCustomMissile("ArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
-			ZANR G 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
-			ZANR F 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
-			ZANR G 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
-			ZANR F 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
-			ZANR G 10 Bright A_FireCustomMissile("ArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
+			TNT1 A 0 A_FireCustomMissile("PArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
+			ZANR G 10 Bright A_FireCustomMissile("PArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
+			ZANR F 10 Bright A_FireCustomMissile("PArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
+			ZANR G 10 Bright A_FireCustomMissile("PArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
+			ZANR F 10 Bright A_FireCustomMissile("PArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
+			ZANR G 10 Bright A_FireCustomMissile("PArmncubusGrenade", frandom(-15,5), 0, 12, 0, 0, 12)
 			ZANR H 10 Bright
 			Goto RIdle
 	}
@@ -129,4 +130,8 @@ ACTOR PGreenFatShot : GreenFatShot {
 			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 5, 140)
 			Goto Death
 	}
+}
+
+ACTOR PArmncubusGrenade : ArmncubusGrenade {
+	DamageType "PPoison" //player poison
 }

@@ -447,7 +447,7 @@ script "applyEffect" (int option, int dur, int force) {
             SetActivator(mtid);
             Thing_ChangeTID(mtid, 0);
             for (i=0; i<times; i++) {
-                Thing_Damage2(0, poisonDmg, "Poison");
+                Thing_Damage2(0, poisonDmg, "PPoison");
                 Delay(70);
             }
 
@@ -596,6 +596,7 @@ script "applyEffectOnPlayer" (int option, int duration, int arg2) {
                 if (!ptid) {
                     int mtid = UniqueTID();
                     Thing_ChangeTID(0, mtid);
+                    poisonDmg = Random(3, 7);
                 }
 
                 ntid = UniqueTID();
@@ -615,7 +616,15 @@ script "applyEffectOnPlayer" (int option, int duration, int arg2) {
 
                 for (i=0; i<arg2; i++) {
                     Thing_Damage2(0, poisonDmg, "Poison");
-                    Delay(lapse);
+                    for (i=0; i<lapse; i++) {
+                        Delay(1);
+                        if (GetUserVariable(0, "user_is_dead")) {
+                            SetActorState(ntid, "Death");
+                            TakeInventory("PoisonCounter", 1);
+                            Thing_ChangeTID(ntid, 0);
+                            terminate;
+                        }
+                    }
                 }
 
                 SetActorState(ntid, "Death");

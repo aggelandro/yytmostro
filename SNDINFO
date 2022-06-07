@@ -395,3 +395,21 @@ cydes/grenadebounce			DGLGBNC1
 cydes/grenadefire				DSGRFIRE
 cydes/lasershot   			LRB2FLY
 cydes/laserexp    			LRB2EXP
+cydes/flameready				DSHECFLM
+cydes/chem							DSDAECH
+
+//diablo
+Diablo/see		LRARSIG
+$rolloff Diablo/see		800 2200
+Diablo/Pain		LRARPAI
+$rolloff Diablo/Pain	800 2200
+Diablo/Death	LRARDTH
+$random Diablo/Active { Diablo/Active1 Diablo/Active2 }
+Diablo/Active1 			DSARCAC1
+Diablo/Active2 			DSARCAC2
+Diablo/FireShoot 		DSPJCTF
+Diablo/FireExplode 	DSPJCTE
+
+$random hoof/step		{ hoof/step1 hoof/step2 }
+hoof/step1			dshof1
+hoof/step2			dshof2

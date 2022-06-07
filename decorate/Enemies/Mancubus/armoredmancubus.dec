@@ -5,6 +5,7 @@ ACTOR Armncubus : Fatso2 {
 	PainChance 0
 	DamageFactor Bullet, 0.5
 	DamageFactor "Poison", 0
+	DamageFactor "PPoison", 0
 	DamageFactor "AfireF", 0.9
 	BloodColor "Green"
 	SeeSound "AM/see"

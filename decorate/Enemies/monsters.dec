@@ -388,6 +388,7 @@ ACTOR Cacodemon2 : YYTMonster
   Speed 8
   PainChance 128
 	Species "Cacodemon"
+	DamageFactor "BrimgoyleBeam", 0
   +FLOAT
   +NOGRAVITY
   SeeSound "caco/sight"
@@ -443,6 +444,7 @@ ACTOR Revenant2 : YYTMonster
   PainChance 100
   MeleeThreshold 196
 	DamageFactor "Poison", 0
+	DamageFactor "PPoison", 0
 	Species "Revenant"
   +MISSILEMORE 
   +FLOORCLIP
@@ -708,6 +710,7 @@ ACTOR BaronOfHell2 : YYTMonster
   Mass 1000
   Speed 8
 	DamageFactor "BaronComet", 0
+	DamageFactor "BaronFire", 0
   PainChance 50
 	Species "Goat"
   +FLOORCLIP

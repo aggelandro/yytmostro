@@ -37,47 +37,44 @@ ACTOR Hellfire : ArchvileFire
     FIRE BCBCDCDCDEDED 6 bright A_Explode(6,20,false,false)
 	FIRE BCBCDCDCDEDED 6 bright A_Explode(6,20,false,false)
 	FIRE BCBCDCDCDEDED 6 bright A_Explode(6,20,false,false)
-	FIRE BCBCDCDCDEDED 6 bright A_Explode(6,20,false,false)
-	FIRE BCBCDCDCDEDED 6 bright A_Explode(6,20,false,false)
-	FIRE BCBCDCDCDEDED 6 bright A_Explode(6,20,false,false)
     FIRE E 2 bright
     FIRE FGH 4 bright
     Stop
   }
 }
-ACTOR AggeNewFire
-{
+ACTOR AggeNewFire {
 	Radius 8
-    Height 40
-    RenderStyle "Add"
-    DamageType "FireBF"
-    Alpha 0.90
-    Projectile
+	Height 40
+	RenderStyle "Add"
+	DamageType "FireBF"
+	Alpha 0.90
+	Projectile
 	+PAINLESS
-    -NOGRAVITY
-    +LOWGRAVITY
-    +NOEXPLODEFLOOR
-    +NODAMAGETHRUST
-	States
-	{
-	Spawn:
-		TNT1 A 0 NoDelay A_PlaySound("agge/flame", CHAN_5, 1.0, TRUE)
-		FLME A 2 bright A_Explode(5, 32, 0)
-		FLME BCDEFGHIJKLMN 2 bright A_Explode(5, 16, 0)
-		FLME A 2 bright A_Explode(5, 32, 0)
-		FLME BCDEFGHIJKLMN 2 bright A_Explode(5, 16, 0)
-		FLME A 2 bright A_Explode(5, 32, 0)
-		FLME BCDEFGHIJKLMN 2 bright A_Explode(5, 16, 0)
-		FLME A 2 bright A_Explode(5, 32, 0)
-		FLME BCDEFGHIJKLMN 2 bright A_Explode(5, 16, 0)
-		FLME A 2 bright A_Explode(5, 32, 0)
-		FLME BCDEFGHIJKLMN 2 bright A_Explode(5, 16, 0)
-		TNT1 A 0 A_Jump(192, "Death")
-		Loop
-	Death:
-		TNT1 A 0 A_StopSound(CHAN_5)
-		TNT1 A 1
-		Stop
+	-NOGRAVITY
+	+LOWGRAVITY
+	+NOEXPLODEFLOOR
+	+NODAMAGETHRUST
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay A_PlaySound("agge/flame", CHAN_5, 1.0, TRUE)
+			FLME A 2 bright A_Explode(5, 32, 0)
+			FLME BCDEFGHIJKLMN 2 bright A_Explode(5, 16, 0)
+			FLME A 2 bright A_Explode(5, 32, 0)
+			FLME BCDEFGHIJKLMN 2 bright A_Explode(5, 16, 0)
+			FLME A 2 bright A_Explode(5, 32, 0)
+			FLME BCDEFGHIJKLMN 2 bright A_Explode(5, 16, 0)
+			FLME A 2 bright A_Explode(5, 32, 0)
+			FLME BCDEFGHIJKLMN 2 bright A_Explode(5, 16, 0)
+			FLME A 2 bright A_Explode(5, 32, 0)
+			FLME BCDEFGHIJKLMN 2 bright A_Explode(5, 16, 0)
+			TNT1 A 0 A_Jump(192, "Death")
+			Loop
+		
+		Death:
+			TNT1 A 0 A_StopSound(CHAN_5)
+			TNT1 A 1
+			Stop
 	}
 }
 ACTOR HellfireM : Hellfire
@@ -85,6 +82,7 @@ ACTOR HellfireM : Hellfire
 	-PAINLESS
 	-FORCERADIUSDMG
 	DamageType "AFire"
+	Alpha 0.5
 	Obituary "%o was burned alive"
 	States
 	{
@@ -93,9 +91,6 @@ ACTOR HellfireM : Hellfire
     FIRE BAB 2 bright 
     FIRE C 2 bright 
     FIRE BCBCDCDCDEDED 4 bright A_Explode(4,20,false,false)
-	FIRE BCBCDCDCDEDED 4 bright A_Explode(4,20,false,false)
-	FIRE BCBCDCDCDEDED 4 bright A_Explode(4,20,false,false)
-	FIRE BCBCDCDCDEDED 4 bright A_Explode(4,20,false,false)
 	FIRE BCBCDCDCDEDED 4 bright A_Explode(4,20,false,false)
 	FIRE BCBCDCDCDEDED 4 bright A_Explode(4,20,false,false)
     FIRE E 2 bright
@@ -109,27 +104,28 @@ ACTOR FlameThrowerFire : PlasmaBall
 	+NODAMAGETHRUST
 	DamageType "FireBF"
 	RenderStyle "Add"
-	Alpha 1
+	Alpha 0.5
 	Damage 1
 	Speed 20
 	+FORCERADIUSDMG
 	+THRUACTORS
 	SeeSound "agge/flamefire"
 	DeathSound "agge/flamehit"
-	States
-	{
-	Spawn:
-		FRFX ABCD 2 Bright A_Explode(5*random(2,5),15)
-		TNT1 A 0 A_LowGravity
-		FRFX EFGHIJKLMNOP 2 Bright A_Explode(5*random(2,5),15)
-		Goto Death
-	Death:
-	    // HellFire actors are in "universalstuff.dec"
-		FRFX C 1 Bright A_SpawnItemEx("AggeNewFire",5,0,0,0,0,0,0)
-		Stop
-	XDeath:
-		FIRE C 1 Bright
-		Stop
+	
+	States {
+		Spawn:
+			FRFX ABCD 2 Bright A_Explode(5*random(2,5),15)
+			TNT1 A 0 A_LowGravity
+			FRFX EFGHIJKLMNOP 2 Bright A_Explode(5*random(2,5),15)
+			Goto Death
+			
+		Death:
+			FRFX C 1 Bright A_SpawnItemEx("AggeNewFire",5,0,0,0,0,0,0)
+			Stop
+			
+		XDeath:
+			FIRE C 1 Bright
+			Stop
 	}
 }
 

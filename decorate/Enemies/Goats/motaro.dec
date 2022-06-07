@@ -120,7 +120,6 @@ ACTOR KnightAttack : BaronBall {
 	States {
 		Spawn:
 			TNT1 A 2 BRIGHT
-			TNT1 A 2
 			Goto Death
 			
 		Death:

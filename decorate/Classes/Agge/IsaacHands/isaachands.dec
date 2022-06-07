@@ -2123,7 +2123,7 @@ ACTOR FireTearProjectile : NormalTearProjectile {
 
 ACTOR ExplosiveTearProjectile : NormalTearProjectile {
 	Speed 5
-	DamageType "Poison"
+	DamageType "PPoison"
 	var int user_explosion_range;
 	-NOGRAVITY
 	
@@ -3118,7 +3118,7 @@ ACTOR IsaacExplosion {
 }
 
 ACTOR IsaacIpecacExplosion : IsaacExplosion {
-	DamageType "Poison"
+	DamageType "PPoison"
 	var int user_explosion_range;
 	var int user_fire_flag;
 	

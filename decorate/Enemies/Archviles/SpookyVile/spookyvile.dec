@@ -31,7 +31,7 @@ ACTOR SpookyVile : Archvile2
 			VILE G 10 Bright A_FaceTarget
 			VILE H 8 Bright A_VileTarget("BlindFire")
 			 VILE IJKLMN 8 Bright A_FaceTarget
-			 VILE O 8 Bright A_VileAttack("vile/stop",50,10,70,1.0)
+			 VILE O 8 Bright A_VileAttack("vile/stop",10,5,70,1.0)
 			VILE P 20 Bright
 			Goto See
 	}

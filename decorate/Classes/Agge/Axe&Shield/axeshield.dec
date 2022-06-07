@@ -25,7 +25,6 @@ ACTOR AxeShield : Weapon
 			
 		Select:
 			TNT1 A 0 A_PlaySound("agge/summon", CHAN_WEAPON)
-			//Los saltos en los states de armas se cuentan por sprite+comando, no por statement como en los otros lados
 			TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, 11)
 			CONE TUVWXYZ 3 A_Raise
 			CONF ABC 2
@@ -153,14 +152,12 @@ ACTOR AxeShield : Weapon
 }
 
 ACTOR EnergyShield {
-
   Health 999999
   Radius 20
   Height 10
   DamageFactor "Friendly", 0
   PainChance 255
 	Projectile
-	
   +SHOOTABLE
 	-NOBLOCKMAP
   +NODAMAGE
@@ -170,7 +167,6 @@ ACTOR EnergyShield {
 	+SEEKERMISSILE
 	
   States {
-	
 		Spawn:
 			// Swapea el target con el master para poder guardar al jugador actual en el master.
 			// Nota: El puntero a target cambia internamente cuando la bala es reflejada (pain state).
@@ -196,10 +192,8 @@ ACTOR EnergyShield {
 }
 
 ACTOR ShieldHit {
-
   Scale 0.2
   Renderstyle Add
-	
   +NOGRAVITY
   +NOINTERACTION
   +SEEKERMISSILE

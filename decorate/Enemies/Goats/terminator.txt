@@ -9,6 +9,12 @@ ACTOR T-800 : BaronOfHell2 {
   PainSound "cydes/pain"
   DeathSound "cydes/death"
   Obituary "Hasta la vista, bb"
+	DropItem "UniqueWeaponSpawner", 32
+	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "IsaacItemsTier2MidChanceSpawner"
+	DropItem "IsaacItemsTier2HighChanceSpawner"
+	DropItem "IsaacItemsTier3MidChanceSpawner"
+	DropItem "CrusherGunToken", 64
 	var int user_laser_duration;
 	
 	States {
@@ -59,19 +65,30 @@ ACTOR T-800 : BaronOfHell2 {
 		Melee:
 		Missile:
 			TNT1 A 0 A_SetTranslucent(1)
-			//TNT1 A 0 A_JumpIfCloser(150,"Flamethrowers")
-			TNT1 A 0 A_Jump(128, "Rockets", "Grenadier", "GreenLasers")
+			TNT1 A 0 A_JumpIfCloser(150,"Flamethrowers")
+			TNT1 A 0 A_Jump(128, "Rockets", "Grenadier", "GreenBeams")
 			Goto Normal
 			
 		Normal:
-			DB2S E 12 A_FaceTarget
-			DB2S E 4 A_FaceTarget
-			TNT1 A 0 A_CustomMissile("CyDemonTechProjectile",36,20,frandom(-2,2),0)
-			TNT1 A 0 A_CustomMissile("CyDemonTechProjectile",36,-20,frandom(-2,2),0)
+			TNT1 A 0 A_Jump(128, "Normal2")
+			DB2S E 16 A_FaceTarget
+			DB2S E 5 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyDemonTechProjectile", 36, 20, frandom(-2,2), 0)
+			TNT1 A 0 A_CustomMissile("CyDemonTechProjectile", 36, -20, frandom(-2,2), 0)
 			DB3S B 2 Bright A_PlaySoundEx("cydes/demontechfire","Weapon")
 			TNT1 A 0 A_Jump(6,"Pause")
 			TNT1 A 0 A_SpidRefire
-			Goto Normal+1
+			Goto Normal+2
+			
+		Normal2:
+			DB2S E 16 A_FaceTarget
+			DB2S E 4 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("BlasterShot", 36, 20, frandom(-5,5), 0)
+			TNT1 A 0 A_CustomMissile("BlasterShot", 36, -20, frandom(-5,5), 0)
+			DB3S D 2 Bright
+			TNT1 A 0 A_Jump(6,"Pause")
+			TNT1 A 0 A_SpidRefire
+			Goto Normal2+1
 			
 		Pause:
 			DB2S E 10
@@ -79,7 +96,7 @@ ACTOR T-800 : BaronOfHell2 {
 			Goto See
 			
 		Rockets:
-			DB2S E 10 A_FaceTarget 
+			DB2S E 16 A_FaceTarget 
 			DB3S D 0 Bright A_CustomMissile("CyBaronRocket",35,-20,0,0)
 			DB3S D 8 Bright A_CustomMissile("CyBaronRocket",35,20,0,0)
 			DB2S E 10 A_FaceTarget
@@ -90,6 +107,7 @@ ACTOR T-800 : BaronOfHell2 {
 			DB3S D 8 Bright A_CustomMissile("CyBaronRocket",35,20,0,0)
 			DB2S E 10
 			TNT1 A 0 A_Jump(16,"RocketSpammingCombo")
+			TNT1 A 0 A_Jump(87,"Grenadier", "GreenBeams")
 			Goto See
 			
 		RocketSpammingCombo:
@@ -141,7 +159,7 @@ ACTOR T-800 : BaronOfHell2 {
 			Goto See
 			
 		Grenadier:
-			DB2S E 8 A_FaceTarget
+			DB2S E 16 A_FaceTarget
 			TNT1 A 0 A_PlaySound("cydes/grenadefire")
 			TNT1 A 0 Bright A_CustomMissile("CyBaronGrenade",60,-20,Random(4,-4))
 			DB3S A 7 Bright A_CustomMissile("CyBaronGrenade",60,20,Random(4,-4))
@@ -153,30 +171,114 @@ ACTOR T-800 : BaronOfHell2 {
 			TNT1 A 0 A_PlaySound("cydes/grenadefire")
 			TNT1 A 0 Bright A_CustomMissile("CyBaronGrenade",60,-20,Random(4,-4))
 			DB3S A 7 Bright A_CustomMissile("CyBaronGrenade",60,20,Random(4,-4))
-			DB2S E 12 A_FaceTarget		
+			DB2S E 12 A_FaceTarget
+			TNT1 A 0 A_Jump(87, "GreenBeams")
 			Goto See
 			
-		GreenLasers:
-			DB2S E 10 A_FaceTarget
+		GreenBeams:
+			DB2S E 16 A_FaceTarget
 			TNT1 A 0 A_SetUserVar("user_laser_duration",0)
 			TNT1 A 0 A_JumpIf(user_laser_duration >= 35,"See")
 			TNT1 A 0 A_SetUserVar("user_laser_duration",user_laser_duration+1)
 			DB3S A 3 Bright A_CustomMissile("CyBaronMiniLaser",66,20,0)
 			TNT1 A 0 A_CustomMissile("CyBaronMiniLaser",66,-20,0)
-			Goto GreenLasers+2  
+			TNT1 A 0 A_FaceTarget
+			Goto GreenBeams+2
+			
+		Flamethrowers:
+			TNT1 A 0 A_Jump(82, "Normal")
+			TNT1 A 0 A_PlaySound("cydes/flameready", CHAN_BODY)
+			DB2S EE 10 A_FaceTarget
+			TNT1 A 0 A_PlaySound("cydes/chem", CHAN_AUTO)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET)
+			TNT1 A 0 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("CyBaronFlamethrower", 35, 20, Random(6, -6), CMF_AIMOFFSET)
+			DB3S B 1 Bright A_CustomMissile("CyBaronFlamethrower", 35, -20, Random(6, -6), CMF_AIMOFFSET) 
+			DB2S EE 12
+			Goto See
 			
 		Pain:
-			DB2S H 2
-			DB2S H 2 A_Pain
-			TNT1 A -1 A_Jump(256, "See")
-			Wait
+			TNT1 A 0 A_Jump(87,"MissilePain")
+			DB2S G 8 A_Pain
+			Goto See
 			
-		Death:
-			DB2S I 8
-			DB2S J 8 A_Scream
-			DB2S K 8
-			DB2S L 8 A_NoBlocking
-			DB2S MNOP 8
+		MissilePain:
+			DB2S G 8 A_Pain
+			Goto Missile 
+			
+		Death: 
+			DB2S G 20 A_Scream
+			TNT1 AA 0 A_CustomMissile("SmokeFX2", 0, 0, random(0,360), 2, random(0,360))  
+			DB2S GGGG 2 Bright A_CustomMissile("Kaboom5", Random(10,50), 0, random(0,360), 2, random(0,360))
+			DB2S HHHH 2 Bright A_CustomMissile("Kaboom5", Random(10,50), 0, random(0,360), 2, random(0,360))
+			TNT1 AA 0 A_CustomMissile("SmokeFX2", 0, 0, random(0,360), 2, random(0,360))  
+			DB2S IIIJJJ 2 Bright A_CustomMissile("Kaboom5", Random(10,50), 0, random(0,360), 2, random(0,360))
+			TNT1 AA 0 A_CustomMissile("SmokeFX2", 0, 0, random(0,360), 2, random(0,360))  
+			DB2S KKKLLL 2 Bright A_CustomMissile("Kaboom5", Random(10,50), 0, random(0,360), 2, random(0,360))
+			TNT1 AAAA 0 A_CustomMissile("SmokeFX2", 0, 0, random(0,360), 2, random(0,360))
+			DB2S M 4 Bright A_NoBlocking
+			DB2S N 3 Bright 
+			DB2S O 3
+			DB2S P 3
 			DB2S Q -1 A_BossDeath
 			Stop
 			
@@ -185,6 +287,31 @@ ACTOR T-800 : BaronOfHell2 {
 			DB2S PONMLKJI 8
 			Goto See
 	}
+}
+
+ACTOR CyBaronFlamethrower : PoisonCloud2 {
+	Radius 10
+	Height 10
+	Scale 0.35
+	Speed 12
+	DamageType "BaronFire"
+	Species "Goat"
+	PROJECTILE
+	-THRUSPECIES
+	-THRUACTORS
+	-SKYEXPLODE
+	Decal Scorch
+	
+	States { 
+		Spawn:
+			FIR1 LKJIHGFEDCB 3 Bright A_Explode(1, 76)
+			FIR1 AA 2 Bright A_FadeOut(0.15)
+			Stop
+			
+		Death:
+			FIR1 AA 2 Bright A_FadeOut(0.25)
+			Stop
+	} 
 }
 
 ACTOR CyBaronRocket : Rocket {
@@ -648,7 +775,18 @@ ACTOR Kaboom4 : Kaboom2 {
 	
 	States {
 		Spawn:
-			FXPO AABBCDEFGHIJKLM 1 Bright A_FadeOut(0.05)
+			FXPO AABBCDEFGHIJKLM 1 Bright NoDelay A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR Kaboom5 : Kaboom2 {
+	Speed 2
+	Scale 0.85
+	
+	States {
+		Spawn:
+			FXPG AABBCDEFGHIJKLM 1 Bright NoDelay A_FadeOut(0.05)
 			Stop
 	}
 }
