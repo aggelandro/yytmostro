@@ -1,8 +1,7 @@
 ACTOR Brimgoyle : Cacodemon2 {
-	Radius 34
-	Height 62
 	Health 700
 	Speed 16
+	Scale 0.9
 	PainChance 15
 	BloodColor "Red"
 	SeeSound "demon/sight"

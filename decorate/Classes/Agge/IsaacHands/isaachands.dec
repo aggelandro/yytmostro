@@ -2086,7 +2086,7 @@ ACTOR FireTearProjectile : NormalTearProjectile {
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("IsaacExplosion", 0, 0, 0, 0, 0, 0, 0, 0, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
-			TNT1 A 0 A_SpawnItemEx("SmokePuff")
+			TNT1 A 0 A_SpawnItemEx("IsaacSmokePuff")
 			Stop
 			
 		DeathBoneTearEnd:
@@ -2096,7 +2096,7 @@ ACTOR FireTearProjectile : NormalTearProjectile {
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("IsaacExplosion", 0, 0, 0, 0, 0, 0, 0, 0, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
-			TNT1 A 0 A_SpawnItemEx("SmokePuff")
+			TNT1 A 0 A_SpawnItemEx("IsaacSmokePuff")
 			Stop
 			
 		DeathNailTearEnd:
@@ -2106,7 +2106,7 @@ ACTOR FireTearProjectile : NormalTearProjectile {
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("IsaacExplosion", 0, 0, 0, 0, 0, 0, 0, 0, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
-			TNT1 A 0 A_SpawnItemEx("SmokePuff")
+			TNT1 A 0 A_SpawnItemEx("IsaacSmokePuff")
 			Stop
 			
 		DeathScytheTearEnd:
@@ -2116,7 +2116,7 @@ ACTOR FireTearProjectile : NormalTearProjectile {
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("IsaacExplosion", 0, 0, 0, 0, 0, 0, 0, 0, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
-			TNT1 A 0 A_SpawnItemEx("SmokePuff")
+			TNT1 A 0 A_SpawnItemEx("IsaacSmokePuff")
 			Stop
 	}
 }
@@ -2181,7 +2181,7 @@ ACTOR ExplosiveTearProjectile : NormalTearProjectile {
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("IsaacIpecacExplosion", 0, 0, 0, 0, 0, 0, 0, 0, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
-			TNT1 A 0 A_SpawnItemEx("SmokePuff")
+			TNT1 A 0 A_SpawnItemEx("IsaacSmokePuff")
 			Stop
 			
 		DeathParasiteBoneTear:
@@ -2671,7 +2671,7 @@ ACTOR BrimstoneBeam : FastProjectile {
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("IsaacIpecacExplosion", 0, 0, 0, 0, 0, 0, 0, 0, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
-			TNT1 A 0 A_SpawnItemEx("SmokePuff")
+			TNT1 A 0 A_SpawnItemEx("IsaacSmokePuff")
 			Goto DeathEnd
 			
 		DeathEnd:
@@ -2878,7 +2878,7 @@ ACTOR IsaacEffectPuff {
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("IsaacIpecacExplosion", 0, 0, 0, 0, 0, 0, 0, 0, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
-			TNT1 A 0 A_SpawnItemEx("SmokePuff")
+			TNT1 A 0 A_SpawnItemEx("IsaacSmokePuff")
 			TNT1 A 0 A_JumpIfInventory("OcularRiftGiver", 1, "RiftCheck", AAPTR_TARGET)
 			TNT1 A 0 A_JumpIfInventory("UranusGiver", 1, "FreezeCheck", AAPTR_TARGET)
 			Stop
@@ -3086,7 +3086,7 @@ ACTOR BrimstoneGib : AbstractGib {
 	}
 }
 
-ACTOR SmokePuff {
+ACTOR IsaacSmokePuff {
 	RenderStyle "Add"
 	Alpha 0.5
 	+NOINTERACTION
@@ -3220,17 +3220,10 @@ ACTOR PiercingDamageDealer {
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 A_SpawnItemEx("IsaacIpecacExplosion", 0, 0, 0, 0, 0, 0, 0, 0, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setChildrenStats", user_spawn_tid)
-			TNT1 A 0 A_SpawnItemEx("SmokePuff")
+			TNT1 A 0 A_SpawnItemEx("IsaacSmokePuff")
 			TNT1 A 0
 			Stop
 	}
-}
-
-ACTOR LoopFlag : Inventory {
-	-INVBAR
-  +UNDROPPABLE
-  Inventory.MaxAmount 999
-  Inventory.Icon TNT1A0
 }
 
 ACTOR PiercingDamageFlag : Inventory { Inventory.MaxAmount 1 Inventory.Amount 1 }

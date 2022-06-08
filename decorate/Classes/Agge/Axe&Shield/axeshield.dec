@@ -41,7 +41,7 @@ ACTOR AxeShield : Weapon
 		VSwing:
 			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
 			CONE GH 3
-			CONE I 4 A_CustomPunch(3 * random(1, 10), TRUE,0,"ShieldPuff")
+			CONE I 4 A_CustomPunch(3 * random(1, 10), TRUE,0,"AggeAxePuff")
 			CONE I 3 Offset(20, 70)
 			CONE J 4
 			CONE K 3
@@ -50,7 +50,7 @@ ACTOR AxeShield : Weapon
 		HSwing:
 			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
 			CONE LM 3
-			CONE N 4 A_CustomPunch(3 * random(1, 10), TRUE,0,"ShieldPuff")
+			CONE N 4 A_CustomPunch(3 * random(1, 10), TRUE,0,"AggeAxePuff")
 			CONE O 3
 			CONE P 4
 			CONE K 3
@@ -64,7 +64,7 @@ ACTOR AxeShield : Weapon
 		BerserkedVSwing:
 			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
 			CONB GH 3
-			CONB I 2 A_CustomPunch(20 * random(1, 10), TRUE, 0, "RedShieldPuff")
+			CONB I 2 A_CustomPunch(20 * random(1, 10), TRUE, 0, "RedAggeAxePuff")
 			CONB I 2 Offset(20, 70)
 			CONB J 2
 			CONB K 2
@@ -74,7 +74,7 @@ ACTOR AxeShield : Weapon
 			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
 			CONE L 3
 			CONB M 3
-			CONB N 1 A_CustomPunch(20 * random(1, 10), TRUE,0,"RedShieldPuff")
+			CONB N 1 A_CustomPunch(20 * random(1, 10), TRUE,0,"RedAggeAxePuff")
 			CONB O 2
 			CONB P 3
 			CONB K 2
@@ -212,11 +212,12 @@ ACTOR EnergyShieldAmmo : Ammo
 	  Inventory.Icon "SHICOA0"
 }
 
-ACTOR ShieldPuff
+ACTOR AggeAxePuff
 {
 	+NOGRAVITY
 	+NOINTERACTION
 	+PUFFONACTORS
+	DamageType "Lightning"
 	States
 	{
 	XDeath:
@@ -234,7 +235,7 @@ ACTOR ShieldPuff
 	}
 }
 
-ACTOR RedShieldPuff : ShieldPuff { Translation "192:207=176:191","240:247=40:47" }
+ACTOR RedAggeAxePuff : AggeAxePuff { Translation "192:207=176:191","240:247=40:47" }
 
 ACTOR AxeFloorFire {
 

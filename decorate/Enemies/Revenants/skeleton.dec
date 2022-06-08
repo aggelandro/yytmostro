@@ -36,7 +36,6 @@ ACTOR Skeleton : Revenant2 {
 			Goto Retreat+1
 			
 		Melee:
-			DRYB G 0 A_FaceTarget
 			DRYB G 6 A_FaceTarget
 			DRYB H 6 A_FaceTarget
 			DRYB I 6 A_CustomMeleeAttack(6 * random(1, 5), "skeleton/melee")
@@ -49,40 +48,34 @@ ACTOR Skeleton : Revenant2 {
 			Goto See+1
 			
 		YesMissile:
-			DRYB G 0 A_FaceTarget
 			DRYB G 6 A_FaceTarget
-			TNT1 A 0 A_CheckRange(128, "MissileLow2")
-			Goto MissileLow1
+			Goto MissileLong
 			
 		MissileLow1:
 			DRYB H 6 A_CustomMissile("BoneProj", 48, 0, 0, CMF_OFFSETPITCH, 4)
-			DRYB I 6 A_FaceTarget
-			TNT1 A 0 A_CheckFlag("FRIGHTENED", "Retreat")
-			Goto See+1
+			Goto MissileEnd
 			
 		MissileLow2:
-			TNT1 A 0 A_CheckRange(256, "MissileMid1")
 			DRYB H 6 A_CustomMissile("BoneProj", 48, 0, 0, CMF_OFFSETPITCH, 8)
-			DRYB I 6 A_FaceTarget
-			TNT1 A 0 A_CheckFlag("FRIGHTENED", "Retreat")
-			Goto See+1
+			Goto MissileEnd
 			
 		MissileMid1:
-			TNT1 A 0 A_CheckRange(512, "MissileMid2")
 			DRYB H 6 A_CustomMissile("BoneProj", 48, 0, 0, CMF_OFFSETPITCH, 16)
-			DRYB I 6 A_FaceTarget
-			TNT1 A 0 A_CheckFlag("FRIGHTENED", "Retreat")
-			Goto See+1
+			Goto MissileEnd
 			
 		MissileMid2:
-			TNT1 A 0 A_CheckRange(1024, "MissileLong")
 			DRYB H 6 A_CustomMissile("BoneProj", 48, 0, 0, CMF_OFFSETPITCH, 24)
-			DRYB I 6 A_FaceTarget
-			TNT1 A 0 A_CheckFlag("FRIGHTENED", "Retreat")
-			Goto See+1
+			Goto MissileEnd
 			
 		MissileLong:
+			TNT1 A 0 A_JumpIfCloser(128, "MissileLow1")
+			TNT1 A 0 A_JumpIfCloser(256, "MissileLow2")
+			TNT1 A 0 A_JumpIfCloser(512, "MissileMid1")
+			TNT1 A 0 A_JumpIfCloser(1024, "MissileMid2")
 			DRYB H 6 A_CustomMissile("BoneProj", 48, 0, 0, CMF_OFFSETPITCH, 45)
+			Goto MissileEnd
+			
+		MissileEnd:
 			DRYB I 6 A_FaceTarget
 			TNT1 A 0 A_CheckFlag("FRIGHTENED", "Retreat")
 			Goto See+1

@@ -5,7 +5,6 @@ ACTOR HellCommander : Cyberdemon2 {
   SeeSound "commander/sight"
   DeathSound "commander/death"
   Obituary "%o was blasted away by the Ancient Hell Commander."
-  +NOTARGET
 	DropItem "IsaacItemsTier1Spawner"
 	DropItem "IsaacItemsTier2Spawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
