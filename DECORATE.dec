@@ -10,6 +10,7 @@
 //universal weapons and items
 #include "decorate/Misc/Weapons/HookShot/hookshot.dec"
 #include "decorate/Misc/Weapons/HitscanFixer/hitscanfixer.txt"
+#include "decorate/Misc/Weapons/WeaponWithThroweableOption/weaponwiththroweableoption.txt"
 
 //weapons from classes
 #include "decorate/Classes/Luciano/Pistol/pistol.dec"
@@ -638,6 +639,7 @@ ACTOR Agge : UniversalPlayer
   Player.StartItem "EnergyShieldAmmo", 200
   Player.StartItem "AggeID"
 	Player.StartItem "HitscanFixer"
+	Player.StartItem "HandGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
   Player.WeaponSlot 1, Chainsaw2, AxeShield
   Player.WeaponSlot 2, NoisyCricket
@@ -662,6 +664,7 @@ ACTOR Ron : UniversalPlayer
   Player.StartItem "RonID"
   Player.StartItem "RonTurretItem", 1
 	Player.StartItem "HitscanFixer"
+	Player.StartItem "HandGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
   Player.WeaponSlot 1, RonWrench, Chainsaw2
   Player.WeaponSlot 2, RonPistol
@@ -681,6 +684,7 @@ ACTOR zLayer : UniversalPlayer
   Player.StartItem "zLayerID"
   Player.StartItem "Backpack"
 	Player.StartItem "HitscanFixer"
+	Player.StartItem "HandGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
   Player.WeaponSlot 1, Fist, Chainsaw2
   Player.WeaponSlot 2, zLayerPistol
@@ -700,6 +704,7 @@ ACTOR Thanuris : UniversalPlayer
 	Player.StartItem "Clip", 50
 	Player.StartItem "ThanuID"
 	Player.StartItem "HitscanFixer"
+	Player.StartItem "HandGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
 	Player.Weaponslot 1, BaseballBat, Chainsaw2
 	Player.Weaponslot 2, ThanuPistol
@@ -715,6 +720,7 @@ ACTOR Terro : UniversalPlayer
 	Player.StartItem "Clip", 50
 	Player.StartItem "TerroID"
 	Player.StartItem "HitscanFixer"
+	Player.StartItem "HandGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
 	Player.WeaponSlot 1, Chainsaw2, TerroFist
 	Player.WeaponSlot 2, TerroPistol

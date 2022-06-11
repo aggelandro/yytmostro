@@ -1,4 +1,4 @@
-ACTOR BaseballBat : Weapon
+ACTOR BaseballBat : WeaponWithGrenadeOption
 {
 	Weapon.Kickback 200
 	Weapon.AmmoType2 "BatReflectAmmo"
@@ -10,10 +10,12 @@ ACTOR BaseballBat : Weapon
 	States
 	{
 		Ready:
+			BBAT A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
 			BBAT A 0 A_GiveInventory("BatReflectAmmo",2)
 			BBAT A 1 A_WeaponReady
 			Loop
 		Select:
+			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
 			BBAT A 1 A_Raise
 			Loop
 		Deselect:

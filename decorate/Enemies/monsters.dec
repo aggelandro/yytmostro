@@ -87,6 +87,7 @@ ACTOR ShotgunGuyMod : AbstractYYTZombie
 	DropItem "Shell"
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "SpreadGunToken", 10
+	DropItem "HandGrenadeAmmo", 32
   States
   {
   SpawnLoop:
@@ -143,6 +144,7 @@ ACTOR ChaingunGuyMod : AbstractYYTZombie
 	Dropitem "Clip"
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "HomingGunToken", 10
+	DropItem "HandGrenadeAmmo", 32
   States
   {
   SpawnLoop:
@@ -197,6 +199,7 @@ ACTOR ZombieMan2 : AbstractYYTZombie
   DropItem "Clip"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "CrusherGunToken", 1
+	DropItem "HandGrenadeAmmo", 32
 	
   States
   {

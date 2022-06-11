@@ -200,7 +200,13 @@ weapons/shell1			dsshell1
 weapons/shell2			dsshell2
 weapons/shell3			dsshell3
 
-weapons/wepsel	dswepsel
+weapons/wepsel					dswepsel
+weapons/weapondown			dswepdwn
+weapons/hgrenadethrow		DSHGREN1
+weapons/hgrenadepin			DSHGREN2
+weapons/hgrenadebounce	DSHGREN3
+weapons/hgrenadepickup	DSHGREN4
+weapons/hgrenadeex			DSHGREN5
 
 // Efecto de fuego en el piso choreado del complex
 $rolloff weapons/rocklx 600 1800

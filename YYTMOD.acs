@@ -109,9 +109,8 @@ script 332 OPEN {
     CreateTranslation (19, 16:47=[0,0,0]:[233,131,13], 169:191=[0,0,0]:[233,131,13]); // The Parasite
 }
 
-Script 333 (void) NET {
-    GiveInventory("WeaponSpecialAction", 1);
-}
+Script 333 (void) NET { GiveInventory("WeaponSpecialAction", 1); }
+Script 339 (void) NET { GiveInventory("ClassThroweableAction", 1); }
  
 script "setEnergyShieldReload" (int flag) {
     ENERGY_SHIELD_RELOAD = flag;

@@ -12,6 +12,7 @@ ACTOR LaserZombie : AbstractYYTZombie {
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "CrusherGunToken", 1
+	DropItem "HandGrenadeAmmo", 32
 	
   States {
 		SpawnLoop:

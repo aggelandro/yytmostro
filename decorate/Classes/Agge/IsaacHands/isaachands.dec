@@ -1,4 +1,4 @@
-ACTOR IsaacHands : Weapon {	
+ACTOR IsaacHands : WeaponWithGrenadeOption {	
 	Inventory.PickupSound "misc/w_pkup"
 	Inventory.PickupMessage "You got the isaac hands!"
 	Obituary "%o was PUIJed by %k's isaac hands."
@@ -7,7 +7,6 @@ ACTOR IsaacHands : Weapon {
 	Weapon.AmmoType "Clip"
 
 	States {
-	 
 		Spawn:
 		  MGUN A -1
 		  Stop
@@ -20,10 +19,12 @@ ACTOR IsaacHands : Weapon {
 		  Wait
 
 		ReadyLoop:
+			CFLM A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
 		  CFLM AAAABBBBCCCC 1 A_WeaponReady
 		  Loop
 			
 		MLReadyLoop:
+			CFLR A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
 			CFLR AAAABBBBCCCC 1 A_WeaponReady
 		  Loop
 
@@ -41,6 +42,7 @@ ACTOR IsaacHands : Weapon {
 		  Loop
 
 		Select:
+			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
 			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, 2)
 		  CFLM A 1 A_Raise
 		  Loop
@@ -344,6 +346,7 @@ ACTOR BlackIsaacHands : IsaacHands {
 		  Wait
 	
 		ReadyLoop:
+			CFLB A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
 		  CFLB AAAABBBBCCCC 1 A_WeaponReady
 		  Loop
 			
@@ -361,6 +364,7 @@ ACTOR BlackIsaacHands : IsaacHands {
 		  Loop
 
 		Select:
+			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
 			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, 2)
 		  CFLB A 1 A_Raise
 		  Loop
@@ -629,6 +633,7 @@ ACTOR OrangeIsaacHands : IsaacHands {
 		  Wait
 			
 		ReadyLoop:
+			CFLO A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
 		  CFLO AAAABBBBCCCC 1 A_WeaponReady
 		  Loop
 			
@@ -647,6 +652,7 @@ ACTOR OrangeIsaacHands : IsaacHands {
 		  Loop
 
 		Select:
+			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
 			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, 2)
 		  CFLO A 1 A_Raise
 		  Loop
@@ -916,6 +922,7 @@ ACTOR GreenIsaacHands : IsaacHands {
 		  Wait
 			
 		ReadyLoop:
+			CFLG A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
 		  CFLG AAAABBBBCCCC 1 A_WeaponReady
 		  Loop
 			
@@ -935,6 +942,7 @@ ACTOR GreenIsaacHands : IsaacHands {
 		  Loop
 
 		Select:
+			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
 			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, 2)
 		  CFLG A 1 A_Raise
 		  Loop
@@ -2994,6 +3002,7 @@ ACTOR ParasiteBouncingFireTearProjectile : BouncingFireTearProjectile {
 
 ACTOR AbstractGib {
 	Gravity 0.5
+	+CLIENTSIDEONLY
 	+BRIGHT
 	
 	States {

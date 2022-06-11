@@ -1,4 +1,4 @@
-ACTOR PkDoubleShotguns : Weapon
+ACTOR PkDoubleShotguns : WeaponWithGrenadeOption
 {
 	+WEAPON.AMMO_CHECKBOTH
 	Weapon.AmmoUse2 1
@@ -29,13 +29,14 @@ ACTOR PkDoubleShotguns : Weapon
 		Loop
 		
 	Select:
+		TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
 		SGDL A 1 A_Raise
 		SGDL A 0 A_GunFlash
 		Goto SL
 		
 	SL:
 		SGDL A 1 A_Raise
-		Goto Select+1
+		Goto Select+2
 		
 	Ready:
 		SGDL A 1
@@ -48,6 +49,7 @@ ACTOR PkDoubleShotguns : Weapon
 		
 	// Left Shotgun
 	LIdle:
+		SGDL A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
 		SGDL A 1 A_WeaponReady(WRF_ALLOWRELOAD|12)
 		SGDL A 0 A_JumpIfInventory("SynthFireLeft",1,"LFire")
 		SGDL A 0 A_JumpIfInventory("IsLReloading",1,"LReload")

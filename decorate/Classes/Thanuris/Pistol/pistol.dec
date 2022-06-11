@@ -1,4 +1,4 @@
-ACTOR ThanuPistol : Weapon
+ACTOR ThanuPistol : WeaponWithGrenadeOption
 {
    Inventory.PickupSound "misc/w_pkup"
    Inventory.PickupMessage "You picked up the Pistol. It appears to have been amplified by unknown technology."
@@ -13,12 +13,14 @@ ACTOR ThanuPistol : Weapon
       SPPP A -1
       Loop
    Ready:
+			SPRP A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
       SPRP A 1 A_WeaponReady
       Loop
    Deselect:
       SPRP A 1 A_Lower
       Loop  
    Select:
+			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
       SPRP A 1 A_Raise
       Loop 
   Fire:

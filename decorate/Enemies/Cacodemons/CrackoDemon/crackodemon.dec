@@ -48,7 +48,7 @@ ACTOR CrackoDemon : Cacodemon2
       HED9 B 0 bright A_CustomMissile("CrackodemonBall", 24, 0, -8, 1)
       HED9 B 5 bright A_CustomMissile("CrackodemonBall", 24, 0, 8, 1)
       Goto See 
-      HED9 B 5 A_FaceTarget
+      HED9 B 10 A_FaceTarget
       HED9 C 5 bright A_CustomMissile("Blusoul", 24, 0, 0, 1)
       HED9 D 5 bright A_facetarget
       HED9 B 5 bright
@@ -102,11 +102,13 @@ Actor CrackodemonBall
 	States
 	{
 	Spawn:
-	   BAL9 AAAABBBB 1 BRIGHT A_SpawnItemEx("CrackoBallTrail", 0, 0, 0, 0, 0, 0, 0, 128)
-	   Loop
+		BAL9 AAAABBBB 1 BRIGHT A_SpawnItemEx("CrackoBallTrail", 0, 0, 0, 0, 0, 0, 0, 128)
+		Loop
 	Death:
-	   BAL9 CDE 6 BRIGHT
-	   Stop
+		TNT1 A 0 A_SpawnItemEx("BlueParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+		TNT1 AAA 0 A_CustomMissile("SmallBlueExplosion", 0, 0, random(0,360), 2, random(0,360))	
+		TNT1 AAA 0 A_CustomMissile("SmokeSmallExplosion", 0, 0, random(0,360), 2, random(0,360))
+		Stop
 	}
 }
 

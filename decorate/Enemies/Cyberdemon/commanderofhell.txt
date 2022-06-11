@@ -118,8 +118,12 @@ Actor HellRocket : Rocket {
       Loop
 			
     Death:
-	    MEL2 C 5 A_Explode
-      MEL2 DE 5 Bright
+			TNT1 A 0 A_SpawnItemEx("OrangeParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			TNT1 AAA 0 A_CustomMissile("NormalRedExplosion", 0, 0, random(0,360), 2, random(0,360))	
+			TNT1 AAA 0 A_CustomMissile("SmokeBigExplosion", 0, 0, random(0,360), 2, random(0,360))
+      TNT1 A 0 A_Explode
+			TNT1 AAAA 0 A_SpawnItemEx("Debris",0,0,0,Random(4,-4),Random(4,-4),Random(4,8),0,128)
+			TNT1 A 1 A_SpawnItem("MediumRocketEx")
       Stop
 	}
 }
@@ -168,7 +172,7 @@ Actor HellGrenade : Rocket {
 		Death:
 			HBA3 D 0 A_NoGravity
 			HBA3 D 3 Bright
-			HBA3 E 3 Bright A_Explode(144,144,1,0,32)
+			HBA3 E 3 Bright A_Explode(Random(60, 120),144,1,0,32)
 			HBA3 FGHIJKLM 3 Bright
 			Stop
    }
@@ -197,7 +201,7 @@ ACTOR CommanderHellBall : BelphegorGreenPlasmaBall {
 	Scale 2.0
 	Height 18
 	Radius 11
-	Damage (Random(35, 50))
+	Damage (Random(50, 80))
 	DeathSound "commander/explosion"
 	+SEEKERMISSILE
 	
@@ -215,8 +219,11 @@ ACTOR CommanderHellBall : BelphegorGreenPlasmaBall {
 			
 		Death:
 			BPEA AABBCC 1
+			TNT1 A 0 A_SpawnItemEx("OrangeParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			TNT1 AAA 0 A_CustomMissile("BigRedExplosion", 0, 0, random(0,360), 2, random(0,360))	
+			TNT1 AAA 0 A_CustomMissile("SmokeBigExplosion", 0, 0, random(0,360), 2, random(0,360))
 			TNT1 A 0 Radius_Quake (3, 35, 0, 15, 0)
-			TNT1 A 0 A_Explode(Random(25, 40), 224, 1)
+			TNT1 A 0 A_Explode(Random(60, 90), 224, 1)
 			BPEA DEFGHIJKLMNO 2
 			Stop
 	}

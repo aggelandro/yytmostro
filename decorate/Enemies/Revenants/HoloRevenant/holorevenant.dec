@@ -8,11 +8,38 @@ ACTOR HoloRevenant : Revenant2
 	DropItem "HomingGunToken", 64
   States
   {
+	SpawnLoop:
+    FSKL AB 10 A_Look
+    Loop
+  See:
+    FSKL AABBCCDDEEFF 2 A_Chase
+    Loop
+  Melee:
+    FSKL G 0 A_FaceTarget
+    FSKL G 6 A_SkelWhoosh
+    FSKL H 6 A_FaceTarget
+    FSKL I 6 A_SkelFist
+    Goto See
   Missile:
-    SKEL G 0 Bright A_FaceTarget
-    SKEL G 10 Bright A_FaceTarget
-    SKEL H 10 A_CustomMissile("RevenantPunch")
-    SKEL I 10 A_FaceTarget
+    FSKL G 0 Bright A_FaceTarget
+    FSKL G 10 Bright A_FaceTarget
+    FSKL H 10 A_CustomMissile("RevenantPunch")
+    FSKL I 10 A_FaceTarget
+    Goto See
+  Pain:
+    FSKL L 5
+    FSKL L 5 A_Pain
+    Goto See
+  Death:
+    FSKL LM 7
+    FSKL N 7 A_Scream
+    FSKL O 7 A_NoBlocking
+    FSKL P 7
+    FSKL Q -1
+    Stop
+  Raise:
+    FSKL Q 5
+    FSKL PONML 5
     Goto See
   }
 }
@@ -28,12 +55,12 @@ ACTOR RevenantPunch : FastProjectile
 	States
 	{
 	Spawn:
-		SKEL H 0
-		SKEL H 3 A_SpawnItemEx("RevenantPunchTrail")
+		FSKL H 0
+		FSKL H 3 A_SpawnItemEx("RevenantPunchTrail")
 		Loop
 	Death:
-		SKEL I 0 A_RadiusThrust(10000,1)
-		SKEL I 4 A_PlaySound("skeleton/melee")
+		FSKL I 0 A_RadiusThrust(10000,1)
+		FSKL I 4 A_PlaySound("skeleton/melee")
 		Stop
 	}
 }
@@ -45,8 +72,8 @@ ACTOR RevenantPunchTrail
 	States
 	{
 	Spawn:
-		SKEL H 0
-		SKEL H 1 A_FadeOut(0.02)
+		FSKL H 0
+		FSKL H 1 A_FadeOut(0.02)
 		Loop
 	}
 }

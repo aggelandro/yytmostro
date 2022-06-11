@@ -1,4 +1,4 @@
-ACTOR ThanuRL : DoomWeapon
+ACTOR ThanuRL : WeaponWithGrenadeOption
 {
 	Weapon.SelectionOrder 2500
     Weapon.AmmoUse 1
@@ -11,12 +11,14 @@ ACTOR ThanuRL : DoomWeapon
 	States
 	{
 	Ready:
+		MENA A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
 		MENA A 1 A_WeaponReady
 		Loop
 	Deselect:
 		MENA A 1 A_Lower
 		Loop
 	Select:
+		TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
 		MENA A 1 A_Raise
 		Loop
 	Fire:
@@ -67,12 +69,18 @@ ACTOR MinaThanu
 		Loop
 	Melee:
 		MISL B 0 A_PlaySound("weapons/rocklx")
+		TNT1 A 0 A_SpawnItemEx("OrangeParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+		TNT1 AAA 0 A_CustomMissile("SmallRedExplosion", 0, 0, random(0,360), 2, random(0,360))
+		TNT1 AAA 0 A_CustomMissile("SmokeSmallExplosion", 0, 0, random(0,360), 2, random(0,360))  
 		MISL B 5 A_CustomMissile("MinaExplosion")
 		MISL C 5
 		MISL D 5
 		Stop
 	Death:
 		MISL B 0 A_PlaySound("weapons/rocklx")
+		TNT1 A 0 A_SpawnItemEx("OrangeParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+		TNT1 AAA 0 A_CustomMissile("SmallRedExplosion", 0, 0, random(0,360), 2, random(0,360))
+		TNT1 AAA 0 A_CustomMissile("SmokeSmallExplosion", 0, 0, random(0,360), 2, random(0,360)) 
 		MISL B 5 A_CustomMissile("MinaExplosion")
 		MISL C 5
 		MISL D 5

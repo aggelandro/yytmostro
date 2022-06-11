@@ -1,9 +1,10 @@
-ACTOR TerroFist : Weapon
+ACTOR TerroFist : WeaponWithGrenadeOption
 {
 	+NOAUTOFIRE
 	States
 	{
 	Ready:
+		PERR A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
 		PERR A 0 A_JumpIfInventory("TerroFistFire",10,"Transform")
 		PERR A 0 A_JumpIfInventory("TerroFistDuration",1,"FireReady")
 		PERR A 1 A_WeaponReady
@@ -21,6 +22,7 @@ ACTOR TerroFist : Weapon
 		PERF A 1 A_Lower
 		Loop
     Select:
+		TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
 		PERR A 0 A_JumpIfInventory("TerroFistDuration",1,2)
 		PERR A 1 A_Raise
 		Loop
@@ -233,7 +235,10 @@ ACTOR TerroExplosionFist
 	States
 	{
 	Spawn:
-		MISL B 0 NoDelay A_PlaySound("weapons/rocklx",CHAN_AUTO)
+		TNT1 A 0 NoDelay A_SpawnItemEx("OrangeParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+		TNT1 AAA 0 A_CustomMissile("SmallRedExplosion", 0, 0, random(0,360), 2, random(0,360))	
+		TNT1 AAA 0 A_CustomMissile("SmokeSmallExplosion", 0, 0, random(0,360), 2, random(0,360))
+		MISL B 0 A_PlaySound("weapons/rocklx",CHAN_AUTO)
 		MISL B 8 Bright A_Explode(32,5,0,0,5)
 		MISL C 6 Bright
 		MISL D 4 Bright
@@ -248,7 +253,10 @@ ACTOR TerroExplosionFistBig : TerroExplosionFist
 	States
 	{
 	Spawn:
-		MISL B 0 NoDelay A_PlaySound("weapons/rocklx",CHAN_AUTO)
+		TNT1 A 0 NoDelay A_SpawnItemEx("OrangeParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+		TNT1 AAA 0 A_CustomMissile("SmallRedExplosion", 0, 0, random(0,360), 2, random(0,360))	
+		TNT1 AAA 0 A_CustomMissile("SmokeSmallExplosion", 0, 0, random(0,360), 2, random(0,360))
+		MISL B 0 A_PlaySound("weapons/rocklx",CHAN_AUTO)
 		MISL B 8 Bright A_Explode(50,8,0,0,8)
 		MISL C 6 Bright
 		MISL D 4 Bright

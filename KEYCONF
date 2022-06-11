@@ -3,3 +3,7 @@ ADDKEYSECTION "Custom Buttons YYTMOSTRO" WaskaLauncherFireSection
 ADDMENUKEY "Weapon Special Action" DetonateWaska
 ALIAS DetonateWaska "Puke 333"
 DEFAULTBIND Q DetonateWaska
+
+ADDMENUKEY "Class Throweable Action" ThroweableAction
+ALIAS ThroweableAction "Puke 339"
+DEFAULTBIND G ThroweableAction

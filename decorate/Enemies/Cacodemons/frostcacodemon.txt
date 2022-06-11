@@ -171,6 +171,8 @@ ACTOR FrostCacoBall : CacodemonBall {
 			
 		Death:
 			TNT1 A 0 A_SpawnItemEx("BlueParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			TNT1 AAA 0 A_CustomMissile("SmallBlueExplosion", 0, 0, random(0,360), 2, random(0,360))	
+			TNT1 AAA 0 A_CustomMissile("SmokeSmallExplosion", 0, 0, random(0,360), 2, random(0,360))
 			FROM EFGHI 6 Bright
 			Stop
   }

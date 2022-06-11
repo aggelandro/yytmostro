@@ -71,6 +71,7 @@ ACTOR LHKFlame : BaronBall {
 			Stop
 			
 		Death:
+			TNT1 A 0 A_SpawnItemEx("RedParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
 			TNT1 A 0 A_StopSound(6)
 			SKFB CDE 3 BRIGHT
 			Stop
@@ -87,6 +88,7 @@ ACTOR LHKFlame2 : BaronBall {
 			Loop
 			
 		Death:
+			TNT1 A 0 A_SpawnItemEx("RedParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
 			TNT1 A 0 A_StopSound(6)
 			SKFB CDE 3 BRIGHT
 			Stop

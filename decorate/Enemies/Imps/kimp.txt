@@ -17,8 +17,7 @@ ACTOR Kimp : DoomImp2 {
 			EHOL AABBCCDD 3 A_Chase
 			Loop
 			
-		Melee:			
-		Missile:
+		Melee:
 			// Ataque de corto alcance que necesita más sprites para que se vea bien
 			/*EHOL EFGHIJK 4 BRIGHT A_FaceTarget
 			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
@@ -29,6 +28,8 @@ ACTOR Kimp : DoomImp2 {
 			TNT1 A 0 A_TakeInventory("LoopFlag", 18)
 			EHOL M 6 BRIGHT
 			Goto See*/
+			
+		Missile:
 			EHOL EFGHIJK 4 BRIGHT A_FaceTarget
 			EHOL L 2 BRIGHT A_CustomMissile("RedLightningBolt", 36)
 			TNT1 A 0 A_Jump(87, "Missile2", "Missile3")
