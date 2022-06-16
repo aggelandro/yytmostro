@@ -1,5 +1,5 @@
 ACTOR Diablo : BaronOfHell2 {
-	Health 2500
+	Health 3500
 	PainChance 10
 	BloodColor "Red"
 	SeeSound "Diablo/see"
@@ -13,6 +13,7 @@ ACTOR Diablo : BaronOfHell2 {
 	DropItem "IsaacItemsTier3MidChanceSpawner"
 	DropItem "IsaacItemsTier3MidChanceSpawner"
 	DropItem "CrusherGunToken", 128
+	DropItem "UniqueWeaponSpawner", 16
 	+BRIGHT
 	+MISSILEMORE
 	+QUICKTORETALIATE

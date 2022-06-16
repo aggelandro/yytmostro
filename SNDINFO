@@ -30,7 +30,12 @@ agge/chargedatkml CHARGEDM
 agge/brimgrowl BRGROWL
 agge/brimroar BRROAR
 agge/brimlaser BRLASER
-agge/warning UNYUALAR
+agge/okuualert UNYUALAR
+agge/risingsubsun SUBSUN00
+agge/subsunactive SUBSUN01
+$random agge/subsunhit { agge/subsunhit1 agge/subsunhit2 }
+agge/subsunhit1	SSHIT01
+agge/subsunhit2	SSHIT02
 elect/spark LHTSPARK
 
 agge/expl1 TEAREXP1

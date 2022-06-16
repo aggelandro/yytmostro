@@ -12,7 +12,6 @@ ACTOR AbstractMonsterDebuff : CustomInventory {
 }
 
 ACTOR FearDebuff : AbstractMonsterDebuff 4200 {
-	
 	States {
 		Pickup:
 			TNT1 A 0 A_JumpIfInventory("FearDebuffGiver", 1, "AlreadyActive")
@@ -23,7 +22,6 @@ ACTOR FearDebuff : AbstractMonsterDebuff 4200 {
 }
 
 ACTOR InfestationDebuff : AbstractMonsterDebuff 4201 {
-	
 	States {
 		Pickup:
 			TNT1 A 0 A_JumpIfInventory("InfestationDebuffGiver", 1, "AlreadyActive")
@@ -34,7 +32,6 @@ ACTOR InfestationDebuff : AbstractMonsterDebuff 4201 {
 }
 
 ACTOR PetrifyingDebuff : AbstractMonsterDebuff 4202 {
-	
 	States {
 		Pickup:
 			TNT1 A 0 A_JumpIfInventory("PetrifyingDebuffGiver", 1, "AlreadyActive")
@@ -46,7 +43,6 @@ ACTOR PetrifyingDebuff : AbstractMonsterDebuff 4202 {
 
 ACTOR PoisonDebuff : AbstractMonsterDebuff 4203 {
 	//Válido para veneno en área
-	
 	States {
 		Pickup:
 			TNT1 A 0 A_JumpIfInventory("PoisonDebuffGiver", 3, "AlreadyActive")

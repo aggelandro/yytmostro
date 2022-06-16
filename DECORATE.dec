@@ -548,6 +548,7 @@ ACTOR UniversalPlayer : DoomPlayer
 	DamageFactor "FireRF", 0
 	DamageFactor "FireBF", 0
 	DamageFactor "PPoison", 0.2
+	DamageFactor "SubSun", 0
   Player.CrouchSprite "PLYC"
   Player.StartItem "Fist"
   Player.StartItem "Pistol"
@@ -1037,7 +1038,6 @@ ACTOR UniqueWeaponSpawner : CustomInventory
 		PickupAgge:
 			TNT1 A 0 A_JumpIfInventory("CargaAgge",10,"Spawn")
 			TNT1 A 0 A_GiveInventory("OkuuCannon",1)
-			TNT1 A 0 A_GiveInventory("CargaAgge",10)
 			TNT1 A 0 A_PlaySound("misc/w_pkup")
 			Stop
 		PickupGeneric:

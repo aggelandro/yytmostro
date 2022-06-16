@@ -20,8 +20,17 @@ ACTOR YYTMonster
 			TNT1 A -1 A_Jump (256, "Pain")
 			Wait
 			
+		Pain.SubSun:
+			TNT1 A 0 A_PlaySound("agge/subsunhit", CHAN_AUTO)
+			TNT1 A 0 A_SpawnItemEx("OrangeParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			TNT1 AAA 0 A_CustomMissile("SmallRedExplosion", 0, 0, random(0,360), 2, random(0,360))
+			TNT1 AAA 0 A_CustomMissile("SmokeSmallExplosion", 0, 0, random(0,360), 2, random(0,360))	
+			TNT1 A -1 A_Jump (256, "Pain")
+			Wait
+			
 		Death.IsaacIce:
 			"####" "#" 0 A_CheckFlag("BOSS", "Death") // No afecta a los bosses
+			"####" "#" 0 A_CheckFlag("NOICEDEATH", "Death")
 			"####" "#" 0 A_GenericFreezeDeath
 			"####" "#" 175
 			"####" "#" 0 A_SpawnItemEx("IsaacIceShard", 40, 0, Height/2, 1, 1, 0, 0, SXF_MULTIPLYSPEED|SXF_ABSOLUTEANGLE)
@@ -87,7 +96,7 @@ ACTOR ShotgunGuyMod : AbstractYYTZombie
 	DropItem "Shell"
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "SpreadGunToken", 10
-	DropItem "HandGrenadeAmmo", 32
+	DropItem "HandGrenadeAmmo", 10
   States
   {
   SpawnLoop:
@@ -144,7 +153,7 @@ ACTOR ChaingunGuyMod : AbstractYYTZombie
 	Dropitem "Clip"
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "HomingGunToken", 10
-	DropItem "HandGrenadeAmmo", 32
+	DropItem "HandGrenadeAmmo", 10
   States
   {
   SpawnLoop:
@@ -199,7 +208,7 @@ ACTOR ZombieMan2 : AbstractYYTZombie
   DropItem "Clip"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "CrusherGunToken", 1
-	DropItem "HandGrenadeAmmo", 32
+	DropItem "HandGrenadeAmmo", 10
 	
   States
   {

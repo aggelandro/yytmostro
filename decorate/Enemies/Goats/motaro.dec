@@ -23,7 +23,7 @@ ACTOR Motaro : HellKnight2 {
 			Loop
 			
 		See:
-			TNT1 A 0 A_CheckRange(256, "TeleportChance")
+			TNT1 A 0 A_JumpIfTargetInLOS("TeleportChance", 0, JLOSF_CLOSENOJUMP|JLOSF_DEADNOJUMP, 4096, 256)
 			BOS3 AAAA 2 A_Chase
 			BOS3 A 0 A_CheckSight("See2")
 			BOS3 BBBB 2 A_Chase

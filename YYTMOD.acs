@@ -13,6 +13,7 @@ int TEARS_STATS_BY_PLAYER[PLAYER_MAX][TEAR_STATS];
 str BRIMSTONE_COLOR = 0; //Para el trail que vive en Marte.
 int IPECAC_FLAT_BONUS_DMG = 20;
 int SV_SEMAPHORE_TOKEN; //Para scripts con mucha concurrencia
+int SUB_SUN_TID;
 
 str  SV_DISPLAYABLE_POWERUPS[DISPLAYABLE_POWERUP_MAX] = {
     "CONTGiverP000A0", "GrowthHormonesGiverP001A0", "JesusJuiceGiverP002A0", "MomsHeelsGiverP003A0", "MomsLipstickGiverP004A0", 
@@ -771,12 +772,12 @@ script "getTargetRadius" (void) {
     }
 }
 
-script "setPlayersDontThrusting" (void) {
+script "setPlayersDontThrusting" (int tics) {
     SV_SEMAPHORE_TOKEN++;
     for (int i=PLAYER_TID_START; i<PLAYER_TID_START+PLAYER_MAX; i++) {
         if (SetActivator(i)) SetActorProperty(0, APROP_Mass, 0x7fffffff);
     }
-    Delay(75);
+    Delay(tics);
     SV_SEMAPHORE_TOKEN--;
     for (i=PLAYER_TID_START; i<PLAYER_TID_START+PLAYER_MAX; i++) {
         if (SetActivator(i)) {
@@ -943,6 +944,201 @@ script "homingAtNegativeZVelocity" (void) {
 script "subtractMasterDiabloIllusionVar" (int qty) {
     if (SetActivator(0, AAPTR_MASTER)) {
         SetUserVariable(0, "user_illusions_on", GetUserVariable(0, "user_illusions_on")-qty);
+    }
+}
+
+script "showCautionAnimation" (void) CLIENTSIDE {
+    SetHudSize(640, 480, 0);
+    SetFont("BIGFONT");
+    HudMessage(s:"'Subterranean Sun'"; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP|HUDMSG_FADEINOUT, 34, CR_ORANGE, 505.0, 390.0, 2.5, 1.5, 0.5);
+    SetFont("SCARD000");
+    HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEINOUT, 33, CR_ORANGE, 600.0, 435.0, 2.5, 1.5, 0.5);
+    for (int i=0; i<6; i++) {
+        SetFont("SPELL000");
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 8, CR_ORANGE, -254.0+(20.0*i), 0.0+(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 9, CR_ORANGE, 0.0+(20.0*i), 0.0+(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 10, CR_ORANGE, 254.0+(20.0*i), 0.0+(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 11, CR_ORANGE, 508.0+(20.0*i), 0.0+(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 12, CR_ORANGE, 762.0+(20.0*i), 0.0+(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 13, CR_ORANGE, -254.0+(20.0*i), 127.0+(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 14, CR_ORANGE, 0.0+(20.0*i), 127.0+(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 15, CR_ORANGE, 254.0+(20.0*i), 127.0+(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 16, CR_ORANGE, 508.0+(20.0*i), 127.0+(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 17, CR_ORANGE, 762.0+(20.0*i), 127.0+(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 18, CR_ORANGE, -254.0+(20.0*i), 254.0+(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 19, CR_ORANGE, 0.0+(20.0*i), 254.0+(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 20, CR_ORANGE, 254.0+(20.0*i), 254.0+(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 21, CR_ORANGE, 508.0+(20.0*i), 254.0+(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 22, CR_ORANGE, 762.0+(20.0*i), 254.0+(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 23, CR_ORANGE, -254.0+(20.0*i), 381.0-(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 24, CR_ORANGE, 0.0+(20.0*i), 381.0-(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 25, CR_ORANGE, 254.0+(20.0*i), 381.0-(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 26, CR_ORANGE, 508.0+(20.0*i), 381.0-(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 27, CR_ORANGE, 762.0+(20.0*i), 381.0-(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 28, CR_ORANGE, -254.0+(20.0*i), 508.0-(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 29, CR_ORANGE, 0.0+(20.0*i), 508.0-(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 30, CR_ORANGE, 254.0+(20.0*i), 508.0-(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 31, CR_ORANGE, 508.0+(20.0*i), 508.0-(20.0*i), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 32, CR_ORANGE, 762.0+(20.0*i), 508.0-(20.0*i), 0, 2.0, 0.25);
+        SetFont("CAUTIO1");
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 1, CR_ORANGE, 70.0+(5.0+(20.0*i)), 32.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 2, CR_ORANGE, 580.0+(5.0+(20.0*i)), 32.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 3, CR_ORANGE, 70.0+(5.0+(20.0*i)), 447.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 4, CR_ORANGE, 580.0+(5.0+(20.0*i)), 447.0, 0.35);
+        SetFont("WARN1");
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 5, CR_ORANGE, 130.0-(5.0+(20.0*i)), 240.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 6, CR_ORANGE, 530.0-(5.0+(20.0*i)), 240.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 7, CR_ORANGE, 930.0-(5.0+(20.0*i)), 240.0, 0.35);
+        Delay(3);
+        SetFont("SPELL000");
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 8, CR_ORANGE, -254.0+(5.0+(20.0*i)), 0.0+(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 9, CR_ORANGE, 0.0+(5.0+(20.0*i)), 0.0+(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 10, CR_ORANGE, 254.0+(5.0+(20.0*i)), 0.0+(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 11, CR_ORANGE, 508.0+(5.0+(20.0*i)), 0.0+(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 12, CR_ORANGE, 762.0+(5.0+(20.0*i)), 0.0+(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 13, CR_ORANGE, -254.0+(5.0+(20.0*i)), 127.0+(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 14, CR_ORANGE, 0.0+(5.0+(20.0*i)), 127.0+(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 15, CR_ORANGE, 254.0+(5.0+(20.0*i)), 127.0+(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 16, CR_ORANGE, 508.0+(5.0+(20.0*i)), 127.0+(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 17, CR_ORANGE, 762.0+(5.0+(20.0*i)), 127.0+(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 18, CR_ORANGE, -254.0+(5.0+(20.0*i)), 254.0+(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 19, CR_ORANGE, 0.0+(5.0+(20.0*i)), 254.0+(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 20, CR_ORANGE, 254.0+(5.0+(20.0*i)), 254.0+(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 21, CR_ORANGE, 508.0+(5.0+(20.0*i)), 254.0+(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 22, CR_ORANGE, 762.0+(5.0+(20.0*i)), 254.0+(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 23, CR_ORANGE, -254.0+(5.0+(20.0*i)), 381.0-(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 24, CR_ORANGE, 0.0+(5.0+(20.0*i)), 381.0-(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 25, CR_ORANGE, 254.0+(5.0+(20.0*i)), 381.0-(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 26, CR_ORANGE, 508.0+(5.0+(20.0*i)), 381.0-(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 27, CR_ORANGE, 762.0+(5.0+(20.0*i)), 381.0-(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 28, CR_ORANGE, -254.0+(5.0+(20.0*i)), 508.0-(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 29, CR_ORANGE, 0.0+(5.0+(20.0*i)), 508.0-(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 30, CR_ORANGE, 254.0+(5.0+(20.0*i)), 508.0-(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 31, CR_ORANGE, 508.0+(5.0+(20.0*i)), 508.0-(5.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 32, CR_ORANGE, 762.0+(5.0+(20.0*i)), 508.0-(5.0+(20.0*i)), 0, 2.0, 0.25);
+        SetFont("CAUTIO1");
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 1, CR_ORANGE, 70.0+(10.0+(20.0*i)), 32.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 2, CR_ORANGE, 580.0+(10.0+(20.0*i)), 32.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 3, CR_ORANGE, 70.0+(10.0+(20.0*i)), 447.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 4, CR_ORANGE, 580.0+(10.0+(20.0*i)), 447.0, 0.35);
+        SetFont("WARN1");
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 5, CR_ORANGE, 130.0-(10.0+(20.0*i)), 240.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 6, CR_ORANGE, 530.0-(10.0+(20.0*i)), 240.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 7, CR_ORANGE, 930.0-(10.0+(20.0*i)), 240.0, 0.35);
+        Delay(2);
+        SetFont("SPELL000");
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 8, CR_ORANGE, -254.0+(10.0+(20.0*i)), 0.0+(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 9, CR_ORANGE, 0.0+(10.0+(20.0*i)), 0.0+(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 10, CR_ORANGE, 254.0+(10.0+(20.0*i)), 0.0+(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 11, CR_ORANGE, 508.0+(10.0+(20.0*i)), 0.0+(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 12, CR_ORANGE, 762.0+(10.0+(20.0*i)), 0.0+(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 13, CR_ORANGE, -254.0+(10.0+(20.0*i)), 127.0+(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 14, CR_ORANGE, 0.0+(10.0+(20.0*i)), 127.0+(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 15, CR_ORANGE, 254.0+(10.0+(20.0*i)), 127.0+(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 16, CR_ORANGE, 508.0+(10.0+(20.0*i)), 127.0+(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 17, CR_ORANGE, 762.0+(10.0+(20.0*i)), 127.0+(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 18, CR_ORANGE, -254.0+(10.0+(20.0*i)), 254.0+(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 19, CR_ORANGE, 0.0+(10.0+(20.0*i)), 254.0+(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 20, CR_ORANGE, 254.0+(10.0+(20.0*i)), 254.0+(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 21, CR_ORANGE, 508.0+(10.0+(20.0*i)), 254.0+(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 22, CR_ORANGE, 762.0+(10.0+(20.0*i)), 254.0+(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 23, CR_ORANGE, -254.0+(10.0+(20.0*i)), 381.0-(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 24, CR_ORANGE, 0.0+(10.0+(20.0*i)), 381.0-(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 25, CR_ORANGE, 254.0+(10.0+(20.0*i)), 381.0-(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 26, CR_ORANGE, 508.0+(10.0+(20.0*i)), 381.0-(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 27, CR_ORANGE, 762.0+(10.0+(20.0*i)), 381.0-(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 28, CR_ORANGE, -254.0+(10.0+(20.0*i)), 508.0-(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 29, CR_ORANGE, 0.0+(10.0+(20.0*i)), 508.0-(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 30, CR_ORANGE, 254.0+(10.0+(20.0*i)), 508.0-(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 31, CR_ORANGE, 508.0+(10.0+(20.0*i)), 508.0-(10.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 32, CR_ORANGE, 762.0+(10.0+(20.0*i)), 508.0-(10.0+(20.0*i)), 0, 2.0, 0.25);
+        SetFont("CAUTIO2");
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 1, CR_ORANGE, 70.0+(15.0+(20.0*i)), 32.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 2, CR_ORANGE, 580.0+(15.0+(20.0*i)), 32.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 3, CR_ORANGE, 70.0+(15.0+(20.0*i)), 447.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 4, CR_ORANGE, 580.0+(15.0+(20.0*i)), 447.0, 0.35);
+        SetFont("WARN2");
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 5, CR_ORANGE, 130.0-(15.0+(20.0*i)), 240.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 6, CR_ORANGE, 530.0-(15.0+(20.0*i)), 240.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 7, CR_ORANGE, 930.0-(15.0+(20.0*i)), 240.0, 0.35);
+        Delay(3);
+        SetFont("SPELL000");
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 8, CR_ORANGE, -254.0+(15.0+(20.0*i)), 0.0+(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 9, CR_ORANGE, 0.0+(15.0+(20.0*i)), 0.0+(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 10, CR_ORANGE, 254.0+(15.0+(20.0*i)), 0.0+(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 11, CR_ORANGE, 508.0+(15.0+(20.0*i)), 0.0+(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 12, CR_ORANGE, 762.0+(15.0+(20.0*i)), 0.0+(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 13, CR_ORANGE, -254.0+(15.0+(20.0*i)), 127.0+(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 14, CR_ORANGE, 0.0+(15.0+(20.0*i)), 127.0+(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 15, CR_ORANGE, 254.0+(15.0+(20.0*i)), 127.0+(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 16, CR_ORANGE, 508.0+(15.0+(20.0*i)), 127.0+(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 17, CR_ORANGE, 762.0+(15.0+(20.0*i)), 127.0+(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 18, CR_ORANGE, -254.0+(15.0+(20.0*i)), 254.0+(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 19, CR_ORANGE, 0.0+(15.0+(20.0*i)), 254.0+(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 20, CR_ORANGE, 254.0+(15.0+(20.0*i)), 254.0+(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 21, CR_ORANGE, 508.0+(15.0+(20.0*i)), 254.0+(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 22, CR_ORANGE, 762.0+(15.0+(20.0*i)), 254.0+(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 23, CR_ORANGE, -254.0+(15.0+(20.0*i)), 381.0-(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 24, CR_ORANGE, 0.0+(15.0+(20.0*i)), 381.0-(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 25, CR_ORANGE, 254.0+(15.0+(20.0*i)), 381.0-(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 26, CR_ORANGE, 508.0+(15.0+(20.0*i)), 381.0-(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 27, CR_ORANGE, 762.0+(15.0+(20.0*i)), 381.0-(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 28, CR_ORANGE, -254.0+(15.0+(20.0*i)), 508.0-(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 29, CR_ORANGE, 0.0+(15.0+(20.0*i)), 508.0-(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 30, CR_ORANGE, 254.0+(15.0+(20.0*i)), 508.0-(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 31, CR_ORANGE, 508.0+(15.0+(20.0*i)), 508.0-(15.0+(20.0*i)), 0, 2.0, 0.25);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA|HUDMSG_FADEOUT, 32, CR_ORANGE, 762.0+(15.0+(20.0*i)), 508.0-(15.0+(20.0*i)), 0, 2.0, 0.25);
+        SetFont("CAUTIO2");
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 1, CR_ORANGE, 70.0+(20.0+(20.0*i)), 32.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 2, CR_ORANGE, 580.0+(20.0+(20.0*i)), 32.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 3, CR_ORANGE, 70.0+(20.0+(20.0*i)), 447.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 4, CR_ORANGE, 580.0+(20.0+(20.0*i)), 447.0, 0.35);
+        SetFont("WARN2");
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 5, CR_ORANGE, 130.0-(20.0+(20.0*i)), 240.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 6, CR_ORANGE, 530.0-(20.0+(20.0*i)), 240.0, 0.35);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEOUT, 7, CR_ORANGE, 930.0-(20.0+(20.0*i)), 240.0, 0.35);
+        Delay(2);
+    }
+}
+
+script "setInvulnerable" (int isOn) {
+    SetActorProperty(0, APROP_Invulnerable, isOn);
+}
+
+script "setSubSunTid" (int tid) {
+    Thing_ChangeTID(0, tid);
+    SUB_SUN_TID = tid;
+}
+
+script "thrustTowardTheSun" (void) {
+    int subSunTid = SUB_SUN_TID;
+    //int actorX = GetActorX(0);
+    //int actorY = GetActorY(0);
+    int actorZ = GetActorZ(0);
+    //int sunX = GetActorX(subSunTid);
+    //int sunY = GetActorY(subSunTid);
+    int sunZ = GetActorZ(subSunTid);
+    while(CheckFlag(subSunTid, "MISSILE")) {
+        if (GetActorProperty(0, APROP_Health) <= 0) terminate;
+        if (actorZ < sunZ) ThrustThingZ(0, 10, 0, 0);
+        else ThrustThingZ(0, 10, 1, 0);
+
+        //TODO: Hacer el ThrustThing de XY quizás
+        /*int sunAngle;
+        if (actorX < sunX) {
+            if (actorY < sunY)
+                sunAngle = VectorAngle(sunX - actorX, sunY - actorY) >> 8;
+            else
+                sunAngle = VectorAngle(sunX - actorX, actorY - sunY) >> 8;
+        }
+        else {
+            if (actorY < sunY)
+                sunAngle = VectorAngle(actorX - sunX, sunY - actorY) >> 8;
+            else
+                sunAngle = VectorAngle(actorX - sunX, actorY - sunY) >> 8;
+        }
+        ThrustThing(sunAngle, 15, 0, 0);*/
+        Delay(3);
     }
 }
 

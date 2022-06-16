@@ -381,6 +381,13 @@ Size 48
 SecondarySize 64
 Interval 5
 }
+Pulselight UranusLight
+{
+Color 0.3 0.31 0.65
+Size 48
+SecondarySize 64
+Interval 5
+}
 
 Object LightFollower
 {
@@ -401,8 +408,7 @@ Interval 2.0
 
 Object FlameThrowerFire { Frame FRFX { Light FlameThrowerFire1 } }
 
-FlickerLight2 DropFlame1
-{
+FlickerLight2 DropFlame1 {
 Offset 0 0 0
 Color 0.15 0.04 0.0
 Size 20
@@ -410,8 +416,7 @@ SecondarySize 30
 Interval 2.0
 }
 
-FlickerLight2 DropFlame2
-{
+FlickerLight2 DropFlame2 {
 Offset 0 0 0
 Color 0.3 0.31 0.65
 Size 20
@@ -419,8 +424,137 @@ SecondarySize 30
 Interval 2.0
 }
 
+FlickerLight2 DropFlame3 {
+Offset 0 0 0
+Color 0.24 0.75 0.19
+Size 20
+SecondarySize 30
+Interval 2.0
+}
+
+FlickerLight2 MeteorLight1 {
+Offset 0 0 0
+Color 1.0 0.58 0.28
+Size 25
+SecondarySize 35
+Interval 2.0
+}
+
+FlickerLight2 MeteorLight2 {
+Offset 0 0 0
+Color 1.0 0.58 0.28
+Size 15
+SecondarySize 25
+Interval 2.0
+}
+
+FlickerLight2 BrimstoneLight1 {
+Offset 0 0 0
+Color 0.92 0.59 0.59
+Size 15
+SecondarySize 25
+Interval 2.0
+}
+
+FlickerLight2 SubSunLight1 {
+Offset 0 0 0
+Color 0.15 0.04 0.0
+Size 128
+SecondarySize 256
+Interval 2.0
+}
+
 Object FireMindFire { Frame FLME { Light DropFlame1 } }
 Object AggeNewFire { Frame FLME { Light DropFlame2 } }
+Object HellFireM { Frame FIRE { Light DropFlame2 } }
+Object HellFire { Frame FIRE { Light DropFlame2 } }
+Object Diablo { Frame PYLDA { Light FireMindLight } }
+Object Diablo { Frame PYLDB { Light FireMindLight } }
+Object Diablo { Frame PYLDC { Light FireMindLight } }
+Object Diablo { Frame PYLDD { Light FireMindLight } }
+Object Diablo { Frame PYLDE { Light FireMindLight } }
+Object Diablo { Frame PYLDF { Light FireMindLight } }
+Object Diablo { Frame PYLDG { Light FireMindLight } }
+Object Diablo { Frame PYLDH { Light FireMindLight } }
+Object Diablo { Frame PYLDI { Light FireMindLight } }
+Object Diablo { Frame PYLDJ { Light FireMindLight } }
+Object Diablo { Frame PYLDK { Light FireMindLight } }
+Object Diablo { Frame PYLDL { Light FireMindLight } }
+Object Diablo { Frame PYLDM { Light FireMindLight } }
+Object Diablo { Frame PYLDN { Light FireMindLight } }
+Object Diablo { Frame PYLDO { Light FireMindLight } }
+Object Diablo { Frame PYLDP { Light FireMindLight } }
+Object Diablo { Frame PYLDQ { Light FireMindLight } }
+Object Diablo { Frame PYLDR { Light FireMindLight } }
+Object Diablo { Frame PYLDS { Light FireMindLight } }
+Object Diablo { Frame PYLDT { Light FireMindLight } }
+Object Diablo { Frame PYLDU { Light FireMindLight } }
+Object Diablo { Frame PYLDV { Light FireMindLight } }
+Object Diablo { Frame PYLDW { Light FireMindLight } }
+Object Diablo { Frame PYLDX { Light FireMindLight } }
+Object Diablo { Frame PYLDY { Light FireMindLight } }
+Object Armncubus { Frame FATUA { Light IpecacLight } }
+Object Armncubus { Frame FATUB { Light IpecacLight } }
+Object Armncubus { Frame FATUC { Light IpecacLight } }
+Object Armncubus { Frame FATUD { Light IpecacLight } }
+Object Armncubus { Frame FATUE { Light IpecacLight } }
+Object Armncubus { Frame FATUF { Light IpecacLight } }
+Object Armncubus { Frame FATUG { Light IpecacLight } }
+Object Armncubus { Frame FATUH { Light IpecacLight } }
+Object Armncubus { Frame FATUT { Light IpecacLight } }
+Object Armncubus { Frame FATUU { Light IpecacLight } }
+Object Armncubus { Frame FATUV { Light IpecacLight } }
+Object Armncubus { Frame FATUW { Light IpecacLight } }
+Object Armncubus { Frame FATUY { Light IpecacLight } }
+Object Armncubus { Frame FATUX { Light IpecacLight } }
+Object Armncubus { Frame FATUZ { Light IpecacLight } }
+Object Armncubus { Frame FATUS { Light IpecacLight } }
+Object Armncubus { Frame FATUK { Light IpecacLight } }
+Object Armncubus { Frame FATUL { Light IpecacLight } }
+Object Armncubus { Frame FATUM { Light IpecacLight } }
+Object Armncubus { Frame FATUN { Light IpecacLight } }
+Object Armncubus { Frame FATUO { Light IpecacLight } }
+Object Armncubus { Frame FATUP { Light IpecacLight } }
+Object Armncubus { Frame FATUQ { Light IpecacLight } }
+Object Frostodemon { Frame HELEA { Light UranusLight } }
+Object Frostodemon { Frame HELEB { Light UranusLight } }
+Object Frostodemon { Frame HELEC { Light UranusLight } }
+Object Frostodemon { Frame HELED { Light UranusLight } }
+Object Frostodemon { Frame HELEE { Light UranusLight } }
+Object Frostodemon { Frame HELEF { Light UranusLight } }
+Object Frostodemon { Frame HELEG { Light UranusLight } }
+Object Frostodemon { Frame HELEH { Light UranusLight } }
+Object Frostodemon { Frame HELEI { Light UranusLight } }
+Object Frostodemon { Frame HELEJ { Light UranusLight } }
+Object Frostodemon { Frame HELEK { Light UranusLight } }
+Object Frostodemon { Frame HELEL { Light UranusLight } }
+Object Frostodemon { Frame HELEM { Light UranusLight } }
+Object Frostodemon { Frame HELEN { Light UranusLight } }
+Object Frostodemon { Frame HELEO { Light UranusLight } }
+Object Frostodemon { Frame HELEP { Light UranusLight } }
+Object Frostodemon { Frame HELEQ { Light UranusLight } }
+Object Frostodemon { Frame HELER { Light UranusLight } }
+Object Frostodemon { Frame HELES { Light UranusLight } }
+Object Frostodemon { Frame HELET { Light UranusLight } }
+Object Frostodemon { Frame HELEU { Light UranusLight } }
+Object DiabloMeteor { Frame COMT { Light MeteorLight1 } }
+Object GiantFireBall { Frame BRBA { Light MeteorLight2 } }
+Object DiabloFireBall { Frame HLK1 { Light MeteorLight2 } }
+Object DiabloComet { Frame COMT { Light MeteorLight2 } }
+Object DiabloWalkFire { Frame IFWF { Light MeteorLight2 } }
+Object GreenFatShot { Frame MANG { Light DropFlame3 } }
+Object PGreenFatShot { Frame MANG { Light DropFlame3 } }
+Object ArmncubusWalkFire { Frame FRTF { Light DropFlame3 } }
+Object ArmncubusGrenade { Frame HBA4 { Light DropFlame3 } }
+Object PArmncubusGrenade { Frame HBA4 { Light DropFlame3 } }
+Object FrostCacoBall { Frame FROM { Light DropFlame2 } }
+Object FrostTPCacoBall { Frame FROM { Light DropFlame2 } }
+Object BrimstoneBeam { Frame BRS0 { Light BrimstoneLight } }
+Object BrimstoneBeam { Frame BRD1 { Light BrimstoneLight } }
+Object SubterraneanRisingSun { Frame OSUN { Light SubSunLight1 } }
+Object SubterraneanSun { Frame OSUN { Light SubSunLight1 } }
+Object SubSunFloorGlow { Frame SSUN { Light MeteorLight1 } }
+Object SubSunBullet { Frame SBLT { Light DropFlame1 } }
 
 
 //Armncubus

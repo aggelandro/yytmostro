@@ -3325,7 +3325,7 @@ ACTOR IsaacRift {
 	States {
 		Spawn:
 			TNT1 A 0 NoDelay A_PlaySound("misc/rockcrumble", CHAN_AUTO)
-			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayersDontThrusting")
+			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayersDontThrusting", 75)
 			EATK A 5 A_RadiusThrust(-2000, 384, RTF_NOIMPACTDAMAGE|RTF_NOTMISSILE, 192)
 			EATK B 1 A_Explode(user_explosion_damage/2, 192, 0, 0, 128)
 			EATK B 4 A_RadiusThrust(-2000, 384, RTF_NOIMPACTDAMAGE|RTF_NOTMISSILE, 192)

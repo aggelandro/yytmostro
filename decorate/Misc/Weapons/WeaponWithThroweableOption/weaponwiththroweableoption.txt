@@ -1,4 +1,6 @@
 ACTOR WeaponWithGrenadeOption : DoomWeapon {
+	Weapon.AmmoType "HandGrenadeAmmo"
+
 	States {
 		Ready:
 			TNT1 A -1 A_Jump(256, "Ready")

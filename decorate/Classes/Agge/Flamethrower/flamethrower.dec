@@ -1,5 +1,4 @@
 ACTOR AggeFlameThrower : DoomWeapon {
-
 	Inventory.PickupMessage "You got the Flamethrower!"
 	Weapon.AmmoType "Cell"
 	Weapon.AmmoUse 2

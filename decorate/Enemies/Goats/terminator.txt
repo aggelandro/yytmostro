@@ -1,5 +1,5 @@
 ACTOR T-800 : BaronOfHell2 {
-	Health 2000
+	Health 3000
 	Bloodcolor Green
 	PainChance 20
 	+BOSS
@@ -9,7 +9,7 @@ ACTOR T-800 : BaronOfHell2 {
   PainSound "cydes/pain"
   DeathSound "cydes/death"
   Obituary "Hasta la vista, bb"
-	DropItem "UniqueWeaponSpawner", 32
+	DropItem "UniqueWeaponSpawner", 16
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
 	DropItem "IsaacItemsTier2HighChanceSpawner"

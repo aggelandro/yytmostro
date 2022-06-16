@@ -50,10 +50,12 @@ ACTOR KnightIllusion : HellKnight2
 	+NORADIUSDMG
 	+NOBLOOD
 	+THRUACTORS
+	+NOTARGET
 	-SOLID
 	States
 	{
 	See:
+		TNT1 A 0 A_JumpIfTargetInLOS("TPMaster", 0, JLOSF_CHECKMASTER|JLOSF_CLOSENOJUMP, 0, 2048)
 		BOS2 AA 3 A_Chase
 		BOS2 BB 3 A_Chase
 		BOS2 CC 3 A_Chase
@@ -64,6 +66,14 @@ ACTOR KnightIllusion : HellKnight2
 		BOS2 EF 8 A_FaceTarget
 		BOS2 G 8 A_CustomMissile("GhostBall")
 		Goto See
+	TPMaster:
+		BOS2 AAAAAAAA 5 A_FadeOut(0.05)
+		BOS2 A 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_NOCHECKPOSITION, "FadeIn")
+		BOS2 AAAAAAAA 1 A_FadeIn(0.05)
+		Goto See
+	FadeIn:
+		BOS2 AAAAAAAA 1 A_FadeIn(0.05)
+		Goto See+1
 	Death:
 		B0S2 A 0
 		BOS2 AAAAAAA 5 A_FadeOut(0.05)

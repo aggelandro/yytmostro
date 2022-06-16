@@ -207,30 +207,28 @@ ACTOR ShieldHit {
   }
 }
 
-ACTOR EnergyShieldAmmo : Ammo
-{
+ACTOR EnergyShieldAmmo : Ammo {
     Inventory.MaxAmount 200
 	  Inventory.Icon "SHICOA0"
 }
 
-ACTOR AggeAxePuff
-{
+ACTOR AggeAxePuff {
 	+NOGRAVITY
 	+NOINTERACTION
 	+PUFFONACTORS
 	DamageType "Lightning"
-	States
-	{
-	XDeath:
-		TNT1 A 0 A_PlaySound("agge/hachazo",CHAN_WEAPON)
-		Goto Crash+1
+	
+	States {
+		XDeath:
+			TNT1 A 0 A_PlaySound("agge/hachazo",CHAN_WEAPON)
+			Goto Crash+1
 		
-	Melee:
-	Crash:
-		TNT1 A 0 A_PlaySound("agge/pared",CHAN_WEAPON)
-		TNT1 A 0 A_SpawnItemEx("BlueParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
-		FAXE RSTUVWX 2
-		Stop
+		Melee:
+		Crash:
+			TNT1 A 0 A_PlaySound("agge/pared",CHAN_WEAPON)
+			TNT1 A 0 A_SpawnItemEx("BlueParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			FAXE RSTUVWX 2
+			Stop
 	}
 }
 

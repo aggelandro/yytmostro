@@ -776,6 +776,7 @@ ACTOR ShotSmoke {
 	+NOINTERACTION
 	+NOGRAVITY
 	+DROPOFF
+	+CLIENTSIDEONLY
 	+FORCEXYBILLBOARD
 	
 	States {
@@ -985,6 +986,7 @@ ACTOR FirePowerSmoke {
 	+NOINTERACTION
 	+NOGRAVITY
 	+FORCEXYBILLBOARD
+	+CLIENTSIDEONLY
 	Scale 0.4
 	RenderStyle Normal
 	
@@ -1004,6 +1006,7 @@ ACTOR AbstractIllusion {
 	-NOBLOCKMAP
   +NOBLOOD
 	+NOGRAVITY
+	+NOICEDEATH
 }
 
 // Explosive Missile Junk
