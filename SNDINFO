@@ -318,6 +318,7 @@ AM/pain			AMPAIN
 AM/active		AMACT
 AM/step			DSDHYFL
 AM/landing	DSDCYST
+AM/highjump	HJUMP
 
 //hell commander
 $rolloff commander/laugh	 	800 3500

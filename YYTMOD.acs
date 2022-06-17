@@ -1118,6 +1118,7 @@ script "thrustTowardTheSun" (void) {
     //int sunX = GetActorX(subSunTid);
     //int sunY = GetActorY(subSunTid);
     int sunZ = GetActorZ(subSunTid);
+    if (CheckActorClass(0, "JetpackZombie")) SetActorProperty(0, APROP_Mass, 100);
     while(CheckFlag(subSunTid, "MISSILE")) {
         if (GetActorProperty(0, APROP_Health) <= 0) terminate;
         if (actorZ < sunZ) ThrustThingZ(0, 10, 0, 0);
@@ -1140,6 +1141,11 @@ script "thrustTowardTheSun" (void) {
         ThrustThing(sunAngle, 15, 0, 0);*/
         Delay(3);
     }
+    if (CheckActorClass(0, "JetpackZombie")) SetActorProperty(0, APROP_Mass, 0x7fffffff);
+}
+
+script "meter" (void) {
+    SetResultValue(CheckInventory("Meter"));
 }
 
 

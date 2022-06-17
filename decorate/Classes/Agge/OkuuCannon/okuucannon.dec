@@ -1,10 +1,10 @@
 ACTOR OkuuCannon : DoomWeapon {
-  Weapon.Kickback 100
-  Weapon.AmmoType "CargaAgge"
+  Weapon.AmmoType "Meter"
 	Weapon.AmmoGive 10
-  Weapon.AmmoUse 1
-  Obituary ""
+	Inventory.PickupMessage "You wield the power of nuclear fusion manipulation!"
+	Obituary "%o was totally nuked by %k's control rod."
   Tag "UNIQUE"
+	
   States {
 		Ready:
 			OKUU A 1 A_WeaponReady
@@ -19,7 +19,12 @@ ACTOR OkuuCannon : DoomWeapon {
 			Loop
 			
 		Fire:
+			TNT1 A 0 A_JumpIf(CallACS("meter") < 4, "NoMeter")
 			TNT1 A 0 A_Refire("FireHold")
+			Goto Ready
+			
+		NoMeter:
+			OKUU A 1 Offset(0,36)
 			Goto Ready
 			
 		FireHold:
@@ -36,14 +41,24 @@ ACTOR OkuuCannon : DoomWeapon {
 			Loop
 			
 		FireCharged:
-			TNT1 A 0 A_JumpIf(CeilingZ-FloorZ<192+56+10, "Ready")
+			TNT1 A 0 A_JumpIf(CeilingZ-FloorZ<192+56+40, "Ready")
+			// Para chequear que no vaya a colisionar con paredes
+			TNT1 A 0 A_FireCustomMissile("WallCheck", 0, 0, 0, 40)
+			OKUU B 2
+			TNT1 A 0 A_JumpIfInventory("WallCheckDone", 1, 1)
+			Goto Ready
+			TNT1 A 0 A_TakeInventory("WallCheckDone", 1)
+			TNT1 A 0 A_TakeInventory("meter", 4)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setInvulnerable", 1)
 			TNT1 A 0 ACS_NamedExecuteWithResult("pausePlayer", 1)
 			TNT1 A 0 A_PlaySound("agge/okuualert", CHAN_WEAPON)
 			TNT1 A 0 ACS_NamedExecuteWithResult("showCautionAnimation")
-			OKUU B 2 Offset(0,36)
-			OKUU B 2 Offset(0,46)
-			OKUU B 2 Offset(0,56)
+			OKUU B 1 Offset(0,36)
+			OKUU B 1 Offset(0,41)
+			OKUU B 1 Offset(0,46)
+			OKUU B 1 Offset(0,51)
+			OKUU B 1 Offset(0,56)
+			OKUU B 1 Offset(0,61)
 			TNT1 A 0 A_SpawnItemEx("FirePowerSmokeSpawner")
 			TNT1 A 0 A_SpawnItemEx("SubSunFloorGlow")
 			OKUU B 15 Offset(0,66)
@@ -53,14 +68,18 @@ ACTOR OkuuCannon : DoomWeapon {
 			OKUU B 22 Offset(0,66)
 			TNT1 A 0 A_SpawnItemEx("FirePowerSmokeSpawner")
 			OKUU B 4 Offset(0,66)
-			OKUU B 2 Offset(0,56)
-			OKUU B 2 Offset(0,46)
-			OKUU B 2 Offset(0,36)
+			OKUU B 1 Offset(0,61)
+			OKUU B 1 Offset(0,56)
+			OKUU B 1 Offset(0,51)
+			OKUU B 1 Offset(0,46)
+			OKUU B 1 Offset(0,41)
+			OKUU B 1 Offset(0,36)
 			TNT1 A 0 ACS_NamedExecuteWithResult("pausePlayer", 0)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setInvulnerable", 0)
 			Goto Ready
 			
 		StopChanneling:
+			TNT1 A 0 A_StopSound(CHAN_WEAPON)
 			TNT1 A 0 A_GiveInventory("FlashDone", 1)
 			Goto Ready
 			
@@ -161,7 +180,6 @@ ACTOR SubterraneanRisingSun {
 			TNT1 A 0 A_RadiusGive("ForceThrustZ", 2048, RGF_MONSTERS)
 			TNT1 A 0 A_ChangeVelocity(0, 0, 0, CVF_REPLACE)
 			TNT1 A 0 A_SpawnItemEx("SubterraneanSun")
-			TNT1 A 0 A_SpawnItemEx("SubSunCore")
 			Stop
 	}
 }
@@ -186,6 +204,7 @@ ACTOR SubterraneanSun {
 		Spawn:
 			TNT1 A 0 NoDelay A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
 			TNT1 A 0 ACS_NamedExecuteWithResult("setSubSunTid", user_spawn_tid)
+			TNT1 A 0 A_SpawnItemEx("SubSunCore", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER)
 			TNT1 A 0 A_PlaySound("agge/subsunactive", CHAN_6, 1.0, TRUE)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayersDontThrusting", 675)
 			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
@@ -222,12 +241,13 @@ ACTOR SubterraneanSun {
 			TNT1 A 0 A_PlaySound("agge/dropfire", CHAN_AUTO)
 			TNT1 A 0 A_SpawnItemEx("SubSunBulletRingSpawner")
 			TNT1 A 0 A_JumpIfInventory("LoopFlag", 15, 1)
-			Goto Spawn+4
+			Goto Spawn+5
 			TNT1 A 0 A_TakeInventory("LoopFlag", 15)
 			TNT1 A 0 A_StopSound(CHAN_6)
 			Goto Death
 			
 		Death:
+			TNT1 A 0 A_KillChildren
 			OSUN DEFGHIJKLMNOABC 3 A_FadeOut(0.05)
 			Loop
 	}
@@ -271,37 +291,65 @@ ACTOR SubSunCore {
 		Spawn:
 			TNT1 A 0 NoDelay A_SetUserVar("user_vely", 0)
 			TNT1 A 0 A_SetUserVar("user_velz", 8)
+			Goto Spawn1
+			
+		Spawn1:
+			TNT1 A 0 A_SetUserVar("user_vely", user_vely+2)
+			TNT1 A 0 A_SetUserVar("user_velz", user_velz-2)
 			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
 			SSC1 A 1 A_SetScale(ScaleX+0.05)
 			TNT1 A 0 A_SpawnItemEx("SubSunCorePartcicle", 0, 0, 0, 0, user_vely, user_velz, Random(0, 359), SXF_NOCHECKPOSITION)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 675, 20)
-			TNT1 A 0 A_JumpIf(user_vely>=8, 6)
-			TNT1 A 0 A_JumpIf(user_velz<=0, 14)
-			TNT1 A 0 A_SetUserVar("user_vely", user_vely+2)
-			TNT1 A 0 A_SetUserVar("user_velz", user_velz-2)
-			TNT1 A 0 A_JumpIf(ScaleX>=0.3, 1)
-			Goto Spawn+2
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 675, 4)
+			TNT1 A 0 A_JumpIf(user_vely>=8, "Spawn2")
+			TNT1 A 0 A_JumpIf(ScaleX>=0.25, 1)
+			Loop
 			SSC1 A 0 A_SetScale(0.05)
-			Goto Spawn+2
-			TNT1 A 0 A_JumpIf(user_velz<=0, 5)
+			Loop
+			TNT1 A 0 A_TakeInventory("LoopFlag", 675)
+			Stop
+			
+		Spawn2:
 			TNT1 A 0 A_SetUserVar("user_vely", user_vely-2)
 			TNT1 A 0 A_SetUserVar("user_velz", user_velz-2)
-			TNT1 A 0 A_JumpIf(ScaleX>=0.3, 1)
-			Goto Spawn+2
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			SSC1 A 1 A_SetScale(ScaleX+0.05)
+			TNT1 A 0 A_SpawnItemEx("SubSunCorePartcicle", 0, 0, 0, 0, user_vely, user_velz, Random(0, 359), SXF_NOCHECKPOSITION)
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 675, 4)
+			TNT1 A 0 A_JumpIf(user_velz<=-8, "Spawn3")			
+			TNT1 A 0 A_JumpIf(ScaleX>=0.25, 1)
+			Loop
 			SSC1 A 0 A_SetScale(0.05)
-			Goto Spawn+2
+			Loop
+			TNT1 A 0 A_TakeInventory("LoopFlag", 675)
+			Stop
+			
+		Spawn3:
 			TNT1 A 0 A_SetUserVar("user_vely", user_vely-2)
 			TNT1 A 0 A_SetUserVar("user_velz", user_velz+2)
-			TNT1 A 0 A_JumpIf(ScaleX>=0.3, 1)
-			Goto Spawn+2
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			SSC1 A 1 A_SetScale(ScaleX+0.05)
+			TNT1 A 0 A_SpawnItemEx("SubSunCorePartcicle", 0, 0, 0, 0, user_vely, user_velz, Random(0, 359), SXF_NOCHECKPOSITION)
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 675, 4)
+			TNT1 A 0 A_JumpIf(user_vely<=-8, "Spawn4")
+			TNT1 A 0 A_JumpIf(ScaleX>=0.25, 1)
+			Loop
 			SSC1 A 0 A_SetScale(0.05)
-			Goto Spawn+2
+			Loop
+			TNT1 A 0 A_TakeInventory("LoopFlag", 675)
+			Stop
+			
+		Spawn4:
 			TNT1 A 0 A_SetUserVar("user_vely", user_vely+2)
 			TNT1 A 0 A_SetUserVar("user_velz", user_velz+2)
-			TNT1 A 0 A_JumpIf(ScaleX>=0.3, 1)
-			Goto Spawn+2
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			SSC1 A 1 A_SetScale(ScaleX+0.05)
+			TNT1 A 0 A_SpawnItemEx("SubSunCorePartcicle", 0, 0, 0, 0, user_vely, user_velz, Random(0, 359), SXF_NOCHECKPOSITION)
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 675, 4)
+			TNT1 A 0 A_JumpIf(user_velz>=8, "Spawn1")
+			TNT1 A 0 A_JumpIf(ScaleX>=0.25, 1)
+			Loop
 			SSC1 A 0 A_SetScale(0.05)
-			Goto Spawn+2
+			Loop
 			TNT1 A 0 A_TakeInventory("LoopFlag", 675)
 			Stop
 	}
@@ -382,7 +430,33 @@ ACTOR SubSunBulletRingSpawner {
 	}
 }
 
+ACTOR WallCheck {
+	Radius 96
+	Height 192
+	Speed 1
+	Projectile
+	+NOGRAVITY
+	-NOBLOCKMAP
+	
+	States {
+		Spawn:
+			TNT1 A 1 NoDelay
+			TNT1 A 0 A_GiveInventory("WallCheckDone", 1, AAPTR_TARGET)
+			Stop
+			
+		Crash:
+		XDeath:
+			TNT1 A 0 A_GiveInventory("WallCheckDone", 1, AAPTR_TARGET)
+			Stop
+			
+		Death:
+			TNT1 A 0
+			Stop
+	}
+}
+
 ACTOR FlashDone : Inventory { Inventory.MaxAmount 1 Inventory.Amount 1 }
+ACTOR WallCheckDone : Inventory { Inventory.MaxAmount 1 Inventory.Amount 1 }
 
 ACTOR ForceThrustZ : CustomInventory {
 	Inventory.MaxAmount 1

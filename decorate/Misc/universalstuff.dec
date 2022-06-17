@@ -8,7 +8,7 @@ ACTOR CargaUnica : Ammo
   Ammo.BackpackMaxAmount 1
   Inventory.Icon "CLIPA0"
 }
-ACTOR CargaAgge : CargaUnica
+ACTOR Meter : CargaUnica
 {
 	Inventory.Amount 10
 	Inventory.MaxAmount 10
@@ -1040,5 +1040,20 @@ ACTOR Debris {
 			SHRD H 50
 			SHRD H 5 A_FadeOut(0.10)
 			Goto Death+6
+	}
+}
+
+ACTOR HighJump {
+	Alpha 0.95
+	+CLIENTSIDEONLY
+  +NOGRAVITY
+  +NOBLOCKMAP
+  +NOTELEPORT
+  +DONTSPLASH
+	
+	States {
+		Spawn:
+			JUMP ABCDEFGHIJK 1
+			Stop
 	}
 }
