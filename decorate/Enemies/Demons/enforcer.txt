@@ -114,6 +114,8 @@ ACTOR Enforcer : Pinky2 {
 			
 		Death:
 			IFIN H 8
+			TNT1 AAA 0 A_CustomMissile("BigRedExplosion", 0, 0, random(0,360), 2, random(0,360))	
+			TNT1 AAA 0 A_CustomMissile("SmokeBigExplosion", 0, 0, random(0,360), 2, random(0,360))
 			IFIN I 1 A_FaceTarget
 			IFIN I 7 A_Scream
 			IFIN J 4 A_Explode(Random(5,32),64,0)

@@ -6,6 +6,7 @@ ACTOR YYTMonster
 {
 	Monster
 	var int user_max_healh; // Guarda el total de HP de un monstruo
+	var int user_spawn_tid; // Se usa para guardar el TID de cualquier spawn que haga el monstruo (de ser necesario)
 	
 	States 
 	{

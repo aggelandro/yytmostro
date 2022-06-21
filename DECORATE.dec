@@ -1,6 +1,7 @@
 // =====================================INCLUDE SPAM STARTS HERE=====================================
 
 // code that is inherited by lots of other actors
+#include "decorate/Enemies/monsters.dec"
 #include "decorate/Misc/universalstuff.dec"
 #include "decorate/Misc/casing.dec"
 #include "decorate/Misc/debuffs.dec"
@@ -31,6 +32,7 @@
 #include "decorate/Classes/Agge/IsaacHands/isaachands.dec"
 #include "decorate/Classes/Agge/Motumbo/motumbo.dec"
 #include "decorate/Classes/Agge/Flamethrower/flamethrower.dec"
+#include "decorate/Classes/Agge/EterealRifles/eterealrifles.txt"
 #include "decorate/Classes/Agge/OkuuCannon/okuucannon.dec"
 
 #include "decorate/Classes/zLayer/Pistol/pistol.dec"
@@ -52,8 +54,6 @@
 #include "decorate/Classes/Terro/SuperShotgun/supershotgun.dec"
 
 //monsters
-#include "decorate/Enemies/monsters.dec"
-
 #include "decorate/Enemies/Zombies/JetpackZombie/jetpackzombie.dec"
 #include "decorate/Enemies/Zombies/FlamethrowerGuy/flamethrowerguy.dec"
 #include "decorate/Enemies/Zombies/laserzombie.txt"
@@ -648,6 +648,7 @@ ACTOR Agge : UniversalPlayer
   Player.WeaponSlot 4, IsaacHands, BlackIsaacHands, OrangeIsaacHands, GreenIsaacHands, BrimstoneHands
   Player.WeaponSlot 5, DualZanzibart, Motumbo
   Player.WeaponSlot 6, AggeFlamethrower
+	Player.WeaponSlot 7, EterealShocker
   Player.WeaponSlot 8, OkuuCannon
 	var int user_charge_state;
 	var int user_isaac_hands_is_active;

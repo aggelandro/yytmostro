@@ -56,6 +56,7 @@ ACTOR PkDoubleShotguns : WeaponWithGrenadeOption
 		Loop
 		
 	LFire:
+		SGDL A 0 A_JumpIfInventory("IsRReloading",1,"LIdle")
     SGDL A 0 A_JumpIfInventory("ClipDoubleLeft",1,1)
 		Goto LDryFire
     SGDL C 0 A_AlertMonsters
@@ -65,24 +66,24 @@ ACTOR PkDoubleShotguns : WeaponWithGrenadeOption
 		TNT1 A 0 A_PlaySound("terro/ssgshot", CHAN_AUTO)
 		SGDL BC 2 BRIGHT
 		SGDL D 2
-		SGDL D 0 A_JumpIfInventory("ClipDoubleLeft",1,1)
-		Goto LReload
 		SGDL EFA 2
 		SGDL A 0 A_JumpIfInventory("SynthFireLeft",1,"LFire")
 		Goto LIdle
 		
 	LReload:
+		TNT1 A 0 A_GiveInventory("IsLReloading",1)
+		SGRL A 0 A_JumpIfInventory("ClipDoubleLeft",2,2)
+		SGRL A 0 A_JumpIfInventory("Shell",1,2)
 		TNT1 A 0 A_TakeInventory("IsLReloading",1)
-		SGRL A 0 A_JumpIfInventory("ClipDoubleLeft",2,"LIdle")
-		SGRL A 0 A_JumpIfInventory("Shell",1,1)
 		Goto LIdle
-		SGRL ABCD 2 
+		SGRL ABCD 2
 		SGRL E 2 A_PlaySound("weapons/sshoto")
 		SGRL FG 2
 		SGRL H 12
 		SGRL I 2
 		SGRL J 2 A_PlaySound("terro/ssgreload")
 		SGRL K 2
+		TNT1 A 0 A_TakeInventory("IsLReloading",1)
 		Goto LRStart
 		
 	LRStart:
@@ -114,17 +115,19 @@ ACTOR PkDoubleShotguns : WeaponWithGrenadeOption
 		Loop
 		
 	RReload:
+		TNT1 A 0 A_GiveInventory("IsRReloading",1)
+		SGDR A 0 A_JumpIfInventory("ClipDoubleRight",2,2)
+		SGDR A 0 A_JumpIfInventory("Shell",1,2)
 		TNT1 A 0 A_TakeInventory("IsRReloading",1)
-		SGDR A 0 A_JumpIfInventory("ClipDoubleRight",2,"RIdle")
-		SGDR A 0 A_JumpIfInventory("Shell",1,1)
 		Goto RIdle
-		SGRR ABCD 2 
+		SGRR ABCD 2
 		SGRR E 2 A_PlaySound("weapons/sshoto")
 		SGRR FG 2
 		SGRR H 12
 		SGRR I 2
 		SGRR J 2 A_PlaySound("terro/ssgreload")
-		SGRR K 2 
+		SGRR K 2
+		TNT1 A 0 A_TakeInventory("IsRReloading",1)
 		Goto RRStart
 		
 	RRStart:
@@ -146,6 +149,7 @@ ACTOR PkDoubleShotguns : WeaponWithGrenadeOption
 		Goto RIdle
 		
 	RFire:
+		SGDL A 0 A_JumpIfInventory("IsLReloading",1,"RIdle")
     SGDR A 0 A_JumpIfInventory("ClipDoubleRight",1,1)
 		Goto RDryFire
     SGDR C 0 A_AlertMonsters
@@ -155,15 +159,13 @@ ACTOR PkDoubleShotguns : WeaponWithGrenadeOption
 		TNT1 A 0 A_PlaySound("terro/ssgshot", CHAN_AUTO)
 		SGDR BC 2 BRIGHT
 		SGDR D 2
-		SGDR D 0 A_JumpIfInventory("ClipDoubleRight",1,1)
-		Goto RReload
 		SGDR EFA 2
 		SGDR A 0 A_JumpIfInventory("SynthFireRight",1,"RFire")
 		Goto RIdle
 		
 	Reload:
-		TNT1 A 0 A_JumpIfInventory("ClipDoubleLeft",1,"EnableLReload")
-		TNT1 A 0 A_JumpIfInventory("ClipDoubleRight",1,"EnableRReload")
+		TNT1 A 0 A_JumpIf(CallACS("clipDoubleLeft") <= 1, "EnableLReload")
+		TNT1 A 0 A_JumpIf(CallACS("clipDoubleRight") <= 1, "EnableRReload")
 		Goto LIdle
 		
 	EnableLReload:

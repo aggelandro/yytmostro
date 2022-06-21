@@ -191,10 +191,10 @@ ACTOR StatusEffect {
 	+NOGRAVITY
 	+NOINTERACTION
 	+SEEKERMISSILE
+	+CLIENTSIDEONLY
 	var int user_se_monster_height;
 	
 	States {
-	
 		Death:
 			TNT1 A 0
 			Stop
@@ -351,6 +351,7 @@ ACTOR IceTrail {
   +RANDOMIZE
 	+NOINTERACTION
 	+NOGRAVITY
+	+CLIENTSIDEONLY
 	
   States {
 		Spawn:
@@ -394,6 +395,7 @@ ACTOR IceOrbit {
 	+NOINTERACTION
 	+NOGRAVITY
 	+SEEKERMISSILE
+	+CLIENTSIDEONLY
 	
 	States {
 		Spawn:
@@ -445,6 +447,22 @@ ACTOR IceOrbitTrail {
 	}
 }
 
+ACTOR TargetSpot : StatusEffect {
+	Scale 0.06
+	
+	States {
+	  Spawn:
+			TARG A 2 A_Warp(AAPTR_TRACER, 0, 0, user_se_monster_height/2, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A 0 A_JumpIf(!ACS_NamedExecuteWithResult("targetPlayerHasTarget"), "Death")
+			TNT1 A 0 A_CheckFlag("CORPSE", "Death", AAPTR_TRACER)
+			Loop
+			
+		Death:
+			TNT1 A 0
+			Stop
+	}
+}
+
 //blood effects
 ACTOR BlueBlood : Blood  {
 	Translation "168:191=192:207"
@@ -453,7 +471,7 @@ ACTOR GreenBlood : Blood {
 	Translation "168:191=112:127"
 }
 //monsters that I use more than once
-ACTOR MiniArachnotron
+ACTOR MiniArachnotron : YYTMonster
 {
   RenderStyle Stencil
   StencilColor Red
@@ -479,7 +497,7 @@ ACTOR MiniArachnotron
   Obituary "%o 's heels were bitten off by a spider."
   States
   {
-  Spawn:
+  SpawnLoop:
     BSPI AB 10 A_Look
     Loop
   See:
@@ -522,9 +540,9 @@ ACTOR FriendlyMiniArachnotron : MiniArachnotron {
 	
 	States {
 	
-		Spawn:
-			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimer", 2100) // Viven 1 min
-			Goto Super::Spawn
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 2100) // Viven 1 min
+			Goto Super::SpawnLoop
 			
 		Melee:
 			BSPI A 5 Fast Bright A_FaceTarget
@@ -595,6 +613,14 @@ ACTOR EnergySparkBlue : AbstractEnergyProjectileSpark {
 	}
 }
 
+ACTOR EnergySparkBlue2 : EnergySparkBlue {	
+	States {
+		Spawn:
+			SPKB A 2 NoDelay Bright A_FadeOut(0.08)
+			Loop
+	}
+}
+
 ACTOR EnergyProjectileSparkRed : AbstractEnergyProjectileSpark {
 	States {
 		Spawn:
@@ -643,6 +669,13 @@ ACTOR ESB3 : EnergySparkBlue { Speed 2 Scale 0.04 }
 ACTOR ESB4 : EnergySparkBlue { Speed 3 Scale 0.03 }
 ACTOR ESB5 : EnergySparkBlue { Speed 4 Scale 0.02 }
 ACTOR ESB6 : EnergySparkBlue { Speed 5 Scale 0.01 }
+
+ACTOR ESB21 : EnergySparkBlue2 { Scale 0.06 }
+ACTOR ESB22 : EnergySparkBlue2 { Scale 0.05 }
+ACTOR ESB23 : EnergySparkBlue2 { Scale 0.04 }
+ACTOR ESB24 : EnergySparkBlue2 { Scale 0.03 }
+ACTOR ESB25 : EnergySparkBlue2 { Scale 0.02 }
+ACTOR ESB26 : EnergySparkBlue2 { Scale 0.01 }
 
 ACTOR EPSR1 : EnergyProjectileSparkRed { Scale 0.06 }
 ACTOR EPSR2 : EnergyProjectileSparkRed { Speed 1 Scale 0.05 }
@@ -704,6 +737,19 @@ ACTOR BlueBodyParticleSpawner : AbstractParticleSpawner {
 			TNT1 A 0 A_SpawnItemEx("ESB5",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
 			TNT1 A 0 A_SpawnItemEx("ESB6",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
 			TNT1 A 1
+			Stop
+	}
+}
+
+ACTOR BlueBodyParticle2Spawner : AbstractParticleSpawner {	
+  States {
+		Spawn:
+			TNT1 A 1 A_SpawnItemEx("ESB21",Random(-20, 20),Random(-2, 2),0,0,0,0.5,0,128)
+			TNT1 A 1 A_SpawnItemEx("ESB22",Random(-20, 20),Random(-2, 2),0,0,0,0.5,0,128)
+			TNT1 A 1 A_SpawnItemEx("ESB23",Random(-20, 20),Random(-2, 2),0,0,0,0.5,0,128)
+			TNT1 A 1 A_SpawnItemEx("ESB24",Random(-20, 20),Random(-2, 2),0,0,0,0.5,0,128)
+			TNT1 A 1 A_SpawnItemEx("ESB25",Random(-20, 20),Random(-2, 2),0,0,0,0.5,0,128)
+			TNT1 A 1 A_SpawnItemEx("ESB26",Random(-20, 20),Random(-2, 2),0,0,0,0.5,0,128)
 			Stop
 	}
 }
@@ -1007,6 +1053,7 @@ ACTOR AbstractIllusion {
   +NOBLOOD
 	+NOGRAVITY
 	+NOICEDEATH
+	var int user_spawn_tid;
 }
 
 // Explosive Missile Junk
@@ -1044,7 +1091,7 @@ ACTOR Debris {
 }
 
 ACTOR HighJump {
-	Alpha 0.95
+	Alpha 0.75
 	+CLIENTSIDEONLY
   +NOGRAVITY
   +NOBLOCKMAP
@@ -1053,7 +1100,7 @@ ACTOR HighJump {
 	
 	States {
 		Spawn:
-			JUMP ABCDEFGHIJK 1
+			JUMP ABCDEFGHIJK 2 NoDelay
 			Stop
 	}
 }

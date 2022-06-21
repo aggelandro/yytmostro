@@ -324,6 +324,14 @@ script "isPressingFire" (void) {
 
 // codigo escopeta terro
 // COMIENZO
+script "clipDoubleLeft" (void) {
+    SetResultValue(CheckInventory("ClipDoubleLeft"));
+}
+
+script "clipDoubleRight" (void) {
+    SetResultValue(CheckInventory("ClipDoubleRight"));
+}
+
 script 891 (void)
 {
     while(checkinventory("SynthFireActive")>0)
@@ -847,6 +855,14 @@ script "setTIDTracerPointerToSelf" (int tid) {
     Thing_ChangeTID(mtid, 0);
 }
 
+script "setTIDTargetPointerToSelf" (int tid) {
+    int mtid = UniqueTID();
+    Thing_ChangeTID(0, mtid);
+    SetActivator(tid);
+    SetPointer(AAPTR_TARGET, mtid);
+    Thing_ChangeTID(mtid, 0);
+}
+
 script "showShellsInShotgun" (void) CLIENTSIDE {
     int shells = ACS_NamedExecuteWithResult("AggeSGShellsLeft", 0);
     SetFont("BIGFONT");
@@ -1124,7 +1140,7 @@ script "thrustTowardTheSun" (void) {
         if (actorZ < sunZ) ThrustThingZ(0, 10, 0, 0);
         else ThrustThingZ(0, 10, 1, 0);
 
-        //TODO: Hacer el ThrustThing de XY quizás
+        //TODO: Hacer el ThrustThing de XY quizás (funciona bien el a_radius_thrust)
         /*int sunAngle;
         if (actorX < sunX) {
             if (actorY < sunY)
@@ -1148,7 +1164,42 @@ script "meter" (void) {
     SetResultValue(CheckInventory("Meter"));
 }
 
+script "playerAcquiresTarget" (void) {
+    int ttid = UniqueTID();
+    int ptid = GetActorProperty(0, APROP_TargetTID);
+    SetActivator(0, AAPTR_TRACER);
+    Thing_ChangeTID(0, ttid);
+    SetActivator(ptid);
+    if (GetActorProperty(0, APROP_TargetTID) == 0) {
+        PlaySound(0, "agge/target", CHAN_AUTO);
+        int etid = UniqueTID();
+        SetPointer(AAPTR_TARGET, ttid);
+        Spawn("TargetSpot", GetActorX(0), GetActorY(0), GetActorZ(0), etid);
+        SetActivator(etid);
+        SetPointer(AAPTR_TRACER, ttid);
+        SetPointer(AAPTR_TARGET, ptid);
+        SetUserVariable(0, "user_se_monster_height", GetActorProperty(ttid, APROP_Height) >> 16);
+    }
+    else {
+        PlaySound(0, "agge/powerupfail", CHAN_AUTO);
+        Thing_ChangeTID(GetActorProperty(0, APROP_TargetTID), 0);
+        SetPointer(AAPTR_TARGET, 0, AAPTR_NULL);
+        terminate;
+    }
+}
 
+script "targetPlayerHasTarget" (void) {
+    SetActivator(GetActorProperty(0, APROP_TargetTID));
+    SetResultValue(GetActorProperty(0, APROP_TargetTID) != 0);
+}
+
+script "setTargetToNull" (void) {
+    SetPointer(AAPTR_TARGET, 0, AAPTR_NULL);
+}
+
+script "cells" (void) {
+    SetResultValue(CheckInventory("Cell"));
+}
 
 
 

@@ -260,7 +260,6 @@ ACTOR LaserShooter {
 	Speed 1
 	Radius 4
 	Height 8
-	Damage (0)
 	RenderStyle None
 	
 	States {
@@ -292,6 +291,7 @@ ACTOR SuperLaserShooter : LaserShooter {
 ACTOR Laser : MachineGunBullet {
 	Scale 2.8
 	DamageType "Laser"
+	Damage (Random(6, 7))
 	-RANDOMIZE
 	Obituary "%o was pierced by %k's Laser."
 	
@@ -330,7 +330,6 @@ ACTOR FlamethrowerProjectile {
 	Radius 4
 	Height 8
 	Speed 30
-	Damage (0)
 	Projectile
 	+PAINLESS
 	+RIPPER
@@ -342,23 +341,23 @@ ACTOR FlamethrowerProjectile {
 	
 	States {
 		Spawn:
-			CEXP AA 1 NoDelay BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP A 2 NoDelay BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP B 0 A_SetScale(scaleX + 0.1,(scaleY + 0.1))
-			CEXP BB 1 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP B 2 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP C 0 A_SetScale(scaleX + 0.1,(scaleY + 0.1))
-			CEXP CC 1 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP C 2 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP D 0 A_SetScale(scaleX + 0.1,(scaleY + 0.1))
-			CEXP DD 1 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP D 2 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP E 0 A_SetScale(scaleX + 0.1,(scaleY + 0.1))
-			CEXP EE 1 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP E 2 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP F 0 A_SetScale(scaleX + 0.1,(scaleY + 0.1))
-			CEXP FF 1 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP F 2 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP G 0 A_SetScale(scaleX + 0.1,(scaleY + 0.1))
-			CEXP GG 1 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP G 2 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP H 0 A_SetScale(scaleX + 0.1,(scaleY + 0.1))
-			CEXP HH 1 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP H 2 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP I 0 A_SetScale(scaleX + 0.1,(scaleY + 0.1))
-			CEXP II 1 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP I 2 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			
 		Death:
 			CEXP J 0 A_ChangeFlag("NOINTERACTION",1)
@@ -370,7 +369,7 @@ ACTOR FlamethrowerProjectile {
 ACTOR FlamethrowerDamager {
 	Projectile
 	Radius 4
-	Damage 2
+	Damage 1
 	Speed 0
 	DamageType "FireR"
 	+BLOODSPLATTER
@@ -398,29 +397,30 @@ ACTOR FlamethrowerDamager {
 ACTOR SuperFlamethrowerProjectile : FlamethrowerProjectile {
 	States {
 		Spawn:
-			CEXP AA 1 NoDelay BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP A 2 NoDelay BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP B 0 A_SetScale(scaleX + 0.1,(scaleY + 0.1))
-			CEXP BB 1 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP B 2 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP C 0 A_SetScale(scaleX + 0.1,(scaleY + 0.1))
-			CEXP CC 1 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP C 2 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP D 0 A_SpawnItemEx("MiniFlamethrowerProjectile",0,0,0,momx+Random(-2,2),momy+Random(-2,2),momz+Random(-2,2),0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP D 0 A_SetScale(scaleX + 0.1,(scaleY + 0.1))
-			CEXP DD 1 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP D 2 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP E 0 A_SpawnItemEx("MiniFlamethrowerProjectile",0,0,0,momx+Random(-2,2),momy+Random(-2,2),momz+Random(-2,2),0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP E 0 A_SetScale(scaleX + 0.1,(scaleY + 0.1))
-			CEXP EE 1 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP E 2 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP F 0 A_SpawnItemEx("MiniFlamethrowerProjectile",0,0,0,momx+Random(-2,2),momy+Random(-2,2),momz+Random(-2,2),0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP F 0 A_SetScale(scaleX + 0.1,(scaleY + 0.1))
-			CEXP FF 1 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP F 2 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP G 0 A_SpawnItemEx("MiniFlamethrowerProjectile",0,0,0,momx+Random(-2,2),momy+Random(-2,2),momz+Random(-2,2),0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP G 0 A_SetScale(scaleX + 0.1,(scaleY + 0.1))
-			CEXP GG 1 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP G 2 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP H 0 A_SpawnItemEx("MiniFlamethrowerProjectile",0,0,0,momx+Random(-2,2),momy+Random(-2,2),momz+Random(-2,2),0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP H 0 A_SetScale(scaleX + 0.1,(scaleY + 0.1))
-			CEXP HH 1 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP H 2 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP I 0 A_SpawnItemEx("MiniFlamethrowerProjectile",0,0,0,momx+Random(-2,2),momy+Random(-2,2),momz+Random(-2,2),0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
 			CEXP I 0 A_SetScale(scaleX + 0.1,(scaleY + 0.1))
-			CEXP II 1 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CEXP I 2 BRIGHT A_SpawnItemEx("FlamethrowerDamager",0,0,0,momx,momy,momz,0,SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			Goto Death
 	}
 }
 

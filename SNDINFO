@@ -36,6 +36,15 @@ agge/subsunactive SUBSUN01
 $random agge/subsunhit { agge/subsunhit1 agge/subsunhit2 }
 agge/subsunhit1	SSHIT01
 agge/subsunhit2	SSHIT02
+agge/snap THANSNAP
+$random agge/cast { agge/cast1 agge/cast2 agge/cast3 }
+agge/cast1	ARCABST1
+agge/cast2	ARCABST2
+agge/cast3	ARCABST3
+agge/lasercharge	BLCHAR
+agge/laserfire	BLFIRE
+agge/target	TARGETSP
+agge/w7fire	SSHFIRE0
 elect/spark LHTSPARK
 
 agge/expl1 TEAREXP1
