@@ -1,6 +1,5 @@
 ACTOR Gendarme : ShotgunGuyMod {
 	Obituary "A %o lo balaceo el gendarme como a Maldonado."
-	var int user_spawn_tid;
 	var int user_invoked;
 	
   States {

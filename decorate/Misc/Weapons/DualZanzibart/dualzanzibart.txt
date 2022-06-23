@@ -7,7 +7,6 @@ ACTOR DualZanzibart : DoomWeapon {
 	Weapon.AmmoUse1 1
 	Weapon.AmmoUse2 1
 	Weapon.AmmoGive 10
-	Weapon.SelectionOrder 200
 	Weapon.UpSound "weapons/wepsel"
 	Obituary "%o was melted into piles of putrid debris by Zanzibart."
 	+NOALERT

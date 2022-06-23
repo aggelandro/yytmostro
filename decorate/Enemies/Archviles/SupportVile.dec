@@ -94,7 +94,7 @@ ACTOR Archevil : Archvile2 {
 			BONL HIJKLMN 6 Bright
 			BONL N 8 Bright A_RadiusGive("BuffSpell", 1120, RGF_MONSTERS)
 			BONL N 20 Bright
-			TNT1 A 0 A_SetUserVar("user_buff_delay", 3)
+			TNT1 A 0 A_SetUserVar("user_buff_delay", 2)
 			Goto SeeLoop
 			
 		Hide:

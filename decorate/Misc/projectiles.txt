@@ -81,6 +81,8 @@ Actor TerrorShotgunTracer : BulletTracer {
 Actor TerrorSSGTracer : BulletTracer { damage 2 }
 ACTOR EterealRifleTracer : BulletTracer {
 	DamageType "Lightning"
+	PoisonDamage 2,3,0
+	PoisonDamageType Lightning
 	Species "Player"
 	-THRUGHOST
 	+THRUSPECIES

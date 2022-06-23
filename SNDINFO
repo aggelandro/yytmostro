@@ -430,7 +430,13 @@ Diablo/Active1 			DSARCAC1
 Diablo/Active2 			DSARCAC2
 Diablo/FireShoot 		DSPJCTF
 Diablo/FireExplode 	DSPJCTE
-
 $random hoof/step		{ hoof/step1 hoof/step2 }
 hoof/step1			dshof1
 hoof/step2			dshof2
+
+//warachnotron
+warach/death		WARDTH
+warach/see			WARSIT
+warach/walk			WARWALK
+warach/pain			WARPAIN
+warach/shielded	WARSHLD

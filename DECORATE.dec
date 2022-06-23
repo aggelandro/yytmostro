@@ -89,6 +89,7 @@
 #include "decorate/Enemies/Goats/terminator.txt"
 
 #include "decorate/Enemies/Arachnotrons/Bouncetron/bouncetron.dec"
+#include "decorate/Enemies/Arachnotrons/warachnotron.txt"
 
 #include "decorate/Enemies/Mancubus/FatsoRocket/fatsorocket.dec"
 #include "decorate/Enemies/Cyberdemon/commanderofhell.txt"
@@ -215,8 +216,9 @@ ACTOR ImpSpawner : RandomSpawner replaces DoomImp
 }
 ACTOR ArachnotronSpawner : RandomSpawner replaces Arachnotron
 {
-	DropItem "Arachnotron2" 255, 75
-	DropItem "BounceTron" 255, 25
+	DropItem "Arachnotron2" 255, 50
+	DropItem "BounceTron" 255, 35
+	DropItem "Warachnotron" 255, 15
 }
 ACTOR ArchvileSpawner : RandomSpawner replaces Archvile
 {
@@ -1007,6 +1009,35 @@ ACTOR ChainsawSpawner : CustomInventory replaces Chainsaw
 			TNT1 A 0 A_GiveInventory("Motumbo",1)
 			TNT1 A 0 A_PlaySound("misc/w_pkup")
 			// TNT1 A 0 A_SpawnItemEx("RocketSpawner")
+			Fail
+	}
+}
+ACTOR BFG9001 : BFG9000{}
+ACTOR BFGSpawner : CustomInventory replaces BFG9000 {
+	Scale 0.5
+	Inventory.PickupMessage "$GOTBFG9000"
+	States
+	{
+		Spawn:
+			CAJA H -1
+			Stop
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("LucianoID",1,"PickupGeneric")
+			TNT1 A 0 A_JumpIfInventory("AggeID",1,"PickupAgge")
+			TNT1 A 0 A_JumpIfInventory("RonID",1,"PickupGeneric")
+			TNT1 A 0 A_JumpIfInventory("zLayerID", 1, "PickupGeneric")
+			TNT1 A 0 A_JumpIfInventory("ThanuID",1,"PickupGeneric")
+			TNT1 A 0 A_JumpIfInventory("TerroID",1,"PickupGeneric")
+			Stop
+		PickupGeneric:
+			TNT1 A 0 A_JumpIfInventory("BFG9001",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("BFG9001",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			Fail
+		PickupAgge:
+			TNT1 A 0 A_JumpIfInventory("EterealShocker",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("EterealShocker",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
 			Fail
 	}
 }

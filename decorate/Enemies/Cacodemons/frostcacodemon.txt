@@ -18,7 +18,6 @@ ACTOR Frostodemon : Cacodemon2 {
 	DropItem "IsaacItemsTier3LowChanceSpawner"
 	+MISSILEMORE
 	+BOSS
-	var int user_spawn_tid;
 	var int user_is_dead;
 	
 	States {

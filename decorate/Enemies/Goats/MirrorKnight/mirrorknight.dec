@@ -55,7 +55,7 @@ ACTOR KnightIllusion : HellKnight2
 	States
 	{
 	See:
-		TNT1 A 0 A_JumpIfTargetInLOS("TPMaster", 0, JLOSF_CHECKMASTER|JLOSF_CLOSENOJUMP, 0, 2048)
+		TNT1 A 0 A_JumpIfTargetInLOS("TPMaster", 0, JLOSF_CHECKMASTER|JLOSF_CLOSENOJUMP, 0, 1536)
 		BOS2 AA 3 A_Chase
 		BOS2 BB 3 A_Chase
 		BOS2 CC 3 A_Chase

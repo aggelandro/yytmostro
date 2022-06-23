@@ -419,7 +419,7 @@ ACTOR DiabloWalkFire : ArmncubusWalkFire {
 }
 
 ACTOR DiabloIllusion : AbstractIllusion {
-	Radius 12
+	Radius 24
 	Height 64
 	Health 350
 	DamageFactor "BaronComet", 0

@@ -2622,7 +2622,6 @@ ACTOR BrimstoneBeam : FastProjectile {
 	Alpha 0.15
 	var int user_spawn_tid;
 	var int user_explosion_range;
-	
 	+PAINLESS
 	+RIPPER
 	+CANNOTPUSH

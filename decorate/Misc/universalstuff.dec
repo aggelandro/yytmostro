@@ -105,7 +105,6 @@ ACTOR FlameThrowerFire : PlasmaBall
 	DamageType "FireBF"
 	RenderStyle "Add"
 	Alpha 0.5
-	Damage 1
 	Speed 20
 	+FORCERADIUSDMG
 	+THRUACTORS
@@ -124,7 +123,7 @@ ACTOR FlameThrowerFire : PlasmaBall
 			Stop
 			
 		XDeath:
-			FIRE C 1 Bright
+			FRFX C 1 Bright
 			Stop
 	}
 }
@@ -812,6 +811,12 @@ ACTOR BlasterShot : FastProjectile {
 			SPRK ABCDEFGHIJKLMNOPQRSTUVW 1 Bright
 			Stop
   }
+}
+
+ACTOR BlueBlasterShot : BlasterShot {
+	Translation "175:186=198:207", "214:223=194:197"
+	Species "WarachnoTech"
+	+THRUSPECIES
 }
 
 ACTOR ShotSmoke {

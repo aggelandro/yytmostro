@@ -513,7 +513,7 @@ ACTOR Revenant2 : YYTMonster
 ACTOR Arachnotron2 : YYTMonster
 {
   Health 500
-  Radius 64
+  Radius 43
   Height 64
   Mass 600
   Speed 12
@@ -530,38 +530,73 @@ ACTOR Arachnotron2 : YYTMonster
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
 	DropItem "LaserGunToken", 64
-  States
-  {
-  SpawnLoop:
-    BSPI AB 10 A_Look
-    Loop
-  See:
-    BSPI A 20
-    BSPI A 3 A_BabyMetal
-    BSPI ABBCC 3 A_Chase
-    BSPI D 3 A_BabyMetal
-    BSPI DEEFF 3 A_Chase
-    Goto See+1
-  Missile:
-    BSPI A 20 Bright A_FaceTarget
-    BSPI G 4 Bright A_BspiAttack
-    BSPI H 4 Bright
-    BSPI H 1 Bright A_SpidRefire
-    Goto Missile+1
-  Pain:
-    BSPI I 3
-    BSPI I 3 A_Pain
-    Goto See+1
-  Death:
-    BSPI J 20 A_Scream
-    BSPI K 7 A_NoBlocking
-    BSPI LMNO 7
-    BSPI P -1 A_BossDeath
-    Stop
-  Raise:
-    BSPI P 5
-    BSPI ONMLKJ 5
-    Goto See+1
+  States {
+		SpawnLoop:
+			BSPI AB 10 A_Look
+			Loop
+			
+		See:
+			BSPI A 20
+			TNT1 A 0 A_JumpIfInTargetLOS("EvadeChance", 45, JLOSF_DEADNOJUMP, 500)
+			BSPI A 3 A_BabyMetal
+			BSPI ABBCC 3 A_Chase
+			BSPI D 3 A_BabyMetal
+			BSPI DEEFF 3 A_Chase
+			Goto See+1
+			
+		Missile:
+			BSPI A 20 Bright A_FaceTarget
+			BSPI G 4 Bright A_CustomMissile("ArachnotronPlasma", 28)
+			BSPI H 4 Bright
+			BSPI H 1 Bright A_SpidRefire
+			Goto Missile+1
+			
+		Pain:
+			BSPI I 3
+			BSPI I 3 A_Pain
+			Goto See+1
+			
+		Death:
+			BSPI J 20 A_Scream
+			BSPI K 7 A_NoBlocking
+			BSPI LMNO 7
+			BSPI P -1 A_BossDeath
+			Stop
+			
+		Raise:
+			BSPI P 5
+			BSPI ONMLKJ 5
+			Goto See+1
+			
+		EvadeChance:
+			TNT1 A 0 A_JumpIf(CeilingZ <= 190, 2)
+			TNT1 A 0 A_Jump(192, "EvadeLeft", "EvadeRight")
+			TNT1 A 0
+			Goto See+2
+		
+		EvadeLeft:
+			SP1V A 2
+			SP1V BB 3
+			TNT1 A 0 A_ChangeFlag("NODROPOFF", TRUE)
+			TNT1 A 0 ThrustThing(Angle*256/360+64, 14, 0, 0)
+			TNT1 A 0 ThrustThingZ(0, 28, 0, 1)
+			SP1V C 6
+			SP2V A 3
+			TNT1 A 0 A_ChangeFlag("NODROPOFF", FALSE)
+			TNT1 A 0 A_Jump(100,"Missile")
+			Goto See+1
+		
+		EvadeRight:
+			SP2V A 2
+			SP2V BB 3
+			TNT1 A 0 A_ChangeFlag("NODROPOFF", TRUE)
+			TNT1 A 0 ThrustThing(Angle*256/360+192, 14, 0, 0)
+			TNT1 A 0 ThrustThingZ(0, 28, 0, 1)
+			SP2V C 6
+			SP1V A 3
+			TNT1 A 0 A_ChangeFlag("NODROPOFF", FALSE)
+			TNT1 A 0 A_Jump(100,"Missile")
+			Goto See+1
   }
 }
 ACTOR Fatso2 : YYTMonster

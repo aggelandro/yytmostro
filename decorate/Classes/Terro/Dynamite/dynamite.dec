@@ -109,6 +109,7 @@ actor Dynamite : Weapon
     PTNT X 3 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE|WRF_NOSWITCH)	
 	Goto ReadyLoop+6
   Deselect:
+	TNT1 A 0 A_TakeInventory("CoopModeOn", 1)
 	TNT1 A 0 A_TakeInventory("CalebTNTReadyDummy",1)
 	TNT1 A 0 A_JumpIfInventory("WhoopsIDied",1,"DeselectDead")
 	TNT1 A 0 A_JumpIfnoammo("DeselectAmmoLess")  
@@ -134,6 +135,7 @@ actor Dynamite : Weapon
 	TNTH Y 1 A_Lower
 	Loop
   Select:
+	TNT1 A 0 A_GiveInventory("CoopModeOn", 1)
 	TNT1 A 0 A_TakeInventory("CalebTNTReadyDummy",1)  
 	TNT1 A 0 A_TakeInventory("ThrowPower",300)
 	TNT1 A 0 A_TakeInventory("ThrowPowerBig",300)

@@ -678,6 +678,7 @@ script "showTranslation" (int option) CLIENTSIDE {
 
 script "deathTimer" (int tics) {
     Delay(tics);
+    if (CheckFlag(0, "CORPSE")) terminate;
     SetActorState(0, "Death");
 }
 
@@ -963,6 +964,13 @@ script "subtractMasterDiabloIllusionVar" (int qty) {
     }
 }
 
+script "removeForceShieldFromTracer" (void) {
+    if (SetActivator(0, AAPTR_TRACER)) {
+        SetUserVariable(0, "user_shield_on", 0);
+        ACS_NamedExecuteAlways("setInvulnerable", 0, 0);
+    }
+}
+
 script "showCautionAnimation" (void) CLIENTSIDE {
     SetHudSize(640, 480, 0);
     SetFont("BIGFONT");
@@ -1197,8 +1205,24 @@ script "setTargetToNull" (void) {
     SetPointer(AAPTR_TARGET, 0, AAPTR_NULL);
 }
 
+script "isTargetDead" (void) {
+    if (SetActivator(0, AAPTR_TARGET)) {
+        SetResultValue(CheckFlag(0, "CORPSE"));
+        terminate;
+    }
+    SetResultValue(1);
+}
+
 script "cells" (void) {
     SetResultValue(CheckInventory("Cell"));
+}
+
+script "isTIDBeingUsed" (int tid) {
+    if (tid == 0) {
+        SetResultValue(0);
+        terminate;
+    }
+    SetResultValue(IsTIDUsed(tid));
 }
 
 

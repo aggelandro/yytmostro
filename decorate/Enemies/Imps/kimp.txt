@@ -110,6 +110,8 @@ ACTOR RedLightning {
 
 ACTOR RedLightningBolt : BlueLightningBolt {
 	Translation "192:207=176:191","240:247=40:47"
+	PoisonDamage 2,3,0
+	PoisonDamageType Lightning
 	
 	States {
 		Spawn:
