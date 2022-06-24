@@ -853,3 +853,66 @@ BrightMap Sprite HELEP0
 Map "sprites/Enemies/Cacodemons/FrostCacodemon/BMHELEP0"
 DisableFullBright
 }
+
+
+
+//Aracnorb
+BrightMap Sprite ACNBB1
+{
+Map "sprites/Enemies/Arachnotrons/Aracnorb/BMBLACK"
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC2C8
+{
+Map "sprites/Enemies/Arachnotrons/Aracnorb/BMBLACK"
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC3C7
+{
+Map "sprites/Enemies/Arachnotrons/Aracnorb/BMBLACK"
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC4C6
+{
+Map "sprites/Enemies/Arachnotrons/Aracnorb/BMBLACK"
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC5
+{
+Map "sprites/Enemies/Arachnotrons/Aracnorb/BMBLACK"
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC1
+{
+Map "sprites/Enemies/Arachnotrons/Aracnorb/BMACNBC1"
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC2C8
+{
+Map "sprites/Enemies/Arachnotrons/Aracnorb/BMACNBC2"
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC3C7
+{
+Map "sprites/Enemies/Arachnotrons/Aracnorb/BMACNBC3"
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC4C6
+{
+Map "sprites/Enemies/Arachnotrons/Aracnorb/BMACNBC4"
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC5
+{
+Map "sprites/Enemies/Arachnotrons/Aracnorb/BMACNBC5"
+DisableFullBright
+}

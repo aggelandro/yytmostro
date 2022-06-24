@@ -90,6 +90,7 @@
 
 #include "decorate/Enemies/Arachnotrons/Bouncetron/bouncetron.dec"
 #include "decorate/Enemies/Arachnotrons/warachnotron.txt"
+#include "decorate/Enemies/Arachnotrons/aracnorb.txt"
 
 #include "decorate/Enemies/Mancubus/FatsoRocket/fatsorocket.dec"
 #include "decorate/Enemies/Cyberdemon/commanderofhell.txt"

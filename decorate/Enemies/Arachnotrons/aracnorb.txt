@@ -1,0 +1,61 @@
+ACTOR Aracnorb : Arachnotron2 {
+	PainChance 0
+	Health 170
+	Mass 400
+	Radius 24
+  Height 56
+	Scale 0.85
+	SeeSound "arac/see"
+	DeathSound "arac/death"
+	Obituary "Por Kolechia..."
+	+NOGRAVITY
+  +FLOAT
+	-FLOORCLIP
+	-BOSSDEATH
+	var int user_has_exploded;
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ThrustThingZ(0, 10, 0, 0)
+			TNT1 A 0 A_Recoil(3)
+			TNT1 A 0 ACS_NamedExecuteWithResult("explodeTimer", 350)
+			Goto SpawnLoop2
+			
+		SpawnLoop2:
+			ACNB A 1 A_Look
+			Loop
+			
+		See:
+			ACNB A 2 A_Chase("", "Kamikaze")
+			Loop
+			
+		Kamikaze:
+			ACNB B 12 BRIGHT A_FaceTarget
+			TNT1 A 0 A_JumpIfTargetInLos(1)
+			Goto See
+			ACNB C 4 BRIGHT A_SkullAttack(30)
+			TNT1 A 0 A_JumpIfCloser(96, "Explode")
+			ACNB BC 2 BRIGHT
+			Goto Kamikaze+3
+			
+		Explode:
+			TNT1 A 0 A_SetUserVar("user_has_exploded", 1)
+			TNT1 A 0 A_Explode(Random(30, 45), 128)
+			ACNB DDDDDD 2 Bright A_CustomMissile("BigGreenExplosion", random(20,60), 0, random(0,360), 2, random(0,360))
+			TNT1 AAAAA 0 A_CustomMissile("SmokeBigExplosion", Random(20,40), 0, random(0,360), 2, random(0,360))
+			TNT1 A 0 ACS_NamedExecuteWithResult("damageMonsterBy", 170)
+			Goto Death
+			
+		Death:
+			ACNB E 6 A_Scream
+			ACNB F 6
+			ACNB G 6 A_NoBlocking
+			ACNB H -1 A_SetFloorClip
+			Stop
+			
+		Raise:
+			ACNB H 8 A_UnSetFloorClip
+			ACNB GFEDA 8
+			Goto See
+	}
+}

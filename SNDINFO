@@ -440,3 +440,7 @@ warach/see			WARSIT
 warach/walk			WARWALK
 warach/pain			WARPAIN
 warach/shielded	WARSHLD
+
+//aracnorb
+arac/death	DSARACDT
+arac/see		DSARACST

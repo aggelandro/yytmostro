@@ -682,6 +682,12 @@ script "deathTimer" (int tics) {
     SetActorState(0, "Death");
 }
 
+script "explodeTimer" (int tics) {
+    Delay(tics);
+    if (GetUserVariable(0, "user_has_exploded")) terminate;
+    SetActorState(0, "Explode");
+}
+
 script "getUniqueTID" (void) {
     SetResultValue(UniqueTID());
 }
@@ -1223,6 +1229,10 @@ script "isTIDBeingUsed" (int tid) {
         terminate;
     }
     SetResultValue(IsTIDUsed(tid));
+}
+
+script "damageMonsterBy" (int value) {
+    Thing_Damage2(0, value, "Friendly");
 }
 
 

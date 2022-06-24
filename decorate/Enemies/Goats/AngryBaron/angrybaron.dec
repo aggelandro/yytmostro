@@ -86,7 +86,7 @@ ACTOR AngryBaron : BaronOfHell2 {
 			BO4D B 7 BRIGHT A_PlaySound("angrybaron/death", CHAN_BODY)
 			BO4D C 5 BRIGHT A_Fall
 			BO4D DE 5 BRIGHT
-			TNT1 AAAAA 0 A_CustomMissile("SmokeBigExplosion", Random(30,60), 0, random(0,360), 2, random(0,360))	
+			TNT1 AAAAA 0 A_CustomMissile("SmokeBigExplosion", Random(30,60), 0, random(0,360), 2, random(0,360))
 			BO4D FGHIJ 4 BRIGHT
 			TNT1 A -1
 			Stop

@@ -1,5 +1,6 @@
 ACTOR Warachnotron : Arachnotron2 {
 	Obituary "%o was vaporized by a Warachnotron."
+	Speed 14
 	Scale 0.75
 	Radius 52
 	SeeSound "warach/see"
