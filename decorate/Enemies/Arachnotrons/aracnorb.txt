@@ -43,7 +43,7 @@ ACTOR Aracnorb : Arachnotron2 {
 			TNT1 A 0 A_Explode(Random(30, 45), 128)
 			ACNB DDDDDD 2 Bright A_CustomMissile("BigGreenExplosion", random(20,60), 0, random(0,360), 2, random(0,360))
 			TNT1 AAAAA 0 A_CustomMissile("SmokeBigExplosion", Random(20,40), 0, random(0,360), 2, random(0,360))
-			TNT1 A 0 ACS_NamedExecuteWithResult("damageMonsterBy", 170)
+			TNT1 A 0 ACS_NamedExecuteWithResult("damageActorBy", 0, 170)
 			Goto Death
 			
 		Death:

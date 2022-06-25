@@ -1231,8 +1231,8 @@ script "isTIDBeingUsed" (int tid) {
     SetResultValue(IsTIDUsed(tid));
 }
 
-script "damageMonsterBy" (int value) {
-    Thing_Damage2(0, value, "Friendly");
+script "damageActorBy" (int tid, int value) {
+    Thing_Damage2(tid, value, "Friendly");
 }
 
 

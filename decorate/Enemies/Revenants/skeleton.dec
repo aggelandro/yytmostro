@@ -12,7 +12,6 @@ ACTOR Skeleton : Revenant2 {
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "HomingGunToken", 64
-	
 	+ALWAYSFAST
   +NOBLOOD
 	-MISSILEMORE
