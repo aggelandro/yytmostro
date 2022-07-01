@@ -1,0 +1,62 @@
+ACTOR ElderDemon : Cyberdemon2 {
+	Translation "192:207=169:191"
+	Health 10000
+	PainChance 15
+	SeeSound "Elder/See"
+  PainSound "Elder/Pain"
+  DeathSound "Elder/Death"
+  ActiveSound "Elder/Active"
+  Obituary "%o has seen aborted its existence by an Elder Demon!"
+	+QUICKTORETALIATE
+	+NOICEDEATH
+	+LOOKALLAROUND
+	+DONTGIB
+	+NOTELEFRAG
+	+DONTHARMSPECIES
+	+NOFEAR
+	+AVOIDMELEE
+
+	States {
+		SpawnLoop:
+			TLCD AB 10 A_Look
+			Loop
+			
+		See:
+			TLCD A 3 A_Hoof
+			TLCD ABBCC 3 A_Chase
+			TLCD D 3 A_Metal
+			TLCD D 3 A_Chase
+			Loop
+			
+		Missile:
+			TLCD E 6 A_FaceTarget
+			TLCD F 12 A_CyberAttack
+			TLCD E 12 A_FaceTarget
+			TLCD F 12 A_CyberAttack
+			TLCD E 12 A_FaceTarget
+			TLCD F 12 A_CyberAttack
+			Goto See
+			
+		Pain:
+			TLCD G 10 A_Pain
+			Goto See
+			
+		Pain.Lightning:
+			TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.25),0,0,0,0)
+			TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(Height*0.35,Height*0.6),0,0,0,0)
+			TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.25),0,0,0,0)
+			TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(Height*0.35,Height*0.6),0,0,0,0)
+			TNT1 A 0 A_Jump(256, "Pain")
+			Wait
+			
+		Death:
+			TLCD H 10
+			TLCD I 10 A_Scream
+			TLCD JKL 10
+			TLCD M 10 A_NoBlocking
+			TLCD NO 10
+			TLCD P 30
+			TLCD P -1 A_BossDeath
+			Stop
+  }
+}

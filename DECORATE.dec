@@ -46,6 +46,8 @@
 #include "decorate/Classes/Thanuris/Pistol/pistol.dec"
 #include "decorate/Classes/Thanuris/BaseballBat/baseballbat.dec"
 
+#include "decorate/Classes/Terro/Throws/subweapons.txt"
+#include "decorate/Classes/Terro/CastlevaniaWhip/castlevaniawhip.txt"
 #include "decorate/Classes/Terro/Dynamite/dynamite.dec"
 #include "decorate/Classes/Terro/ContraWeapon/contraweapon.txt"
 #include "decorate/Classes/Terro/Shotgun/shotgun.dec"
@@ -104,6 +106,7 @@
 #include "decorate/Enemies/Cyberdemon/Council/council.dec"
 #include "decorate/Enemies/Cyberdemon/Cryocubus/cryocubus.dec"
 #include "decorate/Enemies/Cyberdemon/FlameCyber/flamecyber.dec"
+#include "decorate/Enemies/Cyberdemon/elderdemon.txt"
 
 #include "decorate/Enemies/SpiderMastermind/RocketSpiderMastermind/rocketspidermastermind.dec"
 #include "decorate/Enemies/SpiderMastermind/SpiderLord/spiderlord.dec"
@@ -492,7 +495,7 @@ ACTOR Lucianeto : DoomPlayer
 	Player.WeaponSlot 4, ChainGun2
 	Player.WeaponSlot 5, LucianoRL, DualZanzibart
 	Player.WeaponSlot 6, PlasmaRifle2
-	Player.WeaponSlot 7, BFG9000
+	Player.WeaponSlot 7, BFG9001
 	Player.WeaponSlot 8, LucianoBomba
 	States
 	{
@@ -563,7 +566,7 @@ ACTOR UniversalPlayer : DoomPlayer
   Player.WeaponSlot 4, Chaingun2
   Player.WeaponSlot 5, RocketLauncher2
   Player.WeaponSlot 6, PlasmaRifle2
-  Player.WeaponSlot 7, BFG9000
+  Player.WeaponSlot 7, BFG9001
   Player.ColorRange 112, 127
   Player.ColorSet 0, "Green",         0x70, 0x7F,  0x72
   Player.ColorSet 1, "Gray",          0x60, 0x6F,  0x62 // Called "Indigo" originally so as to have a unique initial
@@ -677,7 +680,7 @@ ACTOR Ron : UniversalPlayer
   Player.WeaponSlot 4, Chaingun2
   Player.WeaponSlot 5, RocketLauncher2, DualZanzibart
   Player.WeaponSlot 6, RonPL
-  Player.WeaponSlot 7, BFG9000
+  Player.WeaponSlot 7, BFG9001
 }
 ACTOR zLayer : UniversalPlayer
 {
@@ -697,7 +700,7 @@ ACTOR zLayer : UniversalPlayer
   Player.WeaponSlot 4, zLayerCG
   Player.WeaponSlot 5, DualZanzibart, zLayerRL
   Player.WeaponSlot 6, PlasmaRifle2
-  Player.WeaponSlot 7, BFG9000
+  Player.WeaponSlot 7, BFG9001
   Player.WeaponSlot 8, zLayerUnique
 }
 
@@ -727,7 +730,7 @@ ACTOR Terro : UniversalPlayer
 	Player.StartItem "HitscanFixer"
 	Player.StartItem "HandGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
-	Player.WeaponSlot 1, Chainsaw2, TerroFist
+	Player.WeaponSlot 1, CastlevaniaWhip, TerroFist
 	Player.WeaponSlot 2, TerroPistol
 	Player.WeaponSlot 5, DualZanzibart, Dynamite
 	Player.WeaponSlot 4, ContraWeapon
@@ -982,7 +985,7 @@ ACTOR ChainsawSpawner : CustomInventory replaces Chainsaw
 			TNT1 A 0 A_JumpIfInventory("RonID",1,"PickupGeneric")
 			TNT1 A 0 A_JumpIfInventory("zLayerID", 1, "PickupGeneric")
 			TNT1 A 0 A_JumpIfInventory("ThanuID",1,"PickupGeneric")
-			TNT1 A 0 A_JumpIfInventory("TerroID",1,"PickupGeneric")
+			TNT1 A 0 A_JumpIfInventory("TerroID",1,"PickupTerro")
 			Stop
 		PickupGeneric:
 			TNT1 A 0 A_JumpIfInventory("Chainsaw2",1,"Spawn")
@@ -1001,8 +1004,8 @@ ACTOR ChainsawSpawner : CustomInventory replaces Chainsaw
 			TNT1 A 0 A_PlaySound("misc/w_pkup")
 			Fail
 		PickupTerro:
-			TNT1 A 0 A_JumpIfInventory("Dynamite",1,"Spawn")
-			TNT1 A 0 A_GiveInventory("Dynamite",1)
+			TNT1 A 0 A_JumpIfInventory("CastlevaniaWhip",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("CastlevaniaWhip",1)
 			TNT1 A 0 A_PlaySound("misc/w_pkup")
 			Fail
 		PickupAgge:

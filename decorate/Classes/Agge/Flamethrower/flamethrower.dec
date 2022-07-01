@@ -6,7 +6,6 @@ ACTOR AggeFlameThrower : DoomWeapon {
 	Tag "Flamethrower"
 	
 	States {
-	
 		Spawn:
 			PLAS A -1
 			Stop

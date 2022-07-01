@@ -1767,7 +1767,7 @@ ACTOR NormalTearProjectile {
 			Goto SpawnLoopScytheTear+3
 			
 		ReturnToPlayer:
-			TNT1 A 0 ACS_NamedExecuteWithResult("setTracerToPlayer")
+			TNT1 A 0 ACS_NamedExecuteWithResult("setTracerToPlayer", 4)
 			TNT1 A 0 A_SetUserVar("user_seeker_threshold", 50)
 			TNT1 A 0 A_SetUserVar("user_seeker_maxturnangle", 60)
 			TNT1 A 0 A_JumpIfInventory("DeathsTouchGiver", 1, "SpawnLoopScytheTear", AAPTR_TARGET)
@@ -3358,6 +3358,7 @@ ACTOR ScytheTrail1 {
 	+NOGRAVITY
 	+RANDOMIZE
 	-SOLID
+	Alpha 0.85
 	
 	States {
 		Spawn:

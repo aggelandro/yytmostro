@@ -13,8 +13,8 @@ ACTOR AbstractAutoCustomPowerUp : CustomInventory {
 	Inventory.MaxAmount 1
 	Inventory.InterHubAmount 1
 	Inventory.PickupSound "agge/powerup"
-	Inventory.RestrictedTo "Agge" 
-	
+	Inventory.RestrictedTo "Agge"
+	VisibleToPlayerClass "Agge"
 	+INVENTORY.AUTOACTIVATE
 	+INVENTORY.UNDROPPABLE
 	+INVENTORY.HUBPOWER
@@ -683,6 +683,7 @@ ACTOR AbstractTemporalCustomPowerUp : CustomInventory {
 	Inventory.InterHubAmount 5
 	Inventory.PickupSound "agge/powerup"
 	Inventory.RestrictedTo "Agge"
+	VisibleToPlayerClass "Agge"
 	Scale 0.8
 	
 	+INVENTORY.UNDROPPABLE
@@ -942,17 +943,15 @@ ACTOR AbstractContraToken : CustomInventory {
 	Inventory.MaxAmount 1
 	Inventory.InterHubAmount 1
 	Inventory.RestrictedTo "Terro"
+	VisibleToPlayerClass "Terro"
 	Inventory.PickupSound "contra/powerup"
 	+INVENTORY.AUTOACTIVATE
-	+DONTGIB
 	+FLOATBOB
-	+COUNTITEM
 	
 	States {
 		Pickup:
 			TNT1 A 0 A_JumpIfInventory("ContraWeapon", 1, "Success")
-			TNT1 A 0 A_RailWait
-			Stop
+			Fail
 	}
 }
 
@@ -1081,11 +1080,6 @@ ACTOR CrusherGunToken : AbstractContraToken {
 
 
 
-
-
-
-
-
 ACTOR AbstractContraGiver : Inventory {
 	Inventory.Amount 1
   Inventory.MaxAmount 2
@@ -1097,3 +1091,122 @@ ACTOR PrototypeGunGiver : AbstractContraGiver {}
 ACTOR LaserGunGiver : AbstractContraGiver {}
 ACTOR FlamethrowerGunGiver : AbstractContraGiver {}
 ACTOR CrusherGunGiver : AbstractContraGiver {}
+
+
+
+
+//=================
+// Terro Subweapons
+//=================
+
+ACTOR AbstractSubWeaponItem : CustomInventory {
+	Inventory.MaxAmount 1
+	Inventory.InterHubAmount 1
+	Inventory.RestrictedTo "Terro"
+	VisibleToPlayerClass "Terro"
+	Inventory.PickupSound "terro/subweaponpickup"
+	+INVENTORY.AUTOACTIVATE
+	Gravity 0.15
+	+BRIGHT
+	
+	States {			
+		Death:
+			"####" "#" 1 A_FadeOut(0.01)
+			Loop
+	}
+}
+
+ACTOR DaggerItem : AbstractSubWeaponItem {
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(350, 525))
+			TNT1 A 0 ThrustThingZ(0, 15, 0, 0)
+			Goto SpawnLoop
+			
+		SpawnLoop:
+			DDRP ABCDEFGH 3
+			Loop
+			
+		Pickup:
+			TNT1 A 0 A_TakeInventory("CastlevaniaAxeGiver", 1)
+			TNT1 A 0 A_TakeInventory("CastlevaniaCrossGiver", 1)
+			TNT1 A 0 A_TakeInventory("CastlevaniaHWGiver", 1)
+			TNT1 A 0 A_GiveInventory("CastlevaniaDaggerGiver", 1)
+			TNT1 A 0 A_RailWait
+			Stop
+	}
+}
+
+ACTOR AxeItem : AbstractSubWeaponItem {
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(350, 525))
+			TNT1 A 0 ThrustThingZ(0, 15, 0, 0)
+			Goto SpawnLoop
+			
+		SpawnLoop:
+			HDRP ABCDEFGH 3
+			Loop
+			
+		Pickup:
+			TNT1 A 0 A_TakeInventory("CastlevaniaDaggerGiver", 1)
+			TNT1 A 0 A_TakeInventory("CastlevaniaCrossGiver", 1)
+			TNT1 A 0 A_TakeInventory("CastlevaniaHWGiver", 1)
+			TNT1 A 0 A_GiveInventory("CastlevaniaAxeGiver", 1)
+			TNT1 A 0 A_RailWait
+			Stop
+	}
+}
+
+ACTOR CrossItem : AbstractSubWeaponItem {
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(350, 525))
+			TNT1 A 0 ThrustThingZ(0, 15, 0, 0)
+			Goto SpawnLoop
+			
+		SpawnLoop:
+			CDRP ABCDEFGH 3
+			Loop
+			
+		Pickup:
+			TNT1 A 0 A_TakeInventory("CastlevaniaDaggerGiver", 1)
+			TNT1 A 0 A_TakeInventory("CastlevaniaAxeGiver", 1)
+			TNT1 A 0 A_TakeInventory("CastlevaniaHWGiver", 1)
+			TNT1 A 0 A_GiveInventory("CastlevaniaCrossGiver", 1)
+			TNT1 A 0 A_RailWait
+			Stop
+	}
+}
+
+ACTOR HolyWaterItem : AbstractSubWeaponItem {
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(350, 525))
+			TNT1 A 0 ThrustThingZ(0, 15, 0, 0)
+			Goto SpawnLoop
+			
+		SpawnLoop:
+			HWDR ABCDEFGH 3
+			Loop
+			
+		Pickup:
+			TNT1 A 0 A_TakeInventory("CastlevaniaDaggerGiver", 1)
+			TNT1 A 0 A_TakeInventory("CastlevaniaAxeGiver", 1)
+			TNT1 A 0 A_TakeInventory("CastlevaniaCrossGiver", 1)
+			TNT1 A 0 A_GiveInventory("CastlevaniaHWGiver", 1)
+			TNT1 A 0 A_RailWait
+			Stop
+	}
+}
+
+
+
+ACTOR AbstractSubWeaponGiver : Inventory {
+	Inventory.Amount 1
+  Inventory.MaxAmount 1
+}
+ACTOR CastlevaniaDaggerGiver : AbstractSubWeaponGiver {}
+ACTOR CastlevaniaAxeGiver : AbstractSubWeaponGiver {}
+ACTOR CastlevaniaCrossGiver : AbstractSubWeaponGiver {}
+ACTOR CastlevaniaHWGiver : AbstractSubWeaponGiver {}

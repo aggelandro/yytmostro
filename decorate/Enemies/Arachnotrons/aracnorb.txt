@@ -10,6 +10,8 @@ ACTOR Aracnorb : Arachnotron2 {
 	Obituary "Por Kolechia..."
 	+NOGRAVITY
   +FLOAT
+	+MISSILEMORE
+	+MISSILEEVENMORE
 	-FLOORCLIP
 	-BOSSDEATH
 	var int user_has_exploded;

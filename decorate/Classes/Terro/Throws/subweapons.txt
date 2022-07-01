@@ -1,0 +1,554 @@
+ACTOR WeaponWithSubWeaponOption : DoomWeapon {
+	Weapon.AmmoType "Heart"
+
+	States {
+		Ready:
+			TNT1 A -1 A_Jump(256, "Ready")
+			Wait
+			
+		Fire:
+			TNT1 A -1 A_Jump(256, "Fire")
+			Wait
+			
+		Select:
+			TNT1 A -1 A_Jump(256, "Select")
+			Wait
+			
+		Deselect:
+			TNT1 A -1 A_Jump(256, "Deselect")
+			Wait
+			
+		SubWeaponCheck:
+			"####" "#" 0 A_JumpIfInventory("CastlevaniaDaggerGiver", 1, "DaggerCheck")
+			"####" "#" 0 A_JumpIfInventory("CastlevaniaAxeGiver", 1, "AxeCheck")
+			"####" "#" 0 A_JumpIfInventory("CastlevaniaCrossGiver", 1, "CrossCheck")
+			"####" "#" 0 A_JumpIfInventory("CastlevaniaHWGiver", 1, "HWCheck")
+			"####" "#" 0 A_TakeInventory("ClassThroweableAction", 1)
+			"####" "#" -1 A_Jump(256, "Ready")
+			Wait
+			
+		DaggerCheck:
+			"####" "#" 0 A_JumpIfInventory("Heart", 1, "WeaponDown")
+			Goto SubWeaponCheck+4
+			
+		AxeCheck:
+			"####" "#" 0 A_JumpIfInventory("Heart", 1, "WeaponDown")
+			Goto SubWeaponCheck+4
+			
+		CrossCheck:
+			"####" "#" 0 A_JumpIfInventory("Heart", 3, "WeaponDown")
+			Goto SubWeaponCheck+4
+			
+		HWCheck:
+			"####" "#" 0 A_JumpIfInventory("Heart", 5, "WeaponDown")
+			Goto SubWeaponCheck+4
+			
+		WeaponDown:
+			"####" "#" 0 A_PlaySound("weapons/weapondown", CHAN_WEAPON)
+			"####" "#" 1 A_Lower
+			"####" "#" 0 A_Lower
+			"####" "#" 1 A_Lower
+			"####" "#" 0 A_Lower
+			"####" "#" 1 A_Lower
+			"####" "#" 0 A_Lower
+			"####" "#" 1 A_Lower
+			"####" "#" 0 A_Lower
+			TNT1 A 4
+			TNT1 A 0 A_JumpIfInventory("CastlevaniaHWGiver", 1, "HWThrow")
+			AXTR ABC 3
+			TNT1 A 0 A_AlertMonsters
+			TNT1 A 0 A_JumpIfInventory("CastlevaniaDaggerGiver", 1, "DaggerThrow")
+			TNT1 A 0 A_JumpIfInventory("CastlevaniaCrossGiver", 1, "CrossThrow")
+			Goto AxeThrow
+			
+		HWThrow:
+			HWTR ABC 3
+			TNT1 A 0 A_AlertMonsters
+			TNT1 A 0 A_TakeInventory("Heart", 5)
+			HWTR C 1 A_FireCustomMissile("CastlevaniaHW", 0, 0, 0, 0)
+			HWTR DEF 3
+			Goto ThrowEnd+1
+			
+		DaggerThrow:
+			TNT1 A 0 A_TakeInventory("Heart", 1)
+			AXTR C 1 A_FireCustomMissile("CastlevaniaDagger", 0, 0, 0, 0)
+			Goto ThrowEnd
+			
+		AxeThrow:
+			TNT1 A 0 A_TakeInventory("Heart", 1)
+			AXTR C 1 A_FireCustomMissile("CastlevaniaAxe", 0, 0, 0, 0, 0, 67)
+			Goto ThrowEnd
+			
+		CrossThrow:
+			TNT1 A 0 A_TakeInventory("Heart", 3)
+			AXTR C 1 A_FireCustomMissile("CastlevaniaCross", 0, 0, 0, 0)
+			Goto ThrowEnd
+			
+		ThrowEnd:
+			AXTR DEF 3
+			TNT1 A 6
+			TNT1 A -1 A_Jump(256, "SuperSelect")
+			Wait
+	}
+}
+
+ACTOR Heart : Ammo {
+	Inventory.Amount 1
+	Inventory.MaxAmount 15
+	Inventory.RestrictedTo "Terro"
+	VisibleToPlayerClass "Terro"
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 30
+	Inventory.Pickupmessage "Picked up a small heart!"
+	Inventory.PickupSound "terro/heartpickup"
+	Inventory.Icon "H1ARA0"
+	Gravity 0.04
+	+BRIGHT
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(350, 525))
+			TNT1 A 0 ThrustThingZ(0, 10, 0, 0)
+			H2AR A 15 ThrustThing(angle * 256 / 360 + 64, 4, 0, 0)
+			TNT1 A 0 A_JumpIf(Z <= FloorZ+10, "SpawnEnd")
+			H2AR A 10 ThrustThing(angle * 256 / 360 + 192, 4, 0, 0)
+			H2AR A 10 ThrustThing(angle * 256 / 360 + 64, 4, 0, 0)
+			Goto Spawn+3
+			
+		SpawnEnd:
+			H2AR A -1
+			Stop
+			
+		Death:
+			H2AR A 1 A_FadeOut(0.01)
+			Loop
+	}
+}
+
+ACTOR BigHeart : Heart {
+	Inventory.Pickupmessage "Picked up a big heart!"
+	Inventory.Amount 5
+	Gravity 0.15
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(350, 525))
+			TNT1 A 0 ThrustThingZ(0, 15, 0, 0)
+			H1AR ABCDEFGHIJ 3
+			Goto Spawn+2
+			
+		Death:
+			"####" "#" 1 A_FadeOut(0.01)
+			Loop
+	}
+}
+
+ACTOR CastlevaniaDagger {
+	Projectile
+	Damage (Random(15, 30))
+	Height 7
+	Radius 2
+	Scale 0.05
+	Speed 40
+	Gravity 0.2
+	Obituary "Knife to meet you, %o."
+	+RANDOMIZE
+	+BLOODSPLATTER 
+	+THRUGHOST
+	+NOEXTREMEDEATH
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay A_PlaySound("terro/daggerthrow", CHAN_AUTO)
+			DAGG A 1 A_SpawnItemEx("CastlevaniaDaggerTrail")
+			Goto Spawn+1
+			
+		Crash:
+		XDeath:
+			TNT1 A 0 A_PlaySound("agge/nailhit", CHAN_AUTO)
+			Goto Death+1
+			
+		Death:
+			TNT1 A 0 A_PlaySound("terro/daggerwall", CHAN_AUTO)
+			TNT1 A 0 A_ChangeFlag("NOGRAVITY", FALSE)
+			TNT1 A 0 ThrustThing(angle * 256 / 360 + 128, 3, 0, 0)
+			DAGG A 1 A_FadeOut(0.03)
+			Goto Death+3
+	}
+}
+
+ACTOR CastlevaniaDaggerTrail {
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+RANDOMIZE
+	-SOLID
+	Alpha 0.85
+	Scale 0.05
+	
+	States {
+		Spawn:
+			DAGG A 1 A_FadeOut(0.2)
+			Loop
+	}
+}
+
+ACTOR CastlevaniaAxe {
+	Projectile
+	Height 27
+	Radius 4
+	Scale 0.05
+	Speed 15
+	Gravity 0.75
+	-NOGRAVITY
+	+RIPPER
+	+PAINLESS
+	+RANDOMIZE
+	+BLOODSPLATTER 
+	+THRUGHOST
+	+NOEXTREMEDEATH
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay A_PlaySound("terro/axethrow", CHAN_AUTO, 1.0, TRUE)
+			CAXE A 3 A_SpawnItemEx("CastlevaniaAxeTrailA")
+			CAXE A 0 A_SpawnItemEx("CastlevaniaAxeDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CAXE B 3 A_SpawnItemEx("CastlevaniaAxeTrailB")
+			CAXE B 0 A_SpawnItemEx("CastlevaniaAxeDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CAXE C 3 A_SpawnItemEx("CastlevaniaAxeTrailC")
+			CAXE C 0 A_SpawnItemEx("CastlevaniaAxeDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CAXE D 3 A_SpawnItemEx("CastlevaniaAxeTrailD")
+			CAXE D 0 A_SpawnItemEx("CastlevaniaAxeDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CAXE E 3 A_SpawnItemEx("CastlevaniaAxeTrailE")
+			CAXE E 0 A_SpawnItemEx("CastlevaniaAxeDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CAXE F 3 A_SpawnItemEx("CastlevaniaAxeTrailF")
+			CAXE F 0 A_SpawnItemEx("CastlevaniaAxeDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CAXE G 3 A_SpawnItemEx("CastlevaniaAxeTrailG")
+			CAXE G 0 A_SpawnItemEx("CastlevaniaAxeDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CAXE H 3 A_SpawnItemEx("CastlevaniaAxeTrailH")
+			CAXE H 0 A_SpawnItemEx("CastlevaniaAxeDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			Goto Spawn+1
+			
+		Death:
+			"####" "#" 0 A_StopSound
+			"####" "#" 1 A_FadeOut(0.2)
+			Goto Death+1
+	}
+}
+
+ACTOR AbstractCastlevaniaAxeTrail {
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+RANDOMIZE
+	-SOLID
+	Alpha 0.85
+	Scale 0.05
+}
+
+ACTOR CastlevaniaAxeTrailA : AbstractCastlevaniaAxeTrail {
+	States {
+		Spawn:
+			CAXE A 1 A_FadeOut(0.1)
+			Loop
+	}
+}
+
+ACTOR CastlevaniaAxeTrailB : AbstractCastlevaniaAxeTrail {
+	States {
+		Spawn:
+			CAXE B 1 A_FadeOut(0.1)
+			Loop
+	}
+}
+
+ACTOR CastlevaniaAxeTrailC : AbstractCastlevaniaAxeTrail {
+	States {
+		Spawn:
+			CAXE C 1 A_FadeOut(0.1)
+			Loop
+	}
+}
+
+ACTOR CastlevaniaAxeTrailD : AbstractCastlevaniaAxeTrail {
+	States {
+		Spawn:
+			CAXE D 1 A_FadeOut(0.1)
+			Loop
+	}
+}
+
+ACTOR CastlevaniaAxeTrailE : AbstractCastlevaniaAxeTrail {
+	States {
+		Spawn:
+			CAXE E 1 A_FadeOut(0.1)
+			Loop
+	}
+}
+
+ACTOR CastlevaniaAxeTrailF : AbstractCastlevaniaAxeTrail {
+	States {
+		Spawn:
+			CAXE F 1 A_FadeOut(0.1)
+			Loop
+	}
+}
+
+ACTOR CastlevaniaAxeTrailG : AbstractCastlevaniaAxeTrail {
+	States {
+		Spawn:
+			CAXE G 1 A_FadeOut(0.1)
+			Loop
+	}
+}
+
+ACTOR CastlevaniaAxeTrailH : AbstractCastlevaniaAxeTrail {
+	States {
+		Spawn:
+			CAXE H 1 A_FadeOut(0.1)
+			Loop
+	}
+}
+
+ACTOR CastlevaniaAxeDamager {
+	Projectile
+	Height 27
+	Radius 4
+	Damage (Random(30, 45))
+	Speed 0
+	+PAINLESS
+	+BLOODSPLATTER
+	+HITTRACER
+	-ACTIVATEIMPACT
+	-ACTIVATEPCROSS
+	Obituary "Axe in the hole, %o!"
+	
+	States {
+		Spawn:
+			TNT1 A 1
+			Stop
+			
+		Death:
+			TNT1 A 0
+			Stop
+			
+		Crash:
+		XDeath:
+			TNT1 A 0 A_PlaySound("agge/nailhit", CHAN_AUTO)
+			FWHI ABC 4
+			Stop
+	}
+}
+
+ACTOR CastlevaniaCross {
+	Projectile
+	Height 20
+	Radius 5
+	Scale 0.05
+	Speed 15
+	+RIPPER
+	+PAINLESS
+	+RANDOMIZE
+	+BLOODSPLATTER 
+	+THRUGHOST
+	+NOEXTREMEDEATH
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay A_PlaySound("terro/crossthrow", CHAN_AUTO)
+			CROS C 0 A_GiveInventory("LoopFlag", 1)
+			CROS A 2 A_SpawnItemEx("CastlevaniaCrossTrailA")
+			CROS A 0 A_SpawnItemEx("CastlevaniaCrossDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CROS B 2 A_SpawnItemEx("CastlevaniaCrossTrailB")
+			CROS B 0 A_SpawnItemEx("CastlevaniaCrossDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CROS C 2 A_SpawnItemEx("CastlevaniaCrossTrailC")
+			CROS C 0 A_SpawnItemEx("CastlevaniaCrossDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CROS C 0 A_JumpIfInventory("LoopFlag", 5, 1)
+			Goto Spawn+1
+			CROS C 0 A_TakeInventory("LoopFlag", 5)
+			Goto Spawn2
+			
+		Spawn2:
+			TNT1 A 0 A_ChangeFlag("SEEKERMISSILE", TRUE)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setTracerToPlayer", 5)
+			CROS A 2 A_SpawnItemEx("CastlevaniaCrossTrailA")
+			CROS A 0 A_SpawnItemEx("CastlevaniaCrossDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			TNT1 A 0 A_SeekerMissile(50, 60, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			CROS B 2 A_SpawnItemEx("CastlevaniaCrossTrailB")
+			CROS B 0 A_SpawnItemEx("CastlevaniaCrossDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			TNT1 A 0 A_SeekerMissile(50, 60, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			CROS C 2 A_SpawnItemEx("CastlevaniaCrossTrailC")
+			CROS C 0 A_SpawnItemEx("CastlevaniaCrossDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			TNT1 A 0 A_SeekerMissile(50, 60, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			Goto Spawn3
+			
+		Spawn3:
+			CROS A 2 A_SpawnItemEx("CastlevaniaCrossTrailA")
+			CROS A 0 A_SpawnItemEx("CastlevaniaCrossDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CROS B 2 A_SpawnItemEx("CastlevaniaCrossTrailB")
+			CROS B 0 A_SpawnItemEx("CastlevaniaCrossDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			CROS C 2 A_SpawnItemEx("CastlevaniaCrossTrailC")
+			CROS C 0 A_SpawnItemEx("CastlevaniaCrossDamager", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM)
+			Loop
+	}
+}
+
+ACTOR AbstractCastlevaniaCrossTrail {
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+RANDOMIZE
+	-SOLID
+	RenderStyle "Stencil"
+	StencilColor "Blue"
+	Alpha 0.85
+	Scale 0.05
+}
+
+ACTOR CastlevaniaCrossTrailA : AbstractCastlevaniaCrossTrail {
+	States {
+		Spawn:
+			TNT1 A 2
+			CROS A 1 A_FadeOut(0.1)
+			Goto Spawn+1
+	}
+}
+
+ACTOR CastlevaniaCrossTrailB : AbstractCastlevaniaCrossTrail {
+	States {
+		Spawn:
+			TNT1 A 2
+			CROS B 1 A_FadeOut(0.1)
+			Goto Spawn+1
+	}
+}
+
+ACTOR CastlevaniaCrossTrailC : AbstractCastlevaniaCrossTrail {
+	States {
+		Spawn:
+			TNT1 A 2
+			CROS C 1 A_FadeOut(0.1)
+			Goto Spawn+1
+	}
+}
+
+ACTOR CastlevaniaCrossDamager {
+	Projectile
+	Height 20
+	Radius 5
+	Damage (Random(18, 33))
+	Speed 0
+	+PAINLESS
+	+BLOODSPLATTER
+	+HITTRACER
+	-ACTIVATEIMPACT
+	-ACTIVATEPCROSS
+	Obituary "%o se fue crossupeado."
+	
+	States {
+		Spawn:
+			TNT1 A 1
+			Stop
+			
+		Death:
+			TNT1 A 0
+			Stop
+			
+		Crash:
+		XDeath:
+			FWHI ABC 4
+			Stop
+	}
+}
+
+ACTOR CastlevaniaHW {
+	Projectile
+	Height 12
+	Radius 6
+	Scale 2
+	Speed 20
+	Gravity 0.5
+	+PAINLESS
+	+RANDOMIZE
+	+THRUGHOST
+	-NOGRAVITY
+	+BRIGHT
+	
+	States {
+		Spawn:
+			CHWB ABCD 1
+			Loop
+			
+		Death:
+			TNT1 A 0 A_PlaySound("terro/holywatercrash", CHAN_AUTO)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",0,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",0,24,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",0,-24,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",24,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",-24,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",0,48,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",0,-48,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",48,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",-48,0,0,0,0,0,0,128)
+			TNT1 A 20 A_SpawnItemEx("CastlevaniaHWFire",24,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",24,24,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",24,48,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",48,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",48,24,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",48,48,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",72,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",72,24,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",72,48,0,0,0,0,0,128)
+			TNT1 A 20 A_SpawnItemEx("CastlevaniaHWFire",48,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",48,24,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",48,48,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",72,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",72,24,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",72,48,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",96,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",96,24,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",96,48,0,0,0,0,0,128)
+			TNT1 A 20 A_SpawnItemEx("CastlevaniaHWFire",72,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",72,24,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",72,48,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",96,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",96,24,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",96,48,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",120,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",120,24,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",120,48,0,0,0,0,0,128)
+			TNT1 A 20 A_SpawnItemEx("CastlevaniaHWFire",96,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",96,24,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",96,48,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",120,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",120,24,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",120,48,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",144,0,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",144,24,0,0,0,0,0,128)
+			TNT1 A 0 A_SpawnItemEx("CastlevaniaHWFire",144,48,0,0,0,0,0,128)
+			Stop
+	}
+}
+
+ACTOR CastlevaniaHWFire {
+	Scale 1.4
+  Speed 0
+  RenderStyle Add
+  Alpha 0.75
+	DamageType "FireBF"
+	Obituary "Se hicieron un asadito con %o."
+	+NOCLIP
+  +MISSILE
+  +DROPOFF
+  +RANDOMIZE
+  +DONTSPLASH
+  +NOTELEPORT
+	
+  States {
+		Spawn:
+			TNT1 A 1 NoDelay
+			CHWF ABC 3 Bright A_Explode(2*Random(2,5), 10)
+			TNT1 A 0 A_Jump(191,3)
+			TNT1 A 0 A_CustomMissile("CastlevaniaHWFire", 0, 24, 0)
+			TNT1 A 0 A_CustomMissile("CastlevaniaHWFire", 0, -24, 0)
+			CHWF DEFABCDEFABCDEFABCDEFABCDEFGHIJKLMNO 3 Bright A_Explode(2*Random(2,5), 10)
+			Stop
+	}
+}

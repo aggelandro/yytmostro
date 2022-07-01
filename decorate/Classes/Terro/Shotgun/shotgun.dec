@@ -1,4 +1,4 @@
-actor TerroShotgun : WeaponWithGrenadeOption
+actor TerroShotgun : WeaponWithSubWeaponOption
 {
   Weapon.SelectionOrder 1299
   Weapon.AmmoUse 1
@@ -15,7 +15,7 @@ actor TerroShotgun : WeaponWithGrenadeOption
   States
   {
   Ready:
-		SAWD A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
+		SAWD A 0 A_JumpIfInventory("ClassThroweableAction", 1, "SubWeaponCheck")
     SAWD A 1 A_WeaponReady
     Loop
   Deselect:
@@ -25,6 +25,11 @@ actor TerroShotgun : WeaponWithGrenadeOption
 		TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
     SAWD E 1 A_Raise
     Loop
+	SuperSelect:
+		TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+		SAWD E 1 A_Raise
+		SAWD E 0 A_Raise
+		Loop
 	Fire:
 	SAWD A 1
 	SHT2 A 0 A_PlaySoundEx("weapons/shotgfte", CHAN_AUTO)

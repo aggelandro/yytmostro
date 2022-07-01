@@ -586,6 +586,38 @@ script "applyEffect" (int option, int dur, int force) {
             SetActorState(ptid, "Death");
             Thing_ChangeTID(ptid, 0);
         }; break;
+        case 12: {
+            // Corazones del castlevania
+            while(GetActorProperty(0, APROP_Health) > 0.0) { Delay(1); }
+            int dropChance = Random(0, 99);
+            int actHeight;
+            if (dropChance < 75) {
+                int heartChance = Random(0, 99);
+                actHeight = GetActorProperty(0, APROP_Height);
+                if (heartChance < 25)
+                    Spawn("BigHeart", GetActorX(0), GetActorY(0), GetActorZ(0)+actHeight);
+                else
+                    Spawn("Heart", GetActorX(0), GetActorY(0), GetActorZ(0)+actHeight);
+            }
+            dropChance = Random(0, 99);
+            if (dropChance < 15) {
+                int subweaponChance = Random(0, 99);
+                actHeight = GetActorProperty(0, APROP_Height);
+                if (subweaponChance < 10)
+                    Spawn("DaggerItem", GetActorX(0), GetActorY(0), GetActorZ(0)+actHeight);
+                else {
+                    if (subweaponChance >= 10 && subweaponChance < 30)
+                        Spawn("AxeItem", GetActorX(0), GetActorY(0), GetActorZ(0)+actHeight);
+                    else {
+                        if (subweaponChance >= 30 && subweaponChance < 50)
+                            Spawn("CrossItem", GetActorX(0), GetActorY(0), GetActorZ(0)+actHeight);
+                        else
+                            Spawn("HolyWaterItem", GetActorX(0), GetActorY(0), GetActorZ(0)+actHeight);
+                    }
+                }
+            }
+            TakeInventory("CHDCGiver", 1);
+        }; break;
     }
 }
 
@@ -679,6 +711,11 @@ script "showTranslation" (int option) CLIENTSIDE {
 script "deathTimer" (int tics) {
     Delay(tics);
     if (CheckFlag(0, "CORPSE")) terminate;
+    SetActorState(0, "Death");
+}
+
+script "deathTimerNoMonster" (int tics) {
+    Delay(tics);
     SetActorState(0, "Death");
 }
 
@@ -1235,6 +1272,27 @@ script "damageActorBy" (int tid, int value) {
     Thing_Damage2(tid, value, "Friendly");
 }
 
+script "showXAuraFor" (int opt, int tics) {
+    int ttid = UniqueTID();
+    int ptid;
+    if (PlayerNumber() >= 0) ptid = ActivatorTID();
+    else {
+        ptid = UniqueTID();
+        Thing_ChangeTID(0, ptid);
+    }
+
+    switch(opt) {
+        case 1: { Spawn("FirePowerSmokeSpawner", GetActorX(0), GetActorY(0), GetActorZ(0), ttid); }; break;
+        case 2: { Spawn("RedPowerSmokeSpawner", GetActorX(0), GetActorY(0), GetActorZ(0), ttid); }; break;
+    }
+
+    SetActivator(ttid);
+    SetPointer(AAPTR_TRACER, ptid);
+    SetActivator(ptid);
+    if (PlayerNumber() == -1) Thing_ChangeTID(ptid, 0);
+    Delay(tics);
+    SetActorState(ttid, "Death");
+}
 
 
 
@@ -1871,8 +1929,8 @@ script "dealPiercingDamage" (void) {
     }
 }
 
-script "setTracerToPlayer" (void) {
-    // La cantidad de tics completa de la rotación del sprite tiene que ser idealmente de 5
+script "setTracerToPlayer" (int rotationTics) {
+    // La cantidad de tics completa de la rotación del sprite tiene que ser idealmente de rotationTics+1
     int ptid = GetActorProperty(0, APROP_TargetTID);
     int currVelX = GetActorVelX(0);
     int currVelY = GetActorVelY(0);
@@ -1885,7 +1943,7 @@ script "setTracerToPlayer" (void) {
 
     SetActorAngle(0, newAngle);
     PlaySound(0, "agge/reflactivated", CHAN_AUTO);
-    Delay(4);
+    Delay(rotationTics);
     SetActorVelocity(0, currVelX, currVelY, currVelZ, false, false);
     SetPointer(AAPTR_TRACER, ptid);
     TakeActorInventory(ptid, "WeaponSpecialAction", 1);

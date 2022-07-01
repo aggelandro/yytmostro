@@ -91,6 +91,8 @@ ACTOR HandGrenadeAmmo : Ammo {
 	Inventory.MaxAmount 4
 	Ammo.BackpackAmount 2
 	Ammo.BackpackMaxAmount 8
+	Inventory.RestrictedTo "Agge", "Thanuris", "Ron"
+	VisibleToPlayerClass "Agge", "Thanuris", "Ron"
 	Inventory.Pickupmessage "Hand Grenade"
 	Inventory.PickupSound "weapons/hgrenadepickup"
 	Inventory.Icon "GRNPA0"

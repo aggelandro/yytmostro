@@ -20,13 +20,12 @@ ACTOR SkullImpBall {
   RenderStyle Add
   Alpha 0.9
 	Scale 0.3
-  SeeSound "imp/attack2"
   DeathSound "imp/shotx"
 	
   States {
-	
 		Spawn:
-			SHAN A 4 NoDelay Bright
+			TNT1 A 0 NoDelay A_PlaySound("imp/attack2", CHAN_AUTO, 0.5)
+			SHAN A 4 Bright
 			Loop
 			
 		Death:

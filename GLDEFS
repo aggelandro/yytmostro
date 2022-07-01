@@ -557,6 +557,47 @@ Object SubSunFloorGlow { Frame SSUN { Light MeteorLight1 } }
 Object SubSunBullet { Frame SBLT { Light DropFlame1 } }
 Object SubSunFloorFire { Frame FSUN { Light DropFlame1 } }
 
+//Elder Demon
+FLICKERLIGHT BigTLegLight {
+	color 0.8 0 0
+	OffSet 0 0 0
+	size 85
+	SecondarySize 105
+	Chance 0.2
+}
+
+OBJECT ElderDemon {
+	Frame TLCDA { Light BigTLegLight }
+	Frame TLCDB { Light BigTLegLight }
+	Frame TLCDC { Light BigTLegLight }
+	Frame TLCDD { Light BigTLegLight }
+	Frame TLCDE { Light BigTLegLight }
+	Frame TLCDF { Light BigTLegLight }
+	Frame TLCDG { Light BigTLegLight }
+	Frame TLCDH { Light BigTLegLight }
+	Frame TLCDI { Light BigTLegLight }
+	Frame TLCDJ { Light BigTLegLight }
+	Frame TLCDK { Light BigTLegLight }
+	Frame TLCDL { Light BigTLegLight }
+	Frame TLCDM { Light BigTLegLight }
+	Frame TLCDN { Light BigTLegLight }
+	Frame TLCDO { Light BigTLegLight }
+	Frame TLCDZ { Light BigTLegLight }
+	Frame LBE4A { Light BigTLegLight }
+	Frame LBE4B { Light BigTLegLight }
+	Frame LBE4C { Light BigTLegLight }
+	Frame LBE4D { Light BigTLegLight }
+	Frame LBE4E { Light BigTLegLight }
+	Frame LBE4F { Light BigTLegLight }
+	Frame LBE4G { Light BigTLegLight }
+	Frame TLCBA { Light BigTLegLight }
+	Frame TLCBB { Light BigTLegLight }
+	Frame TLCCA { Light BigTLegLight }
+	Frame TLCCB { Light BigTLegLight }
+	Frame TLCLA { Light BigTLegLight }
+	Frame TLCLB { Light BigTLegLight }
+}
+
 
 //Armncubus
 brightmap sprite FATUH1

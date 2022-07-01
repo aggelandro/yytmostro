@@ -1,4 +1,4 @@
-ACTOR TerroPistol : WeaponWithGrenadeOption
+ACTOR TerroPistol : WeaponWithSubWeaponOption
 {
   Weapon.AmmoUse 1
   Weapon.AmmoUse2 1
@@ -13,7 +13,7 @@ ACTOR TerroPistol : WeaponWithGrenadeOption
   States
   {
   Ready:
-		EN2F A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
+		EN2F A 0 A_JumpIfInventory("ClassThroweableAction", 1, "SubWeaponCheck")
     EN2F A 1 A_WeaponReady
     Loop
 		
@@ -26,6 +26,12 @@ ACTOR TerroPistol : WeaponWithGrenadeOption
 		TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
     EN2F A 1 A_Raise
     Loop
+		
+	SuperSelect:
+		TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+		EN2F A 1 A_Raise
+		EN2F A 0 A_Raise
+		Loop
 		
   Fire:
 		EN2A A 0 A_JumpIfInventory("TerroPistolCounter",1,"FireRight")

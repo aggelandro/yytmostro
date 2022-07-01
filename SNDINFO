@@ -141,6 +141,15 @@ contra/crusher S-CRUSH
 contra/laser S-LASER
 contra/flamethrower S-FLAME
 contra/enemydeathbig S-ENMEX2
+terro/heartpickup	HPICKUP
+terro/daggerthrow	DAGTHRW
+terro/daggerwall DAGWALL
+terro/subweaponpickup	SWPCKUP
+terro/whiphit WHIPHIT
+terro/whipiyu WHIPIYU
+terro/axethrow AXETHRW
+terro/crossthrow CROTHRW
+terro/holywatercrash HWCRASH
 zlayer/sniper ZSNIPER
 zlayer/srelo ZSNIPRE
 ando/ytho YTHO
@@ -444,3 +453,26 @@ warach/shielded	WARSHLD
 //aracnorb
 arac/death	DSARACDT
 arac/see		DSARACST
+
+//elder demon
+$rolloff Elder/See	 1000 3500
+$Volume Elder/See 5.0
+$rolloff Elder/Active	 1000 3500
+Elder/See EDSIGHT
+$Random Elder/Active { Elder/active1 Elder/active2 Elder/active3 Elder/active4 }
+Elder/active1			EDACT1
+Elder/active2			EDACT2
+Elder/active3			EDACT3
+Elder/active4			EDACT4
+$Random Elder/Pain { Elder/Pain1 Elder/Pain2 }
+Elder/Pain1				EDPAIN1
+Elder/Pain2				EDPAIN2
+$rolloff Elder/Pain1	 1000 3500
+$rolloff Elder/Pain2	 1000 3500
+$Volume Elder/Pain1 5.0
+$Volume Elder/Pain2 5.0
+Elder/Death			EDDEATH
+$rolloff Elder/Laugh	 1000 3500
+Elder/Laugh  EDLAUG1
+$rolloff Elder/Laugh2	 1000 3500
+Elder/Laugh2  EDLAUG2
