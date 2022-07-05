@@ -64,6 +64,14 @@ ACTOR Warachnotron : Arachnotron2 {
 			CSPI IJK 6
 			CSPI L -1 A_KillChildren
 			Stop
+			
+		Death.FireBF:
+		Death.AfireF:
+		Death.Afire:		
+		Death.FireRF:
+		Death.FireR:
+			TNT1 A 0
+			Goto Death
 		
 		Raise:
 			CSPI KJIHGF 5

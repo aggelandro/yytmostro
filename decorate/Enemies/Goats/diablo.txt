@@ -6,6 +6,13 @@ ACTOR Diablo : BaronOfHell2 {
 	ActiveSound "Diablo/Active"
 	PainSound "Diablo/Pain"
 	DeathSound "Diablo/Death"
+	DamageFactor "BaronComet", 0
+	DamageFactor "BaronFire", 0
+	DamageFactor "FireBF", 0
+	DamageFactor "AfireF", 0
+	DamageFactor "Afire", 0
+	DamageFactor "FireRF", 0
+	DamageFactor "FireR", 0
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "IsaacItemsTier2HighChanceSpawner"

@@ -51,7 +51,15 @@ ACTOR LiteralHellKnight : HellKnight2 {
 			SLKN K 6 A_Fall 
 			SLKN LMNO 6 
 			SLKN P -1 
-			Stop 
+			Stop
+			
+		Death.FireBF:
+		Death.AfireF:
+		Death.Afire:
+		Death.FireRF:
+		Death.FireR:
+			TNT1 A 0
+			Goto Death
 				
     Raise: 
 			SLKN PONMLKJI 5 

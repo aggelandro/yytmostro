@@ -182,6 +182,14 @@ ACTOR Armncubus : Fatso2 {
 			FATU R -1 A_BossDeath
 			Stop
 			
+		Death.FireBF:
+		Death.AfireF:
+		Death.Afire:		
+		Death.FireRF:
+		Death.FireR:
+			TNT1 A 0
+			Goto Death
+			
 		Raise:
 			FATU R 5
 			FATU QPONMLKS 5

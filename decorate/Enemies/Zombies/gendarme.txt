@@ -44,6 +44,14 @@ ACTOR Gendarme : ShotgunGuyMod {
 			ZSEC L -1
 			Stop
 			
+		Death.FireBF:
+		Death.AfireF:
+		Death.Afire:
+		Death.FireRF:
+		Death.FireR:
+			TNT1 A 0
+			Goto Death
+			
 		Raise:
 			ZSEC L 5
 			ZSEC KJIH 5

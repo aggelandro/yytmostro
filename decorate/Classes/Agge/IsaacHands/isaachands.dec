@@ -30,6 +30,7 @@ ACTOR IsaacHands : WeaponWithGrenadeOption {
 
 		Deselect:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
+			TNT1 A 0 ACS_NamedExecuteWithResult("stopMusic")
 			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 0)
 			CFLM A -1 A_Jump(256, "DeselectLoop")
 		  Wait
@@ -43,6 +44,7 @@ ACTOR IsaacHands : WeaponWithGrenadeOption {
 
 		Select:
 			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("startIsaacMusic", 0)
 			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, 2)
 		  CFLM A 1 A_Raise
 		  Loop
@@ -352,6 +354,7 @@ ACTOR BlackIsaacHands : IsaacHands {
 			
 		Deselect:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
+			TNT1 A 0 ACS_NamedExecuteWithResult("stopMusic")
 			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 0)
 			CFLB A -1 A_Jump(256, "DeselectLoop")
 		  Wait
@@ -365,6 +368,7 @@ ACTOR BlackIsaacHands : IsaacHands {
 
 		Select:
 			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("startIsaacMusic", 1)
 			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, 2)
 		  CFLB A 1 A_Raise
 		  Loop
@@ -639,6 +643,7 @@ ACTOR OrangeIsaacHands : IsaacHands {
 			
 		Deselect:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
+			TNT1 A 0 ACS_NamedExecuteWithResult("stopMusic")
 			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 0)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayerLight", 0)
 			CFLO A -1 A_Jump(256, "DeselectLoop")
@@ -653,6 +658,7 @@ ACTOR OrangeIsaacHands : IsaacHands {
 
 		Select:
 			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("startIsaacMusic", 2)
 			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, 2)
 		  CFLO A 1 A_Raise
 		  Loop
@@ -928,6 +934,7 @@ ACTOR GreenIsaacHands : IsaacHands {
 			
 		Deselect:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
+			TNT1 A 0 ACS_NamedExecuteWithResult("stopMusic")
 			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 0)
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 39), 2) //OFFSET
 			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayerLight", 0)
@@ -943,6 +950,7 @@ ACTOR GreenIsaacHands : IsaacHands {
 
 		Select:
 			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("startIsaacMusic", 3)
 			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, 2)
 		  CFLG A 1 A_Raise
 		  Loop
@@ -1216,6 +1224,7 @@ ACTOR BrimstoneHands : IsaacHands {
 			
 		Deselect:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
+			TNT1 A 0 ACS_NamedExecuteWithResult("stopMusic")
 			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 0)
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 39), 2) //OFFSET
 			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayerLight", 0)
@@ -1227,8 +1236,9 @@ ACTOR BrimstoneHands : IsaacHands {
 		  Loop
 
 		Select:
+			TNT1 A 0 ACS_NamedExecuteWithResult("startIsaacMusic", 4)
 		  CLID A 1 A_Raise
-		  Loop
+		  Goto Select+1
 			
 		Fire:
 			TNT1 A 0 A_Refire("Hold")
@@ -1751,7 +1761,7 @@ ACTOR NormalTearProjectile {
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 36), 2)
 			TNT1 A 0 A_JumpIfInventory("WeaponSpecialAction", 1, "ReturnToPlayer", AAPTR_TARGET)
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
-			TNT1 A 0 A_SpawnItemEx("PiercingDamageDealer", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION, 0, user_spawn_tid)
+			TNT1 A 0 A_SpawnItemEx("PiercingDamageDealer", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setDamageToChildren", user_spawn_tid)
 			TNT1 A 0 A_SeekerMissile(user_seeker_threshold, user_seeker_maxturnangle, SMF_LOOK|SMF_CURSPEED, 256, 3)
 			SCHT F 1 A_SpawnItemEx("ScytheTrail6", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERSCALE|SXF_TRANSFERTRANSLATION)
@@ -1762,7 +1772,7 @@ ACTOR NormalTearProjectile {
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 36), 2)
 			TNT1 A 0 A_JumpIfInventory("WeaponSpecialAction", 1, "ReturnToPlayer", AAPTR_TARGET)
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
-			TNT1 A 0 A_SpawnItemEx("PiercingDamageDealer", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION, 0, user_spawn_tid)
+			TNT1 A 0 A_SpawnItemEx("PiercingDamageDealer", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setDamageToChildren", user_spawn_tid)
 			Goto SpawnLoopScytheTear+3
 			
@@ -2620,18 +2630,18 @@ ACTOR BrimstoneBeam : FastProjectile {
 	Scale 0.8
 	RenderStyle Add
 	Alpha 0.15
-	var int user_spawn_tid;
-	var int user_explosion_range;
 	+PAINLESS
 	+RIPPER
 	+CANNOTPUSH
 	+NODAMAGETHRUST
 	+DONTRIP
-	+NOBLOOD
+	+BLOODLESSIMPACT
 	+NOBLOCKMAP
 	+NOGRAVITY
-	+MTHRUSPECIES
+	+THRUSPECIES
 	+HITTRACER
+	var int user_spawn_tid;
+	var int user_explosion_range;
 	
 	States {
 	
@@ -2692,14 +2702,13 @@ ACTOR BrimstoneBeam : FastProjectile {
 }
 
 ACTOR HomingBrimstoneBeam : BrimstoneBeam {
-	Speed 100
+	Speed 50
 	MaxTargetRange 2
-	var int user_petrifying_flag;
-	var int user_poison_flag;
-	
 	+SEEKERMISSILE
 	+SCREENSEEKER
 	+THRUACTORS
+	var int user_petrifying_flag;
+	var int user_poison_flag;
 	
 	States {
 	
@@ -2715,10 +2724,23 @@ ACTOR HomingBrimstoneBeam : BrimstoneBeam {
 			Goto Super::Spawn
 			
 		SpawnLoop:
+			BRS0 A 1 A_SeekerMissile(45, 90, SMF_LOOK|SMF_CURSPEED|SMF_PRECISE, 256)
 			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
-			TNT1 A 0 A_SpawnItemEx("PiercingDamageDealer", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION, 0, user_spawn_tid)
+			TNT1 A 0 A_SpawnItemEx("PiercingBrimstoneDamageDealer", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM, 0, user_spawn_tid)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setDamageToChildren", user_spawn_tid)
-			BRS0 ABCDA 1 A_SeekerMissile(45, 90, SMF_LOOK|SMF_CURSPEED|SMF_PRECISE, 256)
+			BRS0 B 1 A_SeekerMissile(45, 90, SMF_LOOK|SMF_CURSPEED|SMF_PRECISE, 256)
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("PiercingBrimstoneDamageDealer", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setDamageToChildren", user_spawn_tid)
+			BRS0 C 1 A_SeekerMissile(45, 90, SMF_LOOK|SMF_CURSPEED|SMF_PRECISE, 256)
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("PiercingBrimstoneDamageDealer", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setDamageToChildren", user_spawn_tid)
+			BRS0 D 1 A_SeekerMissile(45, 90, SMF_LOOK|SMF_CURSPEED|SMF_PRECISE, 256)
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("PiercingBrimstoneDamageDealer", 0, 0, 0, velx, vely, velz, 0, SXF_NOCHECKPOSITION|SXF_ABSOLUTEMOMENTUM, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setDamageToChildren", user_spawn_tid)
+			//BRS0 ABCDA 1 A_SeekerMissile(45, 90, SMF_LOOK|SMF_CURSPEED|SMF_PRECISE, 256)
 			TNT1 A 0 A_FaceTracer
 			Loop
 			
@@ -2746,14 +2768,13 @@ ACTOR BrimstoneTrail {
 	RenderStyle Add
 	Alpha 0.15
 	Species "Player"
-	
 	+NOBLOCKMAP
   +NOGRAVITY
   +SHADOW
   +NOTELEPORT
   +CANNOTPUSH
   +NODAMAGETHRUST
-	+MTHRUSPECIES
+	+THRUSPECIES
 	+NOINTERACTION
 	
   States {
@@ -2768,17 +2789,16 @@ ACTOR IsaacEffectPuff {
 	SeeSound "misc/nothing"
 	Species "Player"
 	DamageType "BrimstonePuff"
-	var int user_spawn_tid;
-	var int user_explosion_range;
-	var int user_enemy_explosion_flag;
-	
 	+PUFFONACTORS
 	+PUFFGETSOWNER
 	+HITTRACER
-	+MTHRUSPECIES
+	+THRUSPECIES
 	+ALWAYSPUFF
 	+NODECAL
 	+BLOODLESSIMPACT
+	var int user_spawn_tid;
+	var int user_explosion_range;
+	var int user_enemy_explosion_flag;
 	
 	States {
 		
@@ -3182,6 +3202,12 @@ ACTOR PiercingDamageDealer {
   Height 12
 	Projectile
 	Species "Player"
+	+HITTRACER
+	+THRUSPECIES
+	//-NOBLOCKMAP
+	-ACTIVATEIMPACT
+	-ACTIVATEPCROSS
+	+BLOODSPLATTER
 	var int user_master_damage;
 	var int user_petrifying_flag;
 	var int user_poison_flag;
@@ -3189,19 +3215,14 @@ ACTOR PiercingDamageDealer {
 	var int user_spawn_tid;
 	var int user_explosion_range;
 	
-	+HITTRACER
-	+MTHRUSPECIES
-	-NOBLOCKMAP
-	
 	States {
 	
 		Spawn:
-			TNT1 A 5
+			TNT1 A 3
 			Stop
 	
 		XDeath:
 			// IMPORTANTE: Tiene que seguir haciendo los checks de los otros efectos
-			TNT1 A 0 A_SpawnItemEx("BloodSplatter")
 			TNT1 A 0 ACS_NamedExecuteWithResult("dealPiercingDamage")
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 24) && ACS_NamedExecuteWithResult("checkForNoGiverInTargetInventory", 34), 2) // OFFSET
 			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 4, 0, 3)
@@ -3234,6 +3255,18 @@ ACTOR PiercingDamageDealer {
 	}
 }
 
+ACTOR PiercingBrimstoneDamageDealer : PiercingDamageDealer {
+	Radius 15
+	Height 30
+	-BLOODSPLATTER
+	
+	States {
+		Spawn:
+			TNT1 A 1
+			Stop
+	}
+}
+
 ACTOR PiercingDamageFlag : Inventory { Inventory.MaxAmount 1 Inventory.Amount 1 }
 
 // Actor invisible para disparar rail attacks desde otros angulos/posiciones
@@ -3245,6 +3278,7 @@ ACTOR PlayerDoppelganger {
 	+ISMONSTER
 	+NOBLOCKMAP
 	+NOINTERACTION
+	+NOBLOOD
 	
 	States {		
 		Spawn:
@@ -3253,7 +3287,7 @@ ACTOR PlayerDoppelganger {
 			//TNT1 A 0 A_Warp(AAPTR_MASTER, 35, 5, 38, Angle, WARPF_NOCHECKPOSITION|WARPF_ABSOLUTEANGLE)
 			TNT1 A 1 NoDelay ACS_NamedExecuteWithResult("transferMasterEffectsInventory")
 			TNT1 A 0 ACS_NamedExecuteWithResult("transferMasterPitch")
-			TNT1 A 0 A_CustomMissile("BrimstoneBeam", 32.0, 0, 0, CMF_AIMDIRECTION)
+			TNT1 A 0 A_CustomMissile("BrimstoneBeam", 32.0, 0, 0, CMF_AIMDIRECTION, -pitch)
 			TNT1 A 0 A_CustomRailgun(ACS_NamedExecuteWithResult("getBrimstoneDamage"), 0, None, None, RGF_SILENT, 0, 0, "IsaacEffectPuff")
 			//TNT1 A 0 A_JumpIfInventory("LoopFlag", 0, 1)
 			//Loop
@@ -3263,11 +3297,11 @@ ACTOR PlayerDoppelganger {
 }
 
 ACTOR HomingPlayerDoppelganger : PlayerDoppelganger {
-	States {		
+	States {
 		Spawn:
 			TNT1 A 1 NoDelay ACS_NamedExecuteWithResult("transferMasterEffectsInventory")
 			TNT1 A 0 ACS_NamedExecuteWithResult("transferMasterPitch")
-			TNT1 A 0 A_CustomMissile("HomingBrimstoneBeam", 32.0, 0, 0, CMF_AIMDIRECTION)
+			TNT1 A 0 A_CustomMissile("HomingBrimstoneBeam", 32.0, 0, 0, CMF_AIMDIRECTION, -pitch)
 			Stop
 	}
 }

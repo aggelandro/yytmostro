@@ -1120,7 +1120,7 @@ ACTOR DaggerItem : AbstractSubWeaponItem {
 	States {
 		Spawn:
 			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(350, 525))
-			TNT1 A 0 ThrustThingZ(0, 15, 0, 0)
+			TNT1 A 0 ThrustThingZ(0, 8, 0, 0)
 			Goto SpawnLoop
 			
 		SpawnLoop:
@@ -1141,7 +1141,7 @@ ACTOR AxeItem : AbstractSubWeaponItem {
 	States {
 		Spawn:
 			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(350, 525))
-			TNT1 A 0 ThrustThingZ(0, 15, 0, 0)
+			TNT1 A 0 ThrustThingZ(0, 8, 0, 0)
 			Goto SpawnLoop
 			
 		SpawnLoop:
@@ -1162,7 +1162,7 @@ ACTOR CrossItem : AbstractSubWeaponItem {
 	States {
 		Spawn:
 			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(350, 525))
-			TNT1 A 0 ThrustThingZ(0, 15, 0, 0)
+			TNT1 A 0 ThrustThingZ(0, 8, 0, 0)
 			Goto SpawnLoop
 			
 		SpawnLoop:
@@ -1183,7 +1183,7 @@ ACTOR HolyWaterItem : AbstractSubWeaponItem {
 	States {
 		Spawn:
 			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(350, 525))
-			TNT1 A 0 ThrustThingZ(0, 15, 0, 0)
+			TNT1 A 0 ThrustThingZ(0, 8, 0, 0)
 			Goto SpawnLoop
 			
 		SpawnLoop:

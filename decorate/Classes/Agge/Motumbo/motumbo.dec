@@ -1,5 +1,4 @@
 ACTOR Motumbo : Weapon {
-
   Inventory.PickupMessage "¡Tenés la de Motumbo! ¡¡Agarrala bien!!"
   Obituary "%o fue PUIJeado por la pijza entera de Motumbo."
   Weapon.AmmoType "RocketAmmo"
@@ -15,7 +14,7 @@ ACTOR Motumbo : Weapon {
 			Stop
 		
     Ready:
-	    DFPR AAAAABBBBBCCCCCBBBBB 1 A_WeaponReady
+	    DFPR ABCB 5 A_WeaponReady
 	    Loop
 	
 	  Deselect:
@@ -28,9 +27,9 @@ ACTOR Motumbo : Weapon {
 	
 	  Fire:
 	    DFPR ADEF 3
-	    TNT1 F 0 A_PlaySound("agge/waskafire",0)
+	    TNT1 F 0 A_PlaySound("agge/waskafire", 0)
 			TNT1 A 0 A_AlertMonsters
-	    DFPR F 12 A_FireCustomMissile("WaskaProjectile",0,TRUE,0,0,0,12)
+	    DFPR F 12 A_FireCustomMissile("WaskaProjectile", 0, TRUE, 0, 0, 0, 12)
 	    DFPR A 1 A_ReFire
 			Goto Ready
 	  
@@ -38,96 +37,75 @@ ACTOR Motumbo : Weapon {
 	    DFPR ADEF 3
 			DFPR ADEF 3
 			DFPR ADEF 3
-			TNT1 F 0 A_PlaySound("agge/waskafire",0)
+			TNT1 F 0 A_PlaySound("agge/waskafire", 0)
 	    TNT1 A 0 A_AlertMonsters
-	    DFPR F 50 A_FireCustomMissile("DetonableWaskaProjectile",0,TRUE,0,0,0,25)
+	    DFPR F 50 A_FireCustomMissile("DetonableWaskaProjectile", 0, TRUE, 0, 0, 0, 25)
 	    DFPR A 1 A_ReFire
       Goto Ready
   }
 }
   
 ACTOR WaskaProjectile {
-  Radius 4
-  Height 8
+  Radius 24
+  Height 44
   Speed 30
-  Damage 30
+  Damage 25
   Scale 1.5
-  Projectile
-  +MTHRUSPECIES
-  -NOGRAVITY
-  Gravity 0.7
-  
-  States {
-	  Spawn:
-	    WLS1 AAABBBCCC 4 BRIGHT
-	    Goto SpawnLoop
-	
-	  SpawnLoop:
-	    WLS1 D 1 BRIGHT
-	    Loop
-	  
-	  Crash:
-	  XDeath:
-	    TNT1 A 0 A_PlaySound("agge/waskadeath")
-	    TNT1 B 0 A_SpawnItemEx("WaskaDrop",40,0,-10,5,0,3,0,28,0)
-	    TNT1 B 0 A_SpawnItemEx("WaskaDrop",40,0,-10,5,5,3,45,28,0)
-	    TNT1 B 0 A_SpawnItemEx("WaskaDrop",40,0,-10,0,5,3,90,28,0)
-	    TNT1 B 0 A_SpawnItemEx("WaskaDrop",40,0,-10,-5,5,3,135,28,0)
-	    TNT1 B 0 A_SpawnItemEx("WaskaDrop",40,0,-10,-5,0,3,180,28,0)
-      TNT1 B 0 A_SpawnItemEx("WaskaDrop",40,0,-10,-5,-5,3,225,28,0)
-	    TNT1 B 0 A_SpawnItemEx("WaskaDrop",40,0,-10,0,-5,3,270,28,0)
-	    TNT1 B 0 A_SpawnItemEx("WaskaDrop",40,0,-10,5,-5,3,315,28,0)
-			Stop
-	
-	  Death:
-			TNT1 A 0 A_SetScale(1.0, 1.0)
-	    TNT1 A 0 A_PlaySound("agge/waskadeath")
-	    BGIB ABCDEFGH 2 BRIGHT
-	    BGIB I 50 BRIGHT
-	    Stop
-  }
-}
-
-ACTOR WaskaDrop {
-  Radius 2
-  Height 4
-  Speed 20
-  Damage 10
-  Scale 0.5
-  Projectile
-  +MTHRUSPECIES
-  -NOGRAVITY
-  Gravity 0.7
-  
-  States {
-	  Spawn:
-	    WLS1 AAABBBCCC 4 BRIGHT
-	    Goto SpawnLoop
-	  
-	  SpawnLoop:
-	    WLS1 D 1 BRIGHT
-	    Loop
-	  
-	  Death:
-	    TNT1 A 0 A_PlaySound("agge/waskadeath")
-	    BGIB ABCDEFGH 2 BRIGHT
-	    BGIB I 50 BRIGHT
-	    Stop
-  }
-}
-
-ACTOR DetonableWaskaProjectile {
-  Radius 4
-  Height 8
-  Speed 25
-  Damage 30
-  Scale 1.5
-  RenderStyle Normal
+	Gravity 0.7
   Projectile
   +MTHRUSPECIES
   -NOGRAVITY
 	+BRIGHT
-  Gravity 0.7
+  
+  States {
+	  Spawn:
+	    WLS1 ABC 12
+	    Goto SpawnLoop
+	
+	  SpawnLoop:
+	    WLS1 D 1
+	    Loop
+	  
+	  Crash:
+	  XDeath:
+	    TNT1 A 0 A_PlaySound("agge/waskadeath", CHAN_AUTO)
+	    TNT1 B 0 A_SpawnItemEx("WaskaDrop", 40, 0, -10, 5, 0, 3, 0, 28, 0)
+	    TNT1 B 0 A_SpawnItemEx("WaskaDrop", 40, 0, -10, 5, 5, 3, 45, 28, 0)
+	    TNT1 B 0 A_SpawnItemEx("WaskaDrop", 40, 0, -10, 0, 5, 3, 90, 28, 0)
+	    TNT1 B 0 A_SpawnItemEx("WaskaDrop", 40, 0, -10, -5, 5, 3, 135, 28, 0)
+	    TNT1 B 0 A_SpawnItemEx("WaskaDrop", 40, 0, -10, -5, 0, 3, 180, 28, 0)
+      TNT1 B 0 A_SpawnItemEx("WaskaDrop", 40, 0, -10, -5, -5, 3, 225, 28, 0)
+	    TNT1 B 0 A_SpawnItemEx("WaskaDrop", 40, 0, -10, 0, -5, 3, 270, 28, 0)
+	    TNT1 B 0 A_SpawnItemEx("WaskaDrop", 40, 0, -10, 5, -5, 3, 315, 28, 0)
+			Stop
+	
+	  Death:
+			TNT1 A 0 A_SetScale(1.0)
+	    TNT1 A 0 A_PlaySound("agge/waskadeath")
+	    BGIB ABCDEFGH 2
+	    BGIB I 50
+	    Stop
+  }
+}
+
+ACTOR WaskaDrop : WaskaProjectile {
+	Radius 12
+	Height 22
+	Speed 20
+	Damage 10
+	Scale 0.5
+  
+	States {
+		Crash:
+	  XDeath:
+		Death:
+			TNT1 A 0
+			Goto Super::Death+1
+  }
+}
+
+ACTOR DetonableWaskaProjectile : WaskaProjectile {
+  Speed 25
   
   States {
 	  Spawn:
@@ -148,70 +126,55 @@ ACTOR DetonableWaskaProjectile {
 			TNT1 A 0 A_ChangeFlag("NOINTERACTION", true)
 			TNT1 A 0 A_SetScale(2.0, 1.0)
 			TNT1 A 0 A_PlaySound("agge/dropfire", CHAN_6, 1.0, TRUE)
-			ARX1 AAAAAAAAAAA 1 A_SpawnItemEx("WaskaRain",random(-128,128),random(-128,128),0,0,0,0)
-			ARX1 AAAAAAAAAAA 1 A_SpawnItemEx("WaskaRain",random(-128,128),random(-128,128),0,0,0,0)
-			ARX1 BBBBBBBBBBB 1 A_SpawnItemEx("WaskaRain",random(-128,128),random(-128,128),0,0,0,0)
-			ARX1 BBBBBBBBBBB 1 A_SpawnItemEx("WaskaRain",random(-128,128),random(-128,128),0,0,0,0)
-			ARX1 CCCCCCCCCCC 1 A_SpawnItemEx("WaskaRain",random(-128,128),random(-128,128),0,0,0,0)
-			ARX1 CCCCCCCCCCC 1 A_SpawnItemEx("WaskaRain",random(-128,128),random(-128,128),0,0,0,0)
-			ARX1 DDDDDDDDDDD 1 A_SpawnItemEx("WaskaRain",random(-128,128),random(-128,128),0,0,0,0)
-			ARX1 DDDDDDDDDDD 1 A_SpawnItemEx("WaskaRain",random(-128,128),random(-128,128),0,0,0,0)
-			ARX1 EEEEEEEEEEE 1 A_SpawnItemEx("WaskaRain",random(-128,128),random(-128,128),0,0,0,0)
-			ARX1 EEEEEEEEEEE 1 A_SpawnItemEx("WaskaRain",random(-128,128),random(-128,128),0,0,0,0)
-			ARX1 FFFFFFFFFFF 1 A_SpawnItemEx("WaskaRain",random(-128,128),random(-128,128),0,0,0,0)
-			ARX1 FFFFFFFFFFF 1 A_SpawnItemEx("WaskaRain",random(-128,128),random(-128,128),0,0,0,0)
-			ARX1 GGGGGGGGGGG 1 A_SpawnItemEx("WaskaRain",random(-128,128),random(-128,128),0,0,0,0)
-			ARX1 GGGGGGGGGGG 1 A_SpawnItemEx("WaskaRain",random(-128,128),random(-128,128),0,0,0,0)
+			ARX1 AAAAAAAAAAA 1 A_SpawnItemEx("WaskaRain", random(-128, 128), random(-128, 128))
+			ARX1 AAAAAAAAAAA 1 A_SpawnItemEx("WaskaRain", random(-128, 128), random(-128, 128))
+			ARX1 BBBBBBBBBBB 1 A_SpawnItemEx("WaskaRain", random(-128, 128), random(-128, 128))
+			ARX1 BBBBBBBBBBB 1 A_SpawnItemEx("WaskaRain", random(-128, 128), random(-128, 128))
+			ARX1 CCCCCCCCCCC 1 A_SpawnItemEx("WaskaRain", random(-128, 128), random(-128, 128))
+			ARX1 CCCCCCCCCCC 1 A_SpawnItemEx("WaskaRain", random(-128, 128), random(-128, 128))
+			ARX1 DDDDDDDDDDD 1 A_SpawnItemEx("WaskaRain", random(-128, 128), random(-128, 128))
+			ARX1 DDDDDDDDDDD 1 A_SpawnItemEx("WaskaRain", random(-128, 128), random(-128, 128))
+			ARX1 EEEEEEEEEEE 1 A_SpawnItemEx("WaskaRain", random(-128, 128), random(-128, 128))
+			ARX1 EEEEEEEEEEE 1 A_SpawnItemEx("WaskaRain", random(-128, 128), random(-128, 128))
+			ARX1 FFFFFFFFFFF 1 A_SpawnItemEx("WaskaRain", random(-128, 128), random(-128, 128))
+			ARX1 FFFFFFFFFFF 1 A_SpawnItemEx("WaskaRain", random(-128, 128), random(-128, 128))
+			ARX1 GGGGGGGGGGG 1 A_SpawnItemEx("WaskaRain", random(-128, 128), random(-128, 128))
+			ARX1 GGGGGGGGGGG 1 A_SpawnItemEx("WaskaRain", random(-128, 128), random(-128, 128))
 			TNT1 A 0 A_StopSound(CHAN_6)
 	    Goto ExDeath
 			
 		ExDeath:
 			ARX1 HIJKLMN 5
 			Stop
-	  
-	  Crash:
-	  XDeath:
-	    TNT1 A 0 A_PlaySound("agge/waskadeath", CHAN_AUTO)
-	    TNT1 B 0 A_SpawnItemEx("WaskaDrop",40,0,-10,5,0,3,0,28,0)
-	    TNT1 B 0 A_SpawnItemEx("WaskaDrop",40,0,-10,5,5,3,45,28,0)
-	    TNT1 B 0 A_SpawnItemEx("WaskaDrop",40,0,-10,0,5,3,90,28,0)
-	    TNT1 B 0 A_SpawnItemEx("WaskaDrop",40,0,-10,-5,5,3,135,28,0)
-	    TNT1 B 0 A_SpawnItemEx("WaskaDrop",40,0,-10,-5,0,3,180,28,0)
-      TNT1 B 0 A_SpawnItemEx("WaskaDrop",40,0,-10,-5,-5,3,225,28,0)
-	    TNT1 B 0 A_SpawnItemEx("WaskaDrop",40,0,-10,0,-5,3,270,28,0)
-	    TNT1 B 0 A_SpawnItemEx("WaskaDrop",40,0,-10,5,-5,3,315,28,0)
-			Stop
-	  
-	  Death:
-			TNT1 A 0 A_SetScale(1.0)
-	    TNT1 A 0 A_PlaySound("agge/waskadeath")
-			BGIB ABCDEFGH 2
-	    Stop
   }
 }
 
 ACTOR WaskaRain {
 	Radius 3
-	Height 4
+	Height 20
 	Speed 12
 	Damage 10
   Mass 10
 	Gravity 12
-	+MTHRUSPECIES
 	+DONTSPLASH
-	-NOTELEPORT
+	+MTHRUSPECIES
 	+BRIGHT
 	+MISSILE
 	
 	States {
     Spawn:
-      FX22 A 2
-			FX22 BCDEF 4
+      FX22 A 1
 			Loop
+			
+		XDeath:
+			TNT1 A 0 A_ChangeFlag("NOGRAVITY", TRUE)
+			TNT1 A 0 A_PlaySound("agge/droppuij", CHAN_AUTO)
+			FX22 GHI 3
+			Stop
 
 		Death:
 			TNT1 A 0 A_PlaySound("agge/droppuij", CHAN_AUTO)
-			FX22 GHI 2
+			FX22 BCDEF 3
 			Stop
   }
 }

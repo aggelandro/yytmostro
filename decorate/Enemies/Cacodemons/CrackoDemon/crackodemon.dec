@@ -1,5 +1,4 @@
-ACTOR CrackoDemon : Cacodemon2
-{
+ACTOR CrackoDemon : Cacodemon2 {
 	Health 800
 	Speed 10
 	Radius 32
@@ -17,75 +16,87 @@ ACTOR CrackoDemon : Cacodemon2
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "IsaacItemsTier3LowChanceSpawner"
 	DropItem "IsaacItemsTier3LowChanceSpawner"
-	
   +DONTHURTSPECIES
   +MISSILEMORE
   +NOGRAVITY
 	+FLOAT
   +FLOATBOB
 	
-  States 
-	{ 
-	SpawnLoop: 
-      HED9 A 10 A_Look 
-      Loop 
-	See: 
-      HED9 A 3 A_Chase 
-      Loop
-	Melee:
-      HED9 B 5 A_FaceTarget
-      HED9 C 5 bright A_FaceTarget
-      HED9 D 5 bright A_Meleeattack
-      HED9 B 5
-	Goto See
-	Missile: 
-      HED9 A 0 A_Jump(56,9)
-      HED9 A 0 A_Jump(72,13)
-      HED9 B 5 A_FaceTarget
-      HED9 C 5 bright A_FaceTarget
-      HED9 D 5 A_FaceTarget 
-      HED9 B 0 bright A_CustomMissile("CrackodemonBall", 24, 0, 0, 1)
-      HED9 B 0 bright A_CustomMissile("CrackodemonBall", 24, 0, -8, 1)
-      HED9 B 5 bright A_CustomMissile("CrackodemonBall", 24, 0, 8, 1)
-      Goto See 
-      HED9 B 10 A_FaceTarget
-      HED9 C 5 bright A_CustomMissile("Blusoul", 24, 0, 0, 1)
-      HED9 D 5 bright A_facetarget
-      HED9 B 5 bright
-      Goto See
-      HED9 B 5 A_FaceTarget
-      HED9 C 2 bright A_CustomMissile("CrackodemonBall", 24, 0, 16, 1)
-      HED9 C 2 bright A_CustomMissile("CrackodemonBall", 24, 0, 12, 1)
-      HED9 B 0 A_FaceTarget
-      HED9 C 2 bright A_CustomMissile("CrackodemonBall", 24, 0, 8, 1)
-      HED9 C 2 bright A_CustomMissile("CrackodemonBall", 24, 0, 4, 1)
-      HED9 B 0 A_FaceTarget
-      HED9 D 2 bright A_CustomMissile("CrackodemonBall", 24, 0, 0, 1)
-      HED9 D 2 bright A_CustomMissile("CrackodemonBall", 24, 0, -4, 1)
-      HED9 B 0 A_FaceTarget
-      HED9 D 2 bright A_CustomMissile("CrackodemonBall", 24, 0, -8, 1)
-      HED9 D 2 bright A_CustomMissile("CrackodemonBall", 24, 0, -12, 1)
-      HED9 B 0 A_FaceTarget
-      HED9 B 2 bright A_CustomMissile("CrackodemonBall", 24, 0, -16, 1)
-      HED9 B 4 bright
-      Goto See
-   Pain: 
-      HED9 E 3 
-      HED9 E 3 A_Pain 
-      HED9 F 6 
-      Goto See
-   Death: 
-      HED9 G 8 A_ChangeFlag(FLOATBOB,0)
-      HED9 H 8 A_Scream 
-      HED9 IJ 8
-      HED9 K 8 A_NoBlocking 
-      HED9 L -1 A_SetFloorClip
-      Stop 
-   Raise: 
-      HED9 L 8 A_UnsetFloorClip
-      HED9 KJIHG 8 
-      Goto See 
-   } 
+	States { 
+		SpawnLoop: 
+			HED9 A 10 A_Look 
+			Loop 
+			
+		See: 
+			HED9 A 3 A_Chase 
+			Loop
+			
+		Melee:
+			HED9 B 5 A_FaceTarget
+			HED9 C 5 bright A_FaceTarget
+			HED9 D 5 bright A_Meleeattack
+			HED9 B 5
+			Goto See
+			
+		Missile: 
+			HED9 A 0 A_Jump(56,9)
+			HED9 A 0 A_Jump(72,13)
+			HED9 B 5 A_FaceTarget
+			HED9 C 5 bright A_FaceTarget
+			HED9 D 5 A_FaceTarget 
+			HED9 B 0 bright A_CustomMissile("CrackodemonBall", 24, 0, 0, 1)
+			HED9 B 0 bright A_CustomMissile("CrackodemonBall", 24, 0, -8, 1)
+			HED9 B 5 bright A_CustomMissile("CrackodemonBall", 24, 0, 8, 1)
+			Goto See 
+			HED9 B 10 A_FaceTarget
+			HED9 C 5 bright A_CustomMissile("Blusoul", 24, 0, 0, 1)
+			HED9 D 5 bright A_facetarget
+			HED9 B 5 bright
+			Goto See
+			HED9 B 5 A_FaceTarget
+			HED9 C 2 bright A_CustomMissile("CrackodemonBall", 24, 0, 16, 1)
+			HED9 C 2 bright A_CustomMissile("CrackodemonBall", 24, 0, 12, 1)
+			HED9 B 0 A_FaceTarget
+			HED9 C 2 bright A_CustomMissile("CrackodemonBall", 24, 0, 8, 1)
+			HED9 C 2 bright A_CustomMissile("CrackodemonBall", 24, 0, 4, 1)
+			HED9 B 0 A_FaceTarget
+			HED9 D 2 bright A_CustomMissile("CrackodemonBall", 24, 0, 0, 1)
+			HED9 D 2 bright A_CustomMissile("CrackodemonBall", 24, 0, -4, 1)
+			HED9 B 0 A_FaceTarget
+			HED9 D 2 bright A_CustomMissile("CrackodemonBall", 24, 0, -8, 1)
+			HED9 D 2 bright A_CustomMissile("CrackodemonBall", 24, 0, -12, 1)
+			HED9 B 0 A_FaceTarget
+			HED9 B 2 bright A_CustomMissile("CrackodemonBall", 24, 0, -16, 1)
+			HED9 B 4 bright
+			Goto See
+			
+		Pain: 
+			HED9 E 3 
+			HED9 E 3 A_Pain 
+			HED9 F 6 
+			Goto See
+			
+		Death: 
+			HED9 G 8 A_ChangeFlag(FLOATBOB,0)
+			HED9 H 8 A_Scream 
+			HED9 IJ 8
+			HED9 K 8 A_NoBlocking 
+			HED9 L -1 A_SetFloorClip
+			Stop
+			
+		Death.FireBF:
+		Death.AfireF:
+		Death.Afire:
+		Death.FireRF:
+		Death.FireR:
+			TNT1 A 0
+			Goto Death
+			
+		Raise: 
+			HED9 L 8 A_UnsetFloorClip
+			HED9 KJIHG 8 
+			Goto See 
+	} 
 } 
 
 Actor CrackodemonBall

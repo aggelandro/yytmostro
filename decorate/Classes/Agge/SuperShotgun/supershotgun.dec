@@ -1,130 +1,131 @@
-ACTOR AggeSSG : WeaponWithGrenadeOption
-{
-  Weapon.SelectionOrder 400
-  Weapon.AmmoUse 2
-  Weapon.AmmoGive 8
-  Weapon.AmmoUse2 2
-  Weapon.AmmoType2 "Shell"
-  Weapon.AmmoType "Shell"
-  Inventory.PickupMessage "$GOTSHOTGUN2"
-  Obituary "$OB_MPSSHOTGUN"
-  Tag "$TAG_SUPERSHOTGUN"
+ACTOR AggeSSG : WeaponWithGrenadeOption {
+	Weapon.SelectionOrder 400
+	Weapon.AmmoUse 2
+	Weapon.AmmoGive 8
+	Weapon.AmmoUse2 2
+	Weapon.AmmoType2 "Shell"
+	Weapon.AmmoType "Shell"
+	Inventory.PickupMessage "$GOTSHOTGUN2"
+	Obituary "$OB_MPSSHOTGUN"
+	Tag "$TAG_SUPERSHOTGUN"
+	+NOALERT
 	
-  States {
+	States {	
+		Ready:
+			AGGE A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
+			AGGE A 1 A_WeaponReady(WRF_ALLOWRELOAD)
+			Loop
 		
-	Ready:
-		AGGE A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
-		AGGE A 1 A_WeaponReady(WRF_ALLOWRELOAD)
-		Loop
-  
-	Deselect:
-    AGGE A 1 A_Lower
-    Loop
-  
-	Select:
-		TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
-    AGGE A 1 A_Raise
-    Loop
-  
-	Fire:
-		TNT1 A 0 A_JumpIf(CallACS("aggeSSGShellsLeft") == 0, "Empty")
-		TNT1 A 0 Radius_Quake(12,9,0,10,0)
-    AGGE A 3
-		TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-5.1, 5.1), 1, 0, 0, 0, frandom(-3.55, 3.55))
-		TNT1 A 0 A_GiveInventory("LoopFlag", 1)
-		TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-5.1, 5.1), 0, 0, 0, 0, frandom(-3.55, 3.55))
-		TNT1 A 0 A_JumpIfInventory("LoopFlag", 44, 1)
-		Goto Fire+4
-		TNT1 A 0 A_TakeInventory("LoopFlag", 44)
-		TNT1 A 0 A_TakeInventory("AggeSSGShellsLeft", 2)
-    TNT1 A 0 A_PlaySound("agge/ssgfir", CHAN_AUTO)
-    AGGE B 7 A_GunFlash
-    AGGE C 5
-    AGGE D 5 
-		AGGE E 7
-		AGGE D 2 
-		AGGE C 2
-		TNT1 A 0 A_Refire
-    Goto Ready
+		Deselect:
+			AGGE A 1 A_Lower
+			Loop
 		
-	Reload:
-		TNT1 A 0 A_JumpIfInventory("AggeSSGShellsLeft", 4, "Ready")
-		TNT1 A 0 A_JumpIf(CallACS("aggeSSGShellsLeft") == 2, "Reload2")
-		TNT1 A 0 A_JumpIf(CallACS("shells") == 2, "Reload2")
-		// Full reload
-		TNT1 AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
-    AGGE F 8 A_OpenShotgun2
-    AGGE F 8 A_PlaySound("agge/ssgopen", CHAN_WEAPON)
-    AGGE G 8 A_LoadShotgun2
-		TNT1 A 0 A_PlaySound("agge/ssgreload", CHAN_WEAPON)
-		TNT1 AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
-		AGGE F 8 A_OpenShotgun2
-    AGGE F 8
-    AGGE G 8 A_LoadShotgun2
-    AGGE H 6 A_PlaySound("agge/ssgreload", CHAN_WEAPON)
-    AGGE F 5
-		AGGE A 1 A_PlaySound("agge/ssgclose", CHAN_WEAPON)
-		TNT1 A 0 A_GiveInventory("AggeSSGShellsLeft", 4)
-		Goto Ready
+		Select:
+			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+			AGGE A 1 A_Raise
+			Loop
 		
-	Reload2:
-		// Reload de dos shells
-		TNT1 A 0 A_JumpIfNoAmmo("Empty")
-		TNT1 AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
-    AGGE F 7 A_OpenShotgun2
-    AGGE F 4 A_PlaySound("agge/ssgopen", CHAN_WEAPON)
-    AGGE G 4 A_LoadShotgun2
-    AGGE H 3 A_PlaySound("agge/ssgreload", CHAN_WEAPON)
-    AGGE F 3 
-		AGGE A 1 A_PlaySound("agge/ssgclose", CHAN_WEAPON)
-		TNT1 A 0 A_GiveInventory("AggeSSGShellsLeft", 2)
-		Goto Ready
+		Fire:
+			TNT1 A 0 A_JumpIf(CallACS("aggeSSGShellsLeft") == 0, "Empty")
+			TNT1 A 0 Radius_Quake(12, 9, 0, 10, 0)
+			AGGE A 3
+			TNT1 A 0 A_AlertMonsters
+			TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-5.1, 5.1), 1, 0, 0, 0, frandom(-3.55, 3.55))
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-5.1, 5.1), 0, 0, 0, 0, frandom(-3.55, 3.55))
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 44, 1)
+			Goto Fire+5
+			TNT1 A 0 A_TakeInventory("LoopFlag", 44)
+			TNT1 A 0 A_TakeInventory("AggeSSGShellsLeft", 2)
+			TNT1 A 0 A_PlaySound("agge/ssgfir", CHAN_AUTO)
+			AGGE B 7 A_GunFlash
+			AGGE C 5
+			AGGE D 5 
+			AGGE E 7
+			AGGE D 2 
+			AGGE C 2
+			TNT1 A 0 A_Refire
+			Goto Ready
+			
+		Reload:
+			TNT1 A 0 A_JumpIfInventory("AggeSSGShellsLeft", 4, "Ready")
+			TNT1 A 0 A_JumpIf(CallACS("aggeSSGShellsLeft") == 2, "Reload2")
+			TNT1 A 0 A_JumpIf(CallACS("shells") == 2, "Reload2")
+			// Full reload
+			TNT1 AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
+			AGGE F 8 A_OpenShotgun2
+			AGGE F 8 A_PlaySound("agge/ssgopen", CHAN_WEAPON)
+			AGGE G 8 A_LoadShotgun2
+			TNT1 A 0 A_PlaySound("agge/ssgreload", CHAN_WEAPON)
+			TNT1 AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
+			AGGE F 8 A_OpenShotgun2
+			AGGE F 8
+			AGGE G 8 A_LoadShotgun2
+			AGGE H 6 A_PlaySound("agge/ssgreload", CHAN_WEAPON)
+			AGGE F 5
+			AGGE A 1 A_PlaySound("agge/ssgclose", CHAN_WEAPON)
+			TNT1 A 0 A_GiveInventory("AggeSSGShellsLeft", 4)
+			Goto Ready
+			
+		Reload2:
+			// Reload de dos shells
+			TNT1 A 0 A_JumpIfNoAmmo("Empty")
+			TNT1 AA 0 A_SpawnItemEx("ShellCasing",10,-2,25,Random(-4,-5),Random(-4,-5),Random(4,6),270)
+			AGGE F 7 A_OpenShotgun2
+			AGGE F 4 A_PlaySound("agge/ssgopen", CHAN_WEAPON)
+			AGGE G 4 A_LoadShotgun2
+			AGGE H 3 A_PlaySound("agge/ssgreload", CHAN_WEAPON)
+			AGGE F 3 
+			AGGE A 1 A_PlaySound("agge/ssgclose", CHAN_WEAPON)
+			TNT1 A 0 A_GiveInventory("AggeSSGShellsLeft", 2)
+			Goto Ready
+			
+		Empty:
+			AGGE A 5 A_PlayWeaponSound("agge/ssgclick")
+			Goto Ready
 		
-	Empty:
-    AGGE A 5 A_PlayWeaponSound("agge/ssgclick")
-		Goto Ready
-  
-	Altfire:
-		TNT1 A 0 A_JumpIf(CallACS("aggeSSGShellsLeft") == 0, "Empty")
-		TNT1 A 0 A_JumpIf(CallACS("aggeSSGShellsLeft") < 4, "Fire")
-		TNT1 A 0 Radius_Quake(12,9,0,10,0)
-		AGGE A 3
-		TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-7.6, 7.6), 1, 0, 0, 0, frandom(-2.55, 2.55))
-		TNT1 A 0 A_GiveInventory("LoopFlag", 1)
-		TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-7.6, 7.6), 0, 0, 0, 0, frandom(-2.55, 2.55))
-		TNT1 A 0 A_JumpIfInventory("LoopFlag", 66, 1)
-		Goto AltFire+5
-		TNT1 A 0 A_TakeInventory("LoopFlag", 66)
-		TNT1 A 0 A_TakeInventory("AggeSSGShellsLeft", 2)
-    TNT1 A 0 A_PlaySound("agge/sgfire", CHAN_AUTO)
-		AGGE B 3 A_GunFlash
-		TNT1 A 0 Radius_Quake(12,9,0,10,0)
-    AGGE A 3
-		TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-7.6, 7.6), 1, 0, 0, 0, frandom(-2.55, 2.55))
-		TNT1 A 0 A_GiveInventory("LoopFlag", 1)
-		TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-7.6, 7.6), 0, 0, 0, 0, frandom(-2.55, 2.55))
-		TNT1 A 0 A_JumpIfInventory("LoopFlag", 66, 1)
-		Goto AltFire+15
-		TNT1 A 0 A_TakeInventory("LoopFlag", 66)
-		TNT1 A 0 A_TakeInventory("AggeSSGShellsLeft", 2)
-    TNT1 A 0 A_PlaySound("agge/sgfire", CHAN_AUTO)
-		AGGE B 3 A_GunFlash
-    AGGE C 3 //A_SetPitch(pitch-random(80,85)*0.1)
-    AGGE D 6 
-		AGGE E 7
-		AGGE D 2
-		AGGE C 2
-		TNT1 A 0 A_Refire
-		Goto Ready
-  
-	Flash:
-    TNT1 A 4 Bright A_Light1
-    TNT1 A 3 Bright A_Light2
-    Goto LightDone
-  
-	Spawn:
-    SGN2 A -1
-    Stop
+		Altfire:
+			TNT1 A 0 A_JumpIf(CallACS("aggeSSGShellsLeft") == 0, "Empty")
+			TNT1 A 0 A_JumpIf(CallACS("aggeSSGShellsLeft") < 4, "Fire")
+			TNT1 A 0 Radius_Quake(12, 9, 0, 10, 0)
+			AGGE A 3
+			TNT1 A 0 A_AlertMonsters
+			TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-7.6, 7.6), 1, 0, 0, 0, frandom(-2.55, 2.55))
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-7.6, 7.6), 0, 0, 0, 0, frandom(-2.55, 2.55))
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 66, 1)
+			Goto AltFire+6
+			TNT1 A 0 A_TakeInventory("LoopFlag", 66)
+			TNT1 A 0 A_TakeInventory("AggeSSGShellsLeft", 2)
+			TNT1 A 0 A_PlaySound("agge/sgfire", CHAN_AUTO)
+			AGGE B 3 A_GunFlash
+			TNT1 A 0 Radius_Quake(12, 9, 0, 10, 0)
+			AGGE A 3
+			TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-7.6, 7.6), 1, 0, 0, 0, frandom(-2.55, 2.55))
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			TNT1 A 0 A_FireCustomMissile("AggeSSGTracer", frandom(-7.6, 7.6), 0, 0, 0, 0, frandom(-2.55, 2.55))
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 66, 1)
+			Goto AltFire+16
+			TNT1 A 0 A_TakeInventory("LoopFlag", 66)
+			TNT1 A 0 A_TakeInventory("AggeSSGShellsLeft", 2)
+			TNT1 A 0 A_PlaySound("agge/sgfire", CHAN_AUTO)
+			AGGE B 3 A_GunFlash
+			AGGE C 3 //A_SetPitch(pitch-random(80,85)*0.1)
+			AGGE D 6 
+			AGGE E 7
+			AGGE D 2
+			AGGE C 2
+			TNT1 A 0 A_Refire
+			Goto Ready
+		
+		Flash:
+			TNT1 A 4 Bright A_Light1
+			TNT1 A 3 Bright A_Light2
+			Goto LightDone
+		
+		Spawn:
+			SGN2 A -1
+			Stop
   }
 }
 

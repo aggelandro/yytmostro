@@ -101,9 +101,11 @@ ACTOR Enforcer : Pinky2 {
 			IFIN G 1 A_Jump(174,"SpeedBuff")
 			Goto See
 			
+		Pain.FireRF:
 		Pain.FireR:
-		Pain.FireB:
+		Pain.FireBF:
 		Pain.Fire:
+		Pain.AfireF:
 			IFIN G 3 bright A_Pain
 			Goto SpeedBuff
 			
@@ -123,6 +125,14 @@ ACTOR Enforcer : Pinky2 {
 			IFIN LM 4
 			IFIN N -1
 			Stop
+			
+		Death.FireBF:
+		Death.AfireF:
+		Death.Afire:		
+		Death.FireRF:
+		Death.FireR:
+			TNT1 A 0
+			Goto Death
 			
 		Raise:
 			IFIN NMLKJIH 5

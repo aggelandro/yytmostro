@@ -17,7 +17,6 @@ ACTOR Skeleton : Revenant2 {
 	-MISSILEMORE
 	
 	States {
-		
 		SpawnLoop:
 			DRYB AB 10 A_Look
 			Loop
@@ -114,7 +113,6 @@ ACTOR BoneProj {
 	SeeSound "skel/throw"
 	DeathSound "skel/bondie"
 	var int user_homing_flag;
-	
 	-NOGRAVITY
 	+RANDOMIZE
 	-NOBLOCKMAP
@@ -124,7 +122,6 @@ ACTOR BoneProj {
 	+NOBLOOD
 	
 	States {
-	
 		Spawn:
 			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("homingAtNegativeZVelocity")
 			Goto SpawnLoop

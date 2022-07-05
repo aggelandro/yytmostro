@@ -407,7 +407,8 @@ script "applyEffect" (int option, int dur, int force) {
             Spawn("FriendlyMiniArachnotron", GetActorX(0), GetActorY(0), GetActorZ(0));
         }; break;
         case 3: {
-            // Petrifying: no puede atacar ni moverse pero tampoco se le puede hacer daño
+            // Petrifying: no puede atacar ni moverse
+            if (CheckFlag(0, "BOSS")) terminate;
             mtid = UniqueTID();
             ptid = UniqueTID();
 
@@ -418,12 +419,13 @@ script "applyEffect" (int option, int dur, int force) {
             SetUserVariable(0, "user_se_monster_height", GetActorProperty(mtid, APROP_Height) >> 16);
             SetActivator(mtid);
             Thing_ChangeTID(mtid, 0);
-            Thing_Deactivate(0);
+            SetActorState(0, "Petrify");
             Delay(dur);
-            Thing_Activate(0);
             TakeInventory("PetrifyingDebuffGiver", 1);
             SetActorState(ptid, "Death");
             Thing_ChangeTID(ptid, 0);
+            if (CheckFlag(0, "CORPSE")) terminate;
+            SetActorState(0, "Depetrify");
         }; break;
         case 4: {
             // Knock-back
@@ -466,6 +468,7 @@ script "applyEffect" (int option, int dur, int force) {
         case 6: {
             // Bleeding hace 10% de su salud maxima de daño al monstruo cada 5 segundos y no tiene limite de tiempo.
             // Importante: No debe afectar a monstruos tipo BOSSES.
+            if (CheckFlag(0, "BOSS")) terminate;
             mtid = UniqueTID();
             int btid = UniqueTID();
 
@@ -604,7 +607,7 @@ script "applyEffect" (int option, int dur, int force) {
                 int subweaponChance = Random(0, 99);
                 actHeight = GetActorProperty(0, APROP_Height);
                 if (subweaponChance < 10)
-                    Spawn("DaggerItem", GetActorX(0), GetActorY(0), GetActorZ(0)+actHeight);
+                    Spawn("HolyWaterItem", GetActorX(0), GetActorY(0), GetActorZ(0)+actHeight);
                 else {
                     if (subweaponChance >= 10 && subweaponChance < 30)
                         Spawn("AxeItem", GetActorX(0), GetActorY(0), GetActorZ(0)+actHeight);
@@ -612,7 +615,7 @@ script "applyEffect" (int option, int dur, int force) {
                         if (subweaponChance >= 30 && subweaponChance < 50)
                             Spawn("CrossItem", GetActorX(0), GetActorY(0), GetActorZ(0)+actHeight);
                         else
-                            Spawn("HolyWaterItem", GetActorX(0), GetActorY(0), GetActorZ(0)+actHeight);
+                            Spawn("DaggerItem", GetActorX(0), GetActorY(0), GetActorZ(0)+actHeight);
                     }
                 }
             }
@@ -1962,7 +1965,7 @@ script "getChargedAttackTime" (void) {
 }
 
 script "getBrimstoneDamage" (void) {
-    if (CheckActorClass(0, "PlayerDoppelganger")) SetActivator(GetActorProperty(0, APROP_MasterTID));
+    if (CheckActorClass(0, "PlayerDoppelganger") || CheckActorClass(0, "HomingPlayerDoppelganger")) SetActivator(GetActorProperty(0, APROP_MasterTID));
     int pnum = PlayerNumber();
     int damage = TEARS_STATS_BY_PLAYER[pnum][2];
     damage = applyGiversToDamage(damage, SV_PLAYERS_NUMBERS_2_TIDS[pnum]);
@@ -2080,4 +2083,12 @@ script "brimstoneFreezeCheck" (void) {
     SetActivator(0, AAPTR_TRACER);
     Delay(1);
     if (GetActorProperty(0, APROP_Health) <= 0) SetActorState(0, "Death.IsaacIce");
+}
+
+script "startIsaacMusic" (int number) CLIENTSIDE {
+    LocalSetMusic(StrParam(s:"ISAAC", i:number));
+}
+
+script "stopMusic" (void) CLIENTSIDE {
+    LocalSetMusic("*");
 }

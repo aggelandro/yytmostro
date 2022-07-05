@@ -86,6 +86,14 @@ ACTOR Toxigi : Pinky2 {
 			SAR6 N -1
 			Stop
 			
+		Death.FireBF:
+		Death.AfireF:
+		Death.Afire:		
+		Death.FireRF:
+		Death.FireR:
+			TNT1 A 0
+			Goto Death
+			
 		Raise:
 			SAR6 N 5
 			SAR6 MLKJI 5

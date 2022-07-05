@@ -29,15 +29,14 @@ ACTOR AggeFlameThrower : DoomWeapon {
 			FLAM D 3 
 			FLAM E 0 A_GunFlash
 			FLAM E 3 A_FireCustomMissile("FlameThrowerFire",0,1)
-			//"FlameThrowerFire" is in "universtalstuff.dec" because I use it a lot of times
-			FLAM FG 5 A_ReFire
+			FLAM FG 3 A_ReFire
 			Goto Ready
 			
 		Hold:
-			FLAM D 3
+			FLAM D 2
 			FLAM E 0 A_GunFlash
-			FLAM E 3 A_FireCustomMissile("FlameThrowerFire",0,1)
-			FLAM FG 5 A_Refire
+			FLAM E 2 A_FireCustomMissile("FlameThrowerFire",0,1)
+			FLAM FG 3 A_Refire
 			Goto Ready
 			
 		Flash:

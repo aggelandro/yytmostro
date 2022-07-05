@@ -137,6 +137,14 @@ ACTOR Frostodemon : Cacodemon2 {
 			HELE V -1 A_SetFloorClip
 			Stop
 			
+		Death.FireBF:
+		Death.AfireF:
+		Death.Afire:
+		Death.FireRF:
+		Death.FireR:
+			TNT1 A 0
+			Goto Death
+			
 		Raise:
 			HELE U 8 A_UnSetFloorClip
 			HELE TSRQPONMLKJI 8

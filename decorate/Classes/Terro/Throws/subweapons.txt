@@ -312,7 +312,7 @@ ACTOR CastlevaniaAxeDamager {
 	Projectile
 	Height 27
 	Radius 4
-	Damage (Random(30, 45))
+	Damage (5*Random(9, 12))
 	Speed 0
 	+PAINLESS
 	+BLOODSPLATTER

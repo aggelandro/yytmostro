@@ -125,7 +125,7 @@ ACTOR EterealRifle {
 	//FloatBobStrength 0.5
 	+NOGRAVITY
 	+FLOATBOB
-	+VULNERABLE
+	+VULNERABLE // Necesario porque el radiusgive de zandromierda es limitado
 	+BRIGHT
 	
 	States {
@@ -172,6 +172,7 @@ ACTOR EterealRifle {
 			
 		Shoot:
 			TNT1 A 0 A_TakeInventory("LoopFlag", 17)
+			TNT1 A 0 A_ChangeFlag("VULNERABLE", FALSE)
 			ERAA A 5 A_FaceTarget
 			TNT1 A 0 A_ChangeFlag("FLOATBOB", FALSE)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setAlphaTo", 1)

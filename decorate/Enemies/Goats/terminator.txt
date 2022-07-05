@@ -282,6 +282,14 @@ ACTOR T-800 : BaronOfHell2 {
 			DB2S Q -1 A_BossDeath
 			Stop
 			
+		Death.FireBF:
+		Death.AfireF:
+		Death.Afire:
+		Death.FireRF:
+		Death.FireR:
+			TNT1 A 0
+			Goto Death
+			
 		Raise:
 			DB2S Q 8
 			DB2S PONMLKJI 8
