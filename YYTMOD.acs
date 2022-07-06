@@ -381,6 +381,7 @@ script "isEffectChanceSuccessful" (int chance) {
 // no sean int como parametros y que admite una cantidad limitada de ellos
 script "applyEffect" (int option, int dur, int force) {
     int mtid, ptid, times, i;
+    if (CheckFlag(0, "CORPSE")) terminate;
     switch(option) {
         case 1: {
             // Fear: El enemigo huye del jugador pero tiene chance de contraatacar en medio
@@ -740,6 +741,14 @@ script "aggeSSGShellsLeft" (void) {
     SetResultValue(CheckInventory("AggeSSGShellsLeft"));
 }
 
+script "terroSGFireCount" (void) {
+    SetResultValue(CheckInventory("TerroSGFireCount"));
+}
+
+script "fireReleased" (void) {
+    SetResultValue(CheckInventory("FireReleased"));
+}
+
 script "shells" (void) {
     SetResultValue(CheckInventory("Shell"));
 }
@@ -747,6 +756,21 @@ script "shells" (void) {
 script "targetLoopFlags" (void) {
     int ptid = GetActorProperty(0, APROP_TargetTID);
     SetResultValue(CheckActorInventory(ptid, "LoopFlag"));
+}
+
+script "readHoldingFireButtonFor" (int tics) {
+    // Se queda leyendo los inputs del jugador durante X cantidad de tics hasta que deje
+    // de presionar el click izquierdo en cuyo caso activa un flag de inventario
+    while(tics > 0) {
+        if (ACS_NamedExecuteWithResult("isPressingFire")) {
+            Delay(1);
+            tics--;
+        }
+        else {
+            GiveInventory("FireReleased", 1);
+            terminate;
+        }
+    }
 }
 
 function int fdistance (int tid1, int tid2) {

@@ -43,8 +43,6 @@ ACTOR PkDoubleShotguns : WeaponWithSubWeaponOption
 		
 	Ready:
 		SGDL A 1
-		SGDL A 0 A_GiveInventory("ClipDoubleLeft",2)
-		SGDL A 0 A_GiveInventory("ClipDoubleRight",2)
 		SGDL A 0 A_GiveInventory("SynthFireActive",1)
 		SGDL A 0 ACS_ExecuteAlways(891,0,0,0,0) //act.synth-fire LEFT(pri)
 		SGDL A 0 ACS_ExecuteAlways(892,0,0,0,0) //act.synth-fire RIGHT(sec)

@@ -150,6 +150,7 @@ terro/whipiyu WHIPIYU
 terro/axethrow AXETHRW
 terro/crossthrow CROTHRW
 terro/holywatercrash HWCRASH
+terro/shotgunpump	TSHTPUMP
 zlayer/sniper ZSNIPER
 zlayer/srelo ZSNIPRE
 ando/ytho YTHO
@@ -174,6 +175,7 @@ weapons/boltfire	BOLTFIRE
 
 //escopeta afanada del super skulltag
 weapons/slamfire	shotslam
+weapons/slamfire2 TSHTFIRE
 $volume weapons/slamfire 0.6
 
 terro/shotty1    TESHOTG1
