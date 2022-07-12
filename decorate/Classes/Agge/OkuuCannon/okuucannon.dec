@@ -29,7 +29,7 @@ ACTOR OkuuCannon : DoomWeapon {
 			
 		FireHold:
 			TNT1 A 0 A_TakeInventory("FlashDone", 1)
-			TNT1 A 0 A_PlaySound("cydes/mischrg", CHAN_WEAPON)
+			TNT1 A 0 A_PlaySound("agge/okuucharge", CHAN_WEAPON)
 			TNT1 A 0 ACS_NamedExecuteWithResult("loadChargedAttack", 70)
 			TNT1 A 0 A_GunFlash
 			Goto FireLoop
@@ -255,7 +255,6 @@ ACTOR SubSunFloorGlow {
 	+NOBLOCKMAP
 	+FLOORHUGGER
 	+NOCLIP
-	+CLIENTSIDEONLY
 	+BRIGHT
 	Alpha 0.05
 	
@@ -276,7 +275,6 @@ ACTOR SubSunFloorGlow {
 }
 
 ACTOR SubSunFloorFireSpawner {
-	+CLIENTSIDEONLY
   +NOGRAVITY
   +NOBLOCKMAP
   +NOTELEPORT
@@ -329,7 +327,6 @@ ACTOR SubSunFloorFire {
 	+FLOORHUGGER
 	+NOCLIP
 	+NOGRAVITY
-	+CLIENTSIDEONLY
 	+BRIGHT
 	
 	States {
@@ -343,7 +340,6 @@ ACTOR SubSunCore {
 	Alpha 0.5
 	Scale 0.05
 	+NOBLOCKMAP
-	+CLIENTSIDEONLY
 	+NOGRAVITY
 	+BRIGHT
 	var int user_vely;
@@ -422,7 +418,6 @@ ACTOR SubSunCorePartcicle {
 	Scale 0.075
 	Speed 1
 	+NOBLOCKMAP
-	+CLIENTSIDEONLY
 	+NOGRAVITY
 	+BRIGHT
 	
@@ -459,7 +454,6 @@ ACTOR SubSunBullet {
 }
 
 ACTOR SubSunBulletRingSpawner {
-	+CLIENTSIDEONLY
   +NOGRAVITY
   +NOBLOCKMAP
   +NOTELEPORT

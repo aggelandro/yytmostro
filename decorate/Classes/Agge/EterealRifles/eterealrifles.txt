@@ -122,6 +122,7 @@ ACTOR EterealRifle {
 	Scale 0.15
 	Alpha 0.05
 	ReactionTime 160
+	Mass 1000
 	//FloatBobStrength 0.5
 	+NOGRAVITY
 	+FLOATBOB

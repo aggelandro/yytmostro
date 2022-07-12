@@ -31,6 +31,7 @@ agge/brimgrowl BRGROWL
 agge/brimroar BRROAR
 agge/brimlaser BRLASER
 agge/okuualert UNYUALAR
+agge/okuucharge MAHLAZR
 agge/risingsubsun SUBSUN00
 agge/subsunactive SUBSUN01
 $random agge/subsunhit { agge/subsunhit1 agge/subsunhit2 }
@@ -478,3 +479,8 @@ $rolloff Elder/Laugh	 1000 3500
 Elder/Laugh  EDLAUG1
 $rolloff Elder/Laugh2	 1000 3500
 Elder/Laugh2  EDLAUG2
+Elder/Stomp		ELDMNST
+weapons/clrocketlaunch		DSCLRF
+weapons/clrocketexplode		DSCLEXP
+Elder/giantskymissilelaunch	GSMLAUN
+weapons/giantexplosion	DETHEXP1

@@ -1,12 +1,17 @@
 ACTOR ElderDemon : Cyberdemon2 {
-	Translation "192:207=169:191"
+	Translation "192:207=169:191", "240:247=188:191"
+	BloodColor "ff 50 00"
 	Health 10000
-	PainChance 15
+	PainChance 10
+	DamageFactor "ElderDemonTech", 0
+	DamageFactor "BrimstonePuff", 0.5
+	DamageFactor "Lightning", 0.75
 	SeeSound "Elder/See"
   PainSound "Elder/Pain"
   DeathSound "Elder/Death"
   ActiveSound "Elder/Active"
   Obituary "%o has seen aborted its existence by an Elder Demon!"
+	Tag "Elder Demon"
 	+QUICKTORETALIATE
 	+NOICEDEATH
 	+LOOKALLAROUND
@@ -15,44 +20,361 @@ ACTOR ElderDemon : Cyberdemon2 {
 	+DONTHARMSPECIES
 	+NOFEAR
 	+AVOIDMELEE
+	+NOTELEFRAG
+	+NOTIMEFREEZE
+	DropItem "IsaacItemsTier3Spawner"
+	DropItem "IsaacItemsTier3Spawner"
+	DropItem "IsaacItemsTier3LowChanceSpawner"
+	DropItem "IsaacItemsTier3LowChanceSpawner"
+	DropItem "IsaacItemsTier3LowChanceSpawner"
+	DropItem "IsaacItemsTier3LowChanceSpawner"
+	DropItem "PrototypeGunToken"
+	DropItem "UniqueWeaponSpawner"
+	DropItem "MegaSphere"
+	DropItem "DualZanzibart"
+	var int user_curse_delay;
+	var int user_super_armor;
+	var int user_sky_rocket_delay;
+	var int user_speed_boost;
+	var int user_has_invoked_first_time;
+	var int user_allies_count;
+	var int user_summon_offset;
+	var int user_curr_speed;
+	var int user_sky_changed;
 
 	States {
 		SpawnLoop:
-			TLCD AB 10 A_Look
-			Loop
+			TLCD A 0 A_SetUserVar("user_curr_speed", 16)
+			TLCD AZ 10 A_Look
+			Goto SpawnLoop+1
 			
 		See:
+			TNT1 A 0 A_JumpIf(user_allies_count <= 2, "InvokeMobChance")
+			TNT1 A 0 A_JumpIfInTargetLOS("EvadeChance", 45, JLOSF_DEADNOJUMP, 500)
+			TNT1 A 0 A_JumpIf(Health < 5000, "FastSee")
+			TNT1 A 0 A_JumpIf(Health < 2500, "SuperArmor")
+			TNT1 A 0 A_JumpIf(Health < 1000, "SuperFastSee")
 			TLCD A 3 A_Hoof
 			TLCD ABBCC 3 A_Chase
 			TLCD D 3 A_Metal
 			TLCD D 3 A_Chase
 			Loop
 			
+		InvokeMobChance:
+			TNT1 A 0 A_JumpIf(!user_has_invoked_first_time, "InvokeMob")
+			TNT1 A 0 A_Jump(5, "InvokeMob")
+			Goto See+1
+			
+		InvokeMob:
+			TNT1 A 0 A_ChangeFlag("NOPAIN", TRUE)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 2, 72)
+			LBE4 G 8 A_FaceTarget
+			TLCB AB 16 BRIGHT A_FaceTarget
+			TNT1 A 0 A_SetUserVar("user_summon_offset", 45)
+			TNT1 A 0 A_SetUserVar("user_spawn_tid", ACS_NamedExecuteWithResult("getUniqueTID"))
+			TNT1 A 0 A_SpawnItemEx("EDBaronOfHell", user_summon_offset, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setActorSpeed", user_curr_speed, user_spawn_tid)
+			TNT1 A 0 A_SpawnItemEx("EDBaronOfHell", 0, user_summon_offset, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setActorSpeed", user_curr_speed, user_spawn_tid)
+			TNT1 A 0 A_SpawnItemEx("EDBaronOfHell", -user_summon_offset, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setActorSpeed", user_curr_speed, user_spawn_tid)
+			TNT1 A 0 A_SpawnItemEx("EDBaronOfHell", 0, -user_summon_offset, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setActorSpeed", user_curr_speed, user_spawn_tid)
+			TNT1 A 0 A_SpawnItemEx("EDBaronOfHell", user_summon_offset, user_summon_offset, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setActorSpeed", user_curr_speed, user_spawn_tid)
+			TNT1 A 0 A_SpawnItemEx("EDBaronOfHell", user_summon_offset, -user_summon_offset, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setActorSpeed", user_curr_speed, user_spawn_tid)
+			TNT1 A 0 A_SpawnItemEx("EDBaronOfHell", -user_summon_offset, user_summon_offset, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setActorSpeed", user_curr_speed, user_spawn_tid)
+			TNT1 A 0 A_SpawnItemEx("EDBaronOfHell", -user_summon_offset, -user_summon_offset, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setActorSpeed", user_curr_speed, user_spawn_tid)
+			TNT1 A 0 A_SpawnItemEx("EDBaronOfHell", user_summon_offset*2, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setActorSpeed", user_curr_speed, user_spawn_tid)
+			TNT1 A 0 A_SpawnItemEx("EDBaronOfHell", user_summon_offset*-2, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION, 0, user_spawn_tid)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setActorSpeed", user_curr_speed, user_spawn_tid)
+			TLCB B 48 BRIGHT A_FaceTarget
+			TNT1 A 0 A_SetUserVar("user_has_invoked_first_time", 1)
+			TNT1 A 0 A_SetUserVar("user_allies_count", user_allies_count+10)
+			TNT1 A 0 A_ChangeFlag("NOPAIN", FALSE)
+			Goto See+1
+			
+		FastSee:
+			TNT1 A 0 A_JumpIf(user_speed_boost, 4)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setActorSpeed", 25)
+			TLCD A 0 A_SetUserVar("user_curr_speed", 25)
+			TNT1 A 0 A_SetUserVar("user_speed_boost", 1)
+			TNT1 A 0 A_JumpIf(user_sky_changed, 3)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setEDSky")
+			TNT1 A 0 A_SetUserVar("user_sky_changed", 1)
+			TNT1 A 0
+			Goto See+3
+			
+		SuperArmor:
+			TNT1 A 0 A_JumpIf(!user_super_armor, 1)
+			Goto See+4
+			TNT1 A 0 A_ChangeFlag("NOPAIN", TRUE)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 2, 33)
+			LBE4 G 8
+			TLCL ABABABABAB 2 BRIGHT
+			TNT1 A 0 A_Quake(1, 15, 0, 64)
+			TNT1 A 0 ACS_NamedExecuteWithResult("enableSuperArmor")
+			TNT1 A 0 A_SetUserVar("user_super_armor", 1)
+			LBE4 G 5 
+			TNT1 A 0 A_ChangeFlag("NOPAIN", FALSE)
+			Goto See+4
+			
+		SuperFastSee:
+			TLCD A 3 FAST A_Hoof
+			TLCD ABBCC 3 FAST A_Chase
+			TLCD D 3 FAST A_Metal
+			TLCD D 3 FAST A_Chase
+			Goto See
+			
+		EvadeChance:
+			TNT1 A 0 A_JumpIf(CeilingZ <= 236, 2)
+			TNT1 A 0 A_Jump(96, "EvadeLeft", "EvadeRight")
+			TNT1 A 0
+			Goto See+2
+			
+		EvadeLeft:
+			LBE4 G 4 A_SetTics(10 / (user_max_health / Health))
+			LBE4 B 7 A_SetTics(10 / (user_max_health / Health))
+			TNT1 A 0 A_ChangeFlag("NODROPOFF", TRUE)
+			TNT1 A 0 ThrustThing(Angle*256/360+64, 15, 0, 0)
+			TNT1 A 0 ThrustThingZ(0, 30, 0, 1)
+			LBE4 A 8
+			TNT1 A 0 A_PlaySound("AM/landing", CHAN_BODY)
+			TNT1 A 0 A_Quake(2, 20, 0, 32)
+			LBE4 B 5 A_SetTics(10 / (user_max_health / Health))
+			LBE4 G 2 A_SetTics(10 / (user_max_health / Health))
+			TNT1 A 0 A_ChangeFlag("NODROPOFF", FALSE)
+			TNT1 A 0 A_Jump(100,"Missile")
+			Goto See+2
+		
+		EvadeRight:
+			LBE4 G 4 A_SetTics(10 / (user_max_health / Health))
+			LBE4 B 7 A_SetTics(10 / (user_max_health / Health))
+			TNT1 A 0 A_ChangeFlag("NODROPOFF", TRUE)
+			TNT1 A 0 ThrustThing(Angle*256/360+192, 15, 0, 0)
+			TNT1 A 0 ThrustThingZ(0, 30, 0, 1)
+			LBE4 A 8
+			TNT1 A 0 A_PlaySound("AM/landing", CHAN_BODY)
+			TNT1 A 0 A_Quake(2, 20, 0, 32)
+			LBE4 B 5 A_SetTics(10 / (user_max_health / Health))
+			LBE4 G 2 A_SetTics(10 / (user_max_health / Health))
+			TNT1 A 0 A_ChangeFlag("NODROPOFF", FALSE)
+			TNT1 A 0 A_Jump(100,"Missile")
+			Goto See+2
+			
 		Missile:
+			TNT1 A 0 A_JumpIf(Health < 9000, "Missile9000")
+			Goto Normal
+			
+		Missile9000:
+			TNT1 A 0 A_JumpIf(Health < 8000, "Missile8000")
+			TNT1 A 0 A_Jump(128, "FireStomp")
+			Goto Normal
+			
+		Missile8000:
+			TNT1 A 0 A_JumpIf(Health < 5000, "Missile5000")
+			TNT1 A 0 A_Jump(128, "FireStomp", "SkyRockets")
+			Goto Normal
+			
+		Missile5000:
+			TNT1 A 0 A_CheckFlag("MISSILEEVENMORE", 2)
+			TNT1 A 0 A_ChangeFlag("MISSILEEVENMORE", TRUE)
+			TNT1 A 0 A_JumpIf(Health < 4000, "Missile4000")
+			TNT1 A 0 A_Jump(128, "FireStomp", "EvilEye", "SkyRockets")
+			Goto Normal
+			
+		Missile4000:
+			TNT1 A 0 A_JumpIf(Health < 2500, 2)
+			TNT1 A 0 A_Jump(128, "FullFireStomp", "FireStomp", "EvilEye", "SkyRockets")
+			Goto Normal
+			
+		Missile2500:
+			TNT1 A 0 A_Jump(128, "FullFireStomp", "SkyGiantRocket", "FireStomp", "EvilEye", "SkyRockets")
+			Goto Normal
+			
+		Normal:
+			TNT1 A 0 A_JumpIf(Health < 5000, "Normal2")
 			TLCD E 6 A_FaceTarget
-			TLCD F 12 A_CyberAttack
-			TLCD E 12 A_FaceTarget
-			TLCD F 12 A_CyberAttack
-			TLCD E 12 A_FaceTarget
-			TLCD F 12 A_CyberAttack
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			TLCD F 12 A_SetTics(10 / (user_max_health / Health))
+			TLCD F 0 BRIGHT A_CustomMissile("Rocket", 43, -25, frandom(-5, 5))
+			TLCD E 11 A_SetTics(10 / (user_max_health / Health))
+			TLCD E 1 A_FaceTarget
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 2, 1)
+			Goto Normal+2
+			TNT1 A 0 A_TakeInventory("LoopFlag", 2)
+			TLCD F 12 A_SetTics(10 / (user_max_health / Health))
+			TLCD F 0 BRIGHT A_CustomMissile("Rocket", 43, -25, frandom(-5, 5))
+			Goto See
+			
+		Normal2:
+			TNT1 A 0 A_JumpIf(Health < 2500, "Homing")
+			TLCD E 6 A_FaceTarget
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			TLCD F 12 A_SetTics(10 / (user_max_health / Health))
+			TLCD F 0 BRIGHT A_CustomMissile("EDRocket", 43, -25, frandom(-5, 5))
+			TLCD E 11 A_SetTics(10 / (user_max_health / Health))
+			TLCD E 1 A_FaceTarget
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 5, 1)
+			Goto Normal2+1
+			TNT1 A 0 A_TakeInventory("LoopFlag", 5)
+			TLCD F 12 A_SetTics(10 / (user_max_health / Health))
+			TLCD F 0 BRIGHT A_CustomMissile("EDRocket", 43, -25, frandom(-5, 5))
+			Goto See
+			
+		Homing:
+			TNT1 A 0 A_Jump(128, 1)
+			Goto Normal2+1
+			TLCC A 6 A_FaceTarget
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			TLCC B 12 A_SetTics(10 / (user_max_health / Health))
+			TNT1 A 0 A_Jump(96, 3)
+			TLCC B 0 BRIGHT A_CustomMissile("HomingEDRocket", 43, -25, frandom(-5, 5))
+			TNT1 A 0 A_Jump(256, 2)
+			TLCC B 0 BRIGHT A_CustomMissile("EDRocket", 43, -25, frandom(-5, 5))
+			TLCC A 11 A_SetTics(10 / (user_max_health / Health))
+			TLCC A 1 A_FaceTarget
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 5, 1)
+			Goto Homing+2
+			TNT1 A 0 A_TakeInventory("LoopFlag", 5)
+			TLCC B 12 A_SetTics(10 / (user_max_health / Health))
+			TLCC B 0 BRIGHT A_CustomMissile("HomingEDRocket", 43, -25, frandom(-5, 5))
+			Goto See
+			
+		FireStomp:
+			TNT1 A 0 A_ChangeFlag("NOPAIN", TRUE)
+			LBE4 A 8 A_FaceTarget
+			TNT1 A 0 Radius_Quake(10,8,0,24,0)
+			LBE4 B 6 A_PlaySound("Elder/Stomp", CHAN_AUTO)
+			TNT1 A 0 ACS_NamedExecuteWithResult("SpawnEDFloorExplosionOnTarget")
+			TNT1 A 0 A_ChangeFlag("NOPAIN", FALSE)
+			LBE4 B 15 A_SetTics(10 / (user_max_health / Health))
+			LBE4 G 5 A_SetTics(10 / (user_max_health / Health))
+			TNT1 A 0 A_Jump(64, "Normal")
+			Goto See
+			
+		FullFireStomp:
+			TNT1 A 0 A_JumpIf(CallACS("isTargetAMonster"), "FireStomp")
+			TNT1 A 0 A_ChangeFlag("NOPAIN", TRUE)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 2, 24)
+			LBE4 A 18 BRIGHT A_FaceTarget
+			TNT1 A 0 Radius_Quake(10,12,0,32,0)
+			LBE4 B 6 BRIGHT A_PlaySound("Elder/Stomp", CHAN_AUTO)
+			TNT1 A 0 ACS_NamedExecuteWithResult("SpawnEDFloorExplosionOnPlayers")
+			TNT1 A 0 A_ChangeFlag("NOPAIN", FALSE)
+			LBE4 B 15 A_SetTics(10 / (user_max_health / Health))
+			LBE4 G 5 A_SetTics(10 / (user_max_health / Health))
+			TNT1 A 0 A_Jump(64, "Normal")
+			Goto See
+			
+		EvilEye:
+			TNT1 A 0 A_JumpIf(user_curse_delay>0, "FireStomp")
+			LBE4 G 8 A_FaceTarget
+			TLCL AB 8 BRIGHT A_FaceTarget
+			TNT1 A 0 A_JumpIfTargetInLOS("Curse")
+			TLCL ABABAB 3 BRIGHT A_FaceTarget
+			LBE4 G 3 A_FaceTarget
+			TNT1 A 0 A_Jump(96, "Normal", "FireStomp", "SkyRockets")
+			Goto See
+			
+		Curse:
+			TNT1 A 0 ACS_NamedExecuteWithResult("reversePlayerControls", 700)
+			TNT1 A 0 A_SetUserVar("user_curse_delay", 1050)
+			TNT1 A 0 ACS_NamedExecuteWithResult("curseDelayCooldown", 1050)
+			TNT1 A 0 A_PlaySound("Elder/Laugh2", CHAN_AUTO)
+			Goto EvilEye+5
+			
+		SkyRockets:
+			TNT1 A 0 A_JumpIf(user_sky_rocket_delay>0, "FireStomp")
+			TNT1 A 0 A_ChangeFlag("NOPAIN", TRUE)
+			TBMB A 5 A_SetTics(10 / (user_max_health / Health))
+			TBMB A 1 A_FaceTarget
+			TBMB B 7 BRIGHT A_SetTics(10 / (user_max_health / Health))
+			TBMB B 1 BRIGHT A_FaceTarget
+			TNT1 A 0 ACS_NamedExecuteWithResult("launchMissileToTarget", 35, 0, 0)
+			TNT1 A 0 A_PlaySound("weapons/clrocketlaunch", CHAN_AUTO)
+			TBMB A 5 A_SetTics(10 / (user_max_health / Health))
+			TBMB A 1 A_FaceTarget
+			TBMB B 7 BRIGHT A_SetTics(10 / (user_max_health / Health))
+			TBMB B 1 BRIGHT A_FaceTarget
+			TNT1 A 0 ACS_NamedExecuteWithResult("launchMissileToTarget", 35, Random(32, 96), Random(32, 96))
+			TNT1 A 0 A_PlaySound("weapons/clrocketlaunch", CHAN_AUTO)
+			TBMB A 5 A_SetTics(10 / (user_max_health / Health))
+			TBMB A 1 A_FaceTarget
+			TBMB B 7 BRIGHT A_SetTics(10 / (user_max_health / Health))
+			TBMB B 1 BRIGHT A_FaceTarget
+			TNT1 A 0 ACS_NamedExecuteWithResult("launchMissileToTarget", 35, Random(-32, -96), Random(-32, -96))
+			TNT1 A 0 A_PlaySound("weapons/clrocketlaunch", CHAN_AUTO)
+			TBMB A 5 A_SetTics(10 / (user_max_health / Health))
+			TBMB A 1 A_FaceTarget
+			TBMB B 7 BRIGHT A_SetTics(10 / (user_max_health / Health))
+			TBMB B 1 BRIGHT A_FaceTarget
+			TNT1 A 0 ACS_NamedExecuteWithResult("launchMissileToTarget", 35, Random(32, 96), Random(-32, -96))
+			TNT1 A 0 A_PlaySound("weapons/clrocketlaunch", CHAN_AUTO)
+			TBMB A 5 A_SetTics(10 / (user_max_health / Health))
+			TBMB A 1 A_FaceTarget
+			TBMB B 7 BRIGHT A_SetTics(10 / (user_max_health / Health))
+			TBMB B 1 BRIGHT A_FaceTarget
+			TNT1 A 0 ACS_NamedExecuteWithResult("launchMissileToTarget", 35, Random(-32, -96), Random(32, 96))
+			TNT1 A 0 A_PlaySound("weapons/clrocketlaunch", CHAN_AUTO)
+			TNT1 A 0 A_ChangeFlag("NOPAIN", FALSE)
+			TNT1 A 0 A_SetUserVar("user_sky_rocket_delay", 35)
+			TNT1 A 0 ACS_NamedExecuteWithResult("skyRocketDelayCooldown", 35)
+			TNT1 A 0 A_Jump(84, "Normal", "FireStomp")
+			Goto See
+			
+		SkyGiantRocket:
+			TNT1 A 0 A_JumpIf(user_sky_rocket_delay>0, "FullFireStomp")
+			TNT1 A 0 A_ChangeFlag("NOPAIN", TRUE)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 2, 25)
+			TBMB A 10 A_FaceTarget
+			TBMB B 15 BRIGHT A_FaceTarget
+			TNT1 A 0 A_PlaySound("cydes/grenadefire", CHAN_AUTO)
+			TNT1 A 0 A_ChangeFlag("NOPAIN", FALSE)
+			TNT1 A 0 A_SetUserVar("user_sky_rocket_delay", 175)
+			TNT1 A 0 ACS_NamedExecuteWithResult("launchGiantMissileToTarget", 175)
+			TNT1 A 0 ACS_NamedExecuteWithResult("skyRocketDelayCooldown", 175)
+			TNT1 A 0 A_Jump(84, "Normal", "FullFireStomp", "EvilEye")
 			Goto See
 			
 		Pain:
 			TLCD G 10 A_Pain
+			TNT1 A 0 A_Jump(64, "PainEvade")
+			TNT1 A 0 A_Jump(24, "Missile")
 			Goto See
 			
-		Pain.Lightning:
-			TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.25),0,0,0,0)
-			TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(Height*0.35,Height*0.6),0,0,0,0)
-			TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.25),0,0,0,0)
-			TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(Height*0.35,Height*0.6),0,0,0,0)
-			TNT1 A 0 A_Jump(256, "Pain")
-			Wait
+		PainEvade:
+			TNT1 A 0 A_JumpIf(CeilingZ <= 236, 12)
+			TNT1 A 0 A_ChangeFlag("NOPAIN", TRUE)
+			LBE4 G 3 A_SetTics(10 / (user_max_health / Health))
+			LBE4 B 5 A_SetTics(10 / (user_max_health / Health))
+			TNT1 A 0 A_ChangeFlag("NODROPOFF", TRUE)
+			TNT1 A 0 ThrustThing(Angle*256/360+64, 15, 0, 0)
+			TNT1 A 0 ThrustThingZ(0, 30, 0, 1)
+			LBE4 A 8
+			LBE4 B 3 A_SetTics(10 / (user_max_health / Health))
+			LBE4 G 2 A_SetTics(10 / (user_max_health / Health))
+			TNT1 A 0 A_ChangeFlag("NODROPOFF", FALSE)
+			TNT1 A 0 A_ChangeFlag("NOPAIN", FALSE)
+			TNT1 A 0 A_Jump(128, "Missile")
+			Goto See+2
 			
 		Death:
-			TLCD H 10
-			TLCD I 10 A_Scream
-			TLCD JKL 10
+			TLCD G 10
+			TNT1 AA 0 A_CustomMissile("SmokeBigExplosion", 0, 0, random(0,360), 2, random(0,360))  
+			TLCD HHHHH 2 Bright A_CustomMissile("BigRedExplosion", Random(10,50), 0, random(0,360), 2, random(0,360))
+			TLCD IIIII 2 Bright A_CustomMissile("BigRedExplosion", Random(10,50), 0, random(0,360), 2, random(0,360))
+			TNT1 A 0 A_Scream
+			TNT1 AA 0 A_CustomMissile("SmokeBigExplosion", 0, 0, random(0,360), 2, random(0,360))  
+			TLCD JJJJJ 2 Bright A_CustomMissile("BigRedExplosion", Random(10,50), 0, random(0,360), 2, random(0,360))
+			TNT1 AA 0 A_CustomMissile("SmokeBigExplosion", 0, 0, random(0,360), 2, random(0,360))  
+			TLCD KKKKK 2 Bright A_CustomMissile("BigRedExplosion", Random(10,50), 0, random(0,360), 2, random(0,360))
+			TNT1 AAAA 0 A_CustomMissile("SmokeBigExplosion", 0, 0, random(0,360), 2, random(0,360))
+			TLCD L 10 A_KillChildren
 			TLCD M 10 A_NoBlocking
 			TLCD NO 10
 			TLCD P 30
@@ -60,3 +382,292 @@ ACTOR ElderDemon : Cyberdemon2 {
 			Stop
   }
 }
+
+ACTOR EDFloorExplosion {
+  Radius 1
+  Height 1
+  Speed 0
+  Projectile
+  RenderStyle Add
+	Scale 0.5
+  +NOCLIP
+  +FLOORHUGGER
+  +FORCERADIUSDMG
+	DamageType "FireR"
+	var int user_monster_target;
+	
+  States {
+		Spawn:
+			TNT1 A 0 NoDelay A_PlaySound("weapons/rocklx", CHAN_AUTO)
+			TNT1 A 0 A_Quake(4,12,0,400)
+			TNT1 A 0 A_Quake(2,12,0,800)
+			TNT1 A 5
+			FFED AB 2 Bright
+			TNT1 A 0 A_SpawnItemEx("OrangeParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			TNT1 A 0 A_JumpIf(user_monster_target, 3)
+			FFED C 4 Bright A_Explode(3*Random(8, 13), 80, 0)
+			TNT1 A 0 A_Jump(256, 2)
+			FFED C 4 Bright A_Explode(7*Random(8, 13), 80, 0)
+			FFED DEF 4 Bright
+			Stop       
+   }
+}
+
+ACTOR EDStrongFloorExplosion : EDFloorExplosion {
+  States {
+		Spawn:
+			TNT1 A 0 NoDelay A_PlaySound("weapons/rocklx", CHAN_AUTO)
+			TNT1 A 0 A_Quake(4,12,0,400)
+			TNT1 A 0 A_Quake(2,12,0,800)
+			TNT1 A 5
+			FFED AB 2 Bright
+			TNT1 A 0 A_SpawnItemEx("OrangeParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			FFED C 4 Bright A_Explode(3*Random(11, 16), 80, 0)
+			FFED DEF 4 Bright
+			Stop
+   }
+}
+
+ACTOR EDRocket : Rocket {
+	Speed 22
+	Damage 20
+	FastSpeed 26
+	Scale 0.8
+	DamageType "ElderDemonTech"
+	SeeSound "weapons/clrocketlaunch"
+	DeathSound "weapons/clrocketexplode"
+	-ROCKETTRAIL
+	+BRIGHT
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay A_CustomMissile("MissileTrail",Random(3,5),Random(-2,2))  
+			MIS3 A 2 A_CustomMissile("ProjectileTrailParticleGreen2",Random(2,4),Random(-2,2))
+			Loop
+			
+		Death:
+			TNT1 A 0 A_SpawnItemEx("GreenParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128) 
+			TNT1 AAA 0 A_CustomMissile("NormalGreenExplosion", 0, 0, random(0,360), 2, random(0,360))
+			TNT1 AAA 0 A_CustomMissile("SmokeSmallExplosion", 0, 0, random(0,360), 2, random(0,360))
+			TNT1 AAAA 0 A_SpawnItemEx("Debris",0,0,0,Random(4,-4),Random(4,-4),Random(4,8),0,128)
+			MIS3 B 6 A_Explode
+			MIS3 CDEF 4 A_SetTranslucent(0.75,1)
+			Stop
+	}
+}
+
+ACTOR FallingEDRocket : EDRocket {
+	Radius 4
+	Height 22
+	Speed 0
+	Scale 1.3
+	FastSpeed 0
+	SeeSound ""
+	Gravity 1.5
+	-NOGRAVITY
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay ThrustThingZ(0, 20, -1, 0)
+			TNT1 A 0 A_CustomMissile("MissileTrail",Random(3,5),Random(-2,2))
+			MIS4 A 2 A_CustomMissile("ProjectileTrailParticleGreen2",Random(2,4),Random(-2,2))
+			Goto Spawn+1
+			
+		Death:
+			TNT1 A 0 A_ChangeFlag("NOGRAVITY", TRUE)
+			Goto Super::Death
+	}
+}
+
+ACTOR FallingGiantEDRocket : FallingEDRocket {
+	Scale 2.0
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay ThrustThingZ(0, 15, -1, 0)
+			TNT1 A 0 A_CustomMissile("BigMissileTrail",Random(3,5),Random(-2,2))
+			MIS4 A 2 A_CustomMissile("ProjectileTrailParticleGreen2",Random(2,4),Random(-2,2))
+			Goto Spawn+1
+			
+		Death:
+			TNT1 A 0 A_PlaySound("weapons/giantexplosion", CHAN_AUTO)
+			TNT1 A 0 A_Quake(9, 52, 0, 1024)
+			TNT1 A 0 A_ChangeFlag("NOGRAVITY", TRUE)
+			TNT1 AAA 0 A_SpawnItemEx("RedParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			TNT1 AAA 0 A_CustomMissile("BigRedExplosion", 0, 0, random(0,360), 2, random(0,360))
+			TNT1 AAA 0 A_CustomMissile("SmokeBigExplosion", 0, 0, random(0,360), 2, random(0,360))
+			TNT1 AAAAAA 0 A_SpawnItemEx("Debris",0,0,0,Random(4,-4),Random(4,-4),Random(4,8),0,128)
+			SMBE A 6 A_Explode(500, 224)
+			SMBE BCDEFG 4 A_CustomMissile("SmokeEnormousExplosion", 0, 0, random(0,360), 2, random(0,360))
+			Stop
+	}
+}
+
+ACTOR HomingEDRocket : Rocket {
+	Radius 11
+	Height 8
+	Scale 1
+	Damage 10
+	Speed 20
+	FastSpeed 24
+	ExplosionDamage 68
+	ExplosionRadius 128
+	DamageType "ElderDemonTech"
+	SeeSound "monster/homingrockfire"
+	DeathSound "weapons/clrocketexplode"
+	+SEEKERMISSILE
+	
+	States {
+		Spawn:
+				TNT1 A 0
+				TNT1 A 0 A_Jump(144,"Homing")
+				Goto Normal
+				
+		Normal:
+				TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+				HMIG A 2 Bright A_CustomMissile("ProjectileTrailParticleGreen2",Random(0,2),Random(-2,2))
+				Loop
+				
+		Homing:
+				TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+				HMIG A 2 Bright A_CustomMissile("ProjectileTrailParticleGreen2",Random(0,2),Random(-2,2))
+				TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+				HMIG A 2 Bright A_CustomMissile("ProjectileTrailParticleGreen2",Random(0,2),Random(-2,2))
+				TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+				HMIG A 2 Bright A_CustomMissile("ProjectileTrailParticleGreen2",Random(0,2),Random(-2,2))
+				TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+				HMIG A 2 Bright A_CustomMissile("ProjectileTrailParticleGreen2",Random(0,2),Random(-2,2))
+				TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+				HMIG A 2 Bright A_CustomMissile("ProjectileTrailParticleGreen2",Random(0,2),Random(-2,2))
+			Goto StartSeek
+			
+		StartSeek:
+				TNT1 A 0 Bright A_BishopMissileWeave
+				TNT1 A 0 Bright A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
+				TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+				HMIG A 1 Bright A_CustomMissile("ProjectileTrailParticleGreen",Random(0,2),Random(-2,2))
+				TNT1 A 0 Bright A_BishopMissileWeave	
+				TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+				HMIG A 1 Bright A_CustomMissile("ProjectileTrailParticleGreen",Random(0,2),Random(-2,2))
+				TNT1 A 0 Bright A_BishopMissileWeave
+				TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+				HMIG A 1 Bright A_CustomMissile("ProjectileTrailParticleGreen",Random(0,2),Random(-2,2))
+				TNT1 A 0 Bright A_BishopMissileWeave	
+				TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+				HMIG A 1 Bright A_CustomMissile("ProjectileTrailParticleGreen",Random(0,2),Random(-2,2))
+				TNT1 A 0 Bright A_BishopMissileWeave	
+				TNT1 A 0 Bright A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
+				TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+				HMIG A 1 Bright A_CustomMissile("ProjectileTrailParticleGreen",Random(0,2),Random(-2,2))
+				TNT1 A 0 Bright A_BishopMissileWeave	
+				TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+				HMIG A 1 Bright A_CustomMissile("ProjectileTrailParticleGreen",Random(0,2),Random(-2,2))
+				TNT1 A 0 Bright A_BishopMissileWeave	
+				TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+				HMIG A 1 Bright A_CustomMissile("ProjectileTrailParticleGreen",Random(0,2),Random(-2,2))
+				TNT1 A 0 Bright A_BishopMissileWeave	
+				TNT1 A 0 Bright A_CustomMissile("MissileTrail",Random(0,2),Random(-2,2))
+				HMIG A 1 Bright A_CustomMissile("ProjectileTrailParticleGreen",Random(0,2),Random(-2,2))	
+				TNT1 A 0 Bright A_PlaySound("monster/homingrockbeep")
+				Loop
+	}
+}
+
+ACTOR MissileTargeter {
+	+NOINTERACTION
+	var int user_iterator;
+	
+	States {
+		Spawn:
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			TNT1 A 0 A_SpawnItemEx("OrangeRingParticleSpawner", 48, 48, 0, FloorZ-Z, FloorZ-Z, FloorZ-Z, user_iterator)
+			TNT1 A 0 A_SetUserVar("user_iterator", user_iterator+3)
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 360, 1)
+			Loop
+			TNT1 A 0 A_TakeInventory("LoopFlag", 360)
+			Stop
+	}
+}
+
+ACTOR GiantMissileTargeter : MissileTargeter {
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay A_PlaySound("Elder/giantskymissilelaunch", CHAN_6, 1.0, TRUE)
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			TNT1 A 0 A_SpawnItemEx("OrangeRingParticleSpawner2", 120, 120, 0, FloorZ-Z, FloorZ-Z, FloorZ-Z, user_iterator)
+			TNT1 A 0 A_SetUserVar("user_iterator", user_iterator+3)
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 360, 1)
+			Goto Spawn+1
+			TNT1 A 0 A_TakeInventory("LoopFlag", 360)
+			TNT1 A 0 A_StopSound(CHAN_6)
+			Stop
+	}
+}
+
+ACTOR EDBaronOfHell : BaronOfHell2 {
+	Translation "16:47=175:191"
+	Health 500
+	Species "Cyberdemon"
+	DamageFactor "ElderDemonTech", 0
+	+NOICEDEATH
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 A_PlaySound("misc/teleport", CHAN_AUTO)
+			TFOG ABABCDEFGHIJ 4 Bright
+			BOSS AB 10 A_Look
+			BOSS A 0 A_JumpIfTargetInLOS("TPMaster", 0, JLOSF_CHECKMASTER|JLOSF_CLOSENOJUMP, 0, 768)
+			Goto SpawnLoop+14
+			
+		See:
+			BOSS A 0 A_JumpIfTargetInLOS("TPMaster", 0, JLOSF_CHECKMASTER|JLOSF_CLOSENOJUMP, 0, 768)
+			BOSS AABBCCDD 3 A_Chase
+			Loop
+			
+		Missile:
+			BOSS EF 8 A_FaceTarget
+			BOSS G 8 A_CustomMissile("EDBaronBall", 32, 0, frandom(-10, 10))
+			Goto See
+			
+		TPMaster:
+			BOSS A 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_NOCHECKPOSITION, "TPSuccess")
+			Goto See+1
+			
+		TPSuccess:
+			TNT1 A 0 A_PlaySound("misc/teleport", CHAN_AUTO)
+			TFOG ABABCDEFGHIJ 2 Bright
+			Goto SpawnLoop+14
+			
+		Death:
+			BOSS I 8
+			BOSS J 8 A_Scream
+			BOSS K 8
+			BOSS L 8
+			BOSS MNO 8
+			TNT1 A 0 ACS_NamedExecuteWithResult("subtractMasterEDAlliesCount", 1)
+			Stop
+			
+		Death.FireBF:
+		Death.AfireF:
+		Death.Afire:		
+		Death.FireRF:
+		Death.FireR:
+			TNT1 A 0 A_SetUserVar("user_burning_loop", Random(3, 6))
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			8BAR ABC 4 BRIGHT
+			TNT1 A 0 A_PlaySound("baron/pain", CHAN_AUTO)
+			8BAR DEF 4 BRIGHT
+			TNT1 A 0 A_PlaySound("baron/pain", CHAN_AUTO)
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", user_burning_loop, 1)
+			Goto Death.FireR+1
+			TNT1 A 0 A_PlaySound("baron/death", CHAN_AUTO)
+			8BAR GHIJK 5 BRIGHT
+			8BAR L 5 BRIGHT
+			8BAR MNO 5 BRIGHT
+			TNT1 A 0 ACS_NamedExecuteWithResult("subtractMasterEDAlliesCount", 1)
+			Stop
+	}
+}
+
+ACTOR EDBaronBall : BaronBall { Damage 4 }

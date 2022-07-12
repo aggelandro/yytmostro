@@ -46,8 +46,8 @@ ACTOR Motumbo : Weapon {
 }
   
 ACTOR WaskaProjectile {
-  Radius 24
-  Height 44
+  Radius 6
+  Height 12
   Speed 30
   Damage 25
   Scale 1.5
@@ -89,8 +89,8 @@ ACTOR WaskaProjectile {
 }
 
 ACTOR WaskaDrop : WaskaProjectile {
-	Radius 12
-	Height 22
+	Radius 3
+	Height 6
 	Speed 20
 	Damage 10
 	Scale 0.5

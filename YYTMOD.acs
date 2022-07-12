@@ -7,6 +7,15 @@
 #define TEAR_STATS 7
 #define TEMPORAL_POWERUPS 11
 
+//HPBar
+#define FULL_HUD_WIDTH 800
+#define FULL_HUD_HEIGHT 600
+#define FULL_HOLDTIME 0.5
+#define FULL_HPBAR_X 400.0
+#define FULL_HPBAR_Y 40.0
+#define FULL_NAME_Y (FULL_HPBAR_Y + 25.0)
+#define FULL_INFO_Y (FULL_NAME_Y + 12.0)
+
 int  SV_PLAYERS_NUMBERS_2_TIDS[PLAYER_MAX];
 bool ENERGY_SHIELD_RELOAD = true;
 int TEARS_STATS_BY_PLAYER[PLAYER_MAX][TEAR_STATS];
@@ -67,6 +76,7 @@ script 2 (int value)
 script 331 (void) NET CLIENTSIDE {
     Log(s:"Current player Number: ", i:PlayerNumber());
     Log(s:"Current player TID: ", i:ActivatorTID());
+    Log(s:"Current player Speed: ", f:GetActorProperty(0, APROP_Speed));
     Log(s:"Player list: ");
 
     for (int i=0; i<PLAYER_MAX; i++) {
@@ -169,6 +179,7 @@ script 335 ENTER {
 script 336 DEATH {
     int classNum = PlayerClass(PlayerNumber());
     if (classNum == 0) {
+        LocalSetMusic("*");
         ACS_NamedExecuteAlways("resetTearStats", 0);
 
         if (CheckInventory("DarkMatterGiver")) {
@@ -206,6 +217,7 @@ script 336 DEATH {
         TakeInventory("CrusherGunGiver", 2);
     }
 
+    SetActorProperty(0, APROP_Speed, 1.0);
     SV_PLAYERS_NUMBERS_2_TIDS[PlayerNumber()] = 0;
     Thing_ChangeTID(PLAYER_TID_START+PlayerNumber(), 0);
 }
@@ -482,7 +494,7 @@ script "applyEffect" (int option, int dur, int force) {
             Thing_ChangeTID(mtid, 0);
 
             while (GetActorProperty(0, APROP_Health) > 0.0) {
-                Thing_Damage2(0, multiplyValue(GetUserVariable(0, "user_max_healh"), 0.1), "Bleeding");
+                Thing_Damage2(0, multiplyValue(GetUserVariable(0, "user_max_health"), 0.1), "Bleeding");
                 Delay(175);
             }
 
@@ -582,6 +594,7 @@ script "applyEffect" (int option, int dur, int force) {
             SetUserVariable(0, "user_se_monster_radius", GetActorProperty(mtid, APROP_Radius) >> 16);
             SetActivator(mtid);
             int currMul = GetActorProperty(0, APROP_DamageMultiplier);
+            //TODO: DamageMultiplier no funciona en Zandroshit
             SetActorProperty(0, APROP_DamageMultiplier, currMul + 0.5);
             Delay(dur);
             SetActorProperty(0, APROP_DamageMultiplier, currMul);
@@ -869,7 +882,7 @@ script "isTargetFullyHealed" (void) {
     int ttid = UniqueTID();
     Thing_ChangeTID(0, ttid);
     if (SetActivator(0, AAPTR_TARGET)) {
-        if (!CheckActorClass(0, "Archvile2") && GetActorProperty(0, APROP_Health) < GetUserVariable(0, "user_max_healh")) {
+        if (!CheckActorClass(0, "Archvile2") && GetActorProperty(0, APROP_Health) < GetUserVariable(0, "user_max_health")) {
             Thing_ChangeTID(ttid, 0);
             SetResultValue(0);
             terminate;
@@ -985,15 +998,16 @@ script "killEffectIfMonsterIsDead" (void) {
     int ttid = UniqueTID();
     Thing_ChangeTID(0, ttid);
     if(SetActivator(0, AAPTR_TRACER)) {
-        if (GetUserVariable(0, "user_is_dead"))
+        if (CheckFlag(0, "CORPSE")) {
             SetActorState(ttid, "Death");
             Thing_ChangeTID(ttid, 0);
+        }
     }
 }
 
-script "setActorSpeed" (int value) {
+script "setActorSpeed" (int value, int tid) {
     value = value << 16;
-    SetActorProperty(0, APROP_Speed, value);
+    SetActorProperty(tid, APROP_Speed, value);
 }
 
 script "transferHealthTo" (int tid) {
@@ -1212,7 +1226,9 @@ script "thrustTowardTheSun" (void) {
     //int sunX = GetActorX(subSunTid);
     //int sunY = GetActorY(subSunTid);
     int sunZ = GetActorZ(subSunTid);
-    if (CheckActorClass(0, "JetpackZombie")) SetActorProperty(0, APROP_Mass, 100);
+    int currMass = GetActorProperty(0, APROP_Mass);
+    if (currMass > 800) SetActorProperty(0, APROP_Mass, 500);
+    //if (CheckActorClass(0, "JetpackZombie")) SetActorProperty(0, APROP_Mass, 100);
     while(CheckFlag(subSunTid, "MISSILE")) {
         if (GetActorProperty(0, APROP_Health) <= 0) terminate;
         if (actorZ < sunZ) ThrustThingZ(0, 10, 0, 0);
@@ -1235,7 +1251,8 @@ script "thrustTowardTheSun" (void) {
         ThrustThing(sunAngle, 15, 0, 0);*/
         Delay(3);
     }
-    if (CheckActorClass(0, "JetpackZombie")) SetActorProperty(0, APROP_Mass, 0x7fffffff);
+    //if (CheckActorClass(0, "JetpackZombie")) SetActorProperty(0, APROP_Mass, 0x7fffffff);
+    SetActorProperty(0, APROP_Mass, currMass);
 }
 
 script "meter" (void) {
@@ -1321,7 +1338,192 @@ script "showXAuraFor" (int opt, int tics) {
     SetActorState(ttid, "Death");
 }
 
+script "SpawnEDFloorExplosionOnTarget" (void) {
+    SetActivator(0, AAPTR_TARGET);
+    int ttid = UniqueTID();
+    Spawn("EDFloorExplosion", GetActorX(0), GetActorY(0), GetActorZ(0), ttid);
+    SetActivator(ttid);
+    SetUserVariable(0, "user_monster_target", ACS_NamedExecuteWithResult("isTargetAMonster"));
+    Thing_ChangeTID(ttid, 0);
+}
 
+script "SpawnEDFloorExplosionOnPlayers" (void) {
+    // Si está peleando con otros monstruos no lo hace
+    if (GetActorProperty(0, APROP_TargetTID)<PLAYER_TID_START ||
+        GetActorProperty(0, APROP_TargetTID)>=PLAYER_TID_START+PLAYER_MAX) terminate;
+
+    for (int i=PLAYER_TID_START; i<PLAYER_TID_START+PLAYER_MAX; i++) {
+        Spawn("EDStrongFloorExplosion", GetActorX(i), GetActorY(i), GetActorZ(i));
+    }
+}
+
+script "reversePlayerControls" (int tics) {
+    SetActivator(0, AAPTR_TARGET);
+    if (ActivatorTID()>=PLAYER_TID_START && ActivatorTID()<PLAYER_TID_START+PLAYER_MAX) {
+        SetHudSize(640, 480, 0);
+        SetFont("DFACEE");
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEINOUT, 0, CR_ORANGE, 320.0, 240.0, 0.8, 0.3, 0.3);
+        int currSpeed = GetActorProperty(0, APROP_Speed);
+        SetActorProperty(0, APROP_Speed, -currSpeed);
+        Delay(tics);
+        SetActorProperty(0, APROP_Speed, currSpeed);
+    }
+}
+
+script "curseDelayCooldown" (int tics) {
+    while(tics > 0) {
+        Delay(1);
+        SetUserVariable(0, "user_curse_delay", GetUserVariable(0, "user_curse_delay") - 1);
+        tics--;
+    }
+}
+
+script "skyRocketDelayCooldown" (int tics) {
+    while(tics > 0) {
+        Delay(1);
+        SetUserVariable(0, "user_sky_rocket_delay", GetUserVariable(0, "user_sky_rocket_delay") - 1);
+        tics--;
+    }
+}
+
+script "isTargetAMonster" (void) {
+    int tid = GetActorProperty(0, APROP_TargetTID);
+    SetResultValue(!(tid>=PLAYER_TID_START && tid<PLAYER_TID_START+PLAYER_MAX));
+}
+
+script "enableSuperArmor" (void) {
+    SetActorProperty(0, APROP_DamageFactor, 0.5);
+    int ttid = UniqueTID();
+    int mtid = UniqueTID();
+    Spawn("EDEyeEffect", GetActorX(0), GetActorY(0), GetActorZ(0), ttid);
+    Thing_ChangeTID(0, mtid);
+    SetActivator(ttid);
+    SetPointer(AAPTR_TRACER, mtid);
+    SetUserVariable(0, "user_se_monster_height", GetActorProperty(mtid, APROP_Height) >> 16);
+    Thing_ChangeTID(mtid, 0);
+}
+
+script "launchMissileToTarget" (int tics, int offx, int offy) {
+    SetActivator(0, AAPTR_TARGET);
+    int targetX = GetActorX(0) + (offx << 16);
+    int targetY = GetActorY(0) + (offy << 16);
+    int targetZ = GetActorZ(0);
+    int ceilingZ = GetActorCeilingZ(0);
+    Spawn("MissileTargeter", targetX, targetY, targetZ);
+    Delay(tics);
+    if (targetZ+56 > ceilingZ) terminate;
+    Spawn("FallingEDRocket", targetX, targetY, ceilingZ-27.0);
+}
+
+script "launchGiantMissileToTarget" (int tics) {
+    SetActivator(0, AAPTR_TARGET);
+    int targetX = GetActorX(0);
+    int targetY = GetActorY(0);
+    int targetZ = GetActorZ(0);
+    int ceilingZ = GetActorCeilingZ(0);
+    Spawn("GiantMissileTargeter", targetX, targetY, targetZ);
+    Delay(tics);
+    if (targetZ+56 > ceilingZ) terminate;
+    Spawn("FallingGiantEDRocket", targetX, targetY, ceilingZ-27.0);
+}
+
+script "subtractMasterEDAlliesCount" (int qty) {
+    if (SetActivator(0, AAPTR_MASTER)) {
+        SetUserVariable(0, "user_allies_count", GetUserVariable(0, "user_allies_count")-qty);
+    }
+}
+
+script "setEDSky" (void) {
+    str textureName;
+    int i;
+    while(!CheckFlag(0, "CORPSE")) {
+        for (i=0; i<100; i++) {
+            if (i<10) textureName = StrParam(s:"RNGSKY0", d:i);
+            else textureName = StrParam(s:"RNGSKY", d:i);
+
+            ChangeSky(textureName, textureName);
+            Delay(2);
+        }
+    }
+    ChangeSky("COMSKY00","COMSKY00");
+}
+
+// Codigo de HPBAR.acs sacado de hpbar-v22.pk3, amoldado para el mod (solo mostrar la HP de un boss especifico)
+script "HPBar_Enter" ENTER {
+    Delay(1);
+    ACS_NamedExecuteAlways("HPBar_HitTarget", 0);
+}
+
+script "HPBar_Respawn" RESPAWN {
+    Delay(1);
+    ACS_NamedExecuteAlways("HPBar_HitTarget",0);
+}
+
+script "HPBar_HitTarget" (void) {
+    int pn = PlayerNumber();
+    while(ClassifyActor(0) & ACTOR_ALIVE) {
+        if (ClassifyActor(0) & ACTOR_ALIVE) LineAttack(0, GetActorAngle(0), GetActorPitch(0), 0, StrParam(s:"HPBarPuff", i:pn), "None", 8192.0, FHF_NORANDOMPUFFZ|FHF_NOIMPACTDECAL, 0);
+        Delay(1);
+        if (ClassifyActor(0) & ACTOR_ALIVE) LineAttack(0, GetActorAngle(0), GetActorPitch(0), 0, StrParam(s:"HPBarThruPuff", i:pn), "None", 8192.0, FHF_NORANDOMPUFFZ|FHF_NOIMPACTDECAL, 0);
+        Delay(1);
+    }
+}
+
+script "HPBar_GetTarget" (int pn) {
+    if ((pn >= 0) && (SetActivator(0,AAPTR_TRACER) == 1)) {
+        if (CheckActorClass(0, "ElderDemon")) // Esto cambiaria a una lista si en el futuro agregamos más
+            startTrackingHP(pn);
+    }
+}
+
+script "HPBar_LinebarView" (int player, int currHP, int maxHP) CLIENTSIDE {
+    if (ConsolePlayerNumber() == player) {
+        int hpPercentage = (currHP * 100) / maxHP;
+        str monsterName = GetActorClass(0);
+        bool invul = getActorInvul();
+        show_full_hpbar(currHP, maxHP, hpPercentage, monsterName, invul);
+    }
+}
+
+function void startTrackingHP(int pn) {
+    int currHP = GetActorProperty(0, APROP_Health);
+    int maxHP = GetUserVariable(0, "user_max_health");
+    if (ClassifyActor(0) & ACTOR_ALIVE) {
+        ACS_NamedExecuteAlways("HPBar_LinebarView", 0, pn, currHP, maxHP);
+        //ACS_NamedExecuteAlways("HPBar_TrackerView", 0, 0);
+    }
+}
+
+function bool getActorInvul(void) {
+    return (GetActorProperty(0, APROP_Invulnerable) | !CheckFlag(0, "SHOOTABLE") | CheckFlag(0, "NODAMAGE"));
+}
+
+function void show_full_hpbar(int currHP, int maxHP, int hpPercentage, str monsterName, bool invul) {
+    SetHudSize(FULL_HUD_WIDTH, FULL_HUD_HEIGHT, true);
+    SetFont("SMALLFONT");
+    HudMessageBold(d: currHP, s: " / ", d: maxHP, s: " (", d: hpPercentage, s: "%)"; HUDMSG_FADEOUT, 6000, CR_WHITE, FULL_HPBAR_X, FULL_HPBAR_Y, FULL_HOLDTIME);
+    
+    if (hpPercentage < 100) {
+        int viewHPPercentage = (hpPercentage * 0.15) >> 16;
+        SetFont(StrParam(s:"FILL", i:viewHPPercentage));
+    }
+    else SetFont("FILL14");
+
+    for (int i = 0; i <= 100 && i <= hpPercentage; ++i) {
+        HudMessageBold(s: "A"; HUDMSG_FADEOUT, 6001 + i, CR_UNTRANSLATED, FULL_HPBAR_X - 97.0 + ((i * 2) << 16), FULL_HPBAR_Y, FULL_HOLDTIME);
+    }
+
+    SetFont("HPBAR");
+    HudMessageBold(s: "A"; HUDMSG_FADEOUT, 6102, CR_UNTRANSLATED, FULL_HPBAR_X, FULL_HPBAR_Y, FULL_HOLDTIME);
+    SetFont("SMALLFONT");
+    HudMessageBold(s: monsterName; HUDMSG_FADEOUT, 6103, CR_WHITE, FULL_HPBAR_X, FULL_NAME_Y, FULL_HOLDTIME);
+
+    int ln;
+    if (invul) {
+        HudMessageBold(s: "\c[i8]Invulnerable\c-"; HUDMSG_FADEOUT, 6104 + ln, CR_WHITE, FULL_HPBAR_X, FULL_INFO_Y + ((ln * 10) << 16), FULL_HOLDTIME);
+        ++ln;
+    }
+}
 
 
 

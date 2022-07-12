@@ -235,14 +235,16 @@ ACTOR SpiderMastermindSpawner : RandomSpawner replaces SpiderMastermind
 	DropItem "RocketSpiderMastermind", 255, 30
 	DropItem "SpiderMastermind2" 255, 60
 	DropItem "SpiderLord" 255, 10
+	DropItem "ElderDemon" 255, 2
 }
 ACTOR CyberdemonSpawner : RandomSpawner replaces Cyberdemon
 {
-	DropItem "CouncilSpawner", 255,1
+	DropItem "CouncilSpawner", 255, 1
 	DropItem "Cryocubus", 255, 5
-	DropItem "FlameCyber" 255, 24
+	DropItem "FlameCyber" 255, 22
 	DropItem "HellCommander", 255, 40
 	DropItem "Cyberdemon2" 255, 75
+	DropItem "ElderDemon" 255, 2
 }
 
 ACTOR IsaacItemsTier1Spawner : RandomSpawner {

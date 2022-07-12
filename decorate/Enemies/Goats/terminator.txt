@@ -2,13 +2,14 @@ ACTOR T-800 : BaronOfHell2 {
 	Health 3000
 	Bloodcolor Green
 	PainChance 20
-	+BOSS
-	+MISSILEMORE
-	+QUICKTORETALIATE
+	MaxTargetRange 2048
 	SeeSound "cydes/sight" 
   PainSound "cydes/pain"
   DeathSound "cydes/death"
   Obituary "Hasta la vista, bb"
+	+BOSS
+	+MISSILEMORE
+	+QUICKTORETALIATE
 	DropItem "UniqueWeaponSpawner", 16
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
@@ -545,27 +546,6 @@ ACTOR CyHomingMissile : CyBaronRocket {
 			Loop
     }
 }
-
-ACTOR MissileTrail {
-	RenderStyle Translucent
-	Alpha 0.5
-	Scale 0.2
-	+CLIENTSIDEONLY
-	+NOBLOCKMAP
-	+DONTSPLASH
-	+NOCLIP
-	+NOINTERACTION
-	+THRUACTORS
-	
-	States {
-		Spawn:
-			TNT1 A 2
-			PDBA ABCDEFGHIJKL 1 A_FadeOut(0.05)
-			Stop
-	}
-}
-
-ACTOR GrenadeTrail : MissileTrail { Scale 0.075 }
 
 ACTOR CyDemonTechProjectile {
 	Height 4

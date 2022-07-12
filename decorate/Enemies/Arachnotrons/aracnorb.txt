@@ -45,10 +45,11 @@ ACTOR Aracnorb : Arachnotron2 {
 			TNT1 A 0 A_Explode(Random(30, 45), 128)
 			ACNB DDDDDD 2 Bright A_CustomMissile("BigGreenExplosion", random(20,60), 0, random(0,360), 2, random(0,360))
 			TNT1 AAAAA 0 A_CustomMissile("SmokeBigExplosion", Random(20,40), 0, random(0,360), 2, random(0,360))
-			TNT1 A 0 ACS_NamedExecuteWithResult("damageActorBy", 0, 170)
+			TNT1 A 0 ACS_NamedExecuteWithResult("damageActorBy", 0, 999)
 			Goto Death
 			
 		Death:
+			TNT1 A 0 A_SetUserVar("user_has_exploded", 1)
 			ACNB E 6 A_Scream
 			ACNB F 6
 			ACNB G 6 A_NoBlocking
@@ -64,8 +65,7 @@ ACTOR Aracnorb : Arachnotron2 {
 			Goto Death
 			
 		Raise:
-			ACNB H 8 A_UnSetFloorClip
-			ACNB GFEDA 8
-			Goto See
+			TNT1 A 0
+			Stop
 	}
 }

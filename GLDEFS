@@ -556,6 +556,10 @@ Object SubterraneanSun { Frame OSUN { Light SubSunLight1 } }
 Object SubSunFloorGlow { Frame SSUN { Light MeteorLight1 } }
 Object SubSunBullet { Frame SBLT { Light DropFlame1 } }
 Object SubSunFloorFire { Frame FSUN { Light DropFlame1 } }
+Object AxeFloorFire { Frame FFED { Light DropFlame1 } }
+Object EDFloorExplosion { Frame FFED { Light DropFlame1 } }
+Object EDFloorExplosion { Frame TNT1 { Light DropFlame1 } }
+Object EDEyeEffect { Frame EPEF { Light SubSunLight1 } }
 
 //Elder Demon
 FLICKERLIGHT BigTLegLight {

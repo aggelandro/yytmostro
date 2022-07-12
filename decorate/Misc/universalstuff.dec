@@ -125,6 +125,7 @@ ACTOR AggeNewFire {
 
 ACTOR FlameThrowerFireF : FlameThrowerFire
 {
+	Translation "208:231=192:207","248:249=192:207","160:167=192:207"
 	DamageType "AFire"
 	Speed 35
 	States
@@ -185,7 +186,6 @@ ACTOR StatusEffect {
 	+NOGRAVITY
 	+NOINTERACTION
 	+SEEKERMISSILE
-	+CLIENTSIDEONLY
 	var int user_se_monster_height;
 	
 	States {
@@ -335,6 +335,21 @@ ACTOR DmgUpEffect : StatusEffect {
 		Sprite6:
 			FURI F 2 A_Warp(AAPTR_TRACER, random(-user_se_monster_radius/2, user_se_monster_radius/2), random(-user_se_monster_radius/2, user_se_monster_radius/2), random(-(user_se_monster_height/5), user_se_monster_height/5), 0, WARPF_NOCHECKPOSITION)
 			Goto Spawn+1
+	}
+}
+
+ACTOR EDEyeEffect : StatusEffect {
+	Scale 1.2
+	
+	States {
+	  Spawn:
+			TNT1 A 0 ACS_NamedExecuteWithResult("killEffectIfMonsterIsDead")
+			EPEF ABCD 2 A_Warp(AAPTR_TRACER, 0, -3, user_se_monster_height+10, 0, WARPF_NOCHECKPOSITION)
+			Loop
+			
+		Death:
+			EPEF ABCD 1 A_FadeOut
+			Loop
 	}
 }
 
@@ -633,12 +648,62 @@ ACTOR EnergyProjectileSparkOrange : AbstractEnergyProjectileSpark {
 	}
 }
 
+ACTOR EnergySparkOrange : AbstractEnergyProjectileSpark {
+	Alpha 0.05
+	ReactionTime 17
+	+NOGRAVITY
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay A_GiveInventory("LoopFlag", 1)
+			SPKO A 1 A_FadeIn(0.05)
+			TNT1 A 0 A_CountDown
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 17, 1)
+			Loop
+			TNT1 A 0 A_TakeInventory("LoopFlag", 17)
+			Goto FadeOut
+			
+		FadeOut:
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			SPKO A 1 A_FadeOut(0.05, 0)
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 17, 1)
+			Loop
+			TNT1 A 0 A_TakeInventory("LoopFlag", 17)
+			Goto Spawn
+			
+		Death:
+			SPKO A 1 A_FadeOut(0.025)
+			Loop
+	}
+}
+
+ACTOR EnergySparkOrange2 : EnergySparkOrange { ReactionTime 87 }
+
 ACTOR ProjectileTrailParticleOrange :  EnergyProjectileSparkOrange {
 	Scale 0.02
 	
 	States {
 		Spawn:
 			SPKO A 1 NoDelay Bright A_FadeOut(0.08)
+			Loop
+	}
+}
+
+ACTOR ProjectileTrailParticleGreen : EnergyProjectileSparkGreen {
+	+NOGRAVITY
+	Scale 0.02
+	
+	States {
+		Spawn:
+			SPKG A 2 NoDelay Bright A_FadeOut(0.08)
+			Loop
+	}
+}
+
+ACTOR ProjectileTrailParticleGreen2 : ProjectileTrailParticleGreen {
+	States {
+		Spawn:
+			SPKG A 2 NoDelay Bright A_FadeOut(0.15)
 			Loop
 	}
 }
@@ -684,6 +749,20 @@ ACTOR EPSO3 : EnergyProjectileSparkOrange { Scale 0.045 }
 ACTOR EPSO4 : EnergyProjectileSparkOrange { Scale 0.035 }
 ACTOR EPSO5 : EnergyProjectileSparkOrange { Scale 0.025 }
 ACTOR EPSO6 : EnergyProjectileSparkOrange { Scale 0.015 }
+
+ACTOR ESO1 : EnergySparkOrange { Scale 0.2 }
+ACTOR ESO2 : EnergySparkOrange { Scale 0.19 }
+ACTOR ESO3 : EnergySparkOrange { Scale 0.18 }
+ACTOR ESO4 : EnergySparkOrange { Scale 0.17 }
+ACTOR ESO5 : EnergySparkOrange { Scale 0.16 }
+ACTOR ESO6 : EnergySparkOrange { Scale 0.15 }
+
+ACTOR ESO21 : EnergySparkOrange2 { Scale 0.2 }
+ACTOR ESO22 : EnergySparkOrange2 { Scale 0.19 }
+ACTOR ESO23 : EnergySparkOrange2 { Scale 0.18 }
+ACTOR ESO24 : EnergySparkOrange2 { Scale 0.17 }
+ACTOR ESO25 : EnergySparkOrange2 { Scale 0.16 }
+ACTOR ESO26 : EnergySparkOrange2 { Scale 0.15 }
 
 ACTOR AbstractParticleSpawner {
 	+CLIENTSIDEONLY
@@ -774,6 +853,32 @@ ACTOR OrangeParticleSpawner : AbstractParticleSpawner {
 			TNT1 A 1
 			Stop
   }
+}
+
+ACTOR OrangeRingParticleSpawner : AbstractParticleSpawner {	
+  States {
+		Spawn:
+			TNT1 A 1 A_SpawnItemEx("ESO1",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
+			TNT1 A 1 A_SpawnItemEx("ESO2",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
+			TNT1 A 1 A_SpawnItemEx("ESO3",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
+			TNT1 A 1 A_SpawnItemEx("ESO4",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
+			TNT1 A 1 A_SpawnItemEx("ESO5",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
+			TNT1 A 1 A_SpawnItemEx("ESO6",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
+			Stop
+	}
+}
+
+ACTOR OrangeRingParticleSpawner2 : AbstractParticleSpawner {	
+  States {
+		Spawn:
+			TNT1 A 1 A_SpawnItemEx("ESO21",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
+			TNT1 A 1 A_SpawnItemEx("ESO22",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
+			TNT1 A 1 A_SpawnItemEx("ESO23",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
+			TNT1 A 1 A_SpawnItemEx("ESO24",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
+			TNT1 A 1 A_SpawnItemEx("ESO25",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
+			TNT1 A 1 A_SpawnItemEx("ESO26",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
+			Stop
+	}
 }
 
 
@@ -990,6 +1095,8 @@ ACTOR SmokeSmallExplosion : AbstractExplosion { //smokefx2
 	}
 }
 
+ACTOR SmokeEnormousExplosion : SmokeBigExplosion { Scale 3.0 }
+
 ACTOR RocketEx {
 	RenderStyle Add
 	Alpha 0.85
@@ -1131,3 +1238,303 @@ ACTOR HighJump {
 			Stop
 	}
 }
+
+ACTOR MissileTrail {
+	RenderStyle Translucent
+	Alpha 0.5
+	Scale 0.2
+	+CLIENTSIDEONLY
+	+NOBLOCKMAP
+	+DONTSPLASH
+	+NOCLIP
+	+NOINTERACTION
+	+THRUACTORS
+	
+	States {
+		Spawn:
+			TNT1 A 2
+			PDBA ABCDEFGHIJKL 1 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR GrenadeTrail : MissileTrail { Scale 0.075 }
+ACTOR BigMissileTrail : MissileTrail { Scale 0.4 }
+
+
+
+
+
+/************************
+* BARRA DE VIDA DE CHOBIS
+*************************/
+ACTOR HPBarPuffBase {
+	Height 4
+	Radius 4
+	RenderStyle None
+	Decal None
+	+NODECAL
+	+NOGRAVITY
+	+NOBLOCKMAP 
+	+PAINLESS
+	+BLOODLESSIMPACT
+	+NODAMAGETHRUST
+	+NOTRIGGER
+	+DONTREFLECT
+	+DONTSPLASH
+	+FOILINVUL
+	+HITTRACER
+	+PUFFONACTORS
+	+PUFFGETSOWNER
+	+SERVERSIDEONLY
+	
+	States {
+		Spawn:
+			TNT1 A 2
+			Stop
+			
+		Crash:
+			TNT1 A 2
+			Stop
+	}
+}
+
+Actor HPBarPuff0 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 0)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff0 : HPBarPuff0 { +MTHRUSPECIES }
+
+Actor HPBarPuff1 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 1)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff1 : HPBarPuff1 { +MTHRUSPECIES }
+
+Actor HPBarPuff2 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 2)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff2 : HPBarPuff2 { +MTHRUSPECIES }
+
+Actor HPBarPuff3 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 3)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff3 : HPBarPuff3 { +MTHRUSPECIES }
+
+Actor HPBarPuff4 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 4)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff4 : HPBarPuff4 { +MTHRUSPECIES }
+
+Actor HPBarPuff5 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 5)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff5 : HPBarPuff5 { +MTHRUSPECIES }
+
+Actor HPBarPuff6 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 6)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff6 : HPBarPuff6 { +MTHRUSPECIES }
+
+Actor HPBarPuff7 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 7)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff7 : HPBarPuff7 { +MTHRUSPECIES }
+
+Actor HPBarPuff8 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 8)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff8 : HPBarPuff8 { +MTHRUSPECIES }
+
+Actor HPBarPuff9 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 9)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff9 : HPBarPuff9 { +MTHRUSPECIES }
+
+Actor HPBarPuff10 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 10)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff10 : HPBarPuff10 { +MTHRUSPECIES }
+
+Actor HPBarPuff11 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 11)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff11 : HPBarPuff11 { +MTHRUSPECIES }
+
+Actor HPBarPuff12 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 12)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff12 : HPBarPuff12 { +MTHRUSPECIES }
+
+Actor HPBarPuff13 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 13)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff13 : HPBarPuff13 { +MTHRUSPECIES }
+
+Actor HPBarPuff14 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 14)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff14 : HPBarPuff14 { +MTHRUSPECIES }
+
+Actor HPBarPuff15 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 15)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff15 : HPBarPuff15 { +MTHRUSPECIES }
+
+Actor HPBarPuff16 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 16)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff16 : HPBarPuff16 { +MTHRUSPECIES }
+
+Actor HPBarPuff17 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 17)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff17 : HPBarPuff17 { +MTHRUSPECIES }
+
+Actor HPBarPuff18 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 18)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff18 : HPBarPuff18 { +MTHRUSPECIES }
+
+Actor HPBarPuff19 : HPBarPuffBase
+{
+States
+	{
+	Spawn:
+		TNT1 A 5 Nodelay ACS_NamedExecuteWithResult("HPBar_GetTarget", 19)
+		Stop
+	}
+}
+
+Actor HPBarThruPuff19 : HPBarPuff19 { +MTHRUSPECIES }
