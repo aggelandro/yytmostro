@@ -1341,19 +1341,15 @@ script "showXAuraFor" (int opt, int tics) {
 script "SpawnEDFloorExplosionOnTarget" (void) {
     SetActivator(0, AAPTR_TARGET);
     int ttid = UniqueTID();
-    Spawn("EDFloorExplosion", GetActorX(0), GetActorY(0), GetActorZ(0), ttid);
+    Spawn("EDFloorExplosion", GetActorX(0), GetActorY(0), GetActorFloorZ(0), ttid);
     SetActivator(ttid);
     SetUserVariable(0, "user_monster_target", ACS_NamedExecuteWithResult("isTargetAMonster"));
     Thing_ChangeTID(ttid, 0);
 }
 
 script "SpawnEDFloorExplosionOnPlayers" (void) {
-    // Si está peleando con otros monstruos no lo hace
-    if (GetActorProperty(0, APROP_TargetTID)<PLAYER_TID_START ||
-        GetActorProperty(0, APROP_TargetTID)>=PLAYER_TID_START+PLAYER_MAX) terminate;
-
     for (int i=PLAYER_TID_START; i<PLAYER_TID_START+PLAYER_MAX; i++) {
-        Spawn("EDStrongFloorExplosion", GetActorX(i), GetActorY(i), GetActorZ(i));
+        Spawn("EDStrongFloorExplosion", GetActorX(i), GetActorY(i), GetActorFloorZ(i));
     }
 }
 
@@ -1362,7 +1358,7 @@ script "reversePlayerControls" (int tics) {
     if (ActivatorTID()>=PLAYER_TID_START && ActivatorTID()<PLAYER_TID_START+PLAYER_MAX) {
         SetHudSize(640, 480, 0);
         SetFont("DFACEE");
-        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEINOUT, 0, CR_ORANGE, 320.0, 240.0, 0.8, 0.3, 0.3);
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEINOUT|HUDMSG_ALPHA, 0, CR_ORANGE, 320.0, 240.0, 0.8, 0.3, 0.3, 0.8);
         int currSpeed = GetActorProperty(0, APROP_Speed);
         SetActorProperty(0, APROP_Speed, -currSpeed);
         Delay(tics);
@@ -1400,7 +1396,28 @@ script "enableSuperArmor" (void) {
     SetActivator(ttid);
     SetPointer(AAPTR_TRACER, mtid);
     SetUserVariable(0, "user_se_monster_height", GetActorProperty(mtid, APROP_Height) >> 16);
+    SetActivator(mtid);
     Thing_ChangeTID(mtid, 0);
+}
+
+script "enableRegen" (int threshold, int minHeal, int maxHeal, int tics) {
+    int ttid = UniqueTID();
+    int mtid = UniqueTID();
+    Spawn("RegenEffect", GetActorX(0), GetActorY(0), GetActorZ(0), ttid);
+    Thing_ChangeTID(0, mtid);
+    SetActivator(ttid);
+    SetPointer(AAPTR_TRACER, mtid);
+    SetUserVariable(0, "user_se_monster_height", GetActorProperty(mtid, APROP_Height) >> 16);
+    SetUserVariable(0, "user_delay_max", tics);
+    SetActivator(mtid);
+    Thing_ChangeTID(mtid, 0);
+
+    while ((ClassifyActor(0) & ACTOR_ALIVE) && GetActorProperty(0, APROP_Health) < threshold) {
+        Thing_Damage2(0, Random(-maxHeal, -minHeal), "Healing");
+        Delay(tics);
+    }
+    SetUserVariable(0, "user_regen", 0);
+    SetActorState(ttid, "Death");
 }
 
 script "launchMissileToTarget" (int tics, int offx, int offy) {
@@ -1409,10 +1426,13 @@ script "launchMissileToTarget" (int tics, int offx, int offy) {
     int targetY = GetActorY(0) + (offy << 16);
     int targetZ = GetActorZ(0);
     int ceilingZ = GetActorCeilingZ(0);
-    Spawn("MissileTargeter", targetX, targetY, targetZ);
+    int floorZ = GetActorFloorZ(0);
+    Spawn("MissileTargeter", targetX, targetY, floorZ);
     Delay(tics);
-    if (targetZ+56 > ceilingZ) terminate;
+    if (ceilingZ-floorZ < 128) terminate;
     Spawn("FallingEDRocket", targetX, targetY, ceilingZ-27.0);
+    Spawn("FallingEDRocket", targetX+Random(45.0, 90.0), targetY+Random(45.0, 90.0), ceilingZ-27.0);
+    Spawn("FallingEDRocket", targetX-Random(45.0, 90.0), targetY-Random(45.0, 90.0), ceilingZ-27.0);
 }
 
 script "launchGiantMissileToTarget" (int tics) {
@@ -1448,6 +1468,44 @@ script "setEDSky" (void) {
     ChangeSky("COMSKY00","COMSKY00");
 }
 
+script "ALookFromMaster" (void) {
+    if (SetActivator(0, AAPTR_TARGET)) SetActorState(0, "See");
+    else terminate;
+
+    while (ClassifyActor(0) & ACTOR_ALIVE) {
+        Delay(1);
+    }
+
+    SetActorState(0, "SpawnLoop");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// HPBAR START
 // Codigo de HPBAR.acs sacado de hpbar-v22.pk3, amoldado para el mod (solo mostrar la HP de un boss especifico)
 script "HPBar_Enter" ENTER {
     Delay(1);
@@ -1471,7 +1529,8 @@ script "HPBar_HitTarget" (void) {
 
 script "HPBar_GetTarget" (int pn) {
     if ((pn >= 0) && (SetActivator(0,AAPTR_TRACER) == 1)) {
-        if (CheckActorClass(0, "ElderDemon")) // Esto cambiaria a una lista si en el futuro agregamos más
+        // Esto cambiaria a una lista si en el futuro agregamos más
+        if (CheckActorClass(0, "ElderDemon"))
             startTrackingHP(pn);
     }
 }
@@ -1481,24 +1540,22 @@ script "HPBar_LinebarView" (int player, int currHP, int maxHP) CLIENTSIDE {
         int hpPercentage = (currHP * 100) / maxHP;
         str monsterName = GetActorClass(0);
         bool invul = getActorInvul();
-        show_full_hpbar(currHP, maxHP, hpPercentage, monsterName, invul);
+        showFullHPBar(currHP, maxHP, hpPercentage, monsterName, invul);
     }
 }
 
 function void startTrackingHP(int pn) {
     int currHP = GetActorProperty(0, APROP_Health);
     int maxHP = GetUserVariable(0, "user_max_health");
-    if (ClassifyActor(0) & ACTOR_ALIVE) {
+    if (ClassifyActor(0) & ACTOR_ALIVE)
         ACS_NamedExecuteAlways("HPBar_LinebarView", 0, pn, currHP, maxHP);
-        //ACS_NamedExecuteAlways("HPBar_TrackerView", 0, 0);
-    }
 }
 
 function bool getActorInvul(void) {
     return (GetActorProperty(0, APROP_Invulnerable) | !CheckFlag(0, "SHOOTABLE") | CheckFlag(0, "NODAMAGE"));
 }
 
-function void show_full_hpbar(int currHP, int maxHP, int hpPercentage, str monsterName, bool invul) {
+function void showFullHPBar(int currHP, int maxHP, int hpPercentage, str monsterName, bool invul) {
     SetHudSize(FULL_HUD_WIDTH, FULL_HUD_HEIGHT, true);
     SetFont("SMALLFONT");
     HudMessageBold(d: currHP, s: " / ", d: maxHP, s: " (", d: hpPercentage, s: "%)"; HUDMSG_FADEOUT, 6000, CR_WHITE, FULL_HPBAR_X, FULL_HPBAR_Y, FULL_HOLDTIME);
@@ -1524,6 +1581,7 @@ function void show_full_hpbar(int currHP, int maxHP, int hpPercentage, str monst
         ++ln;
     }
 }
+// HPBAR END
 
 
 

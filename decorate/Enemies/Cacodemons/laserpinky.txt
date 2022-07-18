@@ -3,7 +3,6 @@ ACTOR Brimgoyle : Cacodemon2 {
 	Speed 16
 	Scale 0.9
 	PainChance 15
-	MaxTargetRange 1256
 	BloodColor "Red"
 	SeeSound "demon/sight"
 	AttackSound "demon/melee"

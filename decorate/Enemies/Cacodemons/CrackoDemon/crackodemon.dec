@@ -101,11 +101,11 @@ ACTOR CrackoDemon : Cacodemon2 {
 
 Actor CrackodemonBall
 {
-    Radius 8
-    Height 6
-    Speed 15
-    Damage 10
-    PROJECTILE
+	Radius 8
+	Height 6
+	Speed 15
+	Damage (Random(5, 7))
+	PROJECTILE
 	RENDERSTYLE ADD
 	ALPHA 0.8
 	SeeSound "Crack/see"
@@ -144,10 +144,8 @@ Actor Blusoul : CrackodemonBall
 {
     Radius 12
     Height 24
-    Speed 20
-    Damage 20
-    ExplosionDamage 30
-    ExplosionRadius 64
+    Speed 15
+    Damage 15
     SeeSound "Blusoul/see"
     DeathSound "Blusoul/death"
     States
@@ -157,7 +155,7 @@ Actor Blusoul : CrackodemonBall
        Loop
     Death:
        SKUD H 4 BRIGHT A_Mushroom("CrackodemonBall", 8)
-       SKUD I 4 BRIGHT A_Explode
+       SKUD I 4 BRIGHT A_Explode(10, 64)
        SKUD JK 4 BRIGHT
        stop
     }

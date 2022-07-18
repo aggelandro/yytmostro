@@ -35,7 +35,7 @@ ACTOR TerroPistol : WeaponWithSubWeaponOption
 		
   Fire:
 		EN2A A 0 A_JumpIfInventory("TerroPistolCounter",1,"FireRight")
-    EN2A B 2 A_FireCustomMissile("TerrorPistolTracer", frandom(-1.15, 1.15))
+    EN2A B 2 A_FireCustomMissile("TerrorPistolTracer", frandom(-1.15, 1.15), 1, -10)
 		EN2A B 0 A_SpawnItemEx("BulletCasing",5,-10,35,Random(4,5),Random(-4,-5),Random(4,6),270)
 		EN2A B 0 A_PlaySound("terro/pistol", CHAN_WEAPON)
 		EN2A B 0 A_GunFlash
@@ -43,7 +43,7 @@ ACTOR TerroPistol : WeaponWithSubWeaponOption
     Goto Ready
 		
   FireRight:
-		EN2A A 2 A_FireCustomMissile("TerrorPistolTracer", frandom(-1.15, 1.15))
+		EN2A A 2 A_FireCustomMissile("TerrorPistolTracer", frandom(-1.15, 1.15), 1, 10)
 		EN2A B 0 A_SpawnItemEx("BulletCasing",-5,-10,35,Random(-4,-5),Random(-4,-5),Random(4,6),270)
 		EN2A B 0 A_PlaySound("terro/pistol", CHAN_WEAPON)
 		EN2A B 0 A_GunFlash
@@ -53,14 +53,14 @@ ACTOR TerroPistol : WeaponWithSubWeaponOption
   Altfire:
 		EN2B H 0 A_JumpIfNoAmmo("Ready")
 		EN2B ABCDEFG 2
-		EN2B H 4 A_FireCustomMissile("TerrorPistolTracer", frandom(-2.3, 2.3))
-		TNT1 A 0 A_FireCustomMissile("TerrorPistolTracer", frandom(-2.3, 2.3))
+		EN2B H 4 A_FireCustomMissile("TerrorPistolTracer", frandom(-2.3, 2.3), 1, -2)
+		TNT1 A 0 A_FireCustomMissile("TerrorPistolTracer", frandom(-2.3, 2.3), 1, 2)
 		EN2B H 0 A_PlaySound("terro/pistol", CHAN_WEAPON)
 		EN2B H 0 A_GunFlash
 		EN2B H 0 A_SpawnItemEx("BulletCasing",5,-10,32,Random(4,5),Random(-4,-5),Random(4,6),270)
 		EN2B H 0 A_JumpIfNoAmmo("NoAmmo")
-		EN2B I 4 A_FireCustomMissile("TerrorPistolTracer", frandom(-2.3, 2.3))
-		TNT1 A 0 A_FireCustomMissile("TerrorPistolTracer", frandom(-2.3, 2.3))
+		EN2B I 4 A_FireCustomMissile("TerrorPistolTracer", frandom(-2.3, 2.3), 1, -2)
+		TNT1 A 0 A_FireCustomMissile("TerrorPistolTracer", frandom(-2.3, 2.3), 1, 2)
 		EN2B I 0 A_PlaySound("terro/pistol", CHAN_WEAPON)
 		EN2B H 0 A_GunFlash
 		EN2A B 0 A_SpawnItemEx("BulletCasing",-5,-10,32,Random(-4,-5),Random(-4,-5),Random(4,6),270)
@@ -70,14 +70,14 @@ ACTOR TerroPistol : WeaponWithSubWeaponOption
 		
   AltHold:
 		EN2B H 0 A_JumpIfNoAmmo("NoAmmo")
-		EN2B H 4 A_FireCustomMissile("TerrorPistolTracer", frandom(-2.3, 2.3))
-		TNT1 A 0 A_FireCustomMissile("TerrorPistolTracer", frandom(-2.3, 2.3))
+		EN2B H 4 A_FireCustomMissile("TerrorPistolTracer", frandom(-2.3, 2.3), 1, -2)
+		TNT1 A 0 A_FireCustomMissile("TerrorPistolTracer", frandom(-2.3, 2.3), 1, 2)
 		EN2B H 0 A_GunFlash
 		EN2B H 0 A_PlaySound("terro/pistol", CHAN_WEAPON)
 		EN2B HH 0 A_SpawnItemEx("BulletCasing",5,-10,32,Random(4,5),Random(-4,-5),Random(4,6),270)
 		EN2B H 0 A_JumpIfNoAmmo("NoAmmo")
-		EN2B I 4 A_FireCustomMissile("TerrorPistolTracer", frandom(-2.3, 2.3))
-		TNT1 A 0 A_FireCustomMissile("TerrorPistolTracer", frandom(-2.3, 2.3))
+		EN2B I 4 A_FireCustomMissile("TerrorPistolTracer", frandom(-2.3, 2.3), 1, -2)
+		TNT1 A 0 A_FireCustomMissile("TerrorPistolTracer", frandom(-2.3, 2.3), 1, 2)
 		EN2B I 0 A_PlaySound("terro/pistol", CHAN_WEAPON)
 		EN2B H 0 A_GunFlash
 		EN2A BB 0 A_SpawnItemEx("BulletCasing",-5,-10,32,Random(-4,-5),Random(-4,-5),Random(4,6),270)

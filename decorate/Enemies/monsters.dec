@@ -525,6 +525,7 @@ ACTOR Cacodemon2 : YYTMonster {
   Mass 400
   Speed 8
   PainChance 128
+	MaxTargetRange 768
 	Species "Cacodemon"
 	DamageFactor "BrimgoyleBeam", 0
   +FLOAT

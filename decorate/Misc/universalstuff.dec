@@ -301,6 +301,20 @@ ACTOR HealEffectArea : HealEffect {
 	StencilColor "Red"
 }
 
+ACTOR RegenEffect : StatusEffect {
+	var int user_curr_delay;
+	var int user_delay_max;
+	
+	States {
+		Spawn:
+			TNT1 A 0 A_JumpIf(user_curr_delay > 0, 3)
+			TNT1 A 0 A_SpawnItemEx("HealEffect", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+			TNT1 A 0 A_SetUserVar("user_curr_delay", user_delay_max)
+			TNT1 A 1 A_SetUserVar("user_curr_delay", user_curr_delay-1)
+			Loop
+	}
+}
+
 ACTOR DmgUpEffect : StatusEffect {
 	RenderStyle Add
 	Alpha 0.9
@@ -860,10 +874,6 @@ ACTOR OrangeRingParticleSpawner : AbstractParticleSpawner {
 		Spawn:
 			TNT1 A 1 A_SpawnItemEx("ESO1",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
 			TNT1 A 1 A_SpawnItemEx("ESO2",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
-			TNT1 A 1 A_SpawnItemEx("ESO3",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
-			TNT1 A 1 A_SpawnItemEx("ESO4",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
-			TNT1 A 1 A_SpawnItemEx("ESO5",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
-			TNT1 A 1 A_SpawnItemEx("ESO6",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
 			Stop
 	}
 }
@@ -873,10 +883,6 @@ ACTOR OrangeRingParticleSpawner2 : AbstractParticleSpawner {
 		Spawn:
 			TNT1 A 1 A_SpawnItemEx("ESO21",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
 			TNT1 A 1 A_SpawnItemEx("ESO22",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
-			TNT1 A 1 A_SpawnItemEx("ESO23",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
-			TNT1 A 1 A_SpawnItemEx("ESO24",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
-			TNT1 A 1 A_SpawnItemEx("ESO25",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
-			TNT1 A 1 A_SpawnItemEx("ESO26",Random(-20, 20),Random(-2, 2),0,0,0,0,0,128)
 			Stop
 	}
 }
