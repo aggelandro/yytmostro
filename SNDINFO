@@ -152,6 +152,11 @@ terro/axethrow AXETHRW
 terro/crossthrow CROTHRW
 terro/holywatercrash HWCRASH
 terro/shotgunpump	TSHTPUMP
+$random terro/dogbark { terro/dogbark1 terro/dogbark2 terro/dogbark3 }
+terro/dogbark1 DOGAT2
+terro/dogbark2 DOGAT3
+terro/dogbark3 DOGAT4
+terro/dogbite DOGAT1
 zlayer/sniper ZSNIPER
 zlayer/srelo ZSNIPRE
 ando/ytho YTHO

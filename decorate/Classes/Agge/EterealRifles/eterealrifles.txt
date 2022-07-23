@@ -24,7 +24,7 @@ ACTOR EterealShocker : DoomWeapon {
 			Loop
 			
 		RemoveTarget:
-			TNT1 A 0 ACS_NamedExecuteWithResult("setTargetToNull")
+			TNT1 A 0 ACS_NamedExecuteWithResult("setTargetToNull", 0)
 			Goto Ready+3
 			
 		Ready2:

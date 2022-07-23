@@ -54,6 +54,7 @@
 #include "decorate/Classes/Terro/Pistol/pistol.dec"
 #include "decorate/Classes/Terro/Fist/fist.dec"
 #include "decorate/Classes/Terro/SuperShotgun/supershotgun.dec"
+#include "decorate/Classes/Terro/Dogs/dogs.txt"
 
 //monsters
 #include "decorate/Enemies/Zombies/JetpackZombie/jetpackzombie.dec"
@@ -737,6 +738,8 @@ ACTOR Terro : UniversalPlayer
 	Player.WeaponSlot 5, DualZanzibart, Dynamite
 	Player.WeaponSlot 4, ContraWeapon
 	Player.WeaponSlot 3, TerroShotgun, PKDoubleShotguns
+	Player.WeaponSlot 6, Dogs
+	var int user_dogs_switch_cooldown;
 }
 
 ACTOR Shotgun2 : Shotgun {}
@@ -948,7 +951,7 @@ ACTOR PlasmaSpawner : CustomInventory replaces PlasmaRifle
 			TNT1 A 0 A_JumpIfInventory("ThanuID",1,"PickupThanu")
 			TNT1 A 0 A_JumpIfInventory("RonID",1,"PickupRon")
 			TNT1 A 0 A_JumpIfInventory("zLayerID", 1, "PickupGeneric")
-			TNT1 A 0 A_JumpIfInventory("TerroID",1,"PickupGeneric")
+			TNT1 A 0 A_JumpIfInventory("TerroID",1,"PickupTerro")
 			Stop
 		PickupRon:
 			TNT1 A 0 A_JumpIfInventory("RonPL",1,"Spawn")
@@ -969,6 +972,11 @@ ACTOR PlasmaSpawner : CustomInventory replaces PlasmaRifle
 		PickupThanu:
 			TNT1 A 0 A_JumpIfInventory("ThanuPL",1,"Spawn")
 			TNT1 A 0 A_GiveInventory("ThanuPL",1)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			Fail
+		PickupTerro:
+			TNT1 A 0 A_JumpIfInventory("Dogs",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("Dogs",1)
 			TNT1 A 0 A_PlaySound("misc/w_pkup")
 			Fail
 	}

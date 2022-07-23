@@ -1288,8 +1288,12 @@ script "targetPlayerHasTarget" (void) {
     SetResultValue(GetActorProperty(0, APROP_TargetTID) != 0);
 }
 
-script "setTargetToNull" (void) {
-    SetPointer(AAPTR_TARGET, 0, AAPTR_NULL);
+script "setTargetToNull" (int tid) {
+    SetPointer(AAPTR_TARGET, tid, AAPTR_NULL);
+}
+
+script "setTracerToNull" (int tid) {
+    SetPointer(AAPTR_TRACER, tid, AAPTR_NULL);
 }
 
 script "isTargetDead" (void) {
@@ -1478,6 +1482,36 @@ script "ALookFromMaster" (void) {
 
     SetActorState(0, "SpawnLoop");
 }
+
+script "dogs_switchCooldown" (int tics) {
+    SetUserVariable(0, "user_dogs_switch_cooldown", tics);
+    while(tics > 0) {
+        Delay(1);
+        SetUserVariable(0, "user_dogs_switch_cooldown", GetUserVariable(0, "user_dogs_switch_cooldown") - 1);
+        tics--;
+    }
+}
+
+script "dogs_currentSwitchCooldownValue" (void) {
+    SetResultValue(GetUserVariable(0, "user_dogs_switch_cooldown"));
+}
+
+/*script "dogs_enableFlyingBulletAvoider" (void) {
+    int ttid = UniqueTID();
+    Thing_ChangeTID(0, ttid);
+    while(CheckFlag(ttid, "MISSILE")) {
+        int currZ = GetActorZ(ttid);
+        if (SetActivator(ttid, AAPTR_TRACER)) {
+            int tracerZ = GetActorZ(0);
+            int jHeight = FixedMul(GetActorProperty(0, APROP_Height), 4.0);
+            int jumpMax = currZ+jHeight;
+            Log(s:"perro Z: ", f:currZ, s:" - tracer Z: ", f:tracerZ, s:" - salto: ", f:jumpMax);
+            if (jumpMax < tracerZ) ACS_NamedExecuteAlways("setTracerToNull", ttid);
+        }
+        Delay(1);
+    }
+    Thing_ChangeTID(ttid, 0);
+}*/
 
 
 

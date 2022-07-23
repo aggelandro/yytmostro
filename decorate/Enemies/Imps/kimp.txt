@@ -37,13 +37,13 @@ ACTOR Kimp : DoomImp2 {
 			
 		Missile2:
 			EHOL L 1 BRIGHT A_FaceTarget
-			EHOL L 1 BRIGHT A_CustomMissile("RedLightningBolt", 36, random(-3,0))
+			EHOL L 1 BRIGHT A_CustomMissile("RedLightningBolt", 36, random(-10,0))
 			TNT1 A 0 A_Jump(87, "Missile3")
 			Goto MissileEnd
 			
 		Missile3:
 			EHOL L 1 BRIGHT A_FaceTarget
-			EHOL L 1 BRIGHT A_CustomMissile("RedLightningBolt", 36, random(0,3))
+			EHOL L 1 BRIGHT A_CustomMissile("RedLightningBolt", 36, random(0,10))
 			Goto MissileEnd
 			
 		MissileEnd:
