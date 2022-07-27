@@ -43,8 +43,7 @@ ACTOR HoloRevenant : Revenant2
     Goto See
   }
 }
-ACTOR RevenantPunch : FastProjectile
-{
+ACTOR RevenantPunch : FastProjectile {
 	Radius 11
 	Height 8
 	Speed 75
@@ -52,16 +51,21 @@ ACTOR RevenantPunch : FastProjectile
 	Projectile
 	RenderStyle Translucent
 	Alpha 0.7
-	States
-	{
-	Spawn:
-		FSKL H 0
-		FSKL H 3 A_SpawnItemEx("RevenantPunchTrail")
-		Loop
-	Death:
-		FSKL I 0 A_RadiusThrust(10000,1)
-		FSKL I 4 A_PlaySound("skeleton/melee")
-		Stop
+	
+	States {
+		Spawn:
+			FSKL H 0
+			FSKL H 3 A_SpawnItemEx("RevenantPunchTrail")
+			Loop
+			
+		XDeath:
+			TNT1 A 0 A_PlaySound("revenante/yija", CHAN_AUTO)
+			Goto Death
+			
+		Death:
+			FSKL I 0 A_RadiusThrust(10000,1)
+			FSKL I 4 A_PlaySound("skeleton/melee")
+			Stop
 	}
 }
 ACTOR RevenantPunchTrail

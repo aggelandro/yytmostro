@@ -489,3 +489,8 @@ weapons/clrocketlaunch		DSCLRF
 weapons/clrocketexplode		DSCLEXP
 Elder/giantskymissilelaunch	GSMLAUN
 weapons/giantexplosion	DETHEXP1
+
+//revenante
+$Random revenante/yija { revenante/yija1 revenante/yija2 }
+revenante/yija1	FSKLT1
+revenante/yija2 FSKLT2
