@@ -1544,3 +1544,44 @@ States
 }
 
 Actor HPBarThruPuff19 : HPBarPuff19 { +MTHRUSPECIES }
+
+
+
+
+
+
+ACTOR DecorativeSparks {
+	Radius 8
+	Health 2
+	Height 2
+	Damage 0
+	Speed 0
+	Scale 0.2
+	Renderstyle Add
+	Alpha 0.6
+	Mass 10
+	DamageType Lightning
+	+NODAMAGETHRUST
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+NOTELEPORT
+	+FRIENDLY
+	+NOCLIP
+	+ALWAYSPUFF
+	+FORCEXYBILLBOARD
+	+NOTIMEFREEZE
+	+BLOODLESSIMPACT
+	
+	States {
+		Spawn:
+			ZAP8 H 0 NoDelay A_ChangeVelocity(random(-2,2),random(-2,2),random(-3,0),CVF_RELATIVE|CVF_REPLACE)
+			ZAP8 ABCDEFG 2 Bright
+			Goto Death
+			
+		Death:
+			ZAP8 H 0 A_SetScale(0.03,0.03)
+			ZAP9 HI 6 A_Fadeout(0.05)
+			ZAP9 JKL 6 Bright A_Fadeout(0.05)
+			Stop
+	}
+}
