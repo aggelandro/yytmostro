@@ -111,6 +111,7 @@
 
 #include "decorate/Enemies/SpiderMastermind/RocketSpiderMastermind/rocketspidermastermind.dec"
 #include "decorate/Enemies/SpiderMastermind/SpiderLord/spiderlord.dec"
+#include "decorate/Enemies/SpiderMastermind/spidermadnessmind.txt"
 
 // Dependencia con Armncubus
 #include "decorate/Misc/Weapons/DualZanzibart/dualzanzibart.txt"

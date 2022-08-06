@@ -947,7 +947,7 @@ script "setTIDTargetPointerToSelf" (int tid) {
     Thing_ChangeTID(mtid, 0);
 }
 
-script "showShellsInShotgun" (void) CLIENTSIDE {
+script "showShellsInShotgun" (void) CLIENTSIDE { //deprecated
     int shells = ACS_NamedExecuteWithResult("AggeSGShellsLeft", 0);
     SetFont("BIGFONT");
     SetHudSize(320, 200, 0);
@@ -1512,6 +1512,10 @@ script "dogs_currentSwitchCooldownValue" (void) {
     }
     Thing_ChangeTID(ttid, 0);
 }*/
+
+script "cvar_MoveBob" (void) {
+    SetResultValue(GetCVar("movebob"));
+}
 
 
 

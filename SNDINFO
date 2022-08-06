@@ -494,3 +494,14 @@ weapons/giantexplosion	DETHEXP1
 $Random revenante/yija { revenante/yija1 revenante/yija2 }
 revenante/yija1	FSKLT1
 revenante/yija2 FSKLT2
+
+//spidermadnessmind
+madness/sight		dsconsit
+madness/active	dsconact
+madness/attack	dscannon
+weapons/bounc1	dsbounc1
+weapons/firsfi	dsfirsfi
+weapons/maceex	dsmaceex
+madness/demdth	dsdemdth
+madness/counts	dsconcts
+madness/count		dsconctd
