@@ -62,6 +62,8 @@
 #include "decorate/Enemies/Zombies/laserzombie.txt"
 #include "decorate/Enemies/Zombies/gendarme.txt"
 #include "decorate/Enemies/Zombies/commando.txt"
+#include "decorate/Enemies/Zombies/doublechaingunguy.txt"
+#include "decorate/Enemies/Zombies/dozer.txt"
 
 #include "decorate/Enemies/Imps/SpiderImp/spiderimp.dec"
 #include "decorate/Enemies/Imps/impherno.txt"
@@ -150,8 +152,10 @@ ACTOR ZombieManSpawner : RandomSpawner replaces ZombieMan
 }
 ACTOR ChaingunGuySpawner : RandomSpawner replaces ChaingunGuy
 {
-	DropItem "ChainGunGuyMod", 255, 70
-	DropItem "FlamethrowerGuy", 255, 30
+	DropItem "ChainGunGuyMod", 255, 50
+	DropItem "FlamethrowerGuy", 255, 17
+	DropItem "DoubleChaingunGuy", 255, 16
+	DropItem "Dozer", 255, 17
 }
 ACTOR ShotgunGuySpawner : RandomSpawner replaces ShotgunGuy
 {

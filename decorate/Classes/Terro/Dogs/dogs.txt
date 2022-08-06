@@ -175,23 +175,16 @@ ACTOR DogProjectile {
 
 ACTOR SeekerDogProjectile : DogProjectile {
 	Speed 14
+	Damage 4
 	+SEEKERMISSILE
-	-DROPOFF
-	//var int user_floorhug_flag;
 	
 	States {
 		Spawn:
 			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(210, 280))
-			//DOGW A 1 A_ChangeFlag("FLOORHUGGER", FALSE)
-			//TNT1 A 0 ACS_NamedExecuteWithResult("dogs_enableFlyingBulletAvoider")
 			DOGW A 3 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
-			//TNT1 A 0 A_ChangeFlag("FLOORHUGGER", user_floorhug_flag)
 			DOGW B 3 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
-			//TNT1 A 0 A_ChangeFlag("FLOORHUGGER", user_floorhug_flag)
 			DOGW C 3 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
-			//TNT1 A 0 A_ChangeFlag("FLOORHUGGER", user_floorhug_flag)
 			DOGW D 3 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
-			//TNT1 A 0 A_ChangeFlag("FLOORHUGGER", user_floorhug_flag)
 			Goto SpawnLoop
 			
 		Bounce.Floor:
@@ -200,13 +193,9 @@ ACTOR SeekerDogProjectile : DogProjectile {
 			
 		SpawnLoop:
 			DOGW A 3 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
-			//TNT1 A 0 A_ChangeFlag("FLOORHUGGER", user_floorhug_flag)
 			DOGW B 3 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
-			//TNT1 A 0 A_ChangeFlag("FLOORHUGGER", user_floorhug_flag)
 			DOGW C 3 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
-			//TNT1 A 0 A_ChangeFlag("FLOORHUGGER", user_floorhug_flag)
 			DOGW D 3 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
-			//TNT1 A 0 A_ChangeFlag("FLOORHUGGER", user_floorhug_flag)
 			Loop
 	}
 }

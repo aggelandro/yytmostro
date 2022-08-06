@@ -1496,23 +1496,6 @@ script "dogs_currentSwitchCooldownValue" (void) {
     SetResultValue(GetUserVariable(0, "user_dogs_switch_cooldown"));
 }
 
-/*script "dogs_enableFlyingBulletAvoider" (void) {
-    int ttid = UniqueTID();
-    Thing_ChangeTID(0, ttid);
-    while(CheckFlag(ttid, "MISSILE")) {
-        int currZ = GetActorZ(ttid);
-        if (SetActivator(ttid, AAPTR_TRACER)) {
-            int tracerZ = GetActorZ(0);
-            int jHeight = FixedMul(GetActorProperty(0, APROP_Height), 4.0);
-            int jumpMax = currZ+jHeight;
-            Log(s:"perro Z: ", f:currZ, s:" - tracer Z: ", f:tracerZ, s:" - salto: ", f:jumpMax);
-            if (jumpMax < tracerZ) ACS_NamedExecuteAlways("setTracerToNull", ttid);
-        }
-        Delay(1);
-    }
-    Thing_ChangeTID(ttid, 0);
-}*/
-
 script "cvar_MoveBob" (void) {
     SetResultValue(GetCVar("movebob"));
 }
