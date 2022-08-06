@@ -1031,6 +1031,17 @@ ACTOR SmallRedExplosion : AbstractExplosion {
 	}
 }
 
+ACTOR SmallRedExplosion2 : AbstractExplosion {
+	Speed 1
+	Scale 0.45
+	
+	States {
+		Spawn:
+			FXPR AABBCDEFGHIJKLM 1 Bright NoDelay A_FadeOut(0.05)
+			Stop
+	}
+}
+
 ACTOR SmallBlueExplosion : AbstractExplosion {
 	Speed 1
 	Scale 0.45

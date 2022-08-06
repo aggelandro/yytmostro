@@ -505,3 +505,24 @@ weapons/maceex	dsmaceex
 madness/demdth	dsdemdth
 madness/counts	dsconcts
 madness/count		dsconctd
+
+//hellfire elemental
+$rolloff hfelemental/lava 250 800
+hfelemental/lava				DSBELAC
+hfelemental/suiciderush	DSBESUI
+hfelemental/pain				DSBEPAI
+$rolloff hfelemental/explode 600 1800
+hfelemental/explode			DSBEEXP
+hfelemental/anger				DSBLANG
+hfelemental/sight				DSBLSIT
+hfball/attack						dsfaatk
+hfelemental/firebreath	DSMFFIR
+
+//Rictus
+rictus/attack	DRCTATT
+rictus/active	DRCTACT
+rictus/die		DRCTDIE
+rictus/pain		DRCTPAI
+rictus/sight	DRCTSEE
+rictus/ball		DRCTBL
+rictus/ballex	DRCTEX

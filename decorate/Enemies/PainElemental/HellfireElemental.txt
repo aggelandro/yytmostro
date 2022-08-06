@@ -1,0 +1,268 @@
+ACTOR HellfireElemental : PainElemental2 {
+	Health 850
+	PainChance 60
+	SeeSound "hfelemental/sight"
+	DeathSound "Pain/Death"
+	PainSound "hfelemental/pain"
+	ActiveSound "hfelemental/lava"
+	DamageType "FireR"
+	Obituary "%o was reduced to ashes by a Hellfire Elemental."
+	HitObituary "%o was swallowed by a Hellfire Elemental."
+	+MISSILEEVENMORE
+	+QUICKTORETALIATE
+	
+	States {
+		Spawn:
+			TNT1 A 0 A_LoopActiveSound
+			INFP AABBCCDD 3 Bright A_Look
+			Loop
+			
+		See:
+			TNT1 A 0 A_LoopActiveSound
+			INFP AABBCCDD 3 Bright A_Chase
+			Loop
+			
+		Missile:
+			TNT1 A 0 A_LoopActiveSound
+			TNT1 A 0 A_Jump(102, "Seeker", "FireBreath")
+			Goto Normal
+			
+		Normal:
+			INFP HI 6 Bright A_FaceTarget
+			INFP J 5 Bright A_SpawnItemEx("Rictus",62,0,14,0,0,0,0,SXF_SETMASTER)
+			INFP FE 4 Bright
+			Goto See
+			
+		Seeker:
+			INFP EF 5 Bright A_FaceTarget 
+			INFP G 4 Bright A_CustomMissile("HFEBall", 20, 0, 0)
+			INFP FE 3 Bright
+			Goto See
+			
+		FireBreath:
+			TNT1 A 0 A_JumpIfCloser(300,1)
+			Goto Normal
+			INFP EF 4 Bright A_FaceTarget
+			TNT1 A 0 Bright A_PlaySound("hfelemental/firebreath")
+			INFP G 2 Bright A_CustomMissile("HFEBreath", 24, 0, Random(8,-8))
+			TNT1 A 0 Bright A_FaceTarget
+			INFP G 2 Bright A_CustomMissile("HFEBreath", 24, 0, Random(8,-8))
+			TNT1 A 0 Bright A_FaceTarget
+			INFP G 2 Bright A_CustomMissile("HFEBreath", 24, 0, Random(8,-8))
+			TNT1 A 0 Bright A_FaceTarget
+			INFP G 2 Bright A_CustomMissile("HFEBreath", 24, 0, Random(8,-8))
+			TNT1 A 0 Bright A_FaceTarget
+			INFP G 2 Bright A_CustomMissile("HFEBreath", 24, 0, Random(8,-8))
+			TNT1 A 0 Bright A_FaceTarget
+			INFP G 2 Bright A_CustomMissile("HFEBreath", 24, 0, Random(8,-8))
+			TNT1 A 0 Bright A_FaceTarget
+			INFP G 2 Bright A_CustomMissile("HFEBreath", 24, 0, Random(8,-8))
+			TNT1 A 0 Bright A_FaceTarget
+			INFP G 2 Bright A_CustomMissile("HFEBreath", 24, 0, Random(8,-8))
+			TNT1 A 0 Bright A_FaceTarget
+			INFP G 2 Bright A_CustomMissile("HFEBreath", 24, 0, Random(8,-8))
+			TNT1 A 0 Bright A_FaceTarget
+			INFP G 2 Bright A_CustomMissile("HFEBreath", 24, 0, Random(8,-8))
+			INFP FE 3 Bright
+			Goto See
+			
+		Melee:
+			TNT1 A 0 A_LoopActiveSound
+			INFP EF 5 Bright A_FaceTarget 
+			INFP G 4 Bright A_MeleeAttack
+			INFP FE 3 Bright A_FaceTarget
+			Goto See
+			
+		Pain:
+			TNT1 A 0 A_LoopActiveSound
+			TNT1 A 0 A_JumpIfHealthLower(250,"PainSuicide")
+			TNT1 A 0 A_Jump(128,"PainMissile")
+			INFP K 12 Bright A_Pain
+			Goto See
+			
+		PainSuicide:
+			TNT1 A 0 A_JumpIfCloser(1250,1)
+			Goto Pain+2
+			TNT1 A 0 A_Jump(18,"See")
+			TNT1 A 0 A_StopSound
+			TNT1 A 0 A_ChangeFlag(NOPAIN,1)
+			TNT1 A 0 A_ChangeFlag(NOTARGET,1)
+			TNT1 A 0 A_PlaySound("hfelemental/anger")
+			TNT1 A 0 A_SpawnItem("HFEFireSpawner",0,0,0,0)
+			INFP H 2 Bright A_FaceTarget
+			TNT1 A 0 A_SpawnItem("HFEFireSpawner",0,0,0,0)
+			INFP H 2 Bright A_FaceTarget
+			TNT1 A 0 A_SpawnItem("HFEFireSpawner",0,0,0,0)
+			INFP I 2 Bright A_FaceTarget
+			TNT1 A 0 A_SpawnItem("HFEFireSpawner",0,0,0,0)
+			INFP I 2 Bright A_FaceTarget
+			TNT1 A 0 A_SpawnItem("HFEFireSpawner",0,0,0,0)
+			TNT1 A 0 A_CustomMissile("HFESuicide",0,0,0,0) 
+			INFP J 2 Bright A_Die("Suicide")
+			Stop
+			
+		PainMissile:
+			INFP K 12 Bright A_Pain
+			Goto Missile
+			
+		Death:
+			TNT1 A 0 A_PlaySound("bomb/explode")
+			INFP L 5 Bright A_Explode(82,128)
+			INFP M 5 Bright A_Scream
+			INFP N 5 Bright A_NoBlocking
+			TNT1 A 0 A_SetTranslucent(0.75,1)
+			TNT1 AAAA 0 A_SpawnItemEx("OrangeParticleSpawner", 0, 0, random(20,40), 0, 0, 0, 0, 128)
+			TNT1 AAAA 0 A_CustomMissile("SmokeSmallExplosion", random(20,40), 0, random(0,360), 2, random(0,360))
+			TNT1 AAAA 0 A_CustomMissile("SmallRedExplosion", random(20,40), 0, random(0,360), 2, random(0,360))
+			TNT1 A 0 A_SpawnItemEx("Rictus",0,40,14)
+			TNT1 A 0 A_SpawnItemEx("Rictus",0,-40,14)
+			INFP O 5 Bright A_SpawnItemEx("Rictus",-40,0,14)
+			INFP PQ 5 Bright
+			Stop
+			
+		Death.Suicide:
+			TNT1 A 0
+			TNT1 A 100 A_NoBlocking
+			Stop
+	} 
+}
+
+ACTOR HFEBall {
+	Speed 18
+	FastSpeed 22
+	Damage 10
+	Radius 10
+	Height 10
+	Renderstyle Translucent
+	Alpha 0.85
+	Scale 0.6
+	SeeSound "hfball/attack"
+	DeathSound "Diablo/FireExplode"
+	Species "Soul"
+	PROJECTILE
+	+SEEKERMISSILE
+	+THRUSPECIES
+	Decal RevenantScorch
+	
+	States {
+		Spawn:
+			TNT1 A 0 A_SpawnItemEx("HFEBallTrail",0,0,0,0,0,0,0,128) 
+			PBMB A 2 Bright	A_Tracer2
+			PBMB B 2 Bright A_SpawnItemEx("HFEBallTrail",0,0,0,0,0,0,0,128)
+			Loop
+		
+		Death:
+			TNT1 A 0
+			TNT1 A 0 A_SpawnItemEx("RedParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			TNT1 AAA 0 A_CustomMissile("SmallRedExplosion2", 0, 0, random(0,360), 2, random(0,360))
+			TNT1 AAA 0 A_CustomMissile("SmokeSmallExplosion", 0, 0, random(0,360), 2, random(0,360))	
+			TNT1 A 1 A_SpawnItem("HFEBallEx")
+			Stop
+	}
+}
+
+ACTOR HFEBallEx {
+	Scale 0.75
+	RenderStyle Add
+	Alpha 0.75
+	+CLIENTSIDEONLY
+	+NOGRAVITY
+	
+	States {
+		Spawn:
+			NREB CDEFGHIJKL 2 Bright
+			Stop
+	}
+}
+
+ACTOR HFEBallTrail {
+	RenderStyle Add
+	+CLIENTSIDEONLY
+	+NOBLOCKMAP
+	+DONTSPLASH
+	+NOCLIP
+	+NOINTERACTION
+	+THRUACTORS
+	Scale 0.6
+	
+	States {
+		Spawn:
+			TNT1 A 2
+			FMTT ABCDE 2 Bright A_FadeOut(0.2)
+			Stop
+	}
+}
+
+ACTOR HFEBreath : CyBaronFlamethrower { 
+	Scale 0.42
+	DamageType "FireR"
+	Species "Elemental"
+	
+	States {
+		Spawn:
+			FIR1 LKJIHGFEDCBA 3 Bright A_Explode(3,92)
+			FIR1 AAAA 1 Bright A_FadeOut(0.15)
+			Stop
+	}
+}
+
+ACTOR HFEFireSpawner : AbstractParticleSpawner {
+	States {
+		Spawn:
+			TNT1 AA 0 NoDelay A_SpawnItemEx("HFEFire",5,random(-20,20),random(30,50),random(3,6),0,random(4,8),random(90,270),128,0)
+			TNT1 A 1
+			Stop
+	}
+}
+
+ACTOR HFEFire : ForgottenFire { Scale 0.65 }
+
+ACTOR HFESuicide {
+	Radius 24
+	Height 48
+	Health 250
+	Damage 15
+	Speed 25
+	DeathSound "Pain/Death"
+	DamageType "FireR"
+	Species "Soul"
+	Species "Elemental"
+	ExplosionDamage 168
+	ExplosionRadius 168
+	Decal Scorch
+	PROJECTILE
+	+SOLID
+	+SHOOTABLE
+	+THRUSPECIES
+	+SKYEXPLODE
+	+NOTARGETSWITCH
+	+SEEKERMISSILE
+	-NOBLOCKMAP
+	
+	States {
+		Spawn:
+			TNT1 A 0 A_SeekerMissile(10, 0)
+			INFP JJ 1 Bright A_SpawnItem("HFEFireSpawner", 0, 0, 0, 0)
+			TNT1 A 0 A_PlaySoundEx("hfelemental/suiciderush", "Voice", 1)
+			Loop
+			
+		Death:
+			TNT1 A 0 A_Die
+			
+		Explode:
+			TNT1 A 0 A_ChangeFlag(NOBLOCKMAP, TRUE)
+			TNT1 A 0 A_Explode
+			TNT1 A 0 A_StopSoundEx("Voice")
+			TNT1 A 0 A_PlaySound("hfelemental/explode")
+			INFP LMN 3 Bright
+			TNT1 A 0 A_SetTranslucent(0.75, 1)
+			TNT1 AAAA 0 A_SpawnItemEx("OrangeParticleSpawner", 0, 0, random(20,40), 0, 0, 0, 0, 128)
+			TNT1 AAAA 0 A_CustomMissile("SmokeSmallExplosion", random(20,40), 0, random(0,360), 2, random(0,360))
+			TNT1 AAAA 0 A_CustomMissile("SmallRedExplosion", random(20,40), 0, random(0,360), 2, random(0,360))	
+			TNT1 A 0 A_SpawnItemEx("Rictus",0,40,14)
+			TNT1 A 0 A_SpawnItemEx("Rictus",0,-40,14)
+			INFP O 5 Bright A_SpawnItemEx("Rictus",-40,0,14)
+			INFP PQ 5 Bright
+			Stop
+	} 
+}

@@ -17,35 +17,43 @@ Actor Dozer : ChaingunGuyMod {
 		Missile:
 			BRZK E 10 A_FaceTarget
 			TNT1 A 0 A_JumpIfCloser(256, "Normal")
-			BRZK Q 3 BRIGHT A_Chase("", "")
+			BRZK Q 2 BRIGHT A_Chase("", "")
+			BRZK Q 1 BRIGHT A_FaceTarget
 			TNT1 A 0 A_PlaySound("chainguy/attack",CHAN_AUTO)
 			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, pitch)
 			TNT1 A 0 A_JumpIfCloser(256, "Normal")
-			BRZK Q 3 BRIGHT A_Chase("", "")
+			BRZK Q 2 BRIGHT A_Chase("", "")
+			BRZK Q 1 BRIGHT A_FaceTarget
 			TNT1 A 0 A_PlaySound("chainguy/attack",CHAN_AUTO)
 			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, pitch)
 			TNT1 A 0 A_JumpIfCloser(256, "Normal")
-			BRZK R 3 BRIGHT A_Chase("", "")
+			BRZK R 2 BRIGHT A_Chase("", "")
+			BRZK R 1 BRIGHT A_FaceTarget
 			TNT1 A 0 A_PlaySound("chainguy/attack",CHAN_AUTO)
 			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, pitch)
 			TNT1 A 0 A_JumpIfCloser(256, "Normal")
-			BRZK R 3 BRIGHT A_Chase("", "")
+			BRZK R 2 BRIGHT A_Chase("", "")
+			BRZK R 1 BRIGHT A_FaceTarget
 			TNT1 A 0 A_PlaySound("chainguy/attack",CHAN_AUTO)
 			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, pitch)
 			TNT1 A 0 A_JumpIfCloser(256, "Normal")
-			BRZK S 3 BRIGHT A_Chase("", "")
+			BRZK S 2 BRIGHT A_Chase("", "")
+			BRZK S 1 BRIGHT A_FaceTarget
 			TNT1 A 0 A_PlaySound("chainguy/attack",CHAN_AUTO)
 			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, pitch)
 			TNT1 A 0 A_JumpIfCloser(256, "Normal")
-			BRZK S 3 BRIGHT A_Chase("", "")
+			BRZK S 2 BRIGHT A_Chase("", "")
+			BRZK S 1 BRIGHT A_FaceTarget
 			TNT1 A 0 A_PlaySound("chainguy/attack",CHAN_AUTO)
 			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, pitch)
 			TNT1 A 0 A_JumpIfCloser(256, "Normal")
-			BRZK T 3 BRIGHT A_Chase("", "")
+			BRZK T 2 BRIGHT A_Chase("", "")
+			BRZK T 1 BRIGHT A_FaceTarget
 			TNT1 A 0 A_PlaySound("chainguy/attack",CHAN_AUTO)
 			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, pitch)
 			TNT1 A 0 A_JumpIfCloser(256, "Normal")
-			BRZK T 3 BRIGHT A_Chase("", "")
+			BRZK T 2 BRIGHT A_Chase("", "")
+			BRZK T 1 BRIGHT A_FaceTarget
 			TNT1 A 0 A_PlaySound("chainguy/attack",CHAN_AUTO)
 			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, pitch)
 			Goto Missile+1
@@ -70,9 +78,26 @@ Actor Dozer : ChaingunGuyMod {
 		
 		Death.FireBF:
 		Death.AfireF:
-		Death.Afire:		
+		Death.Afire:
+			REEB A 3 Bright A_PlaySound("grunt/pain")
+			REEB B 3 Bright
+			REEB C 3 Bright A_NoBlocking
+			REEB DEFGH 3 Bright
+			REEB I 3 Bright A_PlaySound("grunt/pain")
+			REEB JKLMN 3 Bright
+			REEB O 3 Bright A_PlaySound("grunt/pain")
+			REEB PQR 3 Bright
+			REEB S 3 Bright A_PlaySound("grunt/death")
+			REEB TW 3 Bright
+			REEB V -1 
+			Stop
+			
 		Death.FireRF:
 		Death.FireR:
+			TNT1 A 0 ACS_NamedExecuteWithResult("showTranslation", 20)
+			TNT1 A -1 A_Jump(256, "Death.Afire")
+			Wait
+			
 		Death:
 			BRZK H 5
 			BRZK I 5 A_Scream

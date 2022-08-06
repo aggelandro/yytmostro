@@ -24,7 +24,7 @@ ACTOR Pain64 : PainElemental2 {
 			
 		Missile:
 			PAI2 BCD 5 A_FaceTarget
-			PAI2 D 0 A_DualPainAttack
+			PAI2 D 0 A_DualPainAttack("LostSoul2")
 			Goto See
 			
 		Pain:
@@ -36,7 +36,7 @@ ACTOR Pain64 : PainElemental2 {
 			PAI2 E 8
 			PAI2 F 8 A_Scream
 			PAI2 GH 8
-			PAI2 I 8 A_PainDie
+			PAI2 I 8 A_PainDie("LostSoul2")
 			PAI2 J 4
 			PAI2 K 2
 			PAI2 L 2

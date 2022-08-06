@@ -897,7 +897,7 @@ ACTOR PainElemental2 : YYTMonster
     PAIN D 5 A_FaceTarget
     PAIN E 5 A_FaceTarget
     PAIN F 5 Bright A_FaceTarget
-    PAIN F 0 Bright A_PainAttack
+    PAIN F 0 Bright A_PainAttack("LostSoul2")
     Goto See
   Pain:
     PAIN G 6
@@ -907,7 +907,7 @@ ACTOR PainElemental2 : YYTMonster
     PAIN H 8 Bright
     PAIN I 8 Bright A_Scream
     PAIN JK 8 Bright
-    PAIN L 8 Bright A_PainDie
+    PAIN L 8 Bright A_PainDie("LostSoul2")
     PAIN M 8 Bright
     Stop
   Raise:

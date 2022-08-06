@@ -74,6 +74,7 @@
 #include "decorate/Enemies/Demons/enforcer.txt"
 
 #include "decorate/Enemies/LostSoul/FireSoul/firesoul.dec"
+#include "decorate/Enemies/LostSoul/rictus.txt"
 
 #include "decorate/Enemies/PainElemental/FireElemental/fireelemental.dec"
 #include "decorate/Enemies/PainElemental/Pain64/pain64.dec"
@@ -92,6 +93,7 @@
 #include "decorate/Enemies/Goats/literalhellknight.dec"
 #include "decorate/Enemies/Goats/motaro.dec"
 #include "decorate/Enemies/Goats/terminator.txt"
+#include "decorate/Enemies/PainElemental/HellfireElemental.txt"
 
 #include "decorate/Enemies/Arachnotrons/Bouncetron/bouncetron.dec"
 #include "decorate/Enemies/Arachnotrons/warachnotron.txt"
@@ -178,11 +180,18 @@ ACTOR HellKnightSpawner : RandomSpawner replaces HellKnight
 	DropItem "LiteralHellKnight", 255, 15
 	DropItem "Motaro", 255, 10
 }
+ACTOR LostSoulSpawner : RandomSpawner replaces LostSoul
+{
+	DropItem "LostSoul2", 255, 70
+	DropItem "FireSoul", 255, 15
+	dropItem "Rictus", 255, 15
+}
 ACTOR PainElementalSpawner : RandomSpawner replaces PainElemental
 {
-	DropItem "PainElemental2", 255, 70
+	DropItem "PainElemental2", 255, 55
 	DropItem "FireElemental", 255, 15
 	dropItem "Pain64", 255, 15
+	DropItem "HellfireElemental", 255, 15
 }
 ACTOR RevenantSpawner : RandomSpawner replaces Revenant
 {
@@ -239,7 +248,8 @@ ACTOR ArchvileSpawner : RandomSpawner replaces Archvile
 ACTOR SpiderMastermindSpawner : RandomSpawner replaces SpiderMastermind
 {
 	DropItem "RocketSpiderMastermind", 255, 30
-	DropItem "SpiderMastermind2" 255, 60
+	DropItem "SpiderMastermind2" 255, 30
+	DropItem "SpiderMadnessmind" 255, 30
 	DropItem "SpiderLord" 255, 10
 	DropItem "ElderDemon" 255, 2
 }
