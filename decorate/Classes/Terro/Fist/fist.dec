@@ -5,6 +5,7 @@ ACTOR TerroFist : WeaponWithSubWeaponOption
 	{
 	Ready:
 		PERR A 0 A_JumpIfInventory("ClassThroweableAction", 1, "SubWeaponCheck")
+		TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 		PERR A 0 A_JumpIfInventory("TerroFistFire",10,"Transform")
 		PERR A 0 A_JumpIfInventory("TerroFistDuration",1,"FireReady")
 		PERR A 1 A_WeaponReady
@@ -23,6 +24,7 @@ ACTOR TerroFist : WeaponWithSubWeaponOption
 		Loop
     Select:
 		TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+		TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 		PERR A 0 A_JumpIfInventory("TerroFistDuration",1,2)
 		PERR A 1 A_Raise
 		Loop

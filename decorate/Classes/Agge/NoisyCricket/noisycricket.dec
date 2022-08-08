@@ -15,6 +15,7 @@ ACTOR NoisyCricket : WeaponWithGrenadeOption {
 			
 		Ready:
 			PLBG A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
+			PLBG A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			PLBG A 1 A_WeaponReady
 			Loop
 			
@@ -24,6 +25,7 @@ ACTOR NoisyCricket : WeaponWithGrenadeOption {
 			
 		Select:
 			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+			PLBG A 0 A_TakeInventory("SlideKickAction", 1)
 			PLBG A 1 A_Raise
 			Loop
 			

@@ -1,4 +1,4 @@
-ACTOR EterealShocker : DoomWeapon {
+ACTOR EterealShocker : YYTWeapon {
 	Weapon.AmmoType "Cell"
 	Weapon.AmmoUse 40
 	Weapon.AmmoGive 40
@@ -8,8 +8,9 @@ ACTOR EterealShocker : DoomWeapon {
 	States {
 		Select:
 			TNT1 A 0 A_TakeInventory("WeaponSpecialAction", 1)
+			TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 			TLKS A 1 A_Raise
-			Goto Select+1
+			Goto Select+2
 			
 		Deselect:
 			TLKS A 1 A_Lower
@@ -19,6 +20,7 @@ ACTOR EterealShocker : DoomWeapon {
 			TNT1 A 0 A_JumpIfInventory("SpellReady", 1, "Ready2")
 			TNT1 A 0 A_JumpIfInventory("AltSpellReady", 1, "Ready2")
 			TNT1 A 0 A_JumpIfInventory("WeaponSpecialAction", 1, "AcquireTarget")
+			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			TNT1 A 0 A_CheckFlag("CORPSE", "RemoveTarget", AAPTR_TARGET)
 			TLKS A 1 A_WeaponReady
 			Loop
@@ -28,6 +30,8 @@ ACTOR EterealShocker : DoomWeapon {
 			Goto Ready+3
 			
 		Ready2:
+			TNT1 A 0 A_JumpIfInventory("WeaponSpecialAction", 1, "AcquireTarget")
+			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			A35T A 1 A_WeaponReady
 			Loop
 			

@@ -1,4 +1,4 @@
-ACTOR Motumbo : Weapon {
+ACTOR Motumbo : YYTWeapon {
   Inventory.PickupMessage "¡Tenés la de Motumbo! ¡¡Agarrala bien!!"
   Obituary "%o fue PUIJeado por la pijza entera de Motumbo."
   Weapon.AmmoType "RocketAmmo"
@@ -14,6 +14,7 @@ ACTOR Motumbo : Weapon {
 			Stop
 		
     Ready:
+			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 	    DFPR ABCB 5 A_WeaponReady
 	    Loop
 	
@@ -22,6 +23,7 @@ ACTOR Motumbo : Weapon {
 	    Loop
 	  
 	  Select:
+			TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 	    DFPR A 1 A_Raise
 	    Loop
 	

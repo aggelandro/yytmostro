@@ -168,6 +168,17 @@ misc/sanctuary SANCTU
 imp/attack2 IMPATK2
 
 
+//Slide Kicks
+$random SlideKick/Start { SLYDSTRT1 SLYDSTRT2 SLYDSTRT3 }
+SLYDSTRT1	SLIDSTR1
+SLYDSTRT2	SLIDSTR2
+SLYDSTRT3	SLIDSTR3
+
+$random SlideKick/End { SLYDEND1 SLYDEND2 }
+SLYDEND1	SLIDEND1
+SLYDEND2	SLIDEND2
+
+
 // dinamita afanada del samsara
 TNT/Throw			TNTTOSS
 TNT/Fuse			TNTFUSE

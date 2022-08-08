@@ -44,7 +44,7 @@ ACTOR SmokeTrailIn4OutSlow : SmokeTrail
 	}
 }
 
-actor Dynamite : Weapon
+actor Dynamite : YYTWeapon
 { 
   inventory.pickupmessage "Bundle of TNT!"
   weapon.selectionorder 880
@@ -73,6 +73,7 @@ actor Dynamite : Weapon
 	TNTL DEF 1 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
 	TNT1 A 0 A_GiveInventory("CalebTNTReadyDummy",1)
   ReadyLoop:
+	TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 	TNT1 A 0 A_JumpIfNoAmmo("ReadyAmmoless")
     TNT1 A 0 A_JumpIf(waterlevel>2,"Cannot")
 	TNTH A 3 A_WeaponReady
@@ -90,7 +91,8 @@ actor Dynamite : Weapon
 	TNT1 A 0 A_PlaySound("TNT/Match",6)	
 	PTNT RST 1 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH)
 	TNT1 A 0 A_GiveInventory("CalebTNTReadyDummy",1)	
-  ReadyAmmolessLoop:	
+  ReadyAmmolessLoop:
+	TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
     TNT1 A 0 A_JumpIf(waterlevel>2,"Cannot")
 	TNT1 A 0 A_JumpIfInventory("RocketAmmo",1,"RaisingDynamite")	
 	PTNT M 3 A_WeaponReady
@@ -140,7 +142,8 @@ actor Dynamite : Weapon
 	TNT1 A 0 A_TakeInventory("ThrowPower",300)
 	TNT1 A 0 A_TakeInventory("ThrowPowerBig",300)
 	TNT1 A 0 A_JumpIfNoAmmo("RaiseAmmoless")
-  SelectLoop:	
+  SelectLoop:
+	TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 	TNTL AA 0 A_Raise
     TNTL A 1 A_Raise
 	Loop

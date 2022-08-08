@@ -6,11 +6,13 @@ ACTOR CastlevaniaWhip : WeaponWithSubWeaponOption {
 	States {
 		Select:
 			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+			TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 			VKI2 A 1 A_Raise
 			Loop
 			
 		SuperSelect:
 			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+			TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 			VKI2 A 1 A_Raise
 			VKI2 A 0 A_Raise
 			Loop
@@ -21,6 +23,7 @@ ACTOR CastlevaniaWhip : WeaponWithSubWeaponOption {
 			
 		Ready:
 			TNT1 A 0 A_JumpIfInventory("ClassThroweableAction", 1, "SubWeaponCheck")
+			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			VKI2 A 1 A_WeaponReady
 			Loop
 			

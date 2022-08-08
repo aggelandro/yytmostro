@@ -1,4 +1,4 @@
-ACTOR WeaponWithGrenadeOption : DoomWeapon {
+ACTOR WeaponWithGrenadeOption : YYTWeapon {
 	Weapon.AmmoType "HandGrenadeAmmo"
 
 	States {
@@ -105,6 +105,12 @@ ACTOR HandGrenadeAmmo : Ammo {
 }
 
 ACTOR ClassThroweableAction : Inventory {
+  +INVENTORY.AUTOACTIVATE
+  Inventory.Amount 1
+  Inventory.MaxAmount 1
+}
+
+ACTOR SlideKickAction : Inventory {
   +INVENTORY.AUTOACTIVATE
   Inventory.Amount 1
   Inventory.MaxAmount 1

@@ -1,4 +1,4 @@
-ACTOR WeaponWithSubWeaponOption : DoomWeapon {
+ACTOR WeaponWithSubWeaponOption : YYTWeapon {
 	Weapon.AmmoType "Heart"
 
 	States {

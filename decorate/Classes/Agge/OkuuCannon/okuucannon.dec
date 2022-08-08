@@ -1,4 +1,4 @@
-ACTOR OkuuCannon : DoomWeapon {
+ACTOR OkuuCannon : YYTWeapon {
   Weapon.AmmoType "Meter"
 	Weapon.AmmoGive 10
 	Inventory.PickupMessage "You wield the power of nuclear fusion manipulation!"
@@ -7,6 +7,7 @@ ACTOR OkuuCannon : DoomWeapon {
 	
   States {
 		Ready:
+			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			OKUU A 1 A_WeaponReady
 			Loop
 			
@@ -15,6 +16,7 @@ ACTOR OkuuCannon : DoomWeapon {
 			Loop
 			
 		Select:
+			TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 			OKUU A 1 A_Raise
 			Loop
 			

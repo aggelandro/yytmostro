@@ -1,4 +1,4 @@
-ACTOR AggeFlameThrower : DoomWeapon {
+ACTOR AggeFlameThrower : YYTWeapon {
 	Inventory.PickupMessage "You got the Flamethrower!"
 	Weapon.AmmoType "Cell"
 	Weapon.AmmoUse 2
@@ -11,6 +11,7 @@ ACTOR AggeFlameThrower : DoomWeapon {
 			Stop
 	
 		Ready:
+			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			FLAM AB 3 A_WeaponReady
 			Loop
 			
@@ -19,6 +20,7 @@ ACTOR AggeFlameThrower : DoomWeapon {
 			Loop
 			
 		Select:
+			TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 			FLAM AB 1 A_Raise
 			Loop
 			

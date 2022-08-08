@@ -122,6 +122,7 @@ script 332 OPEN {
 
 Script 333 (void) NET { GiveInventory("WeaponSpecialAction", 1); }
 Script 339 (void) NET { GiveInventory("ClassThroweableAction", 1); }
+Script 340 (void) NET { GiveInventory("SlideKickAction", 1); }
  
 script "setEnergyShieldReload" (int flag) {
     ENERGY_SHIELD_RELOAD = flag;
@@ -1498,6 +1499,10 @@ script "dogs_currentSwitchCooldownValue" (void) {
 
 script "cvar_MoveBob" (void) {
     SetResultValue(GetCVar("movebob"));
+}
+
+script "movePlayerCameraTo" (int height) {
+    SetActorProperty(0, APROP_ViewHeight, height << 16);
 }
 
 

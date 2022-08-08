@@ -30,6 +30,7 @@ ACTOR PkDoubleShotguns : WeaponWithSubWeaponOption
 		
 	Select:
 		TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+		TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 		SGDL A 1 A_Raise
 		SGDL A 0 A_GunFlash
 		SGDL A 1 A_Raise
@@ -37,6 +38,7 @@ ACTOR PkDoubleShotguns : WeaponWithSubWeaponOption
 		
 	SuperSelect:
 		TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+		TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 		SGDL E 1 A_Raise
 		SGDL E 0 A_Raise
 		Loop
@@ -51,6 +53,7 @@ ACTOR PkDoubleShotguns : WeaponWithSubWeaponOption
 	// Left Shotgun
 	LIdle:
 		SGDL A 0 A_JumpIfInventory("ClassThroweableAction", 1, "SubWeaponCheck")
+		TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 		SGDL A 1 A_WeaponReady(WRF_ALLOWRELOAD|12)
 		SGDL A 0 A_JumpIfInventory("SynthFireLeft",1,"LFire")
 		SGDL A 0 A_JumpIfInventory("IsLReloading",1,"LReload")

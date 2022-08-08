@@ -15,6 +15,7 @@ ACTOR TacticShotgun : WeaponWithGrenadeOption {
 	
 		Select:
 			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+			TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 			RSHT A 1 A_Raise
 			Loop
 			
@@ -23,8 +24,9 @@ ACTOR TacticShotgun : WeaponWithGrenadeOption {
 			Loop
 			
 		Ready:
-			TNT1 A 0 A_GunFlash("DisplayA", GFF_NOEXTCHANGE)
 			RSHT A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
+			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
+			TNT1 A 0 A_GunFlash("DisplayA", GFF_NOEXTCHANGE)
 			RSHT A 1 A_WeaponReady(WRF_ALLOWRELOAD)
 			Loop
 	

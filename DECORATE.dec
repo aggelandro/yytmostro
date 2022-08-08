@@ -9,6 +9,7 @@
 #include "decorate/Misc/projectiles.txt"
 
 //universal weapons and items
+#include "decorate/Misc/Weapons/YYTWeapon/yytweapon.txt"
 #include "decorate/Misc/Weapons/HookShot/hookshot.dec"
 #include "decorate/Misc/Weapons/HitscanFixer/hitscanfixer.txt"
 #include "decorate/Misc/Weapons/WeaponWithThroweableOption/weaponwiththroweableoption.txt"
@@ -577,6 +578,7 @@ ACTOR UniversalPlayer : DoomPlayer
 	DamageFactor "FireBF", 0
 	DamageFactor "PPoison", 0.2
 	DamageFactor "SubSun", 0
+	Player.ViewHeight 50.0
   Player.CrouchSprite "PLYC"
   Player.StartItem "Fist"
   Player.StartItem "Pistol"

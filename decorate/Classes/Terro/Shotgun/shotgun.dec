@@ -15,6 +15,7 @@ actor TerroShotgun : WeaponWithSubWeaponOption {
 			
 		Ready:
 			HSHT A 0 A_JumpIfInventory("ClassThroweableAction", 1, "SubWeaponCheck")
+			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			HSHT A 1 A_WeaponReady
 			Loop
 			
@@ -24,6 +25,7 @@ actor TerroShotgun : WeaponWithSubWeaponOption {
 			
 		Select:
 			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+			TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 			HSHT A 1 A_Raise
 			Loop
 			

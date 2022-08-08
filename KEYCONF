@@ -7,3 +7,6 @@ DEFAULTBIND Q DetonateWaska
 ADDMENUKEY "Class Throweable Action" ThroweableAction
 ALIAS ThroweableAction "Puke 339"
 DEFAULTBIND G ThroweableAction
+
+ADDMENUKEY "SlideKick" SlideKick
+ALIAS SlideKick "Puke 340"

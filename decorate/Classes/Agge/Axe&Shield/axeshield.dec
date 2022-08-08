@@ -10,6 +10,7 @@ ACTOR AxeShield : WeaponWithGrenadeOption {
 		Ready:
 			TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, 4)
 			CONE B 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
+			CONE B 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			CONE AB 4 A_WeaponReady
 			Loop
 			CONB B 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
@@ -25,6 +26,7 @@ ACTOR AxeShield : WeaponWithGrenadeOption {
 			
 		Select:
 			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+			TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 			TNT1 A 0 A_PlaySound("agge/summon", CHAN_WEAPON)
 			TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, 11)
 			CONE TUVWXYZ 3 A_Raise
