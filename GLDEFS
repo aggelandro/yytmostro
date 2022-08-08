@@ -961,3 +961,109 @@ BrightMap Sprite ACNBC5
 Map "sprites/Enemies/Arachnotrons/Aracnorb/BMACNBC5"
 DisableFullBright
 }
+
+
+
+
+
+//Brightmaps Aliencubus
+
+BrightMap Sprite FATXA1
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWA1"
+}
+
+BrightMap Sprite FATXA5
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWA5"
+}
+
+BrightMap Sprite FATXB1
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWB1"
+}
+
+BrightMap Sprite FATXB5
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWB5"
+}
+
+BrightMap Sprite FATXC1
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWC1"
+}
+
+BrightMap Sprite FATXC5
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWC5"
+}
+
+BrightMap Sprite FATXD1
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWD1"
+}
+
+BrightMap Sprite FATXD5
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWD5"
+}
+
+BrightMap Sprite FATXE1
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWE1"
+}
+
+BrightMap Sprite FATXE5
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWE5"
+}
+
+BrightMap Sprite FATXF1
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWF1"
+}
+
+BrightMap Sprite FATXF5
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWF5"
+}
+
+BrightMap Sprite FATXG1
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWG1"
+}
+
+BrightMap Sprite FATXG5
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWG5"
+}
+
+BrightMap Sprite FATXH1
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWH1"
+}
+
+BrightMap Sprite FATXI1
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWI1"
+}
+
+BrightMap Sprite FATXJ1
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWJ1"
+}
+
+BrightMap Sprite FATXJ3
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWJ3"
+}
+
+BrightMap Sprite FATXJ8
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWJ8"
+}
+
+BrightMap Sprite FATXK0
+{
+Map "sprites/Enemies/Mancubus/Aliencubus/brightmaps/FATWK0"
+}

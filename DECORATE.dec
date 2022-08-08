@@ -100,6 +100,8 @@
 #include "decorate/Enemies/Arachnotrons/aracnorb.txt"
 
 #include "decorate/Enemies/Mancubus/FatsoRocket/fatsorocket.dec"
+#include "decorate/Enemies/Mancubus/aliencubus.txt"
+#include "decorate/Enemies/Mancubus/plasmabodyguard.txt"
 #include "decorate/Enemies/Cyberdemon/commanderofhell.txt"
 #include "decorate/Enemies/Mancubus/armoredmancubus.dec"
 #include "decorate/Enemies/Goats/diablo.txt"
@@ -202,8 +204,10 @@ ACTOR RevenantSpawner : RandomSpawner replaces Revenant
 }
 ACTOR FatsoSpawner : RandomSpawner replaces Fatso
 {
-	DropItem "Fatso2", 255, 70
-	DropItem "FatsoRocket", 255, 25
+	DropItem "Fatso2", 255, 40
+	DropItem "FatsoRocket", 255, 18
+	DropItem "Aliencubus", 255, 18
+	DropItem "PlasmaBodyguard", 255, 17
 	DropItem "Armncubus", 255, 5
 }
 ACTOR DemonSpawner : RandomSpawner replaces Demon

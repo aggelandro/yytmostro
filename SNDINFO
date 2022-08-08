@@ -526,3 +526,12 @@ rictus/pain		DRCTPAI
 rictus/sight	DRCTSEE
 rictus/ball		DRCTBL
 rictus/ballex	DRCTEX
+
+//Plasma bodyguard
+plasmab/attack			WLRS-1
+plasmab/sight				WLRS-2
+plasmab/idle				WLRS-3
+plasmab/pain				WLRS-4
+plasmab/death				WLRS-5
+plasmab/PlasmaFire	PLASMA4
+plasmab/impact			EX-TINY1
