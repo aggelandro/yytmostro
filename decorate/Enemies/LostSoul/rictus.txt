@@ -98,6 +98,7 @@ ACTOR RictusBall {
 	XScale 0.22
 	YScale 0.28
 	Species "Soul"
+	DamageType "FireR"
 	PROJECTILE
 	RENDERSTYLE ADD
 	+THRUSPECIES

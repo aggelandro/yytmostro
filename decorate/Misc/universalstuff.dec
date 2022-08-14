@@ -498,7 +498,6 @@ ACTOR MiniArachnotron : YYTMonster
 {
   RenderStyle Stencil
   StencilColor Red
-  Species Spider
   Health 1
   Radius 6
   Height 6

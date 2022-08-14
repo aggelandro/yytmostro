@@ -516,6 +516,7 @@ weapons/maceex	dsmaceex
 madness/demdth	dsdemdth
 madness/counts	dsconcts
 madness/count		dsconctd
+madness/laser		smlaser
 
 //hellfire elemental
 $rolloff hfelemental/lava 250 800

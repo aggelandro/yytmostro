@@ -5,8 +5,8 @@ ACTOR RocketSpiderMastermind : SpiderMastermind2
   Missile:
     SPID A 20 Bright A_FaceTarget
     SPID A 0 Bright A_FaceTarget
-    SPID G 8 Bright A_CustomMissile("RocketsOnFire",40,0,0)
-    SPID H 8 Bright A_CustomMissile("RocketsOnFire",40,0,0)
+    SPID G 16 Bright A_CustomMissile("RocketsOnFire",40,0,0)
+    SPID H 16 Bright A_CustomMissile("RocketsOnFire",40,0,0)
 		SPID H 1 Bright A_SpidRefire
     Goto Missile+1
 	Pain.Lightning:
@@ -37,6 +37,7 @@ ACTOR RocketsOnFire : Rocket
 }
 ACTOR FatShotX : FatShot
 {
+	Damage 0
   RenderStyle Add
   Alpha 0.4
   States
