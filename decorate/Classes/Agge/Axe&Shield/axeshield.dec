@@ -44,7 +44,7 @@ ACTOR AxeShield : WeaponWithGrenadeOption {
 		VSwing:
 			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
 			CONE GH 3
-			CONE I 4 A_CustomPunch(3 * random(1, 10), TRUE,0,"AggeAxePuff")
+			CONE I 4 A_CustomPunch(3 * random(1, 10), TRUE, CPF_NORANDOMPUFFZ,"AggeAxePuff")
 			CONE I 3 Offset(20, 70)
 			CONE J 4
 			CONE K 3
@@ -53,7 +53,7 @@ ACTOR AxeShield : WeaponWithGrenadeOption {
 		HSwing:
 			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
 			CONE LM 3
-			CONE N 4 A_CustomPunch(3 * random(1, 10), TRUE,0,"AggeAxePuff")
+			CONE N 4 A_CustomPunch(3 * random(1, 10), TRUE, CPF_NORANDOMPUFFZ,"AggeAxePuff")
 			CONE O 3
 			CONE P 4
 			CONE K 3
@@ -67,7 +67,7 @@ ACTOR AxeShield : WeaponWithGrenadeOption {
 		BerserkedVSwing:
 			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
 			CONB GH 3
-			CONB I 2 A_CustomPunch(20 * random(1, 10), TRUE, 0, "RedAggeAxePuff")
+			CONB I 2 A_CustomPunch(20 * random(1, 10), TRUE, CPF_NORANDOMPUFFZ, "RedAggeAxePuff")
 			CONB I 2 Offset(20, 70)
 			CONB J 2
 			CONB K 2
@@ -77,7 +77,7 @@ ACTOR AxeShield : WeaponWithGrenadeOption {
 			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
 			CONE L 3
 			CONB M 3
-			CONB N 1 A_CustomPunch(20 * random(1, 10), TRUE,0,"RedAggeAxePuff")
+			CONB N 1 A_CustomPunch(20 * random(1, 10), TRUE, CPF_NORANDOMPUFFZ, "RedAggeAxePuff")
 			CONB O 2
 			CONB P 3
 			CONB K 2
@@ -220,7 +220,7 @@ ACTOR AggeAxePuff {
 	+NOINTERACTION
 	+PUFFONACTORS
 	DamageType "Lightning"
-	Scale 0.3
+	Scale 0.4
 	
 	States {
 		XDeath:

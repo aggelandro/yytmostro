@@ -247,6 +247,7 @@ Actor ElectricMiniLaser : FastProjectile {
 	Speed 70
 	Renderstyle Add
 	Alpha 0.8
+	Scale 0.03
 	Damage 1
 	Missiletype "ElectricMiniLaserTrail"
 	MissileHeight 8
@@ -257,7 +258,7 @@ Actor ElectricMiniLaser : FastProjectile {
 	
 	States {
 		Spawn:
-			TNT1 A 1 NoDelay Bright A_ChangeVelocity(1,0.5*random(-3,3),0.5*random(-2,2),CVF_RELATIVE)
+			YAE1 A 1 NoDelay Bright A_ChangeVelocity(1,0.5*random(-3,3),0.5*random(-2,2),CVF_RELATIVE)
 			Loop
 			
 		Death:
@@ -272,7 +273,7 @@ Actor ElectricMiniLaser : FastProjectile {
 ACTOR ElectricMiniLaserTrail {
   RenderStyle Add
   Alpha 0.75
-  Scale 0.02
+  Scale 0.03
   +NOGRAVITY
   +CLIENTSIDEONLY
   +NOINTERACTION
@@ -280,7 +281,7 @@ ACTOR ElectricMiniLaserTrail {
 	
   States {
 		Spawn:
-		BDLS A 2 NoDelay bright A_FadeOut(0.1)
+		YAE1 A 2 NoDelay bright A_FadeOut(0.04)
 		Loop
   }
 }

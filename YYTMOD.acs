@@ -1505,6 +1505,30 @@ script "movePlayerCameraTo" (int height) {
     SetActorProperty(0, APROP_ViewHeight, height << 16);
 }
 
+script "setPitchToTarget" (int offz, int targetOffZ) {
+    int ttid = UniqueTID();
+    Thing_ChangeTID(0, ttid);
+    if (SetActivator(0, AAPTR_TARGET)) {
+        int targetX = GetActorX(0);
+        int targetY = GetActorY(0);
+        int targetZ = GetActorZ(0) + (targetOffZ << 16);
+    }
+    else terminate;
+
+    SetActivator(ttid);
+    Thing_ChangeTID(ttid, 0);
+    int length;
+    int y = GetActorY(0) - targetY;
+    int x = GetActorX(0) - targetX;
+    int z = (GetActorZ(0) + (offz << 16)) - targetZ;
+
+    int angle = VectorAngle(x, y);
+    if (((angle + 0.125) % 0.5) > 0.25) length = FixedDiv(y, Sin(angle));
+    else length = FixedDiv(x, Cos(angle));
+
+    SetActorPitch(0, GetActorPitch(0)+VectorAngle(length, z));
+}
+
 
 
 

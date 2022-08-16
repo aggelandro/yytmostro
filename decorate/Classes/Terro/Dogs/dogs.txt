@@ -184,10 +184,10 @@ ACTOR SeekerDogProjectile : DogProjectile {
 	States {
 		Spawn:
 			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(210, 280))
-			DOGW A 3 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
-			DOGW B 3 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
-			DOGW C 3 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
-			DOGW D 3 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			DOGW A 5 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			DOGW B 5 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			DOGW C 5 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			DOGW D 5 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
 			Goto SpawnLoop
 			
 		Bounce.Floor:
@@ -195,10 +195,10 @@ ACTOR SeekerDogProjectile : DogProjectile {
 			Goto SpawnLoop
 			
 		SpawnLoop:
-			DOGW A 3 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
-			DOGW B 3 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
-			DOGW C 3 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
-			DOGW D 3 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			DOGW A 5 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			DOGW B 5 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			DOGW C 5 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
+			DOGW D 5 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
 			Loop
 	}
 }

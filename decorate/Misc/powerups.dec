@@ -952,6 +952,10 @@ ACTOR AbstractContraToken : CustomInventory {
 		Pickup:
 			TNT1 A 0 A_JumpIfInventory("ContraWeapon", 1, "Success")
 			Fail
+	
+		Death:
+			"####" "#" 1 A_FadeOut(0.01)
+			Loop
 	}
 }
 
@@ -961,6 +965,7 @@ ACTOR SpreadGunToken : AbstractContraToken {
 	States {
 	
 		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(525, 700))
 			CTRP A -1 BRIGHT
 			Stop
 		
@@ -982,6 +987,7 @@ ACTOR HomingGunToken : AbstractContraToken {
 	States {
 	
 		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(525, 700))
 			CTRP B -1 BRIGHT
 			Stop
 			
@@ -1003,6 +1009,7 @@ ACTOR PrototypeGunToken : AbstractContraToken {
 	States {
 	
 		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(525, 700))
 			CTRP J -1 BRIGHT
 			Stop
 			
@@ -1023,6 +1030,7 @@ ACTOR LaserGunToken : AbstractContraToken {
 	
 	States {
 		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(525, 700))
 			CTRP C -1 BRIGHT
 			Stop
 			
@@ -1043,6 +1051,7 @@ ACTOR FlamethrowerGunToken : AbstractContraToken {
 	
 	States {
 		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(525, 700))
 			CTRP H -1 BRIGHT
 			Stop
 			
@@ -1063,6 +1072,7 @@ ACTOR CrusherGunToken : AbstractContraToken {
 	
 	States {
 		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(525, 700))
 			CTRP I -1 BRIGHT
 			Stop
 			

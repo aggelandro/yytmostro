@@ -404,7 +404,7 @@ Actor CyBaronMiniLaser : FastProjectile {
 	Height 5
 	Radius 5
 	Speed 70
-	Scale 1
+	Scale 0.04
 	Renderstyle Add
 	Alpha 0.8
 	Decal "Scorch"
@@ -418,7 +418,7 @@ Actor CyBaronMiniLaser : FastProjectile {
 	
 	States {
 		Spawn: 
-			TNT1 A 1 NoDelay Bright A_ChangeVelocity(1,0.5*random(-3,3),0.5*random(-2,2),CVF_RELATIVE)
+			YAE3 A 1 NoDelay Bright A_ChangeVelocity(1,0.5*random(-3,3),0.5*random(-2,2),CVF_RELATIVE)
 			Loop
 			
 		Death:
@@ -441,7 +441,7 @@ ACTOR CyBaronMiniLaserTrail {
 	
   States {
 		Spawn:
-		GDLS A 2 NoDelay bright A_FadeOut(0.2)
+		YAE3 A 2 NoDelay bright A_FadeOut(0.2)
 		Loop
   }
 }

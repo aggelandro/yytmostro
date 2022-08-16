@@ -1,14 +1,18 @@
 ACTOR SpiderMadnessmind : SpiderMastermind2 {
+	Health 4000
 	SeeSound "madness/sight"
   PainSound "spider/pain"
   DeathSound "madness/demdth"
   ActiveSound "madness/active"
   Obituary "%o became another victim of the SpiderMadnessmind."
 	var int user_attack;
+	var int user_cannon_height;
+	var int user_original_pitch;
 	
 	States {
 		SpawnLoop:
-			CONQ A 0
+			CONQ A 0 A_SetUserVar("user_cannon_height", 42)
+			CONQ A 0 A_SetUserVar("user_original_pitch", pitch)
 			CONQ A 0 A_SpawnItemEx("SkullCube", 0, 0, 32, 0, 0, 0, 0, SXF_SETMASTER)
 			CONQ A 0 A_SpawnItemEx("SkullCube", 0, 0, 32, 0, 0, 0, 120, SXF_SETMASTER)
 			CONQ A 0 A_SpawnItemEx("SkullCube", 0, 0, 32, 0, 0, 0, 240, SXF_SETMASTER)
@@ -25,17 +29,19 @@ ACTOR SpiderMadnessmind : SpiderMastermind2 {
 			CONQ CDD 3 A_Chase
 			CONQ E 3 A_Metal
 			CONQ EFF 3 A_Chase
-			Loop
+			Goto See
 			
 		Missile:
 			TNT1 A 0 A_JumpIf(user_attack < 1 && health < 2000, "Countdown")
 			CONQ A 20 Bright A_FaceTarget
 			TNT1 A 0 A_PlaySound("madness/laser", CHAN_AUTO)
-			CONQ G 8 Bright A_CustomMissile("MadnessBeam", 48, 0, 0, CMF_OFFSETPITCH, -5)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setPitchToTarget", user_cannon_height)
+			CONQ G 8 Bright A_SpawnItemEx ("LaserProj", 12*cos(-pitch), 0, 12*sin(-pitch)+user_cannon_height, 0, 0, 0, 0, SXF_TRANSFERPITCH)
 			TNT1 A 0 A_PlaySound("madness/laser", CHAN_AUTO)
-			CONQ H 8 Bright A_CustomMissile("MadnessBeam", 48, 0, 15, CMF_AIMOFFSET|CMF_OFFSETPITCH, -5)
-			TNT1 A 0 Bright A_CustomMissile("MadnessBeam", 48, 0, -15, CMF_AIMOFFSET|CMF_OFFSETPITCH, -5)
+			CONQ H 8 Bright A_SpawnItemEx ("LaserProj", 12*cos(-pitch), 0, 12*sin(-pitch)+user_cannon_height, 0, 0, 0, 15, SXF_TRANSFERPITCH)
+			TNT1 A 0 Bright A_SpawnItemEx ("LaserProj", 12*cos(-pitch), 0, 12*sin(-pitch)+user_cannon_height, 0, 0, 0, -15, SXF_TRANSFERPITCH)
 			TNT1 A 0 A_SetUserVar("user_attack", user_attack - 1)
+			TNT1 A 0 A_SetPitch(user_original_pitch)
 			CONQ H 1 Bright A_SpidRefire
 			Goto Missile+3
 			
@@ -249,55 +255,57 @@ ACTOR MadnessMiniNuke {
   }
 }
 
-ACTOR MadnessBeam : FastProjectile {
-	Radius 10
-	Height 19
-	Damage 0
-	Speed 200
-	Scale 0.5
-	RenderStyle Normal
+actor LaserProj {
+  Radius 12
+  Height 24
+  Scale 0.075
+  Damage 0
+  Renderstyle Add
 	Species "Spider"
-	DeathSound "weapons/plasmax"
-	MissileType "MadnessBeamTrail"
-	MissileHeight 8
-	+PAINLESS
+  Decal "Scorch"
+  PROJECTILE
+  +PAINLESS
 	+RIPPER
 	+CANNOTPUSH
 	+NODAMAGETHRUST
 	+DONTRIP
 	+BLOODLESSIMPACT
-	+NOBLOCKMAP
-	+NOGRAVITY
 	+THRUSPECIES
 	+BRIGHT
 	
-	States {
+  States {
 		Spawn:
-			BPS1 ABCD 1
-			BPS2 ABCD 1
-			Goto Spawn+4
+			YAE2 A 0
+			YAE2 A 0 A_SpawnItemEx("LaserSpark", 0, 0, 12, frandom(-2, 2), frandom(-2, 2), frandom(-2, 2), 0, 0, 254)
+			YAE2 A 1 A_SpawnItemEx("LaserProj", 12*cos(-pitch), 0, 12*sin(-pitch), 0, 0, 0, 0, SXF_TRANSFERPOINTERS|SXF_TRANSFERPITCH)
+			Stop
 			
 		Death:
-			BPD1 ABCD 3
+			YAE2 A 1 A_SetScale(0.1, 0.1)
+			YAE2 A 1 A_SetScale(0.11, 0.11)
+			YAE2 A 1 A_SetScale(0.12, 0.12)
+			YAE2 A 1 A_SetScale(0.13, 0.13)
 			TNT1 A 13 A_SetScale(1.1)
 			HBA3 D 3 A_SpawnItemEx("DiabloCometDeathGlow",0,0,0,0,0,0,0,128,0)
-			HBA3 E 3 Bright A_Explode(Random(5, 10)*8, 64)
+			HBA3 E 3 A_Explode(Random(5, 10)*8, 64)
 			TNT1 A 0 A_SpawnItemEx("OrangeParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
 			HBA3 F 3 A_SpawnItemEx("DiabloMeteorDeath",0,0,0,0,0,0,0,128,0)
-			HBA3 GHIJKLM 3 Bright
+			HBA3 GHIJKLM 3
 			Stop
-	}
+  }
 }
 
-ACTOR MadnessBeamTrail : BrimstoneTrail {
-	Scale 0.5
-	RenderStyle Normal
-	Species "Spider"
-	+BRIGHT
+ACTOR LaserSpark {
+	Radius 3
+	Height 4
+	Scale 0.04
+	Renderstyle Add
+	+CLIENTSIDEONLY
+	+NOINTERACTION
 	
 	States {
 		Spawn:
-			BPS2 ABCD 2
-			Stop
-  }
+		YAE2 A 1 BRIGHT A_FadeOut (0.04)
+		Loop
+	}
 }
