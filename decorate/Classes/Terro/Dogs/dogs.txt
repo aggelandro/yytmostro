@@ -47,8 +47,8 @@ ACTOR Dogs : YYTWeapon {
 			Loop
 		
 		Fire:
-			TNT1 A 0 A_AlertMonsters
 			TNT1 A 0 A_JumpIfInventory("SwitchToken", 1, "Fire2")
+			TNT1 A 0 A_AlertMonsters
 			PELB B 3
 			PELB C 2
 			PELB D 2 A_FireCustomMissile("CacoBall", 0, 0)
@@ -73,18 +73,19 @@ ACTOR Dogs : YYTWeapon {
 			Goto Ready
 			
 		Fire2:
-			PECH A 4
-			PECH B 3 A_TakeInventory("Cell", 1)
+			TNT1 A 0 A_AlertMonsters
+			PECH AB 3
+			PECH A 3 A_TakeInventory("Cell", 1)
 			TNT1 A 0 A_FireCustomMissile("SeekerDogProjectile", 0, 1, 0, -27)
-			PECH B 20 A_ReFire("Hold2")
+			PECH BABABAB 3 A_ReFire("Hold2")
 			Goto Ready
 			
 		Hold2:
 			TNT1 A 0 A_AlertMonsters
-			PECH A 4
-			PECH B 3 A_TakeInventory("Cell", 1)
+			PECH AB 3
+			PECH A 3 A_TakeInventory("Cell", 1)
 			TNT1 A 0 A_FireCustomMissile("SeekerDogProjectile", 0, 1, 0, -27)
-			PECH B 20 A_ReFire("Hold2")
+			PECH BABABAB 3 A_ReFire("Hold2")
 			Goto Ready
 			
 		AltFire:
@@ -183,7 +184,7 @@ ACTOR SeekerDogProjectile : DogProjectile {
 	
 	States {
 		Spawn:
-			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(210, 280))
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", Random(140, 210))
 			DOGW A 5 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
 			DOGW B 5 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)
 			DOGW C 5 A_SeekerMissile(15, 20, SMF_LOOK|SMF_CURSPEED, 256, 3)

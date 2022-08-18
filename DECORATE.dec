@@ -601,12 +601,10 @@ ACTOR UniversalPlayer : DoomPlayer
   Player.ColorSet 5, "Light Brown",   0x38, 0x47,  0x3A
   Player.ColorSet 6, "Light Red",     0xB0, 0xBF,  0xB2
   Player.ColorSet 7, "Light Blue",    0xC0, 0xCF,  0xC2
-	var int user_is_dead;
 
   States
   {
   Spawn:
-		TNT1 A 0 A_SetUserVar("user_is_dead", 0)
     PLAY A -1
     Goto Spawn+1
   See:
@@ -622,8 +620,11 @@ ACTOR UniversalPlayer : DoomPlayer
     PLAY G 4 
     PLAY G 4 A_Pain
     Goto Spawn
+	Pain.Lightning:
+		TNT1 A 0 A_SpawnItemEx("ElectricSpark1",random(-10,10),random(-15,-5),random(0,Height*0.5),0,0,0,0)
+		TNT1 A 0 A_SpawnItemEx("ElectricSpark2",random(-10,10),random(5,15),random(0,Height*0.5),0,0,0,0)
+		Goto Pain
   Death:
-		TNT1 A 0 A_SetUserVar("user_is_dead", 1)
     PLAY H 0 A_PlayerSkinCheck("AltSkinDeath")
   Death1:
     PLAY H 10
@@ -633,7 +634,6 @@ ACTOR UniversalPlayer : DoomPlayer
     PLAY N -1
     Stop
   XDeath:
-		TNT1 A 0 A_SetUserVar("user_is_dead", 1)
     PLAY O 0 A_PlayerSkinCheck("AltSkinXDeath")
   XDeath1:
     PLAY O 5
@@ -1049,7 +1049,25 @@ ACTOR ChainsawSpawner : CustomInventory replaces Chainsaw
 			Fail
 	}
 }
-ACTOR BFG9001 : BFG9000{}
+ACTOR BFG9001 : BFG9000 {
+	States {
+		Fire:
+			BFGG A 20 A_BFGSound
+			BFGG B 10 A_GunFlash
+			BFGG B 10 A_FireCustomMissile("BFGBall2", 0, 1)
+			BFGG B 20 A_ReFire
+			Goto Ready
+	}
+}
+ACTOR BFGBall2 : BFGBall {
+	States {
+		Death:
+			BFE1 AB 8 Bright
+			BFE1 C 8 Bright A_BFGSpray("BFGExtra", 40, 7)
+			BFE1 DEF 8 Bright
+			Stop
+	}
+}
 ACTOR BFGSpawner : CustomInventory replaces BFG9000 {
 	Scale 0.5
 	Inventory.PickupMessage "$GOTBFG9000"

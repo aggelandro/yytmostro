@@ -216,12 +216,12 @@ ACTOR CommanderHellBall : BelphegorGreenPlasmaBall {
 		Spawn:
 			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("holdActorVelocityFor", 104)
 			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
-			BPBA A 1 A_JumpIf(ACS_NamedExecuteWithResult("isTargetDead"), "Death")
+			BPBA A 1 A_JumpIf(CallACS("isTargetDead"), "Death")
 			TNT1 A 0 A_JumpIfInventory("LoopFlag", 52, 1)
 			Goto Spawn+1
 			TNT1 A 0 A_TakeInventory("LoopFlag", 52)
 			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
-			BPBA B 1 A_JumpIf(ACS_NamedExecuteWithResult("isTargetDead"), "Death")
+			BPBA B 1 A_JumpIf(CallACS("isTargetDead"), "Death")
 			TNT1 A 0 A_JumpIfInventory("LoopFlag", 52, 1)
 			Goto Spawn+5
 			TNT1 A 0 A_PlaySound("commander/grenadefire", CHAN_BODY)

@@ -299,6 +299,7 @@ ACTOR ElderDemon : Cyberdemon2 {
 			Goto See
 			
 		Curse:
+			TNT1 A 0 A_GiveInventory("ReverseToken", 1, AAPTR_TARGET)
 			TNT1 A 0 ACS_NamedExecuteWithResult("reversePlayerControls", 700)
 			TNT1 A 0 A_SetUserVar("user_curse_delay", 1050)
 			TNT1 A 0 ACS_NamedExecuteWithResult("curseDelayCooldown", 1050)
@@ -723,3 +724,9 @@ ACTOR EDBaronOfHell : BaronOfHell2 {
 }
 
 ACTOR EDBaronBall : BaronBall { Damage 4 }
+ACTOR ReverseToken : Inventory {
+	-INVBAR
+  +UNDROPPABLE
+  Inventory.MaxAmount 1
+	Inventory.Amount 1
+}

@@ -193,9 +193,9 @@ ACTOR EterealRifle {
 			TNT1 A 0 A_CustomMissile("ElectricMiniLaser", 10, 0, 0, CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH)
 			TNT1 A 0 A_Jump(256, 2)
 			TNT1 A 0 A_CustomMissile("ElectricMiniLaser", 10)
-			TNT1 A 0 A_JumpIfInventory("LoopFlag", 25, 1)
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 18, 1)
 			Loop
-			TNT1 A 0 A_TakeInventory("LoopFlag", 25)
+			TNT1 A 0 A_TakeInventory("LoopFlag", 18)
 			TNT1 A 0 A_SpawnItemEx("BlueBodyParticle2Spawner", Random(-10, 10), 0, 0, 0, 0, 0, 0, 128)
 			Goto Death
 			

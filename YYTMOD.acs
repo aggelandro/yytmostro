@@ -392,9 +392,9 @@ script "isEffectChanceSuccessful" (int chance) {
 
 // Obligado a usar switch a causa de que ACS no se banca otras variables que
 // no sean int como parametros y que admite una cantidad limitada de ellos
-script "applyEffect" (int option, int dur, int force) {
+script "applyEffect" (int option, int dur, int arg2) {
     int mtid, ptid, times, i;
-    if (CheckFlag(0, "CORPSE")) terminate;
+    if (ClassifyActor(0) & ACTOR_DEAD) terminate;
     switch(option) {
         case 1: {
             // Fear: El enemigo huye del jugador pero tiene chance de contraatacar en medio
@@ -417,7 +417,7 @@ script "applyEffect" (int option, int dur, int force) {
         }; break;
         case 2: {
             // Araña aliada
-            while(GetActorProperty(0, APROP_Health) > 0.0) { Delay(1); }
+            while(ClassifyActor(0) & ACTOR_ALIVE) { Delay(1); }
             Spawn("FriendlyMiniArachnotron", GetActorX(0), GetActorY(0), GetActorZ(0));
         }; break;
         case 3: {
@@ -438,7 +438,7 @@ script "applyEffect" (int option, int dur, int force) {
             TakeInventory("PetrifyingDebuffGiver", 1);
             SetActorState(ptid, "Death");
             Thing_ChangeTID(ptid, 0);
-            if (CheckFlag(0, "CORPSE")) terminate;
+            if (ClassifyActor(0) & ACTOR_DEAD) terminate;
             SetActorState(0, "Depetrify");
         }; break;
         case 4: {
@@ -446,14 +446,14 @@ script "applyEffect" (int option, int dur, int force) {
             SetActivator(GetActorProperty(0, APROP_TracerTID));
             int angle = GetActorAngle(0) >> 8;
             if (angle < 128) angle = angle + 128; else angle = angle - 128;
-            ThrustThing(angle, force, 0, 0);
+            ThrustThing(angle, arg2, 0, 0);
         }; break;
         case 5: {
             // Poison hace el daño de la lágrima al monstruo cada 2 segundos una X cantidad de veces
             times = dur / 35;
             int poisonDmg;
             if (CheckFlag(0, "ISMONSTER")) {
-                poisonDmg = 7; // Se pierde la relación con el damage dealer
+                poisonDmg = Random(3, 7); // Se pierde la relación con el damage dealer
             }
             else {
                 poisonDmg = GetActorProperty(0, APROP_Damage);
@@ -494,12 +494,11 @@ script "applyEffect" (int option, int dur, int force) {
             SetActivator(mtid);
             Thing_ChangeTID(mtid, 0);
 
-            while (GetActorProperty(0, APROP_Health) > 0.0) {
+            while (ClassifyActor(0) & ACTOR_ALIVE) {
                 Thing_Damage2(0, multiplyValue(GetUserVariable(0, "user_max_health"), 0.1), "Bleeding");
                 Delay(175);
             }
 
-            SetActorState(btid, "Death");
             TakeInventory("BleedingDebuffGiver", 1);
             Thing_ChangeTID(btid, 0);
         }; break;
@@ -530,11 +529,11 @@ script "applyEffect" (int option, int dur, int force) {
                 SetActivator(mtid);
                 Thing_ChangeTID(mtid, 0);
                 for (i=0; i<times; i++) {
+                    if (ClassifyActor(0) & ACTOR_DEAD) break;
                     Thing_Damage2(0, burnDmg, "FireRF");
                     Delay(35);
                 }
 
-                SetActorState(ptid, "Death");
                 TakeInventory("BurnDebuffGiver", 1);
                 Thing_ChangeTID(ptid, 0);
             }
@@ -578,7 +577,7 @@ script "applyEffect" (int option, int dur, int force) {
             SetActivator(mtid);
             SetActorProperty(0, APROP_Speed, FixedMul(GetActorProperty(0, APROP_Speed), 1.5));
             Delay(15);
-            Thing_Damage2(0, Random(-200, -100), "Healing");
+            Thing_Damage2(0, Random(-250, -150), "Healing");
             Delay(510);
             SetActorProperty(0, APROP_Speed, FixedDiv(GetActorProperty(0, APROP_Speed), 1.5));
             Thing_ChangeTID(mtid, 0);
@@ -606,7 +605,11 @@ script "applyEffect" (int option, int dur, int force) {
         }; break;
         case 12: {
             // Corazones del castlevania
-            while(GetActorProperty(0, APROP_Health) > 0.0) { Delay(1); }
+            Delay(1);
+            if (ClassifyActor(0) & ACTOR_ALIVE) {
+                TakeInventory("CHDCGiver", 1);
+                terminate;
+            }
             int dropChance = Random(0, 99);
             int actHeight;
             if (dropChance < 75) {
@@ -636,48 +639,49 @@ script "applyEffect" (int option, int dur, int force) {
             }
             TakeInventory("CHDCGiver", 1);
         }; break;
+        case 13: {
+            // Lightning, parecido a poison, hace daño por tiempo
+            times = dur / 35;
+            for (i=0; i<times; i++) {
+                Thing_Damage2(0, arg2, "Lightning");
+                Delay(105);
+            }
+
+            TakeInventory("LightningCounter", 1);
+        }; break;
     }
 }
 
-script "applyEffectOnPlayer" (int option, int duration, int arg2) {
+script "applyEffectOnPlayer" (int option, int duration, int arg2, int arg3) {
     // Efectos de los monstruos al jugador
     // NOTA: Puede pasar que un monstruo le pegue a otro en el medio, ese caso se tiene en cuenta
     // arg2, etc. son comodines
-    int ptid, ntid, i;
+    int ptid, ntid, i, lapse, j;
     switch(option) {
         case 1: {
-            ptid = GetActorProperty(0, APROP_TracerTID);
-            int poisonDmg = GetActorProperty(0, APROP_Damage);
-            if (poisonDmg > 10000) poisonDmg = Random(0, 1);
-            int lapse = duration / arg2;
             if (SetActivator(0, AAPTR_TRACER)) {
-                if (!ptid) {
-                    int mtid = UniqueTID();
-                    Thing_ChangeTID(0, mtid);
-                    poisonDmg = Random(3, 7);
+                if (ClassifyActor(0) & ACTOR_MONSTER) {
+                    ACS_NamedExecuteAlways("applyEffect", 0, 5, 140);
+                    TakeInventory("PoisonCounter", 1);
+                    terminate;
                 }
 
+                int poisonDmg;
+                lapse = duration / arg2;
+                ptid = ActivatorTID();
                 ntid = UniqueTID();
                 Spawn("PoisonEffect", GetActorX(0), GetActorY(0), GetActorZ(0), ntid);
                 SetActivator(ntid);
-                if (ptid) {
-                    SetPointer(AAPTR_TRACER, ptid);
-                    SetUserVariable(0, "user_se_monster_height", GetActorProperty(ptid, APROP_Height) >> 16);
-                    SetActivator(ptid);
-                }
-                else {
-                    SetPointer(AAPTR_TRACER, mtid);
-                    SetUserVariable(0, "user_se_monster_height", GetActorProperty(mtid, APROP_Height) >> 16);
-                    SetActivator(mtid);
-                    Thing_ChangeTID(mtid, 0);
-                }
+                SetPointer(AAPTR_TRACER, ptid);
+                SetUserVariable(0, "user_se_monster_height", GetActorProperty(ptid, APROP_Height) >> 16);
+                SetActivator(ptid);
 
                 for (i=0; i<arg2; i++) {
+                    poisonDmg = Random(0, 1);
                     Thing_Damage2(0, poisonDmg, "Poison");
-                    for (i=0; i<lapse; i++) {
+                    for (j=0; j<lapse; j++) {
                         Delay(1);
-                        if (GetUserVariable(0, "user_is_dead")) {
-                            SetActorState(ntid, "Death");
+                        if (ClassifyActor(0) & ACTOR_DEAD) {
                             TakeInventory("PoisonCounter", 1);
                             Thing_ChangeTID(ntid, 0);
                             terminate;
@@ -705,7 +709,7 @@ script "applyEffectOnPlayer" (int option, int duration, int arg2) {
                 SetActorProperty(0, APROP_Speed, FixedDiv(GetActorProperty(0, APROP_Speed), 2.0));
                 for (i=0; i<duration; i++) {
                     Delay(1);
-                    if (GetUserVariable(0, "user_is_dead")) {
+                    if (ClassifyActor(0) & ACTOR_DEAD) {
                         SetActorState(ntid, "Death");
                         TakeInventory("SlowCounter", 1);
                         Thing_ChangeTID(ntid, 0);
@@ -717,6 +721,35 @@ script "applyEffectOnPlayer" (int option, int duration, int arg2) {
                 SetActorState(ntid, "Death");
                 TakeInventory("SlowCounter", 1);
                 Thing_ChangeTID(ntid, 0);
+            }
+        }; break;
+        case 3: {
+            // Lightning, parecido a poison, hace daño por tiempo
+            if (SetActivator(0, AAPTR_TRACER)) {
+                if (ClassifyActor(0) & ACTOR_MONSTER) {
+                    // Buscar una solución más general
+                    if (CheckActorClass(0, "DoomImp2") || CheckActorClass(0, "SpiderImp") ||
+                        CheckActorClass(0, "Impherno") || CheckActorClass(0, "Kimp")) {
+                        terminate;
+                    }
+                    ACS_NamedExecuteAlways("applyEffect", 0, 13, 140, 3);
+                    terminate;
+                }
+
+                lapse = duration / arg2;
+                for (i=0; i<arg2; i++) {
+                    int damage = Random(0, arg3);
+                    Thing_Damage2(0, damage, "Lightning");
+                    for (j=0; j<lapse; j++) {
+                        Delay(1);
+                        if (ClassifyActor(0) & ACTOR_DEAD) {
+                            TakeInventory("LightningCounter", 1);
+                            terminate;
+                        }
+                    }
+                }
+
+                TakeInventory("LightningCounter", 1);
             }
         }; break;
     }
@@ -852,11 +885,6 @@ script "setPlayerLight" (int isOn) {
         SetActorState(utid, "Death");
         Thing_ChangeTID(utid, 0);
     }
-}
-
-script "killIfPlayerIsDead" (void) {
-    int ptid = GetActorProperty(0, APROP_TracerTID);
-    if (!ptid) SetActorState(0, "Death");
 }
 
 script "getTargetRadius" (void) {
@@ -995,20 +1023,12 @@ script "setTracerToPlayerFromTarget" (void) {
     }
 }
 
-script "killEffectIfMonsterIsDead" (void) {
-    int ttid = UniqueTID();
-    Thing_ChangeTID(0, ttid);
-    if(SetActivator(0, AAPTR_TRACER)) {
-        if (CheckFlag(0, "CORPSE")) {
-            SetActorState(ttid, "Death");
-            Thing_ChangeTID(ttid, 0);
-        }
-    }
-}
-
 script "setActorSpeed" (int value, int tid) {
     value = value << 16;
-    SetActorProperty(tid, APROP_Speed, value);
+    if (CheckInventory("SlowCounter") == 1) SetActorProperty(tid, APROP_Speed, FixedDiv(value, 2.0));
+    else SetActorProperty(tid, APROP_Speed, value);
+
+    if (CheckInventory("ReverseToken") == 1) SetActorProperty(tid, APROP_Speed, -GetActorProperty(tid, APROP_Speed));
 }
 
 script "transferHealthTo" (int tid) {
@@ -1299,7 +1319,15 @@ script "setTracerToNull" (int tid) {
 
 script "isTargetDead" (void) {
     if (SetActivator(0, AAPTR_TARGET)) {
-        SetResultValue(CheckFlag(0, "CORPSE"));
+        SetResultValue(ClassifyActor(0) & ACTOR_DEAD);
+        terminate;
+    }
+    SetResultValue(1);
+}
+
+script "isTracerDead" (void) {
+    if (SetActivator(0, AAPTR_TRACER)) {
+        SetResultValue(ClassifyActor(0) & ACTOR_DEAD);
         terminate;
     }
     SetResultValue(1);
@@ -1368,6 +1396,7 @@ script "reversePlayerControls" (int tics) {
         SetActorProperty(0, APROP_Speed, -currSpeed);
         Delay(tics);
         SetActorProperty(0, APROP_Speed, currSpeed);
+        TakeInventory("ReverseToken", 1);
     }
 }
 

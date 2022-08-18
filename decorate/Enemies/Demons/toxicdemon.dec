@@ -132,7 +132,6 @@ ACTOR ToxicBreath {
 		XDeath:
 			TNT1 A 0 A_JumpIfInventory("PoisonCounter", 0, "Death", AAPTR_TRACER)
 			TNT1 A 0 A_GiveInventory("PoisonCounter", 1, AAPTR_TRACER)
-			// TODO: Que el veneno haga más daño si le da a otros monstruos
 			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffectOnPlayer", 1, 1050, 6)
 			Goto Death
 			
