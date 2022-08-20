@@ -1394,7 +1394,13 @@ script "reversePlayerControls" (int tics) {
         HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEINOUT|HUDMSG_ALPHA, 0, CR_ORANGE, 320.0, 240.0, 0.8, 0.3, 0.3, 0.8);
         int currSpeed = GetActorProperty(0, APROP_Speed);
         SetActorProperty(0, APROP_Speed, -currSpeed);
-        Delay(tics);
+        while (tics > 0) {
+            Delay(1);
+            if (ClassifyActor(0) & ACTOR_DEAD) {
+                TakeInventory("ReverseToken", 1);
+            }
+            tics--;
+        }
         SetActorProperty(0, APROP_Speed, currSpeed);
         TakeInventory("ReverseToken", 1);
     }
