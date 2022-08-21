@@ -28,7 +28,7 @@ ACTOR Diablo : BaronOfHell2 {
 	var int user_illusions_on;
 	
 	States {
-		Spawn:
+		SpawnLoop:
 			PYLD AB 10 A_Look
 			Loop
 			

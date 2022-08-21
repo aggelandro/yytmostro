@@ -9,7 +9,7 @@ ACTOR PlasmaBodyguard : Fatso2 {
 	+NOBLOOD
 	
 	States {
-		Spawn:
+		SpawnLoop:
 			PFAT AB 15 A_Look
 			Loop
 			

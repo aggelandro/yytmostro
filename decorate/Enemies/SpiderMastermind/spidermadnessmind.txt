@@ -29,7 +29,7 @@ ACTOR SpiderMadnessmind : SpiderMastermind2 {
 			CONQ CDD 3 A_Chase
 			CONQ E 3 A_Metal
 			CONQ EFF 3 A_Chase
-			Goto See
+			Loop
 			
 		Missile:
 			TNT1 A 0 A_JumpIf(user_attack < 1 && health < 2000, "Countdown")

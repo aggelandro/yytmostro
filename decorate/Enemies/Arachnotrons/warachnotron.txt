@@ -10,7 +10,7 @@ ACTOR Warachnotron : Arachnotron2 {
 	var int user_shield_on;
 	
 	States {
-		Spawn:
+		SpawnLoop:
 			CSPI B 10 A_Look
 			Loop
 			

@@ -13,8 +13,8 @@ ACTOR Enforcer : Pinky2 {
 	+NOFEAR
 	var int user_calm;
 	
-	States { 
-		Spawn: 
+	States {
+		SpawnLoop: 
 			IFN2 AB 10 A_Look
       Loop
 			

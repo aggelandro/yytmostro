@@ -19,7 +19,7 @@ ACTOR Rictus : LostSoul2 {
 	+QUICKTORETALIATE
 	
 	States {
-		Spawn:
+		SpawnLoop:
 			TNT1 A 0 A_SpawnItem("RictFireSpawner",0,0,0,0)
 			RICT A 2 Bright A_Look
 			Loop

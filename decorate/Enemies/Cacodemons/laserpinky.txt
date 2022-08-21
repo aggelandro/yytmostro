@@ -15,7 +15,7 @@ ACTOR Brimgoyle : Cacodemon2 {
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	
 	States {
-		Spawn:
+		SpawnLoop:
 			SARF AABBCCBB 3 A_Look
 			Loop
 			

@@ -5,6 +5,7 @@ ACTOR AngryBaron : BaronOfHell2 {
 	var int user_angry;
   States {
 		See:
+			TNT1 A 0 A_JumpIf(user_angry, "AngrySee")
 			BOSS A 0 A_JumpIf(health < 600,"Transform")
 			BOSS AA 3 A_Chase
 			BOSS A 0 A_JumpIf(health < 600,"Transform")

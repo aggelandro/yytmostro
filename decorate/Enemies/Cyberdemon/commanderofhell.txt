@@ -94,8 +94,6 @@ ACTOR HellCommander : Cyberdemon2 {
 			Goto SeeLoop
 			
 		Death:
-			TNT1 A 0 A_JumpIf(user_spawn_tid == 0, 2)
-			TNT1 A 0 ACS_NamedExecuteWithResult("killActorWithTID", user_spawn_tid)
 			COMM H 10 Bright
 			COMM I 10 Bright A_Scream
 			COMM JKL 10 Bright
@@ -287,11 +285,13 @@ ACTOR StrengthAura {
 			
 		SpawnLoop:
 			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			TNT1 A 0 A_JumpIf(CallACS("isTracerDead"), "Death")
 			AURA BCDA 2 A_Warp(AAPTR_TRACER, 5, 0, 0, 0, WARPF_NOCHECKPOSITION)
 			TNT1 A 0 A_JumpIfInventory("LoopFlag", 22, 1)
 			Loop
 			TNT1 A 0 A_TakeInventory("LoopFlag", 22)
 			AURA A 1 A_RadiusGive("BuffSTRSpell", 1024, RGF_MONSTERS|RGF_NOTRACER)
+			TNT1 A 0 A_JumpIf(CallACS("isTracerDead"), "Death")
 			TNT1 A 0 A_Warp(AAPTR_TRACER, 5, 0, 0, 0, WARPF_NOCHECKPOSITION)
 			Loop
 			

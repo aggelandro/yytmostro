@@ -12,7 +12,7 @@ ACTOR HellfireElemental : PainElemental2 {
 	+QUICKTORETALIATE
 	
 	States {
-		Spawn:
+		SpawnLoop:
 			TNT1 A 0 A_LoopActiveSound
 			INFP AABBCCDD 3 Bright A_Look
 			Loop

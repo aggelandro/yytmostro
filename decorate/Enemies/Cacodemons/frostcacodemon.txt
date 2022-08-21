@@ -187,6 +187,7 @@ ACTOR FrostCacoBall : CacodemonBall {
 
 ACTOR FrostTPCacoBall : FrostCacoBall {
 	Speed 8
+	Damage 4
 	+SEEKERMISSILE
 
 	States {

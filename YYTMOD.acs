@@ -952,10 +952,6 @@ script "holdActorVelocityFor" (int tics) {
     SetActorVelocity(0, currVelX, currVelY, currVelZ, false, false);
 }
 
-script "killActorWithTID" (int tid) {
-    SetActorState(tid, "Death");
-}
-
 script "setTIDTracerPointerToSelf" (int tid) {
     int mtid = UniqueTID();
     Thing_ChangeTID(0, mtid);
@@ -1053,14 +1049,17 @@ script "homingAtNegativeZVelocity" (void) {
     }
 
     int ttid = UniqueTID();
+    int ttid2 = UniqueTID();
     Thing_ChangeTID(0, ttid);
-    SetActivatorToTarget(0);
-    int ptid = GetActorProperty(0, APROP_TargetTID);
-    SetActivator(ttid);
-    // Si es un monstruo no interesa que sea target
-    if (ptid) SetPointer(AAPTR_TRACER, ptid);
-    SetUserVariable(0, "user_homing_flag", 1);
-    Thing_ChangeTID(ttid, 0);
+    if (SetActivator(0, AAPTR_TARGET)) {
+        Thing_ChangeTID(0, ttid2);
+        SetActivator(ttid);
+        if (SetPointer(AAPTR_TRACER, ttid2, AAPTR_TARGET)) {
+            SetUserVariable(0, "user_homing_flag", 1);
+        }
+        Thing_ChangeTID(ttid, 0);
+        Thing_ChangeTID(ttid2, 0);
+    }
 }
 
 script "subtractMasterDiabloIllusionVar" (int qty) {

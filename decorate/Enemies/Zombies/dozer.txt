@@ -6,7 +6,7 @@ Actor Dozer : ChaingunGuyMod {
 	Obituary "%o was perforated by a Bulldozer."
 	
 	States {
-		Spawn:
+		SpawnLoop:
 			BRZK AB 10 A_Look
 			Loop
 		

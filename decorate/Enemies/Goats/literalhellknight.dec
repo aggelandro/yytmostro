@@ -13,11 +13,9 @@ ACTOR LiteralHellKnight : HellKnight2 {
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "CrusherGunToken", 45
-	
 	+FLOORCLIP
 	
 	States {
-		
 		SpawnLoop:
 			SLKN AB 10 A_Look 
       Loop

@@ -8,7 +8,6 @@ ACTOR Kimp : DoomImp2 {
 	Obituary "%o was electrocuted by a Kimp."
 	
 	States {
-	
 		SpawnLoop:
 			EHOL AB 10 A_Look
 			Loop

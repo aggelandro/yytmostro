@@ -8,7 +8,6 @@ ACTOR Toxigi : Pinky2 {
 	DropItem "ContraItemPinkySpawner"
 	
 	States {
-		
 		SpawnLoop:
 			SAR6 AB 10 A_Look
 			Loop
