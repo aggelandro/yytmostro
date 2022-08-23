@@ -157,6 +157,9 @@ terro/dogbark1 DOGAT2
 terro/dogbark2 DOGAT3
 terro/dogbark3 DOGAT4
 terro/dogbite DOGAT1
+terro/buffready BUFFRDY
+terro/switchab SWITCAB
+terro/switchba SWITCBA
 zlayer/sniper ZSNIPER
 zlayer/srelo ZSNIPRE
 ando/ytho YTHO

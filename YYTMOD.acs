@@ -43,6 +43,14 @@ str SV_DRAWABLE_CHARGE_BAR[40] = {
     "CHRBAR36", "CHRBAR37", "CHRBAR38", "CHRBAR39", "CHRBAR40", "CHRBAR41", "CHRBAR42"
 };
 
+str SV_DRAWABLE_DOGS_ICON_A[5] = {
+    "DSHOTA1", "DSHOTA2", "DSHOTA3", "DSHOTA4", "DSHOTA5"
+};
+
+str SV_DRAWABLE_DOGS_ICON_B[5] = {
+    "DSHOTB1", "DSHOTB2", "DSHOTB3", "DSHOTB4", "DSHOTB5"
+};
+
 str SV_TEMPORAL_POWERUPS[TEMPORAL_POWERUPS] = {
     "RubberCementGiver", "SacredHeartGiver", "SpoonBenderGiver", "TheParasiteGiver", "CompoundFractureGiver", "MonstrosLungGiver", "BrimstoneGiver",
     "FireMindGiver", "IpecacGiver", "UranusGiver", "OcularRiftGiver"
@@ -1519,16 +1527,47 @@ script "ALookFromMaster" (void) {
 }
 
 script "dogs_switchCooldown" (int tics) {
+    int fullyCharged = tics;
+    int progressFactor = 5.0 / fullyCharged;
+    int playFeedbackSound = 1;
+    int chargedTime, progressC;
     SetUserVariable(0, "user_dogs_switch_cooldown", tics);
+
     while(tics > 0) {
+        progressC = (progressFactor * chargedTime) >> 16;
+        ACS_NamedExecuteWithResult("dogs_showIconProgress", progressC);
+
         Delay(1);
         SetUserVariable(0, "user_dogs_switch_cooldown", GetUserVariable(0, "user_dogs_switch_cooldown") - 1);
+        tics--;
+        if (chargedTime < fullyCharged) chargedTime++;
+    }
+
+    PlaySound(0, "terro/buffready");
+}
+
+script "dogs_showIconProgress" (int entry) CLIENTSIDE {
+    SetHudSize(10000, 7500, 0);
+    if (CheckInventory("SwitchToken")) SetFont(SV_DRAWABLE_DOGS_ICON_B[entry]);
+    else SetFont(SV_DRAWABLE_DOGS_ICON_A[entry]);
+    HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP, 100, 0, 1000.0, 7000.0, 0);
+}
+
+script "dogs_buffDuration" (int tics) {
+    SetUserVariable(0, "user_dogs_buff_duration", tics);
+    while(tics > 0) {
+        Delay(1);
+        SetUserVariable(0, "user_dogs_buff_duration", GetUserVariable(0, "user_dogs_buff_duration") - 1);
         tics--;
     }
 }
 
 script "dogs_currentSwitchCooldownValue" (void) {
     SetResultValue(GetUserVariable(0, "user_dogs_switch_cooldown"));
+}
+
+script "dogs_currentBuffDurationValue" (void) {
+    SetResultValue(GetUserVariable(0, "user_dogs_buff_duration"));
 }
 
 script "cvar_MoveBob" (void) {

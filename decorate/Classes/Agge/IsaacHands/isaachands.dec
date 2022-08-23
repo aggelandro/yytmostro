@@ -342,7 +342,6 @@ ACTOR IsaacHands : WeaponWithGrenadeOption {
 ACTOR BlackIsaacHands : IsaacHands {
 	
 	States {
-	
 		Ready:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 1)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 1)
@@ -632,7 +631,6 @@ ACTOR OrangeIsaacHands : IsaacHands {
 	+BRIGHT
 
 	States {
-	
 		Ready:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 1)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 1)
@@ -924,7 +922,6 @@ ACTOR GreenIsaacHands : IsaacHands {
 	Weapon.AmmoUse 5
 	
 	States {
-	
 		Ready:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 1)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 1)
@@ -1218,7 +1215,6 @@ ACTOR BrimstoneHands : IsaacHands {
 	Weapon.AmmoUse 10
 	
 	States {
-	
 		Ready:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 1)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 1)
@@ -1613,13 +1609,11 @@ ACTOR NormalTearProjectile {
 	var int user_seeker_maxturnangle;
 	var int user_rift_flag;
 	var int user_parasite_count;
-
 	+BRIGHT
 	+HITTRACER
 	+MTHRUSPECIES
 	
   States {
-	
 	  Spawn:
 			// Esperar a que exista A_SetSize en zandromierda para height y radius
 			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("setTearStats")

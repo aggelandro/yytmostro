@@ -756,11 +756,12 @@ ACTOR Terro : UniversalPlayer
 	Player.WeaponSlot 0, HitscanFixer
 	Player.WeaponSlot 1, CastlevaniaWhip, TerroFist
 	Player.WeaponSlot 2, TerroPistol
-	Player.WeaponSlot 5, DualZanzibart, Dynamite
+	Player.WeaponSlot 5, DualZanzibart, RocketLauncher2
 	Player.WeaponSlot 4, ContraWeapon
 	Player.WeaponSlot 3, TerroShotgun, PKDoubleShotguns
 	Player.WeaponSlot 6, Dogs
 	var int user_dogs_switch_cooldown;
+	var int user_dogs_buff_duration;
 }
 
 ACTOR Shotgun2 : Shotgun {}
