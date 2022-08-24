@@ -48,7 +48,7 @@ str SV_DRAWABLE_DOGS_ICON_A[5] = {
 };
 
 str SV_DRAWABLE_DOGS_ICON_B[5] = {
-    "DSHOTB1", "DSHOTB2", "DSHOTB3", "DSHOTB4", "DSHOTB5"
+    "DSHOTB1", "DSHOTB2", "DSHOTB3", "DSHOTB4", "DSHOTA5"
 };
 
 str SV_TEMPORAL_POWERUPS[TEMPORAL_POWERUPS] = {
@@ -1528,7 +1528,7 @@ script "ALookFromMaster" (void) {
 
 script "dogs_switchCooldown" (int tics) {
     int fullyCharged = tics;
-    int progressFactor = 5.0 / fullyCharged;
+    int progressFactor = 4.0 / fullyCharged;
     int playFeedbackSound = 1;
     int chargedTime, progressC;
     SetUserVariable(0, "user_dogs_switch_cooldown", tics);
@@ -1543,6 +1543,7 @@ script "dogs_switchCooldown" (int tics) {
         if (chargedTime < fullyCharged) chargedTime++;
     }
 
+    ACS_NamedExecuteWithResult("dogs_showIconProgress", 4);
     PlaySound(0, "terro/buffready");
 }
 
