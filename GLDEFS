@@ -265,6 +265,10 @@ Size 48
 }
 
 Object FireTearProjectile { Frame FBA2 { Light FireTearProjectile1 } }
+Object FireMindEffect { Frame FBB1 { Light FireTearProjectile1 } }
+Object FireMindEffect2 { Frame FBB1 { Light FireTearProjectile1 } }
+Object FireMindEffect3 { Frame FBB1 { Light FireTearProjectile1 } }
+Object FireMindEffect4 { Frame FBB1 { Light FireTearProjectile1 } }
 
 Pointlight IsaacExplosion1
 {

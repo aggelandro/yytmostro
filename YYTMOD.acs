@@ -105,21 +105,57 @@ script "printMyPointers" (void) {
 script 332 OPEN {
     //Translations
 
-    //Tears
+    //Normal Tears
     CreateTranslation (2, 128:225=[0,0,0]:[24,13,2], 3:4=[0,0,0]:[24,13,2], 80:96=[0,0,0]:[24,13,2]); // A Lump of Coal
     CreateTranslation (3, 192:193=[0,0,0]:[238,25,34], 194:197=[0,0,0]:[158,6,12], 3:4=[0,0,0]:[158,6,12], 80:96=[0,0,0]:[158,6,12]); // Blood of the Martyr
     CreateTranslation (4, 192:193=[0,0,0]:[42,42,42], 194:224=[0,0,0]:[23,23,23], 3:4=[0,0,0]:[42,42,42], 80:96=[0,0,0]:[23,23,23]); // Dark Matter
-    CreateTranslation (6, 128:225=[0,0,0]:[179,26,60], 3:4=[0,0,0]:[179,26,60], 80:96=[0,0,0]:[179,26,60]); // Moms Contact
-    CreateTranslation (8, 192:193=[0,0,0]:[214,215,223], 194:197=[0,0,0]:[199,225,230], 3:4=[0,0,0]:[214,215,223], 80:96=[0,0,0]:[199,225,230]); // Sacred Heart
-    CreateTranslation (9, 192:193=[0,0,0]:[122,38,158], 194:197=[0,0,0]:[111,32,155], 198:224=[0,0,0]:[97,19,146], 3:4=[0,0,0]:[122,38,158], 80:96=[0,0,0]:[111,32,155]); // Spoon Bender
-    CreateTranslation (10, 192:193=[0,0,0]:[83,115,168], 194:197=[0,0,0]:[81,116,174], 198:224=[0,0,0]:[76,115,178], 3:4=[0,0,0]:[83,115,168], 80:96=[0,0,0]:[81,116,174]); // Lost Contact
+    CreateTranslation (6, 128:225=[0,0,0]:[179,26,60], 3:4=[0,0,0]:[179,26,60], 80:96=[0,0,0]:[179,26,60]); // Moms Contacts
+    CreateTranslation (8, 192:193=[0,0,0]:[234,235,242], 194:197=[199,225,230]:[199,225,230], 80:96=[0,0,0]:[199,225,230]); // Sacred Heart
+    CreateTranslation (9, 192:193=[0,0,0]:[168,52,217], 194:197=[111,32,155]:[111,32,155], 198:224=[0,0,0]:[97,19,146], 80:96=[0,0,0]:[111,32,155]); // Spoon Bender
+    CreateTranslation (10, 192:193=[0,0,0]:[113,154,222], 194:197=[81,116,174]:[81,116,174], 198:224=[0,0,0]:[76,115,178], 80:96=[0,0,0]:[81,116,174]); // Lost Contact
     CreateTranslation (11, 128:225=[0,0,0]:[85,154,117], 3:4=[0,0,0]:[85,154,117], 80:96=[0,0,0]:[85,154,117]); // The Common Cold
-    CreateTranslation (13, 192:193=[0,0,0]:[187,98,69], 194:197=[0,0,0]:[154,78,40], 198:224=[0,0,0]:[128,71,43], 3:4=[0,0,0]:[187,98,69], 80:96=[0,0,0]:[154,78,40]); // The Parasite
+    CreateTranslation (13, 192:193=[0,0,0]:[187,98,69], 194:197=[154,78,40]:[154,78,40], 198:224=[0,0,0]:[128,71,43], 80:96=[0,0,0]:[154,78,40]); // The Parasite
     CreateTranslation (20, 192:193=[0,0,0]:[255,148,73], 194:197=[0,0,0]:[239,104,11], 198:224=[0,0,0]:[218,95,10], 3:4=[0,0,0]:[255,148,73], 80:96=[0,0,0]:[239,104,11]); // Fire Mind
     CreateTranslation (21, 192:193=[0,0,0]:[119,136,89], 194:197=[0,0,0]:[140,176,109], 198:224=[0,0,0]:[202,239,190], 3:4=[0,0,0]:[119,136,89], 80:96=[0,0,0]:[140,176,109]); // Ipecac
     CreateTranslation (22, 128:225=[0,0,0]:[1,1,2], 3:4=[0,0,0]:[1,1,2], 80:96=[0,0,0]:[1,1,2]); // Ocular Rift
+    CreateTranslation (32, 192:193=[0,0,0]:[238,25,34], 194:197=[158,6,12]:[158,6,12], 80:96=[0,0,0]:[158,6,12]); // Monstro's Lung
 
-    //Red Beams
+    //8 Inch Nails
+    CreateTranslation (33, 80:111=[113,154,222]:[81,116,174]); // Lost Contact
+    CreateTranslation (34, 80:111=[43,24,4]:[24,13,2]); // A Lump Of Coal
+    CreateTranslation (35, 80:111=[255,147,76]:[255,102,0]); // Fire Mind
+    CreateTranslation (36, 80:111=[119,136,89]:[140,176,109]); // Ipecac
+
+    //Death Touch Scythes
+    CreateTranslation (37, 80:111=[238,25,34]:[158,6,12]); // Blood of the Martyr
+
+    //Compound Fracture Bones
+    CreateTranslation (38, 80:111=[43,24,4]:[24,13,2], 4:4=[43,24,4]:[43,24,4], 168:168=[43,24,4]:[43,24,4], 208:208=[43,24,4]:[43,24,4]); // A Lump of Coal
+    CreateTranslation (39, 80:111=[238,25,34]:[158,6,12], 4:4=[238,25,34]:[238,25,34], 168:168=[238,25,34]:[238,25,34], 208:208=[238,25,34]:[238,25,34]); // Blood of the Martyr
+    CreateTranslation (40, 80:111=[113,154,222]:[81,116,174], 4:4=[81,116,174]:[81,116,174], 168:168=[81,116,174]:[81,116,174], 208:208=[81,116,174]:[81,116,174]); // Lost Contact
+    CreateTranslation (41, 80:111=[234,235,242]:[199,225,230], 4:4=[199,225,230]:[199,225,230], 168:168=[199,225,230]:[199,225,230], 208:208=[199,225,230]:[199,225,230]); // Sacred Heart
+    CreateTranslation (42, 80:111=[168,52,217]:[111,32,155], 4:4=[168,52,217]:[168,52,217], 168:168=[168,52,217]:[168,52,217], 208:208=[168,52,217]:[168,52,217]); // Spoon Bender
+    CreateTranslation (43, 80:111=[187,98,69]:[154,78,40], 4:4=[187,98,69]:[187,98,69], 168:168=[187,98,69]:[187,98,69], 208:208=[187,98,69]:[187,98,69]); // The Parasite
+    CreateTranslation (44, 80:111=[179,26,60]:[216,116,138], 4:4=[216,116,138]:[216,116,138], 168:168=[216,116,138]:[216,116,138], 208:208=[216,116,138]:[216,116,138]); // Moms Contacts
+    CreateTranslation (45, 80:111=[85,154,117]:[154,221,185], 4:4=[154,221,185]:[154,221,185], 168:168=[154,221,185]:[154,221,185], 208:208=[154,221,185]:[154,221,185]); // The Common Cold
+    CreateTranslation (46, 80:111=[1,1,2]:[40,40,41], 4:4=[40,40,41]:[40,40,41], 168:168=[40,40,41]:[40,40,41], 208:208=[40,40,41]:[40,40,41]); // Ocular Rift
+    CreateTranslation (47, 80:111=[255,147,76]:[255,102,0], 4:4=[255,147,76]:[255,147,76], 168:168=[255,147,76]:[255,147,76], 208:208=[255,147,76]:[255,147,76]); // Fire Mind
+    CreateTranslation (48, 80:111=[119,136,89]:[140,176,109], 4:4=[119,136,89]:[119,136,89], 168:168=[119,136,89]:[119,136,89], 208:208=[119,136,89]:[119,136,89]); // Ipecac
+
+    //Dark Matter Tears
+    CreateTranslation (23, 80:111=[0,0,0]:[85,154,117]); // The Common Cold
+    CreateTranslation (24, 80:111=[0,0,0]:[179,26,60]); // Moms Contacts
+    CreateTranslation (25, 80:111=[0,0,0]:[214,215,223]); // Sacred Heart
+    CreateTranslation (26, 80:111=[0,0,0]:[122,38,158]); // Spoon Bender
+    CreateTranslation (27, 80:111=[0,0,0]:[1,1,2]); // Ocular Rift
+    CreateTranslation (28, 80:111=[0,0,0]:[187,98,69]); // The Parasite
+
+    //Fire Mind Tears
+    CreateTranslation (29, 248:248=[1,1,2]:[1,1,2], 209:223=[0,0,0]:[1,1,2], 48:63=[40,40,41]:[40,40,41]); // Ocular Rift
+    CreateTranslation (30, 248:248=[85,154,117]:[85,154,117], 209:223=[0,0,0]:[85,154,117], 48:63=[154,221,185]:[154,221,185]); // The Common Cold
+    CreateTranslation (31, 248:248=[179,26,60]:[179,26,60], 209:223=[0,0,0]:[179,26,60], 48:63=[216,116,138]:[216,116,138]); // Moms Contact
+
+    //Brimstone Beams
     CreateTranslation (14, 16:47=[0,0,0]:[64,36,4], 169:191=[0,0,0]:[64,36,4]); // A Lump of Coal
     CreateTranslation (15, 16:47=[0,0,0]:[13,83,233], 169:191=[0,0,0]:[13,83,233]); // Lost Contact
     CreateTranslation (16, 16:47=[0,0,0]:[13,233,83], 169:191=[0,0,0]:[13,233,83]); // The Common Cold
@@ -1841,29 +1877,132 @@ script "addTearBoost" (int boostType, int bonus) {
 
 script "setTearStats" (void) {
     int ptid = GetActorProperty(0, APROP_TargetTID);
-    int pnum = ACS_NamedExecuteWithResult("getPlayerNumberFromTID", ptid); 
+    int pnum = ACS_NamedExecuteWithResult("getPlayerNumberFromTID", ptid);
     ACS_NamedExecuteAlways("setRadius", 0, TEARS_STATS_BY_PLAYER[pnum][0]);
     ACS_NamedExecuteAlways("setHeight", 0, TEARS_STATS_BY_PLAYER[pnum][1]);
     ACS_NamedExecuteAlways("setDamage", 0, TEARS_STATS_BY_PLAYER[pnum][2], ptid);
     ACS_NamedExecuteAlways("setRange", 0, TEARS_STATS_BY_PLAYER[pnum][3], ptid);
     ACS_NamedExecuteAlways("setSpeed", 0, TEARS_STATS_BY_PLAYER[pnum][4], ptid);
     ACS_NamedExecuteAlways("setScale", 0, TEARS_STATS_BY_PLAYER[pnum][5]);
+    if (CheckActorInventory(ptid, "ALumpOfCoalGiver")) ACS_NamedExecuteAlways("setDamageBoostPerTime", 0, 1, 35, 10);
+}
 
-    if (CheckActorInventory(ptid, "ALumpOfCoalGiver")) {
-        Thing_SetTranslation(0, 2);
-        ACS_NamedExecuteAlways("setDamageBoostPerTime", 0, 1, 35, 10);
-    }
+
+script "setTearTranslation" (void) {
+    int ptid = GetActorProperty(0, APROP_TargetTID);
 
     if (CheckActorClass(0, "NormalTearProjectile") ||
         CheckActorClass(0, "MonstroTearProjectile") ||
         CheckActorClass(0, "BouncingTearProjectile") ||
         CheckActorClass(0, "MonstroBouncingTearProjectile")) {
-        if (CheckActorInventory(ptid, "BloodOfTheMartyrGiver")) Thing_SetTranslation(0, 3);
-        if (CheckActorInventory(ptid, "LostContactGiver")) Thing_SetTranslation(0, 10);
-        if (CheckActorInventory(ptid, "SacredHeartGiver")) Thing_SetTranslation(0, 8);
-        if (CheckActorInventory(ptid, "SpoonBenderGiver")) Thing_SetTranslation(0, 9);
-        if (CheckActorInventory(ptid, "TheParasiteGiver")) Thing_SetTranslation(0, 13);
+        if (CheckActorInventory(ptid, "UranusGiver")) { ACS_NamedExecuteAlways("setTearTranslationForCyanColors", 0, ptid); terminate; }
+        if (CheckActorInventory(ptid, "DeathsTouchGiver")) { ACS_NamedExecuteAlways("setTearTranslationForGreyColors", 0, ptid, 0, 1); terminate; }
+        if (CheckActorInventory(ptid, "8InchNailsGiver")) { ACS_NamedExecuteAlways("setTearTranslationForGreyColors", 0, ptid, 1); terminate; }
+        if (CheckActorInventory(ptid, "CompoundFractureGiver")) { ACS_NamedExecuteAlways("setTearTranslationForBones", 0, ptid); terminate; }
+        ACS_NamedExecuteAlways("setTearTranslationForCyanColors", 0, ptid); terminate;
+        }
+
+    if (CheckActorClass(0, "FearTearProjectile") ||
+        CheckActorClass(0, "MonstroFearTearProjectile") ||
+        CheckActorClass(0, "BouncingFearTearProjectile") ||
+        CheckActorClass(0, "MonstroBouncingFearTearProjectile")) {
+        if (CheckActorInventory(ptid, "UranusGiver")) { ACS_NamedExecuteAlways("setTearTranslationForCyanColors", 0, ptid); terminate; }
+        if (CheckActorInventory(ptid, "DeathsTouchGiver")) { ACS_NamedExecuteAlways("setTearTranslationForGreyColors", 0, ptid, 0, 1); terminate; }
+        if (CheckActorInventory(ptid, "8InchNailsGiver")) { ACS_NamedExecuteAlways("setTearTranslationForGreyColors", 0, ptid, 1); terminate; }
+        if (CheckActorInventory(ptid, "CompoundFractureGiver")) { ACS_NamedExecuteAlways("setTearTranslationForBones", 0, ptid); terminate; }
+        ACS_NamedExecuteAlways("setTearTranslationForGreyColors", 0, ptid); terminate;
     }
+
+    if (CheckActorClass(0, "FireTearProjectile") ||
+        CheckActorClass(0, "MonstroFireTearProjectile") ||
+        CheckActorClass(0, "BouncingFireTearProjectile") ||
+        CheckActorClass(0, "MonstroBouncingFireTearProjectile")) {
+        if (CheckActorInventory(ptid, "UranusGiver")) { ACS_NamedExecuteAlways("setTranslationForTemporalPowerupCyan", 0, ptid, 1); terminate; }
+        if (CheckActorInventory(ptid, "DeathsTouchGiver")) { ACS_NamedExecuteAlways("setTranslationForTemporalPowerupGrey", 0, ptid, 1); terminate; }
+        if (CheckActorInventory(ptid, "8InchNailsGiver")) { ACS_NamedExecuteAlways("setTranslationForTemporalPowerupGrey", 0, ptid, 1); terminate; }
+        if (CheckActorInventory(ptid, "CompoundFractureGiver")) { ACS_NamedExecuteAlways("setTranslationForTemporalPowerupBones", 0, ptid, 1); terminate; }
+        if (GetUserVariable(0, "user_rift_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 29); terminate; }
+        if (GetUserVariable(0, "user_poison_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 30); terminate; }
+        if (GetUserVariable(0, "user_petrifying_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 31); terminate; }
+    }
+
+    if (CheckActorClass(0, "ExplosiveTearProjectile") ||
+        CheckActorClass(0, "BouncingExplosiveTearProjectile")) {
+        if (CheckActorInventory(ptid, "UranusGiver")) { ACS_NamedExecuteAlways("setTranslationForTemporalPowerupCyan", 0, ptid, 0, 1); terminate; }
+        if (CheckActorInventory(ptid, "DeathsTouchGiver")) { ACS_NamedExecuteAlways("setTranslationForTemporalPowerupGrey", 0, ptid, 0, 1); terminate; }
+        if (CheckActorInventory(ptid, "8InchNailsGiver")) { ACS_NamedExecuteAlways("setTranslationForTemporalPowerupGrey", 0, ptid, 0, 1); terminate; }
+        if (CheckActorInventory(ptid, "CompoundFractureGiver")) { ACS_NamedExecuteAlways("setTranslationForTemporalPowerupBones", 0, ptid, 0, 1); terminate; }
+        if (GetUserVariable(0, "user_rift_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 22); terminate; }
+        if (GetUserVariable(0, "user_poison_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 11); terminate; }
+        if (GetUserVariable(0, "user_petrifying_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 6); terminate; }
+        ACS_NamedExecuteAlways("showTranslation", 0, 21);
+    }
+}
+
+script "setTearTranslationForGreyColors" (int ptid, int isNail, int isScythe) {
+    if (GetUserVariable(0, "user_rift_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 27); terminate; }
+    if (GetUserVariable(0, "user_poison_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 23); terminate; }
+    if (GetUserVariable(0, "user_petrifying_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 24); terminate; }
+    if (CheckActorInventory(ptid, "TheParasiteGiver")) { ACS_NamedExecuteAlways("showTranslation", 0, 28); terminate; }
+    if (CheckActorInventory(ptid, "SpoonBenderGiver")) { ACS_NamedExecuteAlways("showTranslation", 0, 26); terminate; }
+    if (CheckActorInventory(ptid, "SacredHeartGiver")) { ACS_NamedExecuteAlways("showTranslation", 0, 25); terminate; }
+    if (CheckActorInventory(ptid, "LostContactGiver") && (isNail || isScythe)) { ACS_NamedExecuteAlways("showTranslation", 0, 33); terminate; }
+    if (CheckActorInventory(ptid, "BloodOfTheMartyrGiver") && isScythe) { ACS_NamedExecuteAlways("showTranslation", 0, 37); terminate; }
+    if (CheckActorInventory(ptid, "ALumpOfCoalGiver") && (isNail || isScythe)) { ACS_NamedExecuteAlways("showTranslation", 0, 34); terminate; }
+}
+
+script "setTearTranslationForCyanColors" (int ptid) {
+    if (GetUserVariable(0, "user_rift_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 22); terminate; }
+    if (GetUserVariable(0, "user_poison_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 11); terminate; }
+    if (GetUserVariable(0, "user_petrifying_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 6); terminate; }
+    if (CheckActorInventory(ptid, "TheParasiteGiver")) { ACS_NamedExecuteAlways("showTranslation", 0, 13); terminate; }
+    if (CheckActorInventory(ptid, "SpoonBenderGiver")) { ACS_NamedExecuteAlways("showTranslation", 0, 9); terminate; }
+    if (CheckActorInventory(ptid, "SacredHeartGiver")) { ACS_NamedExecuteAlways("showTranslation", 0, 8); terminate; }
+    if (CheckActorInventory(ptid, "LostContactGiver")) { ACS_NamedExecuteAlways("showTranslation", 0, 10); terminate; }
+    if (CheckActorInventory(ptid, "BloodOfTheMartyrGiver")) { ACS_NamedExecuteAlways("showTranslation", 0, 32); terminate; }
+    if (CheckActorInventory(ptid, "ALumpOfCoalGiver")) { ACS_NamedExecuteAlways("showTranslation", 0, 2); terminate; }
+    if (CheckActorClass(0, "MonstroTearProjectile") || CheckActorClass(0, "MonstroBouncingTearProjectile")) {
+        ACS_NamedExecuteAlways("showTranslation", 0, 32); terminate;
+    }
+}
+
+script "setTearTranslationForBones" (int ptid) {
+    if (GetUserVariable(0, "user_rift_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 46); terminate; }
+    if (GetUserVariable(0, "user_poison_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 45); terminate; }
+    if (GetUserVariable(0, "user_petrifying_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 44); terminate; }
+    if (CheckActorInventory(ptid, "TheParasiteGiver")) { ACS_NamedExecuteAlways("showTranslation", 0, 43); terminate; }
+    if (CheckActorInventory(ptid, "SpoonBenderGiver")) { ACS_NamedExecuteAlways("showTranslation", 0, 42); terminate; }
+    if (CheckActorInventory(ptid, "SacredHeartGiver")) { ACS_NamedExecuteAlways("showTranslation", 0, 41); terminate; }
+    if (CheckActorInventory(ptid, "LostContactGiver")) { ACS_NamedExecuteAlways("showTranslation", 0, 40); terminate; }
+    if (CheckActorInventory(ptid, "BloodOfTheMartyrGiver")) { ACS_NamedExecuteAlways("showTranslation", 0, 39); terminate; }
+    if (CheckActorInventory(ptid, "ALumpOfCoalGiver")) { ACS_NamedExecuteAlways("showTranslation", 0, 38); terminate; }
+    if (CheckActorClass(0, "MonstroTearProjectile") || CheckActorClass(0, "MonstroBouncingTearProjectile")) {
+        ACS_NamedExecuteAlways("showTranslation", 0, 39); terminate;
+    }
+}
+
+script "setTranslationForTemporalPowerupGrey" (int ptid, int isFire, int isExplosive) {
+    if (GetUserVariable(0, "user_rift_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 27); terminate; }
+    if (GetUserVariable(0, "user_poison_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 23); terminate; }
+    if (GetUserVariable(0, "user_petrifying_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 24); terminate; }
+    if (isFire) { ACS_NamedExecuteAlways("showTranslation", 0, 35); terminate; }
+    if (isExplosive) { ACS_NamedExecuteAlways("showTranslation", 0, 36); terminate; }
+}
+
+script "setTranslationForTemporalPowerupCyan" (int ptid, int isFire, int isExplosive) {
+    if (GetUserVariable(0, "user_rift_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 22); terminate; }
+    if (GetUserVariable(0, "user_poison_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 11); terminate; }
+    if (GetUserVariable(0, "user_petrifying_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 6); terminate; }
+    if (isFire) { ACS_NamedExecuteAlways("showTranslation", 0, 20); terminate; }
+    if (isExplosive) { ACS_NamedExecuteAlways("showTranslation", 0, 21); terminate; }
+}
+
+script "setTranslationForTemporalPowerupBones" (int ptid, int isFire, int isExplosive) {
+    if (GetUserVariable(0, "user_rift_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 46); terminate; }
+    if (GetUserVariable(0, "user_poison_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 45); terminate; }
+    if (GetUserVariable(0, "user_petrifying_flag")) { ACS_NamedExecuteAlways("showTranslation", 0, 44); terminate; }
+    if (isFire) { ACS_NamedExecuteAlways("showTranslation", 0, 47); terminate; }
+    if (isExplosive) { ACS_NamedExecuteAlways("showTranslation", 0, 48); terminate; }
 }
 
 script "setRadius" (int radius) {
@@ -2039,18 +2178,21 @@ script "activateTemporalPowerup" (int option) {
 
     switch(option) {
         case 26: {
+            // Sacred Heart
             ACS_NamedExecuteAlways("addTearBoost", 0, 2, 1);
             ACS_NamedExecuteAlways("addTearBoost", 0, 6, -2);
             ACS_NamedExecuteAlways("addTearBoost", 0, 4, -90);
             //ACS_NamedExecuteAlways("addTearBoost", 0, 1, 2); //Más height (para cuando zandro lo soporte)
         }; break;
         case 33: {
+            // Compound Fracture
             ACS_NamedExecuteWithResult("addTearBoost", 0, 3, 5);
             //ACS_NamedExecuteWithResult("addTearBoost", 0, 1, 1);
             //ACS_NamedExecuteWithResult("addTearBoost", 0, 0, 1);
             //ACS_NamedExecuteWithResult("addTearBoost", 0, 5, 1);
         }; break;
         case 38: {
+            // Brimstone
             if (CheckInventory("IsaacHands")) TakeInventory("IsaacHands", 1);
             if (CheckInventory("BlackIsaacHands")) TakeInventory("BlackIsaacHands", 1);
             if (CheckInventory("OrangeIsaacHands")) TakeInventory("OrangeIsaacHands", 1);
@@ -2064,6 +2206,7 @@ script "activateTemporalPowerup" (int option) {
             PlaySound(0, "agge/brimgrowl", CHAN_AUTO);
         }; break;
         case 39: {
+            // Fire Mind
             if (CheckInventory("BrimstoneHands")) break;
             if (CheckInventory("GreenIsaacHands")) break;
             if (CheckInventory("IsaacHands")) TakeInventory("IsaacHands", 1);
@@ -2075,6 +2218,7 @@ script "activateTemporalPowerup" (int option) {
             ACS_NamedExecuteAlways("setClientOrangeIsaacHands", 0);
         }; break;
         case 40: {
+            // Ipecac
             //ACS_NamedExecuteAlways("addTearBoost", 0, 1, -3);
             //ACS_NamedExecuteAlways("addTearBoost", 0, 0, -3);
             ACS_NamedExecuteAlways("addTearBoost", 0, 5, -3);
@@ -2449,7 +2593,6 @@ script "transferMasterPitch" (void) {
 }
 
 script "setIpecacStats" (void) {
-    Thing_SetTranslation(0, 21);
     int ptid = GetActorProperty(0, APROP_TargetTID);
     int pnum = ACS_NamedExecuteWithResult("getPlayerNumberFromTID", ptid);
     ACS_NamedExecuteAlways("setRadius", 0, TEARS_STATS_BY_PLAYER[pnum][0]);
@@ -2459,17 +2602,6 @@ script "setIpecacStats" (void) {
     ACS_NamedExecuteAlways("setSpeed", 0, TEARS_STATS_BY_PLAYER[pnum][4], ptid);
     ACS_NamedExecuteAlways("setScale", 0, TEARS_STATS_BY_PLAYER[pnum][5]);
     ACS_NamedExecuteAlways("setExplosionRange", 0, TEARS_STATS_BY_PLAYER[pnum][5]);
-
-    if (CheckActorInventory(ptid, "ALumpOfCoalGiver")) {
-        Thing_SetTranslation(0, 2);
-        ACS_NamedExecuteAlways("setDamageBoostPerTime", 0, 1, 35, 10);
-    }
-
-    if (CheckActorInventory(ptid, "BloodOfTheMartyrGiver")) Thing_SetTranslation(0, 3);
-    if (CheckActorInventory(ptid, "LostContactGiver")) Thing_SetTranslation(0, 10);
-    if (CheckActorInventory(ptid, "SacredHeartGiver")) Thing_SetTranslation(0, 8);
-    if (CheckActorInventory(ptid, "SpoonBenderGiver")) Thing_SetTranslation(0, 9);
-    if (CheckActorInventory(ptid, "TheParasiteGiver")) Thing_SetTranslation(0, 13);
 }
 
 script "setGravity" (int gravity) {

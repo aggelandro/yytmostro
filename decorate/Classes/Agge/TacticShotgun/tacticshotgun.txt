@@ -16,21 +16,36 @@ ACTOR TacticShotgun : WeaponWithGrenadeOption {
 		Select:
 			TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
 			TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
+			TNT1 A 0 A_GunFlash("DisplayA", GFF_NOEXTCHANGE)
 			RSHT A 1 A_Raise
 			Loop
 			
 		Deselect:
+			TNT1 A 0 A_GiveInventory("HideDisplay", 1)
 			RSHT A 1 A_Lower
 			Loop
 			
 		Ready:
+			TNT1 A 0 A_TakeInventory("HideDisplay", 1)
+			TNT1 A 0 A_GunFlash("DisplayA", GFF_NOEXTCHANGE)
+			Goto ReadyLoop
+			
+		ReadyLoop:
 			RSHT A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
 			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
-			TNT1 A 0 A_GunFlash("DisplayA", GFF_NOEXTCHANGE)
 			RSHT A 1 A_WeaponReady(WRF_ALLOWRELOAD)
 			Loop
+			
+		GrenadeCheck:
+			"####" "#" 0 A_GiveInventory("HideDisplay", 1)
+			Goto Super::GrenadeCheck
+			
+		SlideKick:
+			TNT1 A 0 A_GiveInventory("HideDisplay", 1)
+			Goto Super::SlideKick
 	
 		Fire:
+			TNT1 A 0 A_GiveInventory("HideDisplay", 1)
 			TNT1 A 0 A_JumpIf(CallACS("aggeSGShellsLeft") == 0, "Empty")
 			TNT1 A 0 A_PlaySound("agge/ssgclick", CHAN_WEAPON)
 			TNT1 A 0 A_JumpIfInventory("ZoomedFlag",1,"ZFire")
@@ -92,6 +107,7 @@ ACTOR TacticShotgun : WeaponWithGrenadeOption {
 			Goto Ready
 			
 		Reload:
+			TNT1 A 0 A_GiveInventory("HideDisplay", 1)
 			TNT1 A 0 A_JumpIfInventory("ZoomedFlag",1,"ZOut")
 			TNT1 A 0 A_JumpIfInventory("AggeSGShellsLeft", 7, "Ready")
 			TNT1 A 0 A_JumpIf(CallACS("shells") == 0, "Ready")
@@ -145,35 +161,59 @@ ACTOR TacticShotgun : WeaponWithGrenadeOption {
 			Stop
 			
 		Display7:
-			DIS7 A 2
+			DIS7 A 1
+			TNT1 A 0 A_JumpIfInventory("HideDisplay", 1, 1)
+			Loop
+			TNT1 A 0
 			Stop
 			
 		Display6:
-			DIS6 A 2
+			DIS6 A 1
+			TNT1 A 0 A_JumpIfInventory("HideDisplay", 1, 1)
+			Loop
+			TNT1 A 0
 			Stop
 			
 		Display5:
-			DIS5 A 2
+			DIS5 A 1
+			TNT1 A 0 A_JumpIfInventory("HideDisplay", 1, 1)
+			Loop
+			TNT1 A 0
 			Stop
 			
 		Display4:
-			DIS4 A 2
+			DIS4 A 1
+			TNT1 A 0 A_JumpIfInventory("HideDisplay", 1, 1)
+			Loop
+			TNT1 A 0
 			Stop
 			
 		Display3:
-			DIS3 A 2
+			DIS3 A 1
+			TNT1 A 0 A_JumpIfInventory("HideDisplay", 1, 1)
+			Loop
+			TNT1 A 0
 			Stop
 			
 		Display2:
-			DIS2 A 2
+			DIS2 A 1
+			TNT1 A 0 A_JumpIfInventory("HideDisplay", 1, 1)
+			Loop
+			TNT1 A 0
 			Stop
 			
 		Display1:
-			DIS1 A 2
+			DIS1 A 1
+			TNT1 A 0 A_JumpIfInventory("HideDisplay", 1, 1)
+			Loop
+			TNT1 A 0
 			Stop
 			
 		Display0:
-			DIS0 C 2
+			DIS0 C 1
+			TNT1 A 0 A_JumpIfInventory("HideDisplay", 1, 1)
+			Loop
+			TNT1 A 0
 			Stop
 			
 		DisplayEmpty:
@@ -185,6 +225,7 @@ ACTOR TacticShotgun : WeaponWithGrenadeOption {
 			Stop
 			
 		AltFire:
+			TNT1 A 0 A_GiveInventory("HideDisplay", 1)
 			TNT1 A 0 A_JumpIfInventory("ZoomedFlag",1,"ZOut")
 			TNT1 A 0 A_GiveInventory("ZoomedFlag",1)
 			TNT1 A 0 A_PlaySound("agge/sgrmove", CHAN_WEAPON)
@@ -252,3 +293,4 @@ ACTOR WeaponFireLight {
 }
 
 ACTOR ZoomedFlag : Inventory { Inventory.MaxAmount 1 Inventory.Amount 1 }
+ACTOR HideDisplay : Inventory { Inventory.MaxAmount 1 Inventory.Amount 1 }
