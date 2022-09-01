@@ -24,9 +24,9 @@ ACTOR SkullImpBall {
 	
   States {
 		Spawn:
-			TNT1 A 0 NoDelay A_PlaySound("imp/attack2", CHAN_AUTO, 0.5)
+			TNT1 A 0 NoDelay A_PlaySound("imp/attack2", CHAN_AUTO, 0.25)
 			SHAN A 4 Bright
-			Loop
+			Goto Spawn+1
 			
 		Death:
 			BAL1 CDE 6 Bright

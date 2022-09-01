@@ -89,6 +89,10 @@ agge/sgrmove		SGRMOVE
 agge/sgpump			SGPUMP
 agge/sgpump2		SGPUMP2
 agge/sginsert		SGINSERT
+agge/cryobounce	CRYOBNC
+agge/cryoexpl		CRYOEXP
+agge/cryopickup	CRYOPU
+agge/cryoselect	CRYOSLCT
 
 misc/freeze1	FREEZE1
 misc/freeze2	FREEZE2
@@ -550,3 +554,13 @@ plasmab/pain				WLRS-4
 plasmab/death				WLRS-5
 plasmab/PlasmaFire	PLASMA4
 plasmab/impact			EX-TINY1
+
+//Straldex
+straldex/sight		STRADESI
+$Random straldex/attack { straldex/attack1 straldex/attack2 }
+straldex/attack1	STRADATK
+straldex/attack2	STRAATK2
+straldex/pain			STRAPAIN
+straldex/death		STRADDTH
+straldex/active		STRADACT
+straldex/reveal		STRARVL

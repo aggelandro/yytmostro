@@ -1,4 +1,4 @@
-ACTOR NoisyCricket : WeaponWithGrenadeOption {
+ACTOR NoisyCricket : WeaponWithCryoGrenadeOption {
 	Inventory.PickupMessage "You got the Noisy Cricket!"
 	Obituary "%o was fried by %k's Noisy Cricket."
 	Weapon.AmmoType1 "Clip"
@@ -14,7 +14,7 @@ ACTOR NoisyCricket : WeaponWithGrenadeOption {
 			Loop
 			
 		Ready:
-			PLBG A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
+			PLBG A 0 A_JumpIfInventory("ClassThroweableAction", 1, "SWGrenadeCheck")
 			PLBG A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			PLBG A 1 A_WeaponReady
 			Loop

@@ -17,6 +17,7 @@ Actor JetpackZombie : AbstractYYTZombie
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "CrusherGunToken", 1
 	DropItem "HandGrenadeAmmo", 20
+	DropItem "CryoGrenadeAmmo", 20
 	DropItem "ChainsawSpawner", 32
 	
   +DontHurtSpecies

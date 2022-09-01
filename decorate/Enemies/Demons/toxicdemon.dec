@@ -167,6 +167,8 @@ ACTOR PoisonCloud2 {
 	RenderStyle Add
 	Scale 0.5
 	DamageType "Poison"
+	Species "Demon"
+	+THRUSPECIES
 	+FORCERADIUSDMG
 	+BLOODLESSIMPACT
 	+RIPPER

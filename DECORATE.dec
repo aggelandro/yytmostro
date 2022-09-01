@@ -26,6 +26,7 @@
 #include "decorate/Classes/Ron/Wrench/wrench.dec"
 #include "decorate/Classes/Ron/SuperShotgun/supershotgun.dec"
 
+#include "decorate/Classes/Agge/Throws/cryogrenade.txt"
 #include "decorate/Classes/Agge/Axe&Shield/axeshield.dec"
 #include "decorate/Classes/Agge/NoisyCricket/noisycricket.dec"
 #include "decorate/Classes/Agge/TacticShotgun/tacticshotgun.txt"
@@ -73,6 +74,7 @@
 #include "decorate/Enemies/Demons/VacuumDemon/vacuumdemon.dec"
 #include "decorate/Enemies/Demons/toxicdemon.dec"
 #include "decorate/Enemies/Demons/enforcer.txt"
+#include "decorate/Enemies/Spectres/straldex.txt"
 
 #include "decorate/Enemies/LostSoul/FireSoul/firesoul.dec"
 #include "decorate/Enemies/LostSoul/rictus.txt"
@@ -220,7 +222,8 @@ ACTOR DemonSpawner : RandomSpawner replaces Demon
 } 
 ACTOR SpectreSpawner : RandomSpawner replaces Spectre
 {
-	DropItem "Spectre2", 255, 70
+	DropItem "Spectre2", 255, 35
+	DropItem "Straldex", 255, 35
 	DropItem "SpectreVacuum", 255, 15
 	DropItem "SpectreToxigi", 255, 15
 }
@@ -670,7 +673,7 @@ ACTOR Agge : UniversalPlayer
   Player.StartItem "EnergyShieldAmmo", 200
   Player.StartItem "AggeID"
 	Player.StartItem "HitscanFixer"
-	Player.StartItem "HandGrenadeAmmo" 3
+	Player.StartItem "CryoGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
   Player.WeaponSlot 1, Chainsaw2, AxeShield
   Player.WeaponSlot 2, NoisyCricket

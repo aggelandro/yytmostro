@@ -1,4 +1,4 @@
-ACTOR TacticShotgun : WeaponWithGrenadeOption {
+ACTOR TacticShotgun : WeaponWithCryoGrenadeOption {
 	Weapon.SelectionOrder 1300
   Weapon.AmmoUse 0
   Weapon.AmmoGive 8
@@ -31,14 +31,14 @@ ACTOR TacticShotgun : WeaponWithGrenadeOption {
 			Goto ReadyLoop
 			
 		ReadyLoop:
-			RSHT A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
+			RSHT A 0 A_JumpIfInventory("ClassThroweableAction", 1, "SWGrenadeCheck")
 			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			RSHT A 1 A_WeaponReady(WRF_ALLOWRELOAD)
 			Loop
 			
-		GrenadeCheck:
+		SWGrenadeCheck:
 			"####" "#" 0 A_GiveInventory("HideDisplay", 1)
-			Goto Super::GrenadeCheck
+			Goto Super::SWGrenadeCheck
 			
 		SlideKick:
 			TNT1 A 0 A_GiveInventory("HideDisplay", 1)

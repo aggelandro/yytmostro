@@ -62,6 +62,16 @@ ACTOR CastlevaniaHeartDropChance : AbstractMonsterDebuff 4204 {
 	}
 }
 
+ACTOR SlowDebuff : AbstractMonsterDebuff 4205 {
+	States {
+		Pickup:
+			TNT1 A 0 A_JumpIfInventory("SlowCounter", 1, "AlreadyActive")
+			TNT1 A 0 A_GiveInventory("SlowCounter", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("applySlowEffect", 350)
+			Stop
+	}
+}
+
 
 
 //=========

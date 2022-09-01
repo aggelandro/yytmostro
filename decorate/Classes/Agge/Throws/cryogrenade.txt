@@ -1,0 +1,116 @@
+ACTOR WeaponWithCryoGrenadeOption : YYTWeapon {
+	Weapon.AmmoType "CryoGrenadeAmmo"
+	
+	States {
+		Ready:
+			TNT1 A -1 A_Jump(256, "Ready")
+			Wait
+			
+		Fire:
+			TNT1 A -1 A_Jump(256, "Fire")
+			Wait
+			
+		Select:
+			TNT1 A -1 A_Jump(256, "Select")
+			Wait
+			
+		Deselect:
+			TNT1 A -1 A_Jump(256, "Deselect")
+			Wait
+			
+		SWGrenadeCheck:
+			"####" "#" 0 A_JumpIfInventory("CryoGrenadeAmmo", 1, "SWGrenadeToss")
+			"####" "#" 0 A_TakeInventory("ClassThroweableAction", 1)
+			"####" "#" -1 A_Jump(256, "Ready")
+			Wait
+			
+		SWGrenadeToss:
+			"####" "#" 0 A_PlaySound("weapons/weapondown", CHAN_WEAPON)
+			"####" "########" 1 A_Lower
+			TNT1 A 4
+			IOGO ABC 1
+			IOGO D 2
+			IOGO DCB 1
+			HGRN HI 2
+			TNT1 A 15 A_PlaySound("agge/cryoselect", CHAN_WEAPON)
+			TNT1 A 0 A_PlaySound("weapons/hgrenadethrow", CHAN_AUTO)
+			TNT1 A 0 A_TakeInventory("CryoGrenadeAmmo", 1)
+			HGNE A 1 A_FireCustomMissile("ThrownSWGrenade", 0, 0, 0, 0)
+			HGRN J 1
+			HGRN KLM 2
+			HGRN NO 1
+			TNT1 A 6
+			HGRN O -1 A_Jump(256, "Select")
+			Wait			
+	}
+}
+
+ACTOR CryoGrenadeAmmo : Ammo {
+	Scale 0.6
+	Inventory.Amount 1
+	Inventory.MaxAmount 4
+	Ammo.BackpackAmount 2
+	Ammo.BackpackMaxAmount 8
+	Inventory.RestrictedTo "Agge"
+	VisibleToPlayerClass "Agge"
+	Inventory.Pickupmessage "Cryo Grenade"
+	Inventory.PickupSound "agge/cryopickup"
+	Inventory.Icon "IGRNA0"
+	
+	States {
+		Spawn:
+			IGRN A -1
+			Stop
+	}
+}
+
+ACTOR ThrownSWGrenade {  
+	Radius 2
+	Height 3
+	Speed 30
+	Damage 10
+	Scale 0.7
+	+MTHRUSPECIES
+	+MISSILE
+	+DONTFALL
+	+CANBOUNCEWATER
+	+DOOMBOUNCE
+	+NOTELEPORT
+	WallBounceFactor 0.16
+	BounceFactor 0.36
+	Gravity 0.6
+	Mass 400
+	DamageType "Ice"
+	Decal "Scorch"
+	Obituary "A %o se le enfrió el pecho."
+	BounceSound "agge/cryobounce"
+	DeathSound "agge/cryoexpl"
+	
+	States {
+		Spawn:
+			IGDN A 3 NoDelay
+			IGDN BCDABCDABCDABCDABCDABCD 3
+			IGDN BCDABCDABCDABCDABCDABCD 3
+			Goto Death
+			
+		Death:
+			TNT1 A 0 A_SetScale(1.5)
+			TNT1 A 0 A_AlertMonsters
+			TNT1 A 0 A_SpawnItemEx("BlueParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			IEXP A 1 Bright A_Explode(100, 200)
+			TNT1 A 0 A_RadiusGive("SlowDebuff", 200, RGF_MONSTERS|RGF_PLAYERS|RGF_GIVESELF)
+			TNT1 AAA 0 A_CustomMissile("SmokeSmallExplosion", 0, 0, random(0,360), 2, random(0,360))
+			IEXP BC 2 BRIGHT
+			TNT1 A 0 A_SpawnItemEx("IceTrail", 0, 0, 0, 0, 0, 0, 0, 128)
+			TNT1 A 0 A_SpawnItemEx("IceTrail", 0, 48, 0, 0, 0, 0, 0, 128)
+			TNT1 A 0 A_SpawnItemEx("IceTrail", 0, -48, 0, 0, 0, 0, 0, 128)
+			TNT1 A 0 A_SpawnItemEx("IceTrail", 48, 0, 0, 0, 0, 0, 0, 128)
+			TNT1 A 0 A_SpawnItemEx("IceTrail", -48, 0, 0, 0, 0, 0, 0, 128)
+			TNT1 A 0 A_SpawnItemEx("IceTrail", 0, 96, 0, 0, 0, 0, 0, 128)
+			TNT1 A 0 A_SpawnItemEx("IceTrail", 0, -96, 0, 0, 0, 0, 0, 128)
+			TNT1 A 0 A_SpawnItemEx("IceTrail", 96, 0, 0, 0, 0, 0, 0, 128)
+			TNT1 A 0 A_SpawnItemEx("IceTrail", -96, 0, 0, 0, 0, 0, 0, 128)
+			IEXP DEFGHIJK 2 Bright
+			Stop
+	}
+}

@@ -15,6 +15,7 @@ ACTOR FlamethrowerGuy : AbstractYYTZombie {
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "HomingGunToken", 15
 	DropItem "HandGrenadeAmmo", 10
+	DropItem "CryoGrenadeAmmo", 10
 	DropItem "ChainsawSpawner", 32
 	
 	States {
