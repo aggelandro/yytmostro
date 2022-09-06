@@ -21,6 +21,7 @@ ACTOR Diablo : BaronOfHell2 {
 	DropItem "IsaacItemsTier3MidChanceSpawner"
 	DropItem "CrusherGunToken", 128
 	DropItem "UniqueWeaponSpawner", 16
+	DropItem "Adramalech", 16
 	+BRIGHT
 	+MISSILEMORE
 	+QUICKTORETALIATE

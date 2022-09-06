@@ -1,4 +1,4 @@
-ACTOR DualZanzibart : DoomWeapon {	
+ACTOR DualZanzibart : YYTWeapon {	
 	Tag "Zanzibart"
 	Inventory.PickupSound "misc/hellwp"
 	Inventory.PickupMessage "Zanzibart... Forgive me...!"
@@ -27,13 +27,14 @@ ACTOR DualZanzibart : DoomWeapon {
 			Loop
 			
 		Select:
+			TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 			ZANL A 1 A_Raise
 			ZANL A 0 A_GunFlash
 			Goto SL
 			
 		SL:
 			ZANL A 1 A_Raise
-			Goto Select+1
+			Goto Select+2
 			
 		Ready:
 			TNT1 A 0 A_TakeInventory("WeaponSpecialAction", 1)
@@ -44,6 +45,7 @@ ACTOR DualZanzibart : DoomWeapon {
 			Goto LIdle
 			
 		LIdle:
+			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			ZANL A 1 A_WeaponReady(12)
 			TNT1 A 0 A_JumpIfInventory("WeaponSpecialAction", 1, "SpecialLFire")
 			ZANL A 0 A_JumpIfInventory("SynthFireLeft",1,"LFire")

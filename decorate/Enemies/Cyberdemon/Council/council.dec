@@ -15,6 +15,7 @@ ACTOR CouncilOfTheSeven : YYTMonster
 	DamageFactor "Council",0
 	Painchance 0
 	DeathSound "*death"
+	DropItem "Adramalech"
 	States
 	{
 	SpawnLoop:

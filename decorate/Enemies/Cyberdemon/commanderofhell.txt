@@ -1,5 +1,5 @@
 ACTOR HellCommander : Cyberdemon2 {
-	Health 4500
+	Health 5000
   MeleeRange 96
   Tag "HellCommander"
   SeeSound "commander/sight"
@@ -15,6 +15,7 @@ ACTOR HellCommander : Cyberdemon2 {
 	DropItem "IsaacItemsTier3LowChanceSpawner"
 	DropItem "PrototypeGunToken", 192
 	DropItem "UniqueWeaponSpawner", 48
+	DropItem "Adramalech", 16
 	var int user_launch_angle;
 	
   States {
@@ -108,7 +109,7 @@ ACTOR HellCommander : Cyberdemon2 {
 Actor HCFlame : LHKFlame { Scale 2.0 ProjectileKickBack 500 }
 
 Actor HellRocket : Rocket {
-	Speed 25
+	Speed 23
 	Scale 0.8
   Renderstyle Normal
 	Decal BaronScorch
@@ -119,7 +120,7 @@ Actor HellRocket : Rocket {
   States {
 		Spawn:
 			TNT1 A 0 NoDelay Bright A_SpawnItemEx("HellRocketTrail")
-      MELF AB 2 Bright
+      MELF AB 2 Bright A_ChangeVelocity (0, random(-2, 2), 0, 1)
       Loop
 			
     Death:

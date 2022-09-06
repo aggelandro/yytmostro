@@ -1,10 +1,11 @@
 ACTOR SpiderMadnessmind : SpiderMastermind2 {
-	Health 4000
+	Health 4500
 	SeeSound "madness/sight"
   PainSound "spider/pain"
   DeathSound "madness/demdth"
   ActiveSound "madness/active"
   Obituary "%o became another victim of the SpiderMadnessmind."
+	DropItem "Falneitz", 144
 	var int user_attack;
 	var int user_cannon_height;
 	var int user_original_pitch;

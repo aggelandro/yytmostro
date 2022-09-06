@@ -11,6 +11,7 @@ ACTOR T-800 : BaronOfHell2 {
 	+MISSILEMORE
 	+QUICKTORETALIATE
 	DropItem "UniqueWeaponSpawner", 16
+	DropItem "Falneitz", 24
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
 	DropItem "IsaacItemsTier2HighChanceSpawner"

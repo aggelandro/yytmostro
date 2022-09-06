@@ -5,10 +5,11 @@ ACTOR AxeShield : WeaponWithCryoGrenadeOption {
   Tag "Fist"
   +WEAPON.WIMPY_WEAPON
   +WEAPON.MELEEWEAPON
+	+WEAPON.NOALERT
 	
   States {
 		Ready:
-			TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, 4)
+			TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, 5) //OFFSET
 			CONE B 0 A_JumpIfInventory("ClassThroweableAction", 1, "SWGrenadeCheck")
 			CONE B 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			CONE AB 4 A_WeaponReady
@@ -19,7 +20,7 @@ ACTOR AxeShield : WeaponWithCryoGrenadeOption {
 			Loop
 			
 		Deselect:
-			TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, 3)
+			TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, 3) //OFFSET
 			CONE AB 1 A_Lower
 			Loop
 			CONB AB 1 A_Lower
@@ -45,43 +46,167 @@ ACTOR AxeShield : WeaponWithCryoGrenadeOption {
 		VSwing:
 			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
 			CONE GH 3
-			CONE I 4 A_CustomPunch(3 * random(1, 10), TRUE, CPF_NORANDOMPUFFZ,"AggeAxePuff")
-			CONE I 3 Offset(20, 70)
+			TNT1 A 0 A_FireCustomMissile("AxeHit", 0, 0, 0, 15)
+			CONE I 2 A_ZoomFactor(0.90)
+			TNT1 A 0 A_Quake(1, 6, 0, 100)
+			CONE I 1
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "Hit")
+			TNT1 A 0 A_FireCustomMissile("AxeHit", 0, 0, 0, 15)
+			CONF D 1
+			TNT1 A 0 A_ZoomFactor(0.97)
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "Hit")
+			CONF D 1
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "Hit")
+			CONF E 1
+			TNT1 A 0 A_ZoomFactor(1)
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "Hit")
+			CONF E 1
 			CONE J 4
-			CONE K 3
+			TNT1 A 0 A_TakeInventory("HammerHasHit", 1)
+			CONE K 3 A_Refire("HSwing")
 			Goto Ready
 			
 		HSwing:
 			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
 			CONE LM 3
-			CONE N 4 A_CustomPunch(3 * random(1, 10), TRUE, CPF_NORANDOMPUFFZ,"AggeAxePuff")
+			TNT1 A 0 A_FireCustomMissile("AxeHit", 0, 0, 0, 15)
+			CONE N 2 A_ZoomFactor(0.90)
+			TNT1 A 0 A_Quake(1, 6, 0, 100)
+			CONE N 1
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "Hit2")
+			TNT1 A 0 A_FireCustomMissile("AxeHit", 0, 0, 0, 15)
+			CONF F 1
+			TNT1 A 0 A_ZoomFactor(0.97)
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "Hit2")
+			CONF F 1
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "Hit2")
+			CONF G 1
+			TNT1 A 0 A_ZoomFactor(1)
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "Hit2")
+			CONF G 1
 			CONE O 3
-			CONE P 4
-			CONE K 3
+			CONE P 1
+			CONE K 3 A_Refire("VSwing")
+			Goto Ready
+			
+		Hit:
+			TNT1 A 0 A_AlertMonsters
+			TNT1 A 0 A_ZoomFactor(0.80)
+			CONF D 1 Offset(2, 30)
+			TNT1 A 0 A_Quake(1, 12, 0, 100)
+			CONF D 1 Offset(3, 29)
+			TNT1 A 0 A_ZoomFactor(0.84)
+			CONF D 1 Offset(2, 31)
+			CONF D 1 Offset(0, 32)
+			TNT1 A 0 A_ZoomFactor(0.97)
+			CONE H 3 Offset(0, 31)
+			TNT1 A 0 A_ZoomFactor(1)
+			CONE G 3 Offset(0, 32)
+			TNT1 A 0 A_TakeInventory("HammerHasHit", 1)
+			CONE K 3 A_Refire("HSwing")
+			Goto Ready
+			
+		Hit2:
+			TNT1 A 0 A_AlertMonsters
+			TNT1 A 0 A_ZoomFactor(0.80)
+			CONF F 1 Offset(2, 32)
+			TNT1 A 0 A_Quake(1, 12, 0, 100)
+			CONF F 1 Offset(3, 32)
+			TNT1 A 0 A_ZoomFactor(0.84)
+			CONF F 1 Offset(2, 32)
+			CONF F 1 Offset(0, 32)
+			TNT1 A 0 A_ZoomFactor(0.97)
+			CONE M 3 Offset(0, 32)
+			TNT1 A 0 A_ZoomFactor(1)
+			CONE L 3 Offset(0, 32)
+			TNT1 A 0 A_TakeInventory("HammerHasHit", 1)
+			TNT1 A 0 Offset(0, 0)
+			CONE K 3 A_Refire("VSwing")
 			Goto Ready
 			
 		Berserked:
 			TNT1 A 0 A_Refire("BerserkedHold")
-			TNT1 A -1 A_Jump(256, "BerserkedVSwing", "BerserkedHSwing")
-			Wait
+			Goto BerserkedVSwing
 			
 		BerserkedVSwing:
 			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
 			CONB GH 3
-			CONB I 2 A_CustomPunch(20 * random(1, 10), TRUE, CPF_NORANDOMPUFFZ, "RedAggeAxePuff")
-			CONB I 2 Offset(20, 70)
+			TNT1 A 0 A_FireCustomMissile("RedAxeHit", 0, 0, 0, 15)
+			CONB I 1 A_ZoomFactor(0.90)
+			TNT1 A 0 A_Quake(1, 6, 0, 100)
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "BerserkedHit")
+			CONC D 1
+			TNT1 A 0 A_ZoomFactor(0.97)
+			TNT1 A 0 A_FireCustomMissile("RedAxeHit", 0, 0, 0, 15)
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "BerserkedHit")
+			CONC D 1
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "BerserkedHit")
+			CONC E 1
+			TNT1 A 0 A_ZoomFactor(1)
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "BerserkedHit")
+			CONC E 1
 			CONB J 2
-			CONB K 2
+			TNT1 A 0 A_TakeInventory("HammerHasHit", 1)
+			CONB K 2 A_Refire("BerserkedHSwing")
+			Goto Ready
+			
+		BerserkedHit:
+			TNT1 A 0 A_AlertMonsters
+			TNT1 A 0 A_ZoomFactor(0.80)
+			CONC D 1 Offset(2, 30)
+			TNT1 A 0 A_Quake(1, 12, 0, 100)
+			CONC D 1 Offset(3, 29)
+			TNT1 A 0 A_ZoomFactor(0.84)
+			CONC D 1 Offset(2, 31)
+			CONC D 1 Offset(0, 32)
+			TNT1 A 0 A_ZoomFactor(0.97)
+			CONB H 2 Offset(0, 31)
+			TNT1 A 0 A_ZoomFactor(1)
+			CONB G 2 Offset(0, 32)
+			TNT1 A 0 A_TakeInventory("HammerHasHit", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("pausePlayer", 0)
+			CONB K 2 A_Refire("BerserkedHSwing")
 			Goto Ready
 			
 		BerserkedHSwing:
 			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
 			CONE L 3
 			CONB M 3
-			CONB N 1 A_CustomPunch(20 * random(1, 10), TRUE, CPF_NORANDOMPUFFZ, "RedAggeAxePuff")
+			TNT1 A 0 A_FireCustomMissile("RedAxeHit", 0, 0, 0, 15)
+			CONB N 1 A_ZoomFactor(0.90)
+			TNT1 A 0 A_Quake(1, 6, 0, 100)
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "BerserkedHit2")
+			TNT1 A 0 A_FireCustomMissile("RedAxeHit", 0, 0, 0, 15)
+			CONC F 1
+			TNT1 A 0 A_ZoomFactor(0.97)
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "BerserkedHit2")
+			CONC F 1
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "BerserkedHit2")
+			CONC G 1
+			TNT1 A 0 A_ZoomFactor(1)
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "BerserkedHit2")
+			CONC G 1
 			CONB O 2
-			CONB P 3
-			CONB K 2
+			CONB P 1
+			CONB K 2 A_Refire("BerserkedVSwing")
+			Goto Ready
+			
+		BerserkedHit2:
+			TNT1 A 0 A_AlertMonsters
+			TNT1 A 0 A_ZoomFactor(0.80)
+			CONC F 1 Offset(2, 32)
+			TNT1 A 0 A_Quake(1, 12, 0, 100)
+			CONC F 1 Offset(3, 32)
+			TNT1 A 0 A_ZoomFactor(0.84)
+			CONC F 1 Offset(2, 32)
+			CONC F 1 Offset(0, 32)
+			TNT1 A 0 A_ZoomFactor(0.97)
+			CONB M 2 Offset(0, 32)
+			TNT1 A 0 A_ZoomFactor(1)
+			CONE L 2 Offset(0, 32)
+			TNT1 A 0 A_TakeInventory("HammerHasHit", 1)
+			TNT1 A 0 Offset(0, 0)
+			CONB K 2 A_Refire("BerserkedVSwing")
 			Goto Ready
 			
 		BerserkedHold:
@@ -98,15 +223,22 @@ ACTOR AxeShield : WeaponWithCryoGrenadeOption {
 			TNT1 A 0 ACS_NamedExecuteWithResult("stopAndPositionPlayer")
 			TNT1 A 0 A_PlaySound("agge/swing", CHAN_WEAPON)
 			CONB GH 2
-			CONB I 2
-			CONB I 2 Offset(20, 70)
-			CONB I 2
-			CONB I 10 A_SpawnItemEx("AxeFloorFire", 40)
-			CONB I 2
+			TNT1 A 0 A_FireCustomMissile("RedAxeHitNoDamage", 0, 0, 0, 15)
+			CONB I 1 A_ZoomFactor(0.90)
+			TNT1 A 0 A_Quake(1, 6, 0, 100)
+			CONB I 1
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "BerserkedHit")
+			CONC D 1
+			TNT1 A 0 A_JumpIfInventory("HammerHasHit", 0, "BerserkedHit")
+			CONC D 1
+			CONC E 2
+			CONC E 10 A_SpawnItemEx("AxeFloorFire", 40)
+			CONC D 2
 			CONB I 2
 			CONB IH 2
-			CONB G 3 Offset(1, 1)
+			CONB G 3
 			TNT1 A 0 ACS_NamedExecuteWithResult("pausePlayer", 0)
+			TNT1 A 0 A_TakeInventory("HammerHasHit", 1)
 			TNT1 A 0 A_Refire("BerserkedHold")
 			Goto Ready
 		
@@ -216,40 +348,6 @@ ACTOR EnergyShieldAmmo : Ammo {
 	  Inventory.Icon "SHICOA0"
 }
 
-ACTOR AggeAxePuff {
-	+NOGRAVITY
-	+NOINTERACTION
-	+PUFFONACTORS
-	DamageType "Lightning"
-	Scale 0.4
-	
-	States {
-		XDeath:
-			TNT1 A 0 A_PlaySound("agge/hachazo",CHAN_WEAPON)
-			Goto Crash+1
-		
-		Melee:
-		Crash:
-			TNT1 A 0 A_PlaySound("agge/pared",CHAN_WEAPON)
-			TNT1 A 0 A_SpawnItemEx("BlueParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
-			FAXE RSTUVWX 2
-			Stop
-	}
-}
-
-ACTOR RedAggeAxePuff : AggeAxePuff {
-	Translation "192:207=176:191","240:247=40:47"
-	
-	States {			
-		Melee:
-		Crash:
-			TNT1 A 0 A_PlaySound("agge/pared",CHAN_WEAPON)
-			TNT1 A 0 A_SpawnItemEx("RedParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
-			FAXE RSTUVWX 2
-			Stop
-	}
-}
-
 ACTOR AxeFloorFire {
   Radius 1
   Height 1
@@ -275,3 +373,76 @@ ACTOR AxeFloorFire {
 			Stop       
    }
 }
+
+ACTOR AxeHit {
+	Radius 3
+	Height 6
+	Damage (3 * random(1, 10))
+	Speed 30
+	DamageType "Lightning"
+	Scale 0.4
+	Projectile
+	+NODECAL
+	+FORCEXYBILLBOARD
+	+BLOODSPLATTER
+	
+	States {
+		Spawn:
+			TNT1 A 1 BRIGHT
+			TNT1 A 1
+			Stop
+			
+		XDeath:
+			TNT1 A 0 A_PlaySound("agge/scythehit", CHAN_WEAPON)
+			Goto Death+1
+		
+		Death:
+			TNT1 A 0 A_PlaySound("agge/pared", CHAN_WEAPON)
+			TNT1 A 0 A_GiveInventory("HammerHasHit", 1, AAPTR_TARGET)
+			TNT1 A 0 A_SpawnItemEx("BlueParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			FAXE RSTUVWX 2
+			Stop
+		}
+}
+
+ACTOR RedAxeHit : AxeHit {
+	Translation "192:207=176:191","240:247=40:47"
+	Damage (20 * random(1, 10))
+	
+	States {
+		Death:
+			TNT1 A 0 A_PlaySound("agge/pared",CHAN_WEAPON)
+			TNT1 A 0 A_GiveInventory("HammerHasHit", 1, AAPTR_TARGET)
+			TNT1 A 0 A_SpawnItemEx("RedParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			FAXE RSTUVWX 2
+			Stop
+	}
+}
+
+ACTOR RedAxeHitNoDamage : RedAxeHit {
+	Damage 0
+	
+	States {
+		Spawn:
+			TNT1 A 1 BRIGHT
+			Stop
+			
+		XDeath:
+			TNT1 A 0
+			Stop
+			
+		Death:
+			TNT1 A 0 A_JumpIf(Z <= FloorZ+5 || Z >= CeilingZ-5, "Death2")
+			TNT1 A 0 A_PlaySound("agge/pared",CHAN_WEAPON)
+			TNT1 A 0 A_GiveInventory("HammerHasHit", 1, AAPTR_TARGET)
+			TNT1 A 0 A_SpawnItemEx("RedParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			FAXE RSTUVWX 2
+			Stop
+			
+		Death2:
+			TNT1 A 0
+			Stop
+	}
+}
+
+ACTOR HammerHasHit : Inventory { Inventory.MaxAmount 1 Inventory.Amount 1 }

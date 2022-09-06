@@ -601,6 +601,7 @@ script "applyEffect" (int option, int dur, int arg2) {
                 SetActorState(ptid, "Death");
                 TakeInventory("SlowCounter", 1);
                 Thing_ChangeTID(ptid, 0);
+                terminate;
             }
 
             if (GetActorProperty(0, APROP_TracerTID) >= 1000 && GetActorProperty(0, APROP_TracerTID) <= 1020)
@@ -785,6 +786,7 @@ script "applyEffectOnPlayer" (int option, int duration, int arg2, int arg3) {
                 SetActorState(ntid, "Death");
                 TakeInventory("SlowCounter", 1);
                 Thing_ChangeTID(ntid, 0);
+                terminate;
             }
 
             if (SetActivator(0, AAPTR_TRACER)) {
@@ -852,7 +854,7 @@ script "showTranslation" (int option) CLIENTSIDE {
 
 script "deathTimer" (int tics) {
     Delay(tics);
-    if (CheckFlag(0, "CORPSE")) terminate;
+    if (ClassifyActor(0) & ACTOR_DEAD) terminate;
     SetActorState(0, "Death");
 }
 
@@ -889,6 +891,10 @@ script "fireReleased" (void) {
 
 script "shells" (void) {
     SetResultValue(CheckInventory("Shell"));
+}
+
+script "clips" (void) {
+    SetResultValue(CheckInventory("Clip"));
 }
 
 script "targetLoopFlags" (void) {
@@ -1454,6 +1460,7 @@ script "showXAuraFor" (int opt, int tics) {
     switch(opt) {
         case 1: { Spawn("FirePowerSmokeSpawner", GetActorX(0), GetActorY(0), GetActorZ(0), ttid); }; break;
         case 2: { Spawn("RedPowerSmokeSpawner", GetActorX(0), GetActorY(0), GetActorZ(0), ttid); }; break;
+        case 3: { Spawn("GoldenPowerSmokeSpawner", GetActorX(0), GetActorY(0), GetActorZ(0), ttid); }; break;
     }
 
     SetActivator(ttid);
@@ -1697,6 +1704,32 @@ script "straldex_healthChecker" (int threshold) {
 
     SetActorProperty(0, APROP_Alpha, 1.0);
     PlaySound(0, "straldex/reveal", CHAN_AUTO);
+}
+
+script "player_userJamChance" (void) {
+    SetResultValue(GetUserVariable(0, "user_jam_chance"));
+}
+
+script "player_addToUserJamChance" (int value) {
+    int chance = GetUserVariable(0, "user_jam_chance") + value;
+    SetUserVariable(0, "user_jam_chance", chance);
+}
+
+script "player_resetUserJamChance" (void) {
+    SetUserVariable(0, "user_jam_chance", 0);
+}
+
+script "player_userOverloadChance" (void) {
+    SetResultValue(GetUserVariable(0, "user_overload_chance"));
+}
+
+script "player_addToUserOverloadChance" (int value) {
+    int chance = GetUserVariable(0, "user_overload_chance") + value;
+    SetUserVariable(0, "user_overload_chance", chance);
+}
+
+script "player_resetUserOverloadChance" (void) {
+    SetUserVariable(0, "user_overload_chance", 0);
 }
 
 

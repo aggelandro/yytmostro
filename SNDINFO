@@ -256,6 +256,16 @@ weapons/hgrenadepin			DSHGREN2
 weapons/hgrenadebounce	DSHGREN3
 weapons/hgrenadepickup	DSHGREN4
 weapons/hgrenadeex			DSHGREN5
+weapons/falnfi					dsfalnfi
+weapons/falnf2					dsfalnf2
+weapons/nailin					dsnailin
+weapons/nailhi					dsnailhi
+weapons/tink						dstink
+weapons/adramalechup		DSINFSIT
+weapons/adramalechfire	DSREAFI1
+weapons/adramalechpckup	DSINFSIT
+weapons/solexp					dssolexp
+weapons/dssouls					dssouls
 
 // Efecto de fuego en el piso choreado del complex
 $rolloff weapons/rocklx 600 1800
@@ -267,6 +277,20 @@ exp4					DSLAGEX4
 exp5					DSLAGEX5
 exp6					DSLAGEX6
 exp7					DSLAGEX7
+
+//Gibs y Blood (complex)
+gib/squish	DSSQUIS
+$random gibs { gib1 gib2 gib3 }
+gib1 					dsblud01
+gib2 					dsblud02
+gib3 					dsblud03
+//Flesh Wound
+$random flesh/wound		{ flesh/wound1 flesh/wound2 flesh/wound3 flesh/wound4 flesh/wound5 }
+flesh/wound1			dswound1
+flesh/wound2			dswound2
+flesh/wound3			dswound3
+flesh/wound4			dswound4
+flesh/wound5			dswound5
 
 //ENEMIGOS
 

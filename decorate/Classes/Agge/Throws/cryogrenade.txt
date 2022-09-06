@@ -48,9 +48,9 @@ ACTOR WeaponWithCryoGrenadeOption : YYTWeapon {
 ACTOR CryoGrenadeAmmo : Ammo {
 	Scale 0.6
 	Inventory.Amount 1
-	Inventory.MaxAmount 4
+	Inventory.MaxAmount 5
 	Ammo.BackpackAmount 2
-	Ammo.BackpackMaxAmount 8
+	Ammo.BackpackMaxAmount 10
 	Inventory.RestrictedTo "Agge"
 	VisibleToPlayerClass "Agge"
 	Inventory.Pickupmessage "Cryo Grenade"

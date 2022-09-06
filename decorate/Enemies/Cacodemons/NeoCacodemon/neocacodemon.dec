@@ -41,7 +41,7 @@ ACTOR GhostCacodemon : NeoCacodemon
 		HEAD KJIHG 8
 		HEAD A 0 A_Stop
 		HEAD A 10 A_Look
-		Goto Spawn+4
+		Goto Spawn+8
 	See:
 		HEAD A 3 A_Chase
 		HEAD A 0 A_SetUserVar("user_duracioncaco",user_duracioncaco+1)

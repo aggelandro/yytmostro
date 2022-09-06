@@ -1,6 +1,6 @@
 ACTOR ElderDemon : Cyberdemon2 {
 	Translation "192:207=169:191", "240:247=188:191"
-	BloodColor "ff 50 00"
+	BloodColor "Orange"
 	Health 10000
 	PainChance 10
 	DamageFactor "ElderDemonTech", 0
@@ -31,7 +31,8 @@ ACTOR ElderDemon : Cyberdemon2 {
 	DropItem "PrototypeGunToken"
 	DropItem "UniqueWeaponSpawner"
 	DropItem "MegaSphere"
-	DropItem "DualZanzibart"
+	DropItem "DualZanzibart", 128
+	DropItem "Adramalech"
 	var int user_curse_delay;
 	var int user_super_armor;
 	var int user_regen;

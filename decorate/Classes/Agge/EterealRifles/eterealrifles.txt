@@ -135,7 +135,7 @@ ACTOR EterealRifle {
 	
 	States {
 		Spawn:
-			TNT1 A 0 NoDelay A_GiveInventory("LoopFlag", 1)
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
 			ERAA A 1 A_FadeIn(0.05)
 			TNT1 A 0 A_CountDown
 			TNT1 A 0 A_JumpIfInventory("ShottoToken", 1, "Shoot")
@@ -281,7 +281,7 @@ ACTOR ElectricMiniLaserTrail {
 	
   States {
 		Spawn:
-		YAE1 A 2 NoDelay bright A_FadeOut(0.04)
+		YAE1 A 2 bright A_FadeOut(0.04)
 		Loop
   }
 }
