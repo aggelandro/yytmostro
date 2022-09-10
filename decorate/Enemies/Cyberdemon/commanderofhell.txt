@@ -16,6 +16,7 @@ ACTOR HellCommander : Cyberdemon2 {
 	DropItem "PrototypeGunToken", 192
 	DropItem "UniqueWeaponSpawner", 48
 	DropItem "Adramalech", 16
+	DropItem "DemonAmmoBox", 162
 	var int user_launch_angle;
 	
   States {

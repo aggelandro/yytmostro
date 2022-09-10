@@ -2,52 +2,55 @@ ACTOR Adramalech : YYTWeapon {
 	Tag "Adramalech"
 	Inventory.PickupSound "weapons/adramalechpckup"
 	Inventory.PickupMessage "You got a Hell Unique Weapon, Adramalech!"
-	Weapon.AmmoType1 "Cell"
-	Weapon.AmmoType2 "Cell"
+	Weapon.AmmoType1 "DemonAmmo"
 	Weapon.AmmoGive 80
 	Weapon.UpSound "weapons/adramalechup"
 	
 	States {
 		Spawn:
-			FHMR H -1 
+			HELR Y -1
 			Stop
 			
 		Ready:
-			FHMR A 1 A_WeaponReady
-			Loop
+			TNT1 A 0 A_PlaySound("weapons/adramalechidle", 6, 1, 1)
+			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
+			HELR ABC 1 A_WeaponReady
+			Goto Ready+1
 			
 		Select:
-			FHMR A 1 A_Raise
+			TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
+			HELR I 1 A_Raise
 			Loop
 			
 		Deselect:
+			TNT1 A 0 A_StopSound(6)
 			TNT1 A 0 A_PlayWeaponSound("weapons/weapondown")
-			FHMR A 1 A_Lower
-			Goto Deselect+1
+			HELR J 1 A_Lower
+			Goto Deselect+2
 			
-		Fire:
-			TNT1 A 0 A_JumpIf(CallACS("cells") < 40, "Ready")
-			FHMR D 3 Bright A_PlayWeaponSound("weapons/adramalechfire")
-			FHMR D 21 Bright
+		Fire:	
+			TNT1 A 0 A_StopSound(6)
+			TNT1 A 0 A_JumpIf(CallACS("demonAmmo") < 40, "Ready")
+			HELR D 8 Bright A_PlayWeaponSound("weapons/adramalechfire")
+			HELR EF 8 Bright
 			TNT1 A 0 A_FireCustomMissile("AdramalechBall")
 			TNT1 A 0 A_FireCustomMissile("AdramalechBall", 20)
 			TNT1 A 0 A_FireCustomMissile("AdramalechBall", -20)
 			TNT1 A 0 A_GunFlash
-			TNT1 A 0 A_TakeInventory("Cell", 40)
-			FHMR E 10 Bright
-			FHMR F 6 Bright
-			FHMR G 3 Bright
-			FHMR C 5 Bright
-			FHMR B 5 Bright
-			FHMR A 5 Bright A_Refire
+			TNT1 A 0 A_TakeInventory("DemonAmmo", 40)
+			HELR FGH 2 Bright
+			HELR J 23
+			TNT1 A 0 A_PlaySound("weapons/adramalechidle")
+			HELR IABC 1
 			Goto Ready
 			
 		Flash:
-      NULL A 1 A_Light1
-      NULL A 9 A_Light2
-      NULL A 5 A_Light1
-      NULL A 0 A_Light0
-      Stop
+			TNT1 A 3 A_Light1
+			TNT1 A 3 A_Light2
+			TNT1 A 3 A_Light(5)
+			TNT1 A 3 A_Light2
+			TNT1 A 3 A_Light1
+			Goto LightDone
 	}
 }
 

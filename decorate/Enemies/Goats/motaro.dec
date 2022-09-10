@@ -14,6 +14,7 @@ ACTOR Motaro : HellKnight2 {
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "CrusherGunToken", 55
+	DropItem "DemonAmmo", 48
 	+DONTHURTSPECIES
 	+MISSILEMORE
 	

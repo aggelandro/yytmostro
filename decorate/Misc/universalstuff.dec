@@ -1066,6 +1066,16 @@ ACTOR BigBlueExplosion : AbstractExplosion {
 	}
 }
 
+ACTOR BigRedExplosion2 : AbstractExplosion {
+	Scale 0.75
+	States {
+		Spawn:
+			FXPR A 1 NoDelay Bright A_PlaySound("weapons/rocklx")
+			FXPR ABBCDEFGHIJKLM 1 Bright A_FadeOut(0.05)
+			Stop
+	}
+}
+
 ACTOR SmallGreenExplosion : AbstractExplosion { //kaboom3
 	Speed 1
 	Scale 0.45
@@ -2022,5 +2032,17 @@ ACTOR OrangeGibTrail : RedGibTrail {
 		Spawn:
 			FBOL ABCD 2 A_FadeOut(0.08)
 			Loop
+	}
+}
+
+ACTOR NewBaronBall : BaronBall replaces BaronBall {
+	States {
+		Spawn:
+			ABAX AB 4 BRIGHT
+			Loop
+			
+		Death:
+			ABAX CDEFG 3 BRIGHT
+			Stop
 	}
 }

@@ -1,5 +1,14 @@
 ACTOR RocketSpiderMastermind : SpiderMastermind2
 {
+	DropItem "IsaacItemsTier1Spawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier2HighChanceSpawner"
+	DropItem "IsaacItemsTier2LowChanceSpawner"
+	DropItem "IsaacItemsTier3HighChanceSpawner"
+	DropItem "PrototypeGunToken", 128
+	DropItem "DemonAmmoBox", 80
+	
   States
   {
   Missile:

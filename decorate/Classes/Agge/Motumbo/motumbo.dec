@@ -31,7 +31,7 @@ ACTOR Motumbo : YYTWeapon {
 	    DFPR ADEF 3
 	    TNT1 F 0 A_PlaySound("agge/waskafire", 0)
 			TNT1 A 0 A_AlertMonsters
-	    DFPR F 12 A_FireCustomMissile("WaskaProjectile", 0, TRUE, 0, 0, 0, 12)
+	    DFPR F 12 A_FireCustomMissile("WaskaProjectile", 0, TRUE, 0, 10, 0, 12)
 	    DFPR A 1 A_ReFire
 			Goto Ready
 	  
@@ -41,7 +41,7 @@ ACTOR Motumbo : YYTWeapon {
 			DFPR ADEF 3
 			TNT1 F 0 A_PlaySound("agge/waskafire", 0)
 	    TNT1 A 0 A_AlertMonsters
-	    DFPR F 50 A_FireCustomMissile("DetonableWaskaProjectile", 0, TRUE, 0, 0, 0, 25)
+	    DFPR F 50 A_FireCustomMissile("DetonableWaskaProjectile", 0, TRUE, 0, 10, 0, 25)
 	    DFPR A 1 A_ReFire
       Goto Ready
   }

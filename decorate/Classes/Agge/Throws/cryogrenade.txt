@@ -35,7 +35,7 @@ ACTOR WeaponWithCryoGrenadeOption : YYTWeapon {
 			TNT1 A 15 A_PlaySound("agge/cryoselect", CHAN_WEAPON)
 			TNT1 A 0 A_PlaySound("weapons/hgrenadethrow", CHAN_AUTO)
 			TNT1 A 0 A_TakeInventory("CryoGrenadeAmmo", 1)
-			HGNE A 1 A_FireCustomMissile("ThrownSWGrenade", 0, 0, 0, 0)
+			HGNE A 1 A_FireCustomMissile("ThrownSWGrenade", 0, 0, 0, 10)
 			HGRN J 1
 			HGRN KLM 2
 			HGRN NO 1

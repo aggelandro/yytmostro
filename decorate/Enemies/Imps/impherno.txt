@@ -1,5 +1,8 @@
 ACTOR Impherno : DoomImp2 {
 	Translation "64:79=[203,197,80]:[125,122,50]"
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "FlamethrowerGunToken", 10
+	DropItem "DemonAmmo", 10
 	
 	States {
 		Missile:

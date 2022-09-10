@@ -34,7 +34,7 @@ ACTOR NoisyCricket : WeaponWithCryoGrenadeOption {
 			PLBG E 0 A_Light1
 			PLBG E 0 A_PlayWeaponSound("agge/pistolzap")
 			PLBG E 0 A_Recoil(0.5)
-			PLBG E 4 Bright A_FireCustomMissile("BlueLightningBolt",0,1,9,3)
+			PLBG E 4 Bright A_FireCustomMissile("BlueLightningBolt",0,1,9,13)
 			PLBG E 0 A_Recoil(-0.5)
 			PLBG C 3 A_Light0
 			PLBG D 2

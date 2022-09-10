@@ -24,6 +24,10 @@ ACTOR SpookyVile : Archvile2
 	Mass 100
 	-SOLID
 	Obituary "%o was killed by a spooky archvile."
+	DropItem "DemonAmmo", 80
+	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "IsaacItemsTier2MidChanceSpawner"
+	DropItem "IsaacItemsTier3LowChanceSpawner"
 	States
 	{
 		Missile:

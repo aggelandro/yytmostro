@@ -342,7 +342,7 @@ script "loadChargedAttack" (int fullyCharged) {
 
 script "stopAndPositionPlayer" (void) {
     ACS_NamedExecuteWithResult("pausePlayer", 1);
-    SetActorPitch(0, 0.1);
+    SetActorPitch(0, 0.095);
 }
 
 script "displayChargeBar" (int isOn) CLIENTSIDE {
@@ -1436,6 +1436,10 @@ script "cells" (void) {
     SetResultValue(CheckInventory("Cell"));
 }
 
+script "demonAmmo" (void) {
+    SetResultValue(CheckInventory("DemonAmmo"));
+}
+
 script "isTIDBeingUsed" (int tid) {
     if (tid == 0) {
         SetResultValue(0);
@@ -1730,6 +1734,47 @@ script "player_addToUserOverloadChance" (int value) {
 
 script "player_resetUserOverloadChance" (void) {
     SetUserVariable(0, "user_overload_chance", 0);
+}
+
+script "marduk_addParasite" (void) {
+    if (SetActivator(0, AAPTR_TRACER)) {
+        if (CheckInventory("MardukParasiteCount") == 0) {
+            int mtid = UniqueTID();
+            int ptid = UniqueTID();
+
+            Thing_ChangeTID(0, mtid);
+            Spawn("MardukParasite", GetActorX(0), GetActorY(0), GetActorZ(0), ptid);
+            SetActivator(ptid);
+            SetPointer(AAPTR_TRACER, mtid);
+            SetUserVariable(0, "user_se_monster_height", GetActorProperty(mtid, APROP_Height) >> 16);
+            SetActivator(mtid);
+            Thing_ChangeTID(mtid, 0);
+            Thing_ChangeTID(ptid, 0);
+        }
+        GiveInventory("MardukParasiteCount", 1);
+    }
+}
+
+script "marduk_startDeathTimer" (void) {
+    while(GetUserVariable(0, "user_death_time") > 0) {
+        Delay(1);
+        SetUserVariable(0, "user_death_time", GetUserVariable(0, "user_death_time")-1);
+    }
+
+    if (ClassifyActor(0) & ACTOR_DEAD) terminate;
+    SetActorState(0, "Death");
+}
+
+script "marduk_parasiteDamage" (int intermission) {
+    int ttid = UniqueTID();
+    Thing_ChangeTID(0, ttid);
+    if (SetActivator(0, AAPTR_TRACER)) {
+        while((ClassifyActor(0) & ACTOR_ALIVE) || GetUserVariable(ttid, "user_death_time") > 0) {
+            Thing_Damage2(0, GetUserVariable(ttid, "user_damage"), "None");
+            Delay(intermission);
+        }
+        Thing_ChangeTID(ttid, 0);
+    }
 }
 
 

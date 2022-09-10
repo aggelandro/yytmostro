@@ -19,6 +19,8 @@ Actor JetpackZombie : AbstractYYTZombie
 	DropItem "HandGrenadeAmmo", 20
 	DropItem "CryoGrenadeAmmo", 20
 	DropItem "ChainsawSpawner", 32
+	DropItem "DemonAmmo", 16
+	DropItem "Marduk", 5
 	
   +DontHurtSpecies
   +Float

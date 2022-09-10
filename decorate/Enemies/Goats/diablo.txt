@@ -22,6 +22,7 @@ ACTOR Diablo : BaronOfHell2 {
 	DropItem "CrusherGunToken", 128
 	DropItem "UniqueWeaponSpawner", 16
 	DropItem "Adramalech", 16
+	DropItem "DemonAmmoBox", 192
 	+BRIGHT
 	+MISSILEMORE
 	+QUICKTORETALIATE

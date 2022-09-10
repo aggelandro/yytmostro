@@ -12,11 +12,13 @@ ACTOR T-800 : BaronOfHell2 {
 	+QUICKTORETALIATE
 	DropItem "UniqueWeaponSpawner", 16
 	DropItem "Falneitz", 24
+	DropItem "Marduk", 128
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
 	DropItem "IsaacItemsTier2HighChanceSpawner"
 	DropItem "IsaacItemsTier3MidChanceSpawner"
 	DropItem "CrusherGunToken", 64
+	DropItem "DemonAmmoBox"
 	var int user_laser_duration;
 	
 	States {

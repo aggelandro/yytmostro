@@ -26,6 +26,7 @@ ACTOR Armncubus : Fatso2 {
 	DropItem "IsaacItemsTier3LowChanceSpawner"
 	DropItem "ContraItemMancubusSpawner"
 	DropItem "DualZanzibart", 128
+	DropItem "DemonAmmoBox", 224
 	var int user_jump_force;
 	
 	States {

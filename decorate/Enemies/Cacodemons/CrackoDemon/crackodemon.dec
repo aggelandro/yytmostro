@@ -11,6 +11,7 @@ ACTOR CrackoDemon : Cacodemon2 {
 	PainSound "Cracko/Pain"
 	Obituary "%o Was Shocked By The Cracko Demon"
   HitObituary "%o Was Crounched By The Cracko Demon"
+	DropItem "DemonAmmoBox", 64
 	DropItem "IsaacItemsTier1Spawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"

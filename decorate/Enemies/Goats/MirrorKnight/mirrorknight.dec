@@ -5,6 +5,7 @@ ACTOR MirrorKnight : HellKnight2
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
 	DropItem "CrusherGunToken", 45
+	DropItem "DemonAmmo", 48
 	var int user_has_invoked_already;
 	
   States {

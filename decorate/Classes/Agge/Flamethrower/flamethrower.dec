@@ -30,14 +30,14 @@ ACTOR AggeFlameThrower : YYTWeapon {
 			FLAM C 3
 			FLAM D 3 
 			FLAM E 0 A_GunFlash
-			FLAM E 3 A_FireCustomMissile("FlameThrowerFire",0,1)
+			FLAM E 3 A_FireCustomMissile("FlameThrowerFire", 0, 1, 0, 10)
 			FLAM FG 3 A_ReFire
 			Goto Ready
 			
 		Hold:
 			FLAM D 2
 			FLAM E 0 A_GunFlash
-			FLAM E 2 A_FireCustomMissile("FlameThrowerFire",0,1)
+			FLAM E 2 A_FireCustomMissile("FlameThrowerFire", 0, 1, 0, 10)
 			FLAM FG 3 A_Refire
 			Goto Ready
 			

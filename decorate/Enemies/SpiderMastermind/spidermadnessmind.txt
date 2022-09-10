@@ -6,6 +6,7 @@ ACTOR SpiderMadnessmind : SpiderMastermind2 {
   ActiveSound "madness/active"
   Obituary "%o became another victim of the SpiderMadnessmind."
 	DropItem "Falneitz", 144
+	DropItem "DemonAmmoBox", 128
 	var int user_attack;
 	var int user_cannon_height;
 	var int user_original_pitch;

@@ -4,6 +4,14 @@ Actor Dozer : ChaingunGuyMod {
 	Mass 150
 	Scale 1.1
 	Obituary "%o was perforated by a Bulldozer."
+	DropItem "DemonAmmo", 32
+	Dropitem "Chaingun"
+	Dropitem "Clip"
+	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "HomingGunToken", 10
+	DropItem "HandGrenadeAmmo", 20
+	DropItem "CryoGrenadeAmmo", 20
+	DropItem "Marduk", 5
 	
 	States {
 		SpawnLoop:

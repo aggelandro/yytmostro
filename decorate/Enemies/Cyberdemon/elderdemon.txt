@@ -33,6 +33,7 @@ ACTOR ElderDemon : Cyberdemon2 {
 	DropItem "MegaSphere"
 	DropItem "DualZanzibart", 128
 	DropItem "Adramalech"
+	DropItem "DemonAmmoBox"
 	var int user_curse_delay;
 	var int user_super_armor;
 	var int user_regen;

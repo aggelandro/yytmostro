@@ -8,6 +8,7 @@ ACTOR FatsoRocket : Fatso2
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
 	DropItem "ContraItemMancubusSpawner"
+	DropItem "DemonAmmo", 48
   var int user_tiros;
   States {
 		See:

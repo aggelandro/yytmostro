@@ -12,6 +12,7 @@ ACTOR FlameCyber : Cyberdemon2
 	DropItem "IsaacItemsTier3MidChanceSpawner"
 	DropItem "PrototypeGunToken", 192
 	DropItem "UniqueWeaponSpawner", 32
+	DropItem "DemonAmmoBox", 132
 	States
 	{
 	Missile:

@@ -6,6 +6,7 @@
 #include "decorate/Misc/casing.dec"
 #include "decorate/Misc/debuffs.dec"
 #include "decorate/Misc/powerups.dec"
+#include "decorate/Misc/demonammo.dec"
 #include "decorate/Misc/projectiles.txt"
 
 //universal weapons and items
@@ -14,6 +15,7 @@
 #include "decorate/Misc/Weapons/HitscanFixer/hitscanfixer.txt"
 #include "decorate/Misc/Weapons/Falneitz/falneitz.dec"
 #include "decorate/Misc/Weapons/Adramalech/adramalech.dec"
+#include "decorate/Misc/Weapons/Marduk/marduk.dec"
 #include "decorate/Misc/Weapons/WeaponWithThroweableOption/weaponwiththroweableoption.txt"
 
 //weapons from classes
@@ -678,7 +680,7 @@ ACTOR Agge : UniversalPlayer
 	Player.StartItem "CryoGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
   Player.WeaponSlot 1, Chainsaw2, AxeShield
-  Player.WeaponSlot 2, NoisyCricket
+  Player.WeaponSlot 2, Marduk, NoisyCricket
   Player.WeaponSlot 3, TacticShotgun, AggeSSG
   Player.WeaponSlot 4, Falneitz, IsaacHands, BlackIsaacHands, OrangeIsaacHands, GreenIsaacHands, BrimstoneHands
   Player.WeaponSlot 5, DualZanzibart, Motumbo
@@ -706,7 +708,7 @@ ACTOR Ron : UniversalPlayer
 	Player.StartItem "HandGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
   Player.WeaponSlot 1, RonWrench, Chainsaw2
-  Player.WeaponSlot 2, RonPistol
+  Player.WeaponSlot 2, Marduk, RonPistol
   Player.WeaponSlot 3, Shotgun2, RonSSG
   Player.WeaponSlot 4, Falneitz, Chaingun2
   Player.WeaponSlot 5, RocketLauncher2, DualZanzibart
@@ -728,7 +730,7 @@ ACTOR zLayer : UniversalPlayer
 	Player.StartItem "HandGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
   Player.WeaponSlot 1, Fist, Chainsaw2
-  Player.WeaponSlot 2, zLayerPistol
+  Player.WeaponSlot 2, Marduk, zLayerPistol
   Player.WeaponSlot 3, Shotgun2, SuperShotgun2
   Player.WeaponSlot 4, Falneitz, zLayerCG
   Player.WeaponSlot 5, DualZanzibart, zLayerRL
@@ -750,7 +752,7 @@ ACTOR Thanuris : UniversalPlayer
 	Player.StartItem "HandGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
 	Player.Weaponslot 1, BaseballBat, Chainsaw2
-	Player.Weaponslot 2, ThanuPistol
+	Player.Weaponslot 2, Marduk, ThanuPistol
 	Player.Weaponslot 5, DualZanzibart, ThanuRL
 	Player.WeaponSlot 6, ThanuPL
 	Player.WeaponSlot 3, Shotgun2,ReloadShotgun
@@ -770,7 +772,7 @@ ACTOR Terro : UniversalPlayer
 	Player.StartItem "HandGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
 	Player.WeaponSlot 1, CastlevaniaWhip, TerroFist
-	Player.WeaponSlot 2, TerroPistol
+	Player.WeaponSlot 2, Marduk, TerroPistol
 	Player.WeaponSlot 5, DualZanzibart, RocketLauncher2
 	Player.WeaponSlot 4, Falneitz, ContraWeapon
 	Player.WeaponSlot 3, TerroShotgun, PKDoubleShotguns

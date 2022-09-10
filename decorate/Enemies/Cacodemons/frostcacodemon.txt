@@ -13,6 +13,7 @@ ACTOR Frostodemon : Cacodemon2 {
 	PainSound "frostcaco/helpai"
 	DeathSound "frostcaco/heldth"
 	ActiveSound "frostcaco/helact"
+	DropItem "DemonAmmoBox", 48
 	DropItem "IsaacItemsTier2HighChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "IsaacItemsTier3LowChanceSpawner"

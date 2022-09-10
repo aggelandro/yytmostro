@@ -2,6 +2,12 @@ ACTOR AngryBaron : BaronOfHell2 {
   Health 1200
   Obituary "%o got a baron mad."
   HitObituary "%o pissed off the wrong baron."
+	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "IsaacItemsTier2HighChanceSpawner"
+	DropItem "IsaacItemsTier2MidChanceSpawner"
+	DropItem "CrusherGunToken", 64
+	DropItem "DemonAmmo", 16
 	var int user_angry;
   States {
 		See:

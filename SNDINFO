@@ -249,23 +249,39 @@ weapons/shell1			dsshell1
 weapons/shell2			dsshell2
 weapons/shell3			dsshell3
 
-weapons/wepsel					dswepsel
-weapons/weapondown			dswepdwn
-weapons/hgrenadethrow		DSHGREN1
-weapons/hgrenadepin			DSHGREN2
-weapons/hgrenadebounce	DSHGREN3
-weapons/hgrenadepickup	DSHGREN4
-weapons/hgrenadeex			DSHGREN5
-weapons/falnfi					dsfalnfi
-weapons/falnf2					dsfalnf2
-weapons/nailin					dsnailin
-weapons/nailhi					dsnailhi
-weapons/tink						dstink
-weapons/adramalechup		DSINFSIT
-weapons/adramalechfire	DSREAFI1
-weapons/adramalechpckup	DSINFSIT
-weapons/solexp					dssolexp
-weapons/dssouls					dssouls
+//Extra Weapons
+weapons/wepsel							dswepsel
+weapons/weapondown					dswepdwn
+weapons/hgrenadethrow				DSHGREN1
+weapons/hgrenadepin					DSHGREN2
+weapons/hgrenadebounce			DSHGREN3
+weapons/hgrenadepickup			DSHGREN4
+weapons/hgrenadeex					DSHGREN5
+weapons/falnfi							dsfalnfi
+weapons/falnf2							dsfalnf2
+weapons/nailin							dsnailin
+weapons/nailhi							dsnailhi
+weapons/tink								dstink
+weapons/adramalechup				DSINFSIT
+weapons/adramalechfire			DSREAFI1
+weapons/adramalechpckup			DSINFSIT
+weapons/adramalechidle			DSHYPIDL
+weapons/solexp							dssolexp
+weapons/dssouls							dssouls
+$random weapons/marduk { weapons/marduk1 weapons/marduk2 weapons/marduk3 }
+weapons/marduk1							DSDGZEF1
+weapons/marduk2							DSDGZEF2
+weapons/marduk3							DSDGZEF3
+weapons/mardukfirestorm			DSDGZEFX
+weapons/mardukpickup				DSUNIQUE
+weapons/mardukhitflesh			MRKFLESH
+$volume weapons/mardukhitflesh 0.23
+weapons/mardukbloodsplash1	MRKSPL1
+weapons/mardukbloodsplash2	MRKSPL2
+weapons/mardukbloodsplash3	MRKSPL3
+$random weapons/mardukbloodsplash { weapons/mardukbloodsplash1 weapons/mardukbloodsplash2 weapons/mardukbloodsplash3 }
+$limit weapons/mardukbloodsplash 2
+$volume weapons/mardukbloodsplash 0.3
 
 // Efecto de fuego en el piso choreado del complex
 $rolloff weapons/rocklx 600 1800
@@ -291,6 +307,9 @@ flesh/wound2			dswound2
 flesh/wound3			dswound3
 flesh/wound4			dswound4
 flesh/wound5			dswound5
+
+items/demonammo			DSDTKAM
+items/demonammopack		DSDTKAC
 
 //ENEMIGOS
 

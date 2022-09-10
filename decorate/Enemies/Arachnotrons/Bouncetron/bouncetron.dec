@@ -1,6 +1,11 @@
 ACTOR BounceTron : Arachnotron2
 {
 	Translation "192:207=176:191", "80:111=48:79", "128:143=64:79", "144:151=72:79"
+	DropItem "DemonAmmo", 128
+	DropItem "IsaacItemsTier1MidChanceSpawner"
+	DropItem "IsaacItemsTier1LowChanceSpawner"
+	DropItem "IsaacItemsTier2MidChanceSpawner"
+	DropItem "LaserGunToken", 64
 	States
 	{
 	Missile:

@@ -1,0 +1,29 @@
+ACTOR DemonAmmo : Ammo {
+Scale 0.65
+Inventory.PickupMessage "Demon Energy"
+Inventory.PickupSound "items/demonammo"
+Inventory.Amount 60
+Inventory.MaxAmount 300
+Ammo.BackpackAmount 20
+Ammo.BackpackMaxAmount 600
+Inventory.Icon "HUDGA0"
+States
+{
+Spawn:
+	DAMG A -1
+    Stop
+    }
+}
+
+ACTOR DemonAmmoBox : DemonAmmo {
+Scale 0.65
+Inventory.Amount 200
+Inventory.PickupMessage "Demon Energy Pack"
+Inventory.PickupSound "items/demonammopack"
+States
+{
+Spawn:
+	DAMO A -1
+	Stop
+	}
+}

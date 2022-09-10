@@ -6,6 +6,7 @@ ACTOR HoloRevenant : Revenant2
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "HomingGunToken", 64
+	DropItem "DemonAmmo", 24
   States
   {
 	SpawnLoop:
