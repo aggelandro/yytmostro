@@ -24,7 +24,7 @@ ACTOR Falneitz : YYTWeapon {
 		Select:
 			TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 			FALN A 1 A_Raise
-			Loop
+			Goto Select+1
 			
 		Fire:
 			TNT1 A 0 A_JumpIf(CallACS("demonAmmo") < 3, "Empty")

@@ -71,7 +71,7 @@ ACTOR IsaacHands : WeaponWithCryoGrenadeOption {
 		MLHold:
 			CFLR A 1 Offset (0, 40)
 			CFLR D 2 Offset (0, 50)
-			TNT1 A 0 ACS_NamedExecuteWithResult("loadChargedAttack", ACS_NamedExecuteWithResult("getChargedAttackTime"))
+			TNT1 A 0 ACS_NamedExecuteWithResult("loadChargedAttack", ACS_NamedExecuteWithResult("getChargedAttackTime"), 0, 1)
 			Goto MLLoop
 			
 		MLLoop:
@@ -1251,7 +1251,7 @@ ACTOR BrimstoneHands : IsaacHands {
 		  Wait
 			
 		Hold:
-			TNT1 A 0 ACS_NamedExecuteWithResult("loadChargedAttack", ACS_NamedExecuteWithResult("getChargedAttackTime"))
+			TNT1 A 0 ACS_NamedExecuteWithResult("loadChargedAttack", ACS_NamedExecuteWithResult("getChargedAttackTime"), 0, 1)
 			Goto HoldLoop
 			
 		HoldLoop:

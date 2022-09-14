@@ -4,6 +4,7 @@ ACTOR OkuuCannon : YYTWeapon {
 	Inventory.PickupMessage "You wield the power of nuclear fusion manipulation!"
 	Obituary "%o was totally nuked by %k's control rod."
   Tag "UNIQUE"
+	+NOALERT
 	
   States {
 		Ready:
@@ -32,7 +33,7 @@ ACTOR OkuuCannon : YYTWeapon {
 		FireHold:
 			TNT1 A 0 A_TakeInventory("FlashDone", 1)
 			TNT1 A 0 A_PlaySound("agge/okuucharge", CHAN_WEAPON)
-			TNT1 A 0 ACS_NamedExecuteWithResult("loadChargedAttack", 70)
+			TNT1 A 0 ACS_NamedExecuteWithResult("loadChargedAttack", 70, 0, 1)
 			TNT1 A 0 A_GunFlash
 			Goto FireLoop
 			
@@ -51,6 +52,7 @@ ACTOR OkuuCannon : YYTWeapon {
 			Goto Ready
 			TNT1 A 0 A_TakeInventory("WallCheckDone", 1)
 			TNT1 A 0 A_TakeInventory("meter", 4)
+			TNT1 A 0 A_AlertMonsters
 			TNT1 A 0 ACS_NamedExecuteWithResult("setInvulnerable", 1)
 			TNT1 A 0 ACS_NamedExecuteWithResult("pausePlayer", 1)
 			TNT1 A 0 A_PlaySound("agge/okuualert", CHAN_WEAPON)
@@ -66,6 +68,7 @@ ACTOR OkuuCannon : YYTWeapon {
 			OKUU B 8 Offset(0,66)
 			TNT1 A 0 A_SpawnItemEx("SubSunFloorFireSpawner")
 			OKUU B 7 Offset(0,66)
+			TNT1 A 0 A_Quake(3, 35, 0, 8, "none")
 			TNT1 A 0 A_SpawnItemEx("SubterraneanRisingSun")
 			OKUU B 33 Offset(0,66)
 			OKUU B 1 Offset(0,61)

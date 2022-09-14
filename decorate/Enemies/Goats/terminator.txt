@@ -12,6 +12,7 @@ ACTOR T-800 : BaronOfHell2 {
 	+QUICKTORETALIATE
 	DropItem "UniqueWeaponSpawner", 16
 	DropItem "Falneitz", 24
+	DropItem "Dagon", 12
 	DropItem "Marduk", 128
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"

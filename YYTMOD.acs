@@ -43,6 +43,11 @@ str SV_DRAWABLE_CHARGE_BAR[40] = {
     "CHRBAR36", "CHRBAR37", "CHRBAR38", "CHRBAR39", "CHRBAR40", "CHRBAR41", "CHRBAR42"
 };
 
+str SV_HUD_DEMON_SOUL[15] = {
+    "SOUL1", "SOUL2", "SOUL3", "SOUL4", "SOUL5", "SOUL6", "SOUL7", "SOUL8",
+    "SOUL9", "SOUL10", "SOUL11", "SOUL12", "SOUL13", "SOUL14", "SOUL15"
+};
+
 str SV_DRAWABLE_DOGS_ICON_A[5] = {
     "DSHOTA1", "DSHOTA2", "DSHOTA3", "DSHOTA4", "DSHOTA5"
 };
@@ -314,10 +319,9 @@ script "checkForNoAmmoInPointerInventory" (int choice) {
     }
 }
 
-script "loadChargedAttack" (int fullyCharged) {
+script "loadChargedAttack" (int fullyCharged, int stopAtTimeLimit, int playFeedbackSound) {
     SetUserVariable(0, "user_charge_state", 0);
     int progressFactor = 40.0 / fullyCharged;
-    int playFeedbackSound = 1;
     int chargedTime, progressC;
     ACS_NamedExecuteWithResult("displayChargeBar", 1);
 
@@ -331,6 +335,33 @@ script "loadChargedAttack" (int fullyCharged) {
                 PlaySound(0, "agge/charged", CHAN_AUTO);
                 playFeedbackSound = 0;
             }
+            if (stopAtTimeLimit) break;
+        }
+        Delay(1);
+    }
+
+    ACS_NamedExecuteWithResult("displayChargeBar", 0);
+    if (chargedTime == fullyCharged) SetUserVariable(0, "user_charge_state", 1);
+    else SetUserVariable(0, "user_charge_state", 2);
+}
+
+script "loadChargedAltAttack" (int fullyCharged, int stopAtTimeLimit, int playFeedbackSound) {
+    SetUserVariable(0, "user_charge_state", 0);
+    int progressFactor = 40.0 / fullyCharged;
+    int chargedTime, progressC;
+    ACS_NamedExecuteWithResult("displayChargeBar", 1);
+
+    while (ACS_NamedExecuteWithResult("isPressingAltFire")) {
+        progressC = (progressFactor * chargedTime) >> 16;
+        ACS_NamedExecuteWithResult("showProgressChargeBar", progressC);
+
+        if (chargedTime < fullyCharged) chargedTime++;
+        else {
+            if (playFeedbackSound) {
+                PlaySound(0, "agge/charged", CHAN_AUTO);
+                playFeedbackSound = 0;
+            }
+            if (stopAtTimeLimit) break;
         }
         Delay(1);
     }
@@ -377,6 +408,11 @@ script "getChargeState" (void) {
 script "isPressingFire" (void) {
     int buttons = GetPlayerInput(PlayerNumber(), INPUT_BUTTONS);
     SetResultValue(buttons & BT_ATTACK);
+}
+
+script "isPressingAltFire" (void) {
+    int buttons = GetPlayerInput(PlayerNumber(), INPUT_BUTTONS);
+    SetResultValue(buttons & BT_ALTATTACK);
 }
 
 // codigo escopeta terro
@@ -500,7 +536,8 @@ script "applyEffect" (int option, int dur, int arg2) {
                 poisonDmg = Random(3, 7); // Se pierde la relación con el damage dealer
             }
             else {
-                poisonDmg = GetActorProperty(0, APROP_Damage);
+                if (arg2) poisonDmg = arg2;
+                else poisonDmg = GetActorProperty(0, APROP_Damage);
                 if (!SetActivator(0, AAPTR_TRACER)) { break; }
             }
 
@@ -560,8 +597,12 @@ script "applyEffect" (int option, int dur, int arg2) {
         case 8: {
             // Burn hace el daño de la lágrima cada segundo durante toda su duración
             times = dur / 35;
-            int burnDmg = GetActorProperty(0, APROP_Damage);
+            int burnDmg;
+            if (arg2) burnDmg = arg2;
+            else burnDmg = GetActorProperty(0, APROP_Damage);
+
             if (SetActivator(0, AAPTR_TRACER)) {
+                if (ClassifyActor(0) & ACTOR_PLAYER) terminate;
                 mtid = UniqueTID();
                 ptid = UniqueTID();
 
@@ -714,6 +755,17 @@ script "applyEffect" (int option, int dur, int arg2) {
 
             TakeInventory("LightningCounter", 1);
         }; break;
+        case 14: {
+            // Demon Souls
+            if (SetActivator(0, AAPTR_TRACER)) {
+                if (!CheckInventory("DemonSoulDropped")) {
+                    Delay(1);
+                    if (ClassifyActor(0) & ACTOR_ALIVE) terminate;
+                    GiveInventory("DemonSoulDropped", 1);
+                    Spawn("DemonSoulItem", GetActorX(0), GetActorY(0), GetActorZ(0));
+                }
+            }
+        }; break;
     }
 }
 
@@ -820,7 +872,7 @@ script "applyEffectOnPlayer" (int option, int duration, int arg2, int arg3) {
             // Lightning, parecido a poison, hace daño por tiempo
             if (SetActivator(0, AAPTR_TRACER)) {
                 if (ClassifyActor(0) & ACTOR_MONSTER) {
-                    // Buscar una solución más general
+                    // TODO: Buscar una solución más general
                     if (CheckActorClass(0, "DoomImp2") || CheckActorClass(0, "SpiderImp") ||
                         CheckActorClass(0, "Impherno") || CheckActorClass(0, "Kimp")) {
                         terminate;
@@ -1440,6 +1492,10 @@ script "demonAmmo" (void) {
     SetResultValue(CheckInventory("DemonAmmo"));
 }
 
+script "demonSouls" (void) {
+    SetResultValue(CheckInventory("DemonSoul"));
+}
+
 script "isTIDBeingUsed" (int tid) {
     if (tid == 0) {
         SetResultValue(0);
@@ -1649,6 +1705,10 @@ script "dogs_showIconProgress" (int entry) CLIENTSIDE {
     if (CheckInventory("SwitchToken")) SetFont(SV_DRAWABLE_DOGS_ICON_B[entry]);
     else SetFont(SV_DRAWABLE_DOGS_ICON_A[entry]);
     HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP, 100, 0, 1000.0, 7000.0, 0);
+    if (entry == 4) {
+        Delay(70);
+        HudMessage(s:""; HUDMSG_PLAIN, 100, 0, 0, 0, 0);
+    }
 }
 
 script "dogs_buffDuration" (int tics) {
@@ -1775,6 +1835,42 @@ script "marduk_parasiteDamage" (int intermission) {
         }
         Thing_ChangeTID(ttid, 0);
     }
+}
+
+script "subweapon_thrustFlyingMonster" (void) {
+    int velz = GetUserVariable(0, "user_velz");
+    Delay(1);
+    if (SetActivator(0, AAPTR_TRACER)) {
+        if ((ClassifyActor(0) & ACTOR_ALIVE) && velz < 0) {
+            ThrustThingZ(0, 10, 1, 1);
+        }
+    }
+}
+
+script "dagon_showDemonSouls" (void) CLIENTSIDE {
+    SetUserVariable(0, "user_hide_demon_souls", 0);
+    int i;
+    while(true) {
+        for (i=0; i < 15; i++) {
+            if (GetUserVariable(0, "user_hide_demon_souls")) {
+                HudMessage(s:""; HUDMSG_PLAIN, 200, 0, 0, 0, 1);
+                HudMessage(s:""; HUDMSG_PLAIN, 201, 0, 0, 0, 1);
+                terminate;
+            }
+            SetHudSize(1280, 960, 0);
+            SetFont(SV_HUD_DEMON_SOUL[i]);
+            HudMessage(s:"A"; HUDMSG_PLAIN, 200, 0, -100.0, 770.0, 0);
+            SetHudSize(640, 480, 0);
+            SetFont("BIGFONT");
+            if (CheckInventory("DemonSoul") < 100) HudMessage(s:"x ", i:CheckInventory("DemonSoul"); HUDMSG_PLAIN, 201, CR_RED, -15.0, 390.0, 0);
+            else HudMessage(s:"x 100"; HUDMSG_PLAIN, 201, CR_GREEN, -15.0, 390.0, 0);
+            Delay(3);
+        }
+    }
+}
+
+script "dagon_hideDemonSouls" (void) CLIENTSIDE {
+    SetUserVariable(0, "user_hide_demon_souls", 1);
 }
 
 

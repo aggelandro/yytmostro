@@ -11,6 +11,7 @@ ACTOR Cryocubus : Cyberdemon2
   Obituary "%o was frozen by the Cryocubus."
 	DropItem "DemonAmmoBox", 192
 	DropItem "Marduk"
+	DropItem "Dagon"
   DropItem "UniqueWeaponSpawner"
 	DropItem "IsaacItemsTier1Spawner"
 	DropItem "IsaacItemsTier1LowChanceSpawner"

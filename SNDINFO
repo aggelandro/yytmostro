@@ -282,6 +282,12 @@ weapons/mardukbloodsplash3	MRKSPL3
 $random weapons/mardukbloodsplash { weapons/mardukbloodsplash1 weapons/mardukbloodsplash2 weapons/mardukbloodsplash3 }
 $limit weapons/mardukbloodsplash 2
 $volume weapons/mardukbloodsplash 0.3
+weapons/dagonfire						DSTAKFIR
+weapons/dagonfireend				HCFEND
+weapons/demonballsee				DSPLASM2
+weapons/demonsoultake				SOULTAKE
+weapons/dagonmagic					DSMAGIC9
+weapons/dagonmagic2					DSMAGIC2
 
 // Efecto de fuego en el piso choreado del complex
 $rolloff weapons/rocklx 600 1800
@@ -310,6 +316,11 @@ flesh/wound5			dswound5
 
 items/demonammo			DSDTKAM
 items/demonammopack		DSDTKAC
+
+//HolySpirit Sounds
+SpiritActive            dsghapai 
+SpiritAttack            dsghaatk
+SpiritDie               dsghadth
 
 //ENEMIGOS
 

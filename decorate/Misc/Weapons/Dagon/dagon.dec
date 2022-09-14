@@ -1,0 +1,429 @@
+ACTOR Dagon : YYTWeapon {
+	Tag "Dagon"
+	Inventory.PickupSound "misc/hellwp"
+	Inventory.PickupMessage "You got a Hell Powerful Weapon, Dagon!"
+	Weapon.AmmoType1 "DemonAmmo"
+	Weapon.AmmoGive 40
+	Weapon.UpSound "weapons/wepsel"
+	+NOALERT
+	
+	States {
+		Spawn:
+			WTAK A -1
+			Stop
+			
+		Select:
+			TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("dagon_showDemonSouls")
+			TAKG A 1 A_Raise
+			Goto Select+2
+			
+		Deselect:
+			TNT1 A 0 ACS_NamedExecuteWithResult("dagon_hideDemonSouls")
+			TNT1 A 0 A_PlayWeaponSound("weapons/weapondown")
+			TAKG A 1 A_Lower
+			Goto Deselect+2
+			
+		Ready:
+			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
+			TNT1 A 0 A_JumpIf(CallACS("demonAmmo") < 2, "Empty")
+			TAKG A 1 A_WeaponReady
+			Loop
+			
+		Empty:
+			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
+			TNT1 A 0 A_JumpIf(CallACS("demonAmmo") >= 2, "Ready")
+			TAKG A 1 A_WeaponReady(WRF_NOPRIMARY)
+			Loop
+			
+		Fire:
+			TNT1 A 0 A_Refire
+			Goto Ready
+			
+		Hold:
+			TNT1 A 0 A_PlayWeaponSound("weapons/dagonfire")
+			TNT1 A 0 ACS_NamedExecuteWithResult("loadChargedAttack", 54, 1, 1)
+			Goto Fire2
+			
+		Fire2:
+			TAKG B 3 A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG B 3 A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG C 3 A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG C 3 A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TNT1 A 0 A_PlayWeaponSound("weapons/dagonfire")
+			TAKG D 3 A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG D 3 A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG E 3 A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG E 3 A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TNT1 A 0 A_PlayWeaponSound("weapons/dagonfire")
+			TAKG F 3 A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG F 3 A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG G 3 A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG G 3 A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TNT1 A 0 A_PlayWeaponSound("weapons/dagonfire")
+			TAKG H 3 BRIGHT A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG H 3 BRIGHT A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG I 3 BRIGHT A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG I 3 BRIGHT A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TNT1 A 0 A_PlayWeaponSound("weapons/dagonfire")
+			TAKG J 3 BRIGHT A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG J 3 BRIGHT A_JumpIf(CallACS("getChargeState") == 1, "FireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			Goto FireCharged
+			
+		FireCharged:
+			TNT1 A 0 A_AlertMonsters
+			TNT1 A 0 A_TakeInventory("DemonAmmo", 2)
+			TAKG KLM 3 BRIGHT
+			TNT1 A 0 A_PlayWeaponSound("weapons/dagonfire")
+			TAKG NOP 4 BRIGHT
+			TNT1 A 0 A_Quake(3, 3, 0, 8, "none")
+			TNT1 A 0 A_ZoomFactor(0.7)
+			TNT1 A 0 A_Recoil(1)
+			TAKG Q 4 BRIGHT
+			TAKG R 3 BRIGHT A_FireCustomMissile("DagonBall2", 0, 0, 0, 3)
+			TAKG R 1 BRIGHT A_ZoomFactor(1)
+			TAKG S 10 A_Refire("Hold2")
+			TNT1 A 0 A_PlayWeaponSound("weapons/dagonfireend")
+			TAKG S 35
+			Goto Ready
+			
+		Hold2:
+			TNT1 A 0 A_JumpIf(CallACS("demonAmmo") < 2, "Empty")
+			TNT1 A 0 A_AlertMonsters
+			TNT1 A 0 A_TakeInventory("DemonAmmo", 2)
+			TNT1 A 0 A_Quake(3, 3, 0, 8, "none")
+			TNT1 A 0 A_ZoomFactor(0.7)
+			TNT1 A 0 A_Recoil(1)
+			TAKG Q 1 BRIGHT
+			TAKG R 1 BRIGHT A_FireCustomMissile("DagonBall2", 0, 0, 0, 3)
+			TAKG R 1 BRIGHT A_ZoomFactor(1)
+			TAKG S 10 A_Refire("Hold2")
+			TNT1 A 0 A_PlayWeaponSound("weapons/dagonfireend")
+			TAKG S 35
+			Goto Ready
+			
+		AltFire:
+			TNT1 A 0 A_JumpIf(CallACS("demonSouls") < 100, "Ready")
+			TNT1 A 0 A_Refire
+			Goto Ready
+			
+		AltHold:
+			TNT1 A 0 A_JumpIf(CallACS("demonSouls") < 100, "Ready")
+			TNT1 A 0 ACS_NamedExecuteWithResult("loadChargedAltAttack", 39, 1)
+			Goto AltFire2
+			
+		AltFire2:
+			TAKG A 3 A_JumpIf(CallACS("getChargeState") == 1, "AltFireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG A 3 A_JumpIf(CallACS("getChargeState") == 1, "AltFireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TNT1 A 0 A_PlayWeaponSound("weapons/dagonmagic2")
+			TAKG T 4 A_JumpIf(CallACS("getChargeState") == 1, "AltFireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG T 4 A_JumpIf(CallACS("getChargeState") == 1, "AltFireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TNT1 A 0 A_PlayWeaponSound("weapons/dagonmagic2")
+			TAKG U 4 BRIGHT A_JumpIf(CallACS("getChargeState") == 1, "AltFireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG U 4 BRIGHT A_JumpIf(CallACS("getChargeState") == 1, "AltFireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TNT1 A 0 A_PlayWeaponSound("weapons/dagonmagic2")
+			TAKG V 4 BRIGHT A_JumpIf(CallACS("getChargeState") == 1, "AltFireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG V 4 BRIGHT A_JumpIf(CallACS("getChargeState") == 1, "AltFireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG W 4 BRIGHT A_JumpIf(CallACS("getChargeState") == 1, "AltFireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			TAKG W 4 BRIGHT A_JumpIf(CallACS("getChargeState") == 1, "AltFireCharged")
+			TNT1 A 0 A_JumpIf(CallACS("getChargeState") == 2, "Ready")
+			Goto AltFireCharged
+			
+		AltFireCharged:
+			TNT1 A 0 A_AlertMonsters
+			TNT1 A 0 A_PlaySound("*taunt", CHAN_VOICE)
+			TAKG W 35 BRIGHT
+			TNT1 A 0 A_TakeInventory("DemonSoul", 100)
+			TNT1 A 0 A_Quake(3, 3, 0, 8, "none")
+			TNT1 A 0 A_ZoomFactor(0.7)
+			TNT1 A 0 A_Recoil(1)
+			TAKG Q 4 BRIGHT
+			TNT1 A 0 A_PlayWeaponSound("weapons/dagonmagic")
+			TNT1 A 0 A_FireCustomMissile("HolyMissile2", -9, 0, 0, 3)
+			TNT1 A 0 A_FireCustomMissile("HolyMissile2", 9, 0, 0, 3)
+			TNT1 A 0 A_FireCustomMissile("HolyMissile2", -18, 0, 0, 3)
+			TNT1 A 0 A_FireCustomMissile("HolyMissile2", 18, 0, 0, 3)
+			TNT1 A 0 A_FireCustomMissile("HolyMissile2", -27, 0, 0, 3)
+			TNT1 A 0 A_FireCustomMissile("HolyMissile2", 27, 0, 0, 3)
+			TNT1 A 0 A_FireCustomMissile("HolyMissile2", -36, 0, 0, 3)
+			TNT1 A 0 A_FireCustomMissile("HolyMissile2", 36, 0, 0, 3)
+			TNT1 A 0 A_FireCustomMissile("HolyMissile2", -45, 0, 0, 3)
+			TNT1 A 0 A_FireCustomMissile("HolyMissile2", 45, 0, 0, 3)
+			TAKG R 14 BRIGHT A_FireCustomMissile("HolyMissile2", 0, 0, 0, 3)
+			TAKG R 1 BRIGHT A_ZoomFactor(1)
+			TAKG S 10
+			TNT1 A 0 A_PlayWeaponSound("weapons/dagonfireend")
+			TAKG S 35
+			Goto Ready
+	}
+}
+
+ACTOR DagonBall2 {
+	Height 10
+	Radius 12
+	Speed 30
+	Damage 10
+	Scale 0.24
+	PROJECTILE
+	+FORCERADIUSDMG
+	+HITTRACER
+	SeeSound "weapons/demonballsee"
+	DeathSound "weapons/dagonfireend"
+	Decal DBRScorch
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay A_Jump(128,"Spawn2")
+			Goto Normal
+		
+		Normal:
+			TNT1 A 0 A_Jump(128,"NormalFX")
+			DBB2 A 1 Bright A_SpawnItemEx("DagonBallTrail2",Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-20,20),128)
+			Loop
+			
+		NormalFX:
+			TNT1 A 0 A_SpawnItemEx("DagonBallLightning",Random(1,-1),Random(1,-1),Random(1,-1),0,0,0,0,128)
+			DBB2 A 1 Bright A_SpawnItemEx("DagonBallTrail2",Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-20,20),128)
+			TNT1 A 0 A_SpawnItemEx("DagonBallLightning2",Random(1,-1),Random(1,-1),Random(1,-1),0,0,0,0,128)
+			DBB2 A 1 Bright A_SpawnItemEx("DagonBallTrail2",Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-20,20),128)
+			Goto Normal
+			
+		Spawn2:
+			TNT1 A 0 A_Jump(128,"Spawn2FX")
+			DBB2 A 1 Bright A_SpawnItemEx("DagonBallTrail3",Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-20,20),128)
+			Loop
+			
+		Spawn2FX:
+			TNT1 A 0 A_SpawnItemEx("DagonBallLightning",Random(1,-1),Random(1,-1),Random(1,-1),0,0,0,0,128)
+			DBB2 A 1 Bright A_SpawnItemEx("DagonBallTrail2",Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-20,20),128)
+			TNT1 A 0 A_SpawnItemEx("DagonBallLightning2",Random(1,-1),Random(1,-1),Random(1,-1),0,0,0,0,128)
+			DBB2 A 1 Bright A_SpawnItemEx("DagonBallTrail2",Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-1,1),Random(-20,20),128)
+			Goto Spawn2
+			
+		XDeath:
+			TNT1 A 0 ACS_NamedExecuteWithResult("applyEffect", 14)
+			Goto Death
+			
+		Death:
+			TNT1 A 0
+			TNT1 A 0 Bright A_SpawnItemEx("RedParticleSpawnerDT", 0, 0, 0, 0, 0, 0, 0, 128)
+			TNT1 A 0 A_Explode(7, 16, 0, 0, 16)
+			TNT1 AAA 0 A_CustomMissile("SmallRedExplosion2", 0, 0, random(0,360), 2, random(0,360))
+			TNT1 AAAA 0 A_CustomMissile("SmokeSmallExplosion", 0, 0, random(0,360), 2, random(0,360))
+			TNT1 A 1 Bright A_Explode(2,48)
+			Stop
+	}
+}
+
+ACTOR DagonBallTrail2 {
+	RenderStyle Add
+	Scale 0.22
+	Alpha 0.65
+	+CLIENTSIDEONLY
+	+NOBLOCKMAP
+	+DONTSPLASH
+	+NOCLIP
+	+NOINTERACTION
+	+THRUACTORS
+	
+	States {
+		Spawn:
+			TNT1 A 2
+			DBRI AAAAAABBBBBBBB 1 Bright A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR DagonBallTrail3 : DagonBallTrail2 {
+	States {
+		Spawn:
+			TNT1 A 2
+			DBRI AAAAAACCCCCCCC 1 Bright A_FadeOut(0.05)
+			Stop
+  }
+}
+
+ACTOR DagonBallLightning {
+	RenderStyle Add
+	Scale 0.03
+	Alpha 0.5
+	+MISSILE
+	+NOGRAVITY
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOTELEPORT
+	+DONTSPLASH
+	+CLIENTSIDEONLY
+	-SOLID
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay A_Jump(256,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72)
+			REL1 ABCDEFGHIJKLMNOPQR 0 Bright A_Jump(256,"Death")
+			REL2 ABCDEFGHIJKLMNOPQR 0 Bright A_Jump(256,"Death")
+			REL3 ABCDEFGHIJKLMNOPQR 0 Bright A_Jump(256,"Death")
+			REL4 ABCDEFGHIJKLMNOPQR 0 Bright A_Jump(256,"Death")
+			Goto Death
+			
+		Death:
+			"----" A 1 Bright
+			Stop
+	}
+}
+
+ACTOR DagonBallLightning2 : DagonBallLightning { Scale 0.06 }
+
+ACTOR RedParticleSpawnerDT : RedParticleSpawner {
+  States {
+		Spawn:
+			TNT1 A 0 NoDelay A_SpawnItemEx("EPSR7",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("EPSR8",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("EPSR9",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("EPSR10",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("EPSR11",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 0 A_SpawnItemEx("EPSR12",0,0,0,Random(4,-4),Random(4,-4),Random(4,-4),0,128)
+			TNT1 A 1
+			Stop
+  }
+}
+
+ACTOR EnergyProjectileSparkRedDT : EnergyProjectileSparkRed {
+	States {
+		Spawn:
+			SPKR A 2 Bright A_FadeOut(0.08)
+			Loop
+	}
+}
+
+ACTOR EPSR7 : EnergyProjectileSparkRedDT { Scale 0.040 }
+ACTOR EPSR8 : EnergyProjectileSparkRedDT { Scale 0.035 }
+ACTOR EPSR9 : EnergyProjectileSparkRedDT { Scale 0.030 }
+ACTOR EPSR10 : EnergyProjectileSparkRedDT { Scale 0.025 }
+ACTOR EPSR11 : EnergyProjectileSparkRedDT { Scale 0.020 }
+ACTOR EPSR12 : EnergyProjectileSparkRedDT { Scale 0.015 }
+
+
+Actor HolyMissile2 : HolyMissile replaces HolyMissile {
+	Speed 15
+	Damage 0
+	RenderStyle NONE
+	Alpha 0.50
+	Damagetype "Soul"
+	Obituary "%o was reaped by %k."
+	+Bright
+	+EXTREMEDEATH
+	+FORCEXYBILLBOARD
+	+PIERCEARMOR
+	-FOILINVUL
+	
+	States {
+		Spawn:
+			TNT1 A 0 
+			TNT1 A 1 A_CHolyAttack2
+			Stop
+	}
+}
+
+ACTOR HolyPuff2 : HolyPuff replaces HolyPuff {
+	+Bright
+	RenderStyle Translucent
+	Alpha 0.66
+	+FORCEXYBILLBOARD
+}
+
+ACTOR HolyTail2 : HolyTail replaces HolyTail {
+	RenderStyle Translucent
+	Alpha 0.25
+	+Bright
+	+FORCEXYBILLBOARD
+	
+	States {
+		Spawn:
+			SPIR AB 1 A_CHolyTail
+			Stop
+  }
+}
+
+ACTOR HolyTailTrail2 : HolyTailTrail replaces HolyTailTrail {
+	RenderStyle Translucent
+	Alpha 0.77
+	+Bright
+	+FORCEXYBILLBOARD
+	
+	States {
+		Spawn:
+			TNT1 A 0
+			Stop
+  }
+}
+
+ACTOR HolyMissilePuff2 : HolyMissilePuff replaces HolyMissilePuff {
+	RenderStyle Translucent
+	Alpha 0.75
+	+Bright
+	+FORCEXYBILLBOARD
+}
+
+ACTOR HolySpirit2 : HolySpirit replaces HolySpirit {
+	Health 155
+	Speed 12
+	Radius 10
+	Height 6
+	Damage 3
+	Projectile
+	+RIPPER
+	+SEEKERMISSILE
+	+FOILINVUL
+	+SKYEXPLODE
+	+NOEXPLODEFLOOR
+	+CANBLAST
+	+EXTREMEDEATH
+	+HITTRACER
+	Damagetype "Soul"
+	RenderStyle Translucent
+	Alpha 0.4
+	DeathSound "SpiritDie"
+	Obituary "$OB_MPCWEAPWRAITHVERGE"
+	+BRIGHT
+
+	States {
+		Spawn:
+			SPIR AAB 2 A_CHolySeek
+			SPIR B 2 A_CHolyCheckScream
+			TNT1 A 0 A_RadiusGive("FearDebuff", 24, RGF_MONSTERS)
+			Loop
+			
+		Death:
+			SPIR D 4
+			SPIR E 4 A_Scream
+			SPIR FGHIJ 4
+			Stop
+	}
+}

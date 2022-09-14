@@ -16,6 +16,7 @@
 #include "decorate/Misc/Weapons/Falneitz/falneitz.dec"
 #include "decorate/Misc/Weapons/Adramalech/adramalech.dec"
 #include "decorate/Misc/Weapons/Marduk/marduk.dec"
+#include "decorate/Misc/Weapons/Dagon/dagon.dec"
 #include "decorate/Misc/Weapons/WeaponWithThroweableOption/weaponwiththroweableoption.txt"
 
 //weapons from classes
@@ -684,7 +685,7 @@ ACTOR Agge : UniversalPlayer
   Player.WeaponSlot 3, TacticShotgun, AggeSSG
   Player.WeaponSlot 4, Falneitz, IsaacHands, BlackIsaacHands, OrangeIsaacHands, GreenIsaacHands, BrimstoneHands
   Player.WeaponSlot 5, DualZanzibart, Motumbo
-  Player.WeaponSlot 6, AggeFlamethrower
+  Player.WeaponSlot 6, Dagon, AggeFlamethrower
 	Player.WeaponSlot 7, Adramalech, EterealShocker
   Player.WeaponSlot 8, OkuuCannon
 	var int user_charge_state;
@@ -693,6 +694,7 @@ ACTOR Agge : UniversalPlayer
 	var int user_player_light_tid;
 	var int user_jam_chance;
 	var int user_overload_chance;
+	var int user_hide_demon_souls;
 }
 ACTOR Ron : UniversalPlayer
 {
@@ -712,10 +714,11 @@ ACTOR Ron : UniversalPlayer
   Player.WeaponSlot 3, Shotgun2, RonSSG
   Player.WeaponSlot 4, Falneitz, Chaingun2
   Player.WeaponSlot 5, RocketLauncher2, DualZanzibart
-  Player.WeaponSlot 6, RonPL
+  Player.WeaponSlot 6, Dagon, RonPL
   Player.WeaponSlot 7, Adramalech, BFG9001
 	var int user_jam_chance;
 	var int user_overload_chance;
+	var int user_hide_demon_souls;
 }
 ACTOR zLayer : UniversalPlayer
 {
@@ -734,11 +737,12 @@ ACTOR zLayer : UniversalPlayer
   Player.WeaponSlot 3, Shotgun2, SuperShotgun2
   Player.WeaponSlot 4, Falneitz, zLayerCG
   Player.WeaponSlot 5, DualZanzibart, zLayerRL
-  Player.WeaponSlot 6, PlasmaRifle2
+  Player.WeaponSlot 6, Dagon, PlasmaRifle2
   Player.WeaponSlot 7, Adramalech, BFG9001
   Player.WeaponSlot 8, zLayerUnique
 	var int user_jam_chance;
 	var int user_overload_chance;
+	var int user_hide_demon_souls;
 }
 
 ACTOR Thanuris : UniversalPlayer
@@ -754,12 +758,13 @@ ACTOR Thanuris : UniversalPlayer
 	Player.Weaponslot 1, BaseballBat, Chainsaw2
 	Player.Weaponslot 2, Marduk, ThanuPistol
 	Player.Weaponslot 5, DualZanzibart, ThanuRL
-	Player.WeaponSlot 6, ThanuPL
+	Player.WeaponSlot 6, Dagon, ThanuPL
 	Player.WeaponSlot 3, Shotgun2,ReloadShotgun
 	Player.WeaponSlot 4, Falneitz, Chaingun2
 	Player.WeaponSlot 7, Adramalech, BFG9001
 	var int user_jam_chance;
 	var int user_overload_chance;
+	var int user_hide_demon_souls;
 }
 ACTOR Terro : UniversalPlayer
 {
@@ -776,12 +781,13 @@ ACTOR Terro : UniversalPlayer
 	Player.WeaponSlot 5, DualZanzibart, RocketLauncher2
 	Player.WeaponSlot 4, Falneitz, ContraWeapon
 	Player.WeaponSlot 3, TerroShotgun, PKDoubleShotguns
-	Player.WeaponSlot 6, Dogs
+	Player.WeaponSlot 6, Dagon, Dogs
 	Player.WeaponSlot 7, Adramalech, BFG9001
 	var int user_dogs_switch_cooldown;
 	var int user_dogs_buff_duration;
 	var int user_jam_chance;
 	var int user_overload_chance;
+	var int user_hide_demon_souls;
 }
 
 ACTOR Shotgun2 : Shotgun {}

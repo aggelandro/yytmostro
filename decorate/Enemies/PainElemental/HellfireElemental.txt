@@ -9,6 +9,7 @@ ACTOR HellfireElemental : PainElemental2 {
 	Obituary "%o was reduced to ashes by a Hellfire Elemental."
 	HitObituary "%o was swallowed by a Hellfire Elemental."
 	DropItem "DemonAmmoBox", 128
+	DropItem "Dagon", 24
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "IsaacItemsTier2HighChanceSpawner"
 	+MISSILEEVENMORE

@@ -3,7 +3,7 @@ ACTOR Marduk : YYTWeapon {
 	Inventory.PickupSound "weapons/mardukpickup"
 	Inventory.PickupMessage "You got a Living Weapon, Marduk!"
 	Weapon.AmmoType1 "DemonAmmo"
-	Weapon.AmmoGive 8
+	Weapon.AmmoGive 20
 	+NOALERT
 	
 	States {
@@ -12,6 +12,7 @@ ACTOR Marduk : YYTWeapon {
 			Loop
 		
 		Ready:
+			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			TNT1 A 0 A_JumpIf(CallACS("demonAmmo") == 0, "ReadyClose")
 			DGAZ ABCDDDCB 4 A_WeaponReady
 			TNT1 A 0 A_Jump(180, "ReadyBlink")
@@ -25,13 +26,15 @@ ACTOR Marduk : YYTWeapon {
 			Goto Ready
 			
 		ReadyClose:
+			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			TNT1 A 0 A_JumpIf(CallACS("demonAmmo") > 0, "Ready")
-			DGAZ E 1
+			DGAZ E 1 A_WeaponReady(WRF_NOFIRE)
 			Loop
 			
 		Select:
+			TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 			DGAZ E 1 A_Raise
-			Loop
+			Goto Select+1
 	
 		Deselect:
 			DGAZ E 1 A_Lower

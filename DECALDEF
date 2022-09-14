@@ -1,2 +1,28 @@
 generator CrackodemonBall CacoScorch
 generator Blusoul CacoScorch
+
+DECAL DTRScorch
+{
+Pic DTDEA0
+Add 1.0
+X-Scale 0.06
+Y-Scale 0.06
+FullBright
+RandomFlipx
+RandomFlipy
+Animator GoAway
+LowerDecal DoomImpScorch
+}
+
+DECAL DBRScorch
+{
+Pic DBDEA0
+Add 1.0
+X-Scale 0.06
+Y-Scale 0.06
+FullBright
+RandomFlipx
+RandomFlipy
+Animator GoAway
+LowerDecal DoomImpScorch
+}

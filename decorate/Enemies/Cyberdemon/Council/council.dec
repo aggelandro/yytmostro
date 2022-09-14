@@ -16,6 +16,7 @@ ACTOR CouncilOfTheSeven : YYTMonster
 	Painchance 0
 	DeathSound "*death"
 	DropItem "Adramalech"
+	DropItem "Dagon"
 	DropItem "DemonAmmoBox"
 	States
 	{
