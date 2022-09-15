@@ -12,11 +12,15 @@ Actor Dozer : ChaingunGuyMod {
 	DropItem "HandGrenadeAmmo", 20
 	DropItem "CryoGrenadeAmmo", 20
 	DropItem "Marduk", 5
+	var int user_gun_height;
+	var int user_original_pitch;
 	
 	States {
 		SpawnLoop:
+			TNT1 A 0 A_SetUserVar("user_gun_height", 34)
+			TNT1 A 0 A_SetUserVar("user_original_pitch", pitch)
 			BRZK AB 10 A_Look
-			Loop
+			Goto SpawnLoop+2
 		
 		See:
 			BRZK AABBCCDD 3 A_Chase
@@ -28,42 +32,58 @@ Actor Dozer : ChaingunGuyMod {
 			BRZK Q 2 BRIGHT A_Chase("", "")
 			BRZK Q 1 BRIGHT A_FaceTarget
 			TNT1 A 0 A_PlaySound("chainguy/attack",CHAN_AUTO)
-			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, pitch)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setPitchToTarget", user_gun_height, 28)
+			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, -pitch)
+			TNT1 A 0 A_SetPitch(user_original_pitch)
 			TNT1 A 0 A_JumpIfCloser(256, "Normal")
 			BRZK Q 2 BRIGHT A_Chase("", "")
 			BRZK Q 1 BRIGHT A_FaceTarget
 			TNT1 A 0 A_PlaySound("chainguy/attack",CHAN_AUTO)
-			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, pitch)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setPitchToTarget", user_gun_height, 28)
+			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, -pitch)
+			TNT1 A 0 A_SetPitch(user_original_pitch)
 			TNT1 A 0 A_JumpIfCloser(256, "Normal")
 			BRZK R 2 BRIGHT A_Chase("", "")
 			BRZK R 1 BRIGHT A_FaceTarget
 			TNT1 A 0 A_PlaySound("chainguy/attack",CHAN_AUTO)
-			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, pitch)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setPitchToTarget", user_gun_height, 28)
+			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, -pitch)
+			TNT1 A 0 A_SetPitch(user_original_pitch)
 			TNT1 A 0 A_JumpIfCloser(256, "Normal")
 			BRZK R 2 BRIGHT A_Chase("", "")
 			BRZK R 1 BRIGHT A_FaceTarget
 			TNT1 A 0 A_PlaySound("chainguy/attack",CHAN_AUTO)
-			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, pitch)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setPitchToTarget", user_gun_height, 28)
+			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, -pitch)
+			TNT1 A 0 A_SetPitch(user_original_pitch)
 			TNT1 A 0 A_JumpIfCloser(256, "Normal")
 			BRZK S 2 BRIGHT A_Chase("", "")
 			BRZK S 1 BRIGHT A_FaceTarget
 			TNT1 A 0 A_PlaySound("chainguy/attack",CHAN_AUTO)
-			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, pitch)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setPitchToTarget", user_gun_height, 28)
+			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, -pitch)
+			TNT1 A 0 A_SetPitch(user_original_pitch)
 			TNT1 A 0 A_JumpIfCloser(256, "Normal")
 			BRZK S 2 BRIGHT A_Chase("", "")
 			BRZK S 1 BRIGHT A_FaceTarget
 			TNT1 A 0 A_PlaySound("chainguy/attack",CHAN_AUTO)
-			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, pitch)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setPitchToTarget", user_gun_height, 28)
+			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, -pitch)
+			TNT1 A 0 A_SetPitch(user_original_pitch)
 			TNT1 A 0 A_JumpIfCloser(256, "Normal")
 			BRZK T 2 BRIGHT A_Chase("", "")
 			BRZK T 1 BRIGHT A_FaceTarget
 			TNT1 A 0 A_PlaySound("chainguy/attack",CHAN_AUTO)
-			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, pitch)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setPitchToTarget", user_gun_height, 28)
+			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, -pitch)
+			TNT1 A 0 A_SetPitch(user_original_pitch)
 			TNT1 A 0 A_JumpIfCloser(256, "Normal")
 			BRZK T 2 BRIGHT A_Chase("", "")
 			BRZK T 1 BRIGHT A_FaceTarget
 			TNT1 A 0 A_PlaySound("chainguy/attack",CHAN_AUTO)
-			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, pitch)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setPitchToTarget", user_gun_height, 28)
+			TNT1 A 0 A_CustomMissile("ChaingunnerTracer", 34, 12, frandom(-25, 25), CMF_AIMDIRECTION|CMF_ABSOLUTEPITCH, -pitch)
+			TNT1 A 0 A_SetPitch(user_original_pitch)
 			TNT1 A 0 A_JumpIfTargetInLOS(1, 0, JLOSF_CLOSENOJUMP|JLOSF_DEADNOJUMP, 4096, 257)
 			Goto See
 			TNT1 A 0
