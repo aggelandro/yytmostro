@@ -40,7 +40,7 @@ ACTOR DemonSoulItem : CustomInventory {
 	
 	States {
 		Spawn:
-			SOUL ABCDEFGHIJKLMNO 2
+			SOU2 ABCDEFGHIJKLMNO 2
 			Loop
 			
 		Pickup:
