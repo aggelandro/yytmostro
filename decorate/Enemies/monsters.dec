@@ -49,6 +49,13 @@ ACTOR YYTMonster
 			TNT1 A -1 A_Jump (256, "Pain")
 			Wait
 			
+		Death.Adramalech:
+			TNT1 A 0 A_Jump(128, "Death")
+			TNT1 A 0 A_PlaySound("weapons/dssouls")
+			TNT1 A 0 ACS_NamedExecuteWithResult("adramalech_reviveMonsterSoul")
+			TNT1 A -1 A_Jump (256, "Death")
+			Wait
+			
 		Death.IsaacIce:
 			"####" "#" 0 A_CheckFlag("BOSS", "Death") // No afecta a los bosses
 			"####" "#" 0 A_CheckFlag("NOICEDEATH", "Death")
@@ -256,13 +263,6 @@ ACTOR ChaingunGuyMod : AbstractYYTZombie {
 			8CHN J -1
 			Stop
 			
-		Death.Adramalech:
-			TNT1 A 0 A_Jump(128, "Death")
-			TNT1 A 0 A_PlaySound("weapons/dssouls")
-			TNT1 A 0 A_SpawnItemEx("FriendlyGhostChaingunGuyMod")
-			TNT1 A -1 A_Jump (256, "Death")
-			Wait
-			
 		XDeath:
 			CPOS O 5 
 			CPOS P 5 A_XScream
@@ -344,13 +344,6 @@ ACTOR ZombieMan2 : AbstractYYTZombie {
 			8POS I 4 BRIGHT A_NoBlocking
 			8POS J -1
 			Stop
-			
-		Death.Adramalech:
-			TNT1 A 0 A_Jump(128, "Death")
-			TNT1 A 0 A_PlaySound("weapons/dssouls")
-			TNT1 A 0 A_SpawnItemEx("FriendlyGhostZombieMan2")
-			TNT1 A -1 A_Jump (256, "Death")
-			Wait
 			
 		XDeath:
 			POSS M 5
@@ -455,13 +448,6 @@ ACTOR DoomImp2 : YYTMonster {
 			8IMP K -1
 			Stop
 			
-		Death.Adramalech:
-			TNT1 A 0 A_Jump(128, "Death")
-			TNT1 A 0 A_PlaySound("weapons/dssouls")
-			TNT1 A 0 A_SpawnItemEx("FriendlyGhostDoomImp2")
-			TNT1 A -1 A_Jump (256, "Death")
-			Wait
-			
 		XDeath:
 			TROO N 5
 			TROO O 5 A_XScream
@@ -536,13 +522,6 @@ ACTOR Pinky2 : YYTMonster {
 			8PIK I 4 BRIGHT A_NoBlocking
 			8PIK J -1
 			Stop
-			
-		Death.Adramalech:
-			TNT1 A 0 A_Jump(128, "Death")
-			TNT1 A 0 A_PlaySound("weapons/dssouls")
-			TNT1 A 0 A_SpawnItemEx("FriendlyGhostPinky2")
-			TNT1 A -1 A_Jump (256, "Death")
-			Wait
 			
 		Raise:
 			SARG N 5
@@ -630,13 +609,6 @@ ACTOR Cacodemon2 : YYTMonster {
 			8CAC J -1 A_SetFloorClip
 			Stop
 			
-		Death.Adramalech:
-			TNT1 A 0 A_Jump(128, "Death")
-			TNT1 A 0 A_PlaySound("weapons/dssouls")
-			TNT1 A 0 A_SpawnItemEx("FriendlyGhostCacodemon2")
-			TNT1 A -1 A_Jump (256, "Death")
-			Wait
-			
 		Raise:
 			HEAD L 8 A_UnSetFloorClip
 			HEAD KJIHG 8
@@ -719,13 +691,6 @@ ACTOR Revenant2 : YYTMonster {
 			8REV K -1
 			Stop
 			
-		Death.Adramalech:
-			TNT1 A 0 A_Jump(128, "Death")
-			TNT1 A 0 A_PlaySound("weapons/dssouls")
-			TNT1 A 0 A_SpawnItemEx("FriendlyGhostRevenant2")
-			TNT1 A -1 A_Jump (256, "Death")
-			Wait
-			
 		Raise:
 			SKEL Q 5
 			SKEL PONML 5
@@ -798,13 +763,6 @@ ACTOR Arachnotron2 : YYTMonster
 			8SPI J 10 BRIGHT
 			8SPI J -1 A_BossDeath
 			Stop
-			
-		Death.Adramalech:
-			TNT1 A 0 A_Jump(128, "Death")
-			TNT1 A 0 A_PlaySound("weapons/dssouls")
-			TNT1 A 0 A_SpawnItemEx("FriendlyGhostArachnotron2")
-			TNT1 A -1 A_Jump (256, "Death")
-			Wait
 			
 		Eject:
 			BSPI JJJJJJ 2 Bright A_CustomMissile("BigGreenExplosion", random(20,60), 0, random(0,360), 2, random(0,360))
@@ -928,13 +886,6 @@ ACTOR Fatso2 : YYTMonster
 			8FAT F -1
 			Stop
 			
-		Death.Adramalech:
-			TNT1 A 0 A_Jump(128, "Death")
-			TNT1 A 0 A_PlaySound("weapons/dssouls")
-			TNT1 A 0 A_SpawnItemEx("FriendlyGhostFatso2")
-			TNT1 A -1 A_Jump (256, "Death")
-			Wait
-			
 		Raise:
 			FATT R 5
 			FATT QPONMLK 5
@@ -983,12 +934,6 @@ ACTOR PainElemental2 : YYTMonster
     PAIN L 8 Bright A_PainDie("LostSoul2")
     PAIN M 8 Bright
     Stop
-	Death.Adramalech:
-		TNT1 A 0 A_Jump(128, "Death")
-		TNT1 A 0 A_PlaySound("weapons/dssouls")
-		TNT1 A 0 A_SpawnItemEx("FriendlyGhostPainElemental2")
-		TNT1 A -1 A_Jump (256, "Death")
-		Wait
   Raise:
     PAIN MLKJIH 8
     Goto See
@@ -1041,12 +986,6 @@ ACTOR LostSoul2 : YYTMonster
     SKUL J 6
     SKUL K 6
     Stop
-	Death.Adramalech:
-		TNT1 A 0 A_Jump(128, "Death")
-		TNT1 A 0 A_PlaySound("weapons/dssouls")
-		TNT1 A 0 A_SpawnItemEx("FriendlyGhostLostSoul2")
-		TNT1 A -1 A_Jump (256, "Death")
-		Wait
   }
 }
 ACTOR BaronOfHell2 : YYTMonster
@@ -1128,13 +1067,6 @@ ACTOR BaronOfHell2 : YYTMonster
 			8BAR MN 5 BRIGHT
 			8BAR O -1
 			Stop
-			
-		Death.Adramalech:
-			TNT1 A 0 A_Jump(128, "Death")
-			TNT1 A 0 A_PlaySound("weapons/dssouls")
-			TNT1 A 0 A_SpawnItemEx("FriendlyGhostBaronOfHell2")
-			TNT1 A -1 A_Jump (256, "Death")
-			Wait
 		
 		Raise:
 			BOSS O 8
@@ -1210,13 +1142,6 @@ ACTOR HellKnight2 : BaronOfHell2 {
 			8BAR MN 5 BRIGHT
 			8BAR O -1
 			Stop
-			
-		Death.Adramalech:
-			TNT1 A 0 A_Jump(128, "Death")
-			TNT1 A 0 A_PlaySound("weapons/dssouls")
-			TNT1 A 0 A_SpawnItemEx("FriendlyGhostHellKnight2")
-			TNT1 A -1 A_Jump (256, "Death")
-			Wait
 		
 		Raise:
 			BOS2 O 8
@@ -1298,13 +1223,6 @@ ACTOR Archvile2 : YYTMonster {
 			8ARC CDEFGHIJKLMNOP 4 BRIGHT
 			8ARC Q -1
 			Stop
-			
-		Death.Adramalech:
-			TNT1 A 0 A_Jump(128, "Death")
-			TNT1 A 0 A_PlaySound("weapons/dssouls")
-			TNT1 A 0 A_SpawnItemEx("FriendlyGhostArchvile2")
-			TNT1 A -1 A_Jump (256, "Death")
-			Wait
   }
 }
 ACTOR Cyberdemon2 : YYTMonster
@@ -1380,12 +1298,6 @@ ACTOR Cyberdemon2 : YYTMonster
     CYBR P 30
     CYBR P -1 A_BossDeath
     Stop
-	Death.Adramalech:
-		TNT1 A 0 A_Jump(128, "Death")
-		TNT1 A 0 A_PlaySound("weapons/dssouls")
-		TNT1 A 0 A_SpawnItemEx("FriendlyGhostCyberdemon2")
-		TNT1 A -1 A_Jump (256, "Death")
-		Wait
   }
 }
 ACTOR SpiderMastermind2 : YYTMonster {
@@ -1489,12 +1401,5 @@ ACTOR SpiderMastermind2 : YYTMonster {
 			8SPI J 30 BRIGHT
 			8SPI J -1 A_BossDeath
 			Stop
-			
-		Death.Adramalech:
-			TNT1 A 0 A_Jump(128, "Death")
-			TNT1 A 0 A_PlaySound("weapons/dssouls")
-			TNT1 A 0 A_SpawnItemEx("FriendlyGhostSpiderMastermind2")
-			TNT1 A -1 A_Jump (256, "Death")
-			Wait
   }
 }

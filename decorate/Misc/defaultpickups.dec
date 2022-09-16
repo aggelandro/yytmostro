@@ -1,0 +1,418 @@
+ACTOR ModdedBerserk : Berserk {}
+
+// Armaduras del complex
+ACTOR ModdedGreenArmor : GreenArmor {
+	Scale 0.8
+	Armor.SavePercent 40
+	Inventory.PickupSound "pickups/greenarmor"
+	Inventory.Pickupmessage "Light Armor"
+	Inventory.Icon "ARM1B0"
+	
+	States {
+		Spawn:
+			ARM1 AAAAAA 1 A_SpawnItemEx("GreenPowerLineSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			ARM1 BBBBBBBBBBBB 1 Bright A_SpawnItemEx("GreenPowerLineSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			Loop
+	}
+}
+
+ACTOR ModdedBlueArmor : BlueArmor {
+	Scale 0.8
+	Armor.SavePercent 56
+	Inventory.PickupSound "pickups/bluearmor"
+	Inventory.Pickupmessage "Combat Armor"
+	Inventory.Icon "ARM2B0"
+
+	States {
+		Spawn:
+			ARM2 AAAAAA 1 A_SpawnItemEx("BluePowerLineSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			ARM2 BBBBBBBBBBBB 1 Bright A_SpawnItemEx("BluePowerLineSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			Loop
+	}
+}
+
+ACTOR RedArmor : BlueArmor {
+	Scale 0.8
+	Armor.SavePercent 68
+	Armor.SaveAmount 250
+	DamageFactor "Explosion", 0.5
+	Inventory.PickupSound "pickups/redarmor"
+	Inventory.Pickupmessage "Demonic Armor"
+	Inventory.Icon "ARM3B0"
+	
+	States {
+		Spawn:
+			ARM3 AAAAAA 1 A_SpawnItemEx("RedPowerLineSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			ARM3 BBBBBBBBBBBB 1 Bright A_SpawnItemEx("RedPowerLineSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+			Loop
+	}
+}
+
+ACTOR BluePowerLineSpawner {
+	+CLIENTSIDEONLY
+	+NOGRAVITY
+
+	States {
+		Spawn:
+			TNT1 A 1 NoDelay A_SpawnItemEx("BluePowerLine",random(12,-12),random(12,-12),0,0,0,2,0,128,0)
+			Stop
+	}
+}
+
+ACTOR GreenPowerLineSpawner : BluePowerLineSpawner {
+	States {
+		Spawn:
+			TNT1 A 1 NoDelay A_SpawnItemEx("GreenPowerLine",random(12,-12),random(12,-12),0,0,0,2,0,128,0) 
+			Stop
+	}
+}
+
+ACTOR RedPowerLineSpawner : BluePowerLineSpawner {
+	States {
+		Spawn:
+			TNT1 A 1 NoDelay A_SpawnItemEx("RedPowerLine",random(12,-12),random(12,-12),0,0,0,2,0,128,0) 
+			Stop
+	}
+}
+
+ACTOR BluePowerLine {
+	Speed 1
+	Radius 0
+	Height 0
+	Scale 0.28
+	Translation "80:111=196:207"
+	RenderStyle Add
+	Alpha 0.8
+	+MISSILE
+	+NOGRAVITY
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOTELEPORT
+	+DONTSPLASH
+	-SOLID
+	
+	States {
+		Spawn:
+			SPFX A 5 Bright
+			TNT1 A 0 A_Jump(128, "FadeOut2")
+			Goto Normal
+			
+		Normal:
+			SPFX AAAAAAAA 1 Bright A_FadeOut(0.05)
+			Stop
+			
+		FadeOut2:
+			SPFX AAAAAAAA 1 Bright A_FadeOut(0.075)
+			Stop
+	}
+}
+
+ACTOR GreenPowerLine : BluePowerLine {
+	Translation "80:111=112:127"
+
+	States {
+		Normal:
+			SPFX AAAA 1 Bright A_FadeOut(0.05)
+			Stop
+			
+		FadeOut2:
+			SPFX AAAA 1 Bright A_FadeOut(0.075)
+			Stop
+	}
+}
+
+ACTOR RedPowerLine : BluePowerLine { Translation "80:111=176:191" }
+
+
+
+
+
+// Esferas del complex
+ACTOR ModdedBlurSphere : BlurSphere {
+	Inventory.PickupMessage "Partial Invisibility Sphere"
+	Inventory.PickupSound "powerups/blurp"
+	+FLOATBOB
+	-FLOAT
+	
+	States {
+		Spawn:
+			TNT1 A 0 A_CustomMissile ("BlueSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			PINS AAAAAABBBBBB 1 Bright A_SpawnItem("BlueSphereFlare",0,38)
+			TNT1 A 0 A_CustomMissile ("RedSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			PINS CCCCCCDDDDDD 1 Bright A_SpawnItem("RedSphereFlare",0,38)
+			Loop
+	}
+}
+
+ACTOR ModdedSoulSphere : SoulSphere {
+	Inventory.PickupMessage "Soul Sphere"
+	Inventory.PickupSound "powerups/soulsphere"
+	+FLOATBOB
+	-FLOAT
+	-INVENTORY.ALWAYSPICKUP
+	
+	States {
+		Spawn:
+			TNT1 A 0 A_CustomMissile ("BlueSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			SOUL AAAAAABBBBBB 1 Bright A_SpawnItem("BlueSphereFlare",0,38)
+			TNT1 A 0 A_CustomMissile ("BlueSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			SOUL CCCCCCDDDDDD 1 Bright A_SpawnItem("BlueSphereFlare",0,38)
+			TNT1 A 0 A_CustomMissile ("BlueSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			SOUL CCCCCCBBBBBB 1 Bright A_SpawnItem("BlueSphereFlare",0,38)
+			Loop
+	}
+}
+
+ACTOR ModdedMegaSphere : CustomInventory {
+	Inventory.PickupMessage "Mega Sphere"
+	Inventory.PickupSound "powerups/megasphere"
+	+FLOATBOB
+	+COUNTITEM
+	-FLOAT
+	-INVENTORY.ALWAYSPICKUP
+	
+	States {
+		Spawn:
+			TNT1 A 0 A_CustomMissile ("WhiteSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			MEGA AAAAAABBBBBB 1 Bright A_SpawnItem("MegaSphereFlare",0,38)
+			TNT1 A 0 A_CustomMissile ("WhiteSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			MEGA CCCCCCDDDDDD 1 Bright A_SpawnItem("MegaSphereFlare",0,38)
+			Loop
+			
+		Pickup:
+			TNT1 A 0 A_GiveInventory("ModdedBlueArmor", 1)
+			TNT1 A 0 A_GiveInventory("MSHealth", 1)	 
+			Stop
+	}
+}
+
+ACTOR MSHealth : Health {
+	Inventory.Amount 200
+	Inventory.MaxAmount 200
+}
+
+ACTOR ModdedInvulnerabilitySphere : InvulnerabilitySphere {
+	Inventory.PickupMessage "Invulnerability Sphere"
+	Inventory.PickupSound "pickups/invulnerable"
+	Powerup.Color GreenMap
+	+FLOATBOB
+	-FLOAT
+	
+	States {
+		Spawn:
+			TNT1 A 0 A_CustomMissile ("RedSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			PINV AAAAAABBBBBB 1 Bright A_SpawnItem("GreenSphereFlare",0,38)
+			TNT1 A 0 A_CustomMissile ("GreenSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			PINV CCCCCCDDDDDD 1 Bright A_SpawnItem("GreenSphereFlare",0,38)
+			Loop
+	}
+}
+
+
+ACTOR WhiteSparkleSpawner {
+	+CLIENTSIDEONLY
+	+NOGRAVITY
+	+NOBLOCKMAP
+	+NOTELEPORT
+	+DONTSPLASH
+	+NOCLIP
+	
+	States {
+		Spawn:
+			TNT1 AA 2 A_SpawnItemEx("WhiteStar", random(-15, 15), random(-15, 15), random(28, 44), 0, 0, 0, 0, 128)
+			Stop
+	}
+}
+
+ACTOR BlueSparkleSpawner : WhiteSparkleSpawner {
+	States {
+		Spawn:
+			TNT1 AA 2 A_SpawnItemEx("BlueStar", random(-15, 15), random(-15, 15), random(28, 44), 0, 0, 0, 0, 128)
+			Stop
+	}
+}
+
+ACTOR RedSparkleSpawner : WhiteSparkleSpawner {
+	States {
+		Spawn:
+			TNT1 AA 2 A_SpawnItemEx("RedStar", random(-15, 15), random(-15, 15), random(28, 44), 0, 0, 0, 0, 128) 
+			Stop
+	}
+}
+
+ACTOR GreenSparkleSpawner : WhiteSparkleSpawner {
+	States {
+		Spawn:
+			TNT1 AA 2 A_SpawnItemEx("GreenStar", random(-15, 15), random(-15, 15), random(28, 44), 0, 0, 0, 0, 128) 
+			Stop
+	}
+}
+
+ACTOR WhiteStar {
+	Height 0
+	Radius 0
+	Speed 2
+	Scale 0.16
+	Renderstyle Add
+	PROJECTILE
+	+CLIENTSIDEONLY
+	+DOOMBOUNCE
+	+DONTSPLASH
+	+NOTELEPORT
+	+NOGRAVITY
+	+FORCEXYBILLBOARD
+	+FLOATBOB
+	
+	States {
+		Spawn:
+			PTCL ABC 2 Bright A_FadeOut(0.05)
+			Loop
+	}
+}
+
+ACTOR BlueStar : WhiteStar { Translation "80:111=196:207" }
+ACTOR RedStar : WhiteStar { Translation "80:111=176:191" }
+ACTOR GreenStar : WhiteStar { Translation "80:111=112:127" }
+
+
+
+ACTOR BaseFlare {
+	Radius 1
+	Height 1
+	Scale 0.2
+	+NOCLIP
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	+FORCEXYBILLBOARD
+	RENDERSTYLE Add
+	Alpha 0.3
+}
+
+ACTOR BlueSphereFlare : BaseFlare {
+	States {
+		Spawn:
+			LENB A 1 NoDelay Bright
+			Stop
+	}
+}
+
+ACTOR MegaSphereFlare : BaseFlare {
+	Alpha 0.15
+	
+	States {
+		Spawn:
+			LENW A 1 NoDelay Bright
+			Stop
+		}
+}
+
+ACTOR GreenSphereFlare : BaseFlare {
+	States {
+		Spawn:
+			LENG A 1 NoDelay Bright
+			Stop
+		}
+}
+
+ACTOR RedSphereFlare : BaseFlare {
+	States {
+		Spawn:
+			LENR A 1 NoDelay Bright
+			Stop
+		}
+}
+
+
+
+// Esferas nuevas
+ACTOR RageSphereHealth : Health {	
+	-COUNTITEM
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.Amount 100
+  Inventory.MaxAmount 200
+  Inventory.PickupMessage ""
+  Inventory.PickupSound ""
+	
+	States {
+		Spawn:
+			TNT1 A 0 A_CustomMissile ("BlueSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))	
+			LISP AAAAAABBBBBB 1 Bright A_SpawnItem("BlueSphereFlare",0,38)
+			TNT1 A 0 A_CustomMissile ("BlueSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			LISP CCCCCCDDDDDD 1 Bright A_SpawnItem("BlueSphereFlare",0,38)
+			TNT1 A 0 A_CustomMissile ("BlueSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			LISP CCCCCCBBBBBB 1 Bright A_SpawnItem("BlueSphereFlare",0,38)
+			Loop
+	}
+}
+
+ACTOR RageSphere : CustomInventory {	
+	Inventory.PickupMessage "Rage Sphere"
+	Inventory.PickupSound "powerups/ragesphere"
+	+FLOATBOB
+	+COUNTITEM
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.FANCYPICKUPSOUND
+	+INVENTORY.ALWAYSPICKUP
+	-FLOAT
+	
+	States {
+		Spawn:
+			TNT1 A 0 A_CustomMissile ("RedSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))	
+			RAGE AAAAAABBBBBB 1 Bright A_SpawnItem("RedSphereFlare",0,38)
+			TNT1 A 0 A_CustomMissile ("RedSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			RAGE CCCCCCDDDDDD 1 Bright A_SpawnItem("RedSphereFlare",0,38)
+			TNT1 A 0 A_CustomMissile ("RedSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			RAGE CCCCCCBBBBBB 1 Bright A_SpawnItem("RedSphereFlare",0,38)
+			Loop
+			
+		Pickup:
+			TNT1 A 0 A_GiveInventory("PowerStrength")
+			TNT1 A 0 A_GiveInventory("RageSphereHealth")
+			Stop
+	}
+}
+
+ACTOR SoulSphereEX : ModdedSoulSphere {
+	Inventory.PickupMessage "Soul Sphere EX"
+	Inventory.PickupSound "powerups/soulsphereex"
+	Inventory.Amount 150
+  Inventory.MaxAmount 200
+	
+	States {
+		Spawn:
+			TNT1 A 0 A_CustomMissile ("RedSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			SOUX AAAAAABBBBBB 1 Bright A_SpawnItem("RedSphereFlare",0,38)
+			TNT1 A 0 A_CustomMissile ("RedSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			SOUX CCCCCCDDDDDD 1 Bright A_SpawnItem("RedSphereFlare",0,38)
+			TNT1 A 0 A_CustomMissile ("RedSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			SOUX CCCCCCBBBBBB 1 Bright A_SpawnItem("RedSphereFlare",0,38)
+			Loop
+	}
+}
+
+ACTOR MegaSphereEX : ModdedMegaSphere {
+	Inventory.PickupMessage "Mega Sphere EX"
+	Inventory.PickupSound "powerups/megasphereex"
+	
+	States {
+		Spawn:
+			TNT1 A 0 A_CustomMissile ("WhiteSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			MEGX AAAAAABBBBBB 1 Bright A_SpawnItem("MegaSphereFlare",0,38)
+			TNT1 A 0 A_CustomMissile ("WhiteSparkleSpawner", 0, 0, random(0,-360), 2, random(0,360))
+			MEGX CCCCCCDDDDDD 1 Bright A_SpawnItem("MegaSphereFlare",0,38)
+			Loop
+			
+		Pickup:
+			TNT1 A 0 A_GiveInventory("RedArmor", 1)
+			TNT1 A 0 A_GiveInventory("MSEXHealth", 1)	 
+			Stop
+	}
+}
+
+ACTOR MSEXHealth : Health {
+	Inventory.Amount 250
+	Inventory.MaxAmount 250
+}

@@ -8,13 +8,13 @@
 #include "decorate/Misc/powerups.dec"
 #include "decorate/Misc/demonammo.dec"
 #include "decorate/Misc/projectiles.txt"
+#include "decorate/Misc/defaultpickups.dec"
 
 //universal weapons and items
 #include "decorate/Misc/Weapons/YYTWeapon/yytweapon.txt"
 #include "decorate/Misc/Weapons/HookShot/hookshot.dec"
 #include "decorate/Misc/Weapons/HitscanFixer/hitscanfixer.txt"
 #include "decorate/Misc/Weapons/Falneitz/falneitz.dec"
-#include "decorate/Misc/Weapons/Adramalech/adramalech.dec"
 #include "decorate/Misc/Weapons/Marduk/marduk.dec"
 #include "decorate/Misc/Weapons/Dagon/dagon.dec"
 #include "decorate/Misc/Weapons/WeaponWithThroweableOption/weaponwiththroweableoption.txt"
@@ -130,6 +130,9 @@
 // Dependencia con Armncubus
 #include "decorate/Misc/Weapons/DualZanzibart/dualzanzibart.txt"
 
+// Dependencia con todos los monstruos
+#include "decorate/Misc/Weapons/Adramalech/adramalech.dec"
+
 // =====================================INCLUDE SPAM ENDS HERE=======================================
 
 actor LucianoID : Inventory
@@ -156,6 +159,8 @@ actor zLayerID : LucianoID{}
 actor ThanuID : LucianoID{}
 actor TerroID : LucianoID{}
 
+
+// MONSTERS //
 ACTOR ZombieManSpawner : RandomSpawner replaces ZombieMan
 {
 	DropItem "Zombieman2", 255, 80
@@ -276,6 +281,45 @@ ACTOR CyberdemonSpawner : RandomSpawner replaces Cyberdemon
 	DropItem "ElderDemon" 255, 2
 }
 
+
+
+// PICKUPS //
+ACTOR GreenArmorSpawner : RandomSpawner Replaces GreenArmor {
+	DropItem "ModdedGreenArmor", 255, 95
+	DropItem "RedArmor", 255, 5
+}
+
+ACTOR BlueArmorSpawner : RandomSpawner Replaces BlueArmor {
+	DropItem "ModdedBlueArmor", 255, 90
+	DropItem "RedArmor", 255, 10
+}
+
+ACTOR BlurSphereSpawner : RandomSpawner Replaces BlurSphere {
+	DropItem "ModdedBlurSphere"
+}
+
+ACTOR SoulSphereSpawner : RandomSpawner Replaces SoulSphere {
+	DropItem "ModdedSoulSphere", 255, 70
+	DropItem "SoulSphereEX", 255, 30
+}
+
+ACTOR MegaSphereSpawner : RandomSpawner Replaces MegaSphere {
+	DropItem "ModdedMegaSphere", 255, 80
+	DropItem "MegaSphereEX", 255, 20
+}
+
+ACTOR InvulnerabilitySphereSpawner : RandomSpawner Replaces InvulnerabilitySphere {
+	DropItem "ModdedInvulnerabilitySphere"
+}
+
+ACTOR BerserkSpawner : RandomSpawner Replaces Berserk {
+	DropItem "ModdedBerserk", 255, 70
+	DropItem "RageSphere", 255, 30
+}
+
+
+
+// ISAAC ITEMS //
 ACTOR IsaacItemsTier1Spawner : RandomSpawner {
 	DropItem "Cat-O-Nine-Tails", 255, 6
 	DropItem "GrowthHormones", 255, 6
@@ -484,6 +528,9 @@ ACTOR IsaacItemsTier3HighChanceSpawner : RandomSpawner {
 	DropItem "OcularRift", 96, 8
 }
 
+
+
+// CONTRA SPAWNERS //
 ACTOR ContraItemMancubusSpawner : RandomSpawner {	
 	DropItem "SpreadGunToken", 64, 50
 	DropItem "FlamethrowerGunToken", 64, 50
@@ -614,7 +661,7 @@ ACTOR UniversalPlayer : DoomPlayer
   {
   Spawn:
     PLAY A -1
-    Goto Spawn+1
+    Loop
   See:
     PLAY ABCD 4 
     Loop

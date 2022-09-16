@@ -1060,10 +1060,22 @@ script "isTargetFullyHealed" (void) {
     int ttid = UniqueTID();
     Thing_ChangeTID(0, ttid);
     if (SetActivator(0, AAPTR_TARGET)) {
-        if (!CheckActorClass(0, "Archvile2") && GetActorProperty(0, APROP_Health) < GetUserVariable(0, "user_max_health")) {
-            Thing_ChangeTID(ttid, 0);
-            SetResultValue(0);
-            terminate;
+        if (!CheckActorClass(0, "Archvile2")) {
+            if ((ClassifyActor(0) & ACTOR_MONSTER) && GetActorProperty(0, APROP_Health) < GetUserVariable(0, "user_max_health")) {
+                Thing_ChangeTID(ttid, 0);
+                SetResultValue(0);
+                terminate;
+            }
+
+            int spawnHealth;
+            if (GetActorProperty(0, APROP_SpawnHealth) == 0) spawnHealth = 100;
+            else spawnHealth = GetActorProperty(0, APROP_SpawnHealth);
+            
+            if ((ClassifyActor(0) & ACTOR_PLAYER) && GetActorProperty(0, APROP_Health) < spawnHealth) {
+                Thing_ChangeTID(ttid, 0);
+                SetResultValue(0);
+                terminate;
+            }
         }
         else {
             SetActivator(ttid);
@@ -1871,6 +1883,15 @@ script "dagon_showDemonSouls" (void) CLIENTSIDE {
 
 script "dagon_hideDemonSouls" (void) CLIENTSIDE {
     SetUserVariable(0, "user_hide_demon_souls", 1);
+}
+
+script "adramalech_reviveMonsterSoul" (void) {
+    str actorName = StrParam(s:"FriendlyGhost", s:GetActorClass(0));
+    int spawnX = GetActorX(0);
+    int spawnY = GetActorY(0);
+    int spawnZ = GetActorZ(0);
+    Delay(10);
+    Spawn(actorName, spawnX, spawnY, spawnZ);
 }
 
 

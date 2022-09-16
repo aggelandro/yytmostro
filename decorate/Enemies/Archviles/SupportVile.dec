@@ -40,7 +40,8 @@ ACTOR Archevil : Archvile2 {
 			
 		See:
 			TNT1 A 0 A_PlaySound("archevil/sight", CHAN_AUTO)
-			Goto SeeLoop
+			TNT1 A -1 A_Jump(256, "SeeLoop")
+			Wait
 			
 		SeeLoop:
 			TNT1 A 0 A_GiveInventory("LoopFlag", 1)

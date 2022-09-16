@@ -112,8 +112,8 @@ ACTOR SkullCube : YYTMonster {
   var int user_angle;
 
   States {
-		Spawn:
-			CUBE A 0 NoDelay A_SetUserVar("user_angle", angle)
+		SpawnLoop:
+			CUBE A 0 A_SetUserVar("user_angle", angle)
 			Goto Idle
 			
 		Idle:

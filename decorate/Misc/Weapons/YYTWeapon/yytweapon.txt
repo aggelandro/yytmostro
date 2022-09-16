@@ -21,7 +21,7 @@ ACTOR YYTWeapon : DoomWeapon {
 			TNT1 A 0 ACS_NamedExecuteWithResult("setActorSpeed", 0)
 			TNT1 A 0 ACS_NamedExecuteWithResult("movePlayerCameraTo", 15)
 			TNT1 A 0 A_PlaySound("SlideKick/Start", 1)
-			TNT1 A 0 A_Recoil(-13)
+			TNT1 A 0 A_Recoil(-18)
 			TNT1 A 0 A_ZoomFactor(0.95)
 			SLDK A 1 A_ZoomFactor(0.90)
 			TNT1 A 0 A_JumpIf(Z > FloorZ+5, "SlideKickEnd")

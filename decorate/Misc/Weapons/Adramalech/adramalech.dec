@@ -156,7 +156,91 @@ ACTOR FriendlyGhostShotgunGuyMod : ShotgunGuyMod {
 	}
 }
 
+ACTOR FriendlyGhostCommando : Commando {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostGendarme : Gendarme {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Missile:
+			TNT1 A 0
+			Goto Missile1
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
 ACTOR FriendlyGhostChaingunGuyMod : ChaingunGuyMod {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostDoubleChaingunGuy : DoubleChaingunGuy {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostDozer : Dozer {
 	Translation "0:255=[131,85,25]:[236,152,43]"
 	RenderStyle Translucent
 	Alpha 0.5
@@ -196,7 +280,127 @@ ACTOR FriendlyGhostZombieMan2 : ZombieMan2 {
 	}
 }
 
+ACTOR FriendlyGhostLaserZombie : LaserZombie {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostJetpackZombie : JetpackZombie {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostFlamethrowerGuy : FlamethrowerGuy {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
 ACTOR FriendlyGhostDoomImp2 : DoomImp2 {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostImpherno : Impherno {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostKimp : Kimp {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostSpiderImp : SpiderImp {
 	Translation "0:255=[131,85,25]:[236,152,43]"
 	RenderStyle Translucent
 	Alpha 0.5
@@ -236,7 +440,227 @@ ACTOR FriendlyGhostPinky2 : Pinky2 {
 	}
 }
 
+ACTOR FriendlyGhostEnforcer : Enforcer {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostToxigi : Toxigi {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostVacuumDemon : VacuumDemon {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostSpectre2 : Spectre2 {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostSpectreVacuum : SpectreVacuum {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostSpectreToxigi : SpectreToxigi {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostStraldex : Straldex {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
 ACTOR FriendlyGhostCacodemon2 : Cacodemon2 {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostBrimgoyle : Brimgoyle {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostFrostodemon : Frostodemon {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostNeoCacodemon : NeoCacodemon {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostCrackoDemon : CrackoDemon {
 	Translation "0:255=[131,85,25]:[236,152,43]"
 	RenderStyle Translucent
 	Alpha 0.5
@@ -276,6 +700,66 @@ ACTOR FriendlyGhostRevenant2 : Revenant2 {
 	}
 }
 
+ACTOR FriendlyGhostSkeleton : Skeleton {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostVayneAurelius : VayneAurelius {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostHoloRevenant : HoloRevenant {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
 ACTOR FriendlyGhostArachnotron2 : Arachnotron2 {
 	Translation "0:255=[131,85,25]:[236,152,43]"
 	RenderStyle Translucent
@@ -296,7 +780,127 @@ ACTOR FriendlyGhostArachnotron2 : Arachnotron2 {
 	}
 }
 
+ACTOR FriendlyGhostBounceTron : BounceTron {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostWarachnotron : Warachnotron {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
 ACTOR FriendlyGhostFatso2 : Fatso2 {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostFatsoRocket : FatsoRocket {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostAliencubus : Aliencubus {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostArmncubus : Armncubus {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostPlasmaBodyguard : PlasmaBodyguard {
 	Translation "0:255=[131,85,25]:[236,152,43]"
 	RenderStyle Translucent
 	Alpha 0.5
@@ -343,7 +947,158 @@ ACTOR FriendlyGhostPainElemental2 : PainElemental2 {
 	}
 }
 
+ACTOR FriendlyGhostFireElemental : FireElemental {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Missile:
+			PAIN D 5 A_FaceTarget
+			PAIN E 5 A_FaceTarget
+			PAIN F 5 Bright A_FaceTarget
+			PAIN F 0 Bright A_PainAttack("FriendlyGhostFireSoul")
+			Goto See
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostPain64 : Pain64 {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Missile:
+			PAI2 BCD 5 A_FaceTarget
+			PAI2 D 0 A_DualPainAttack("FriendlyGhostLostSoul2")
+			Goto See
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostHellfireElemental : HellfireElemental {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Normal:
+			INFP HI 6 Bright A_FaceTarget
+			INFP J 5 Bright A_SpawnItemEx("FriendlyGhostRictus",62,0,14,0,0,0,0,SXF_SETMASTER)
+			INFP FE 4 Bright
+			Goto See
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
 ACTOR FriendlyGhostLostSoul2 : LostSoul2 {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostFireSoul : FireSoul {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostRictus : Rictus {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		PainSuicide:
+			TNT1 A 0 A_JumpIfCloser(450,1)
+			Goto See
+			TNT1 A 0 A_SpawnItem("RictFireSpawner",0,0,0,0)
+			RICT B 3 Bright A_Pain
+			TNT1 A 0 A_Jump(28,"See")
+			TNT1 A 0 A_ChangeFlag(NOTARGET,1)
+			RICT B 1 Bright A_ChangeFlag(NOPAIN,1)
+			TNT1 A 0 A_SpawnItem("RictFireSpawner",0,0,0,0)
+			TNT1 A 0 A_CustomMissile("FriendlyGhostRictusSuicide",0,0,0,0)
+			RICT B 1 Bright A_Die
+			Stop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostRictusSuicide : RictusSuicide {
 	Translation "0:255=[131,85,25]:[236,152,43]"
 	RenderStyle Translucent
 	Alpha 0.5
@@ -383,7 +1138,130 @@ ACTOR FriendlyGhostBaronOfHell2 : BaronOfHell2 {
 	}
 }
 
+ACTOR FriendlyGhostAngryBaron : AngryBaron {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	Health 599
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostDiablo : Diablo {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "#" 0 A_KillChildren
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostT-800 : T-800 {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
 ACTOR FriendlyGhostHellKnight2 : HellKnight2 {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostMirrorKnight : MirrorKnight {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "#" 0 A_KillChildren
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostLiteralHellKnight : LiteralHellKnight {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostMotaro : Motaro {
 	Translation "0:255=[131,85,25]:[236,152,43]"
 	RenderStyle Translucent
 	Alpha 0.5
@@ -427,6 +1305,91 @@ ACTOR FriendlyGhostArchvile2 : Archvile2 {
 	}
 }
 
+ACTOR FriendlyGhostSpookyVile : SpookyVile {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		See:
+			VILE AABBCCDDEEFF 2 A_Chase
+			Loop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostSummoner : Summoner {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostArchevil : Archevil {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", FALSE)
+			Goto Super::SpawnLoop
+			
+		SeeLoop:
+			BONL AABB 2 A_Chase
+			BONL CCDD 2 A_Chase
+			BONL EEFF 2 A_Chase
+			Loop
+			
+		Missile:
+			TNT1 A 0 A_Jump(196, "HealTarget")
+			TNT1 A 0 A_Jump(224, "Hide")
+			Goto SeeLoop
+			
+		HealTarget:
+			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("isTargetFullyHealed"), "Hide")
+			TNT1 A 0 A_PlaySound("archevil/active", CHAN_AUTO)
+			TNT1 A 0 A_FadeTo(1, 1, FALSE)
+			TNT1 A 0 A_SetUserVar("user_hidden", 0)
+			BONL "[]" 10 Bright A_FaceTarget
+			TNT1 A 0 ACS_NamedExecuteWithResult("healTarget", random(-500, -250))
+			BONL "]" 10 Bright A_FaceTarget
+			Goto SeeLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
 ACTOR FriendlyGhostCyberdemon2 : Cyberdemon2 {
 	Translation "0:255=[131,85,25]:[236,152,43]"
 	RenderStyle Translucent
@@ -447,7 +1410,178 @@ ACTOR FriendlyGhostCyberdemon2 : Cyberdemon2 {
 	}
 }
 
+ACTOR FriendlyGhostCryocubus : Cryocubus {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostFlameCyber : FlameCyber {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostHellCommander : HellCommander {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostElderDemon : ElderDemon {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	-DONTHARMSPECIES
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "#" 0 A_KillChildren
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
 ACTOR FriendlyGhostSpiderMastermind2 : SpiderMastermind2 {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostRocketSpiderMastermind : RocketSpiderMastermind {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostSpiderLord : SpiderLord {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto Super::SpawnLoop
+			
+		Death:
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostSpiderMadnessmind : SpiderMadnessmind {
+	Translation "0:255=[131,85,25]:[236,152,43]"
+	RenderStyle Translucent
+	Alpha 0.5
+	-SOLID
+	-SHOOTABLE
+	
+	States {
+		SpawnLoop:
+			TNT1 A 0 ACS_NamedExecuteWithResult("deathTimer", 700)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 3, 700)
+			TNT1 A 0 A_ChangeFlag("FRIENDLY", TRUE)
+			Goto SpawnLoop2
+			
+		SpawnLoop2:
+			CONQ A 0 A_SetUserVar("user_cannon_height", 42)
+			CONQ A 0 A_SetUserVar("user_original_pitch", pitch)
+			CONQ A 0 A_SpawnItemEx("FriendlyGhostSkullCube", 0, 0, 32, 0, 0, 0, 0, SXF_SETMASTER)
+			CONQ A 0 A_SpawnItemEx("FriendlyGhostSkullCube", 0, 0, 32, 0, 0, 0, 120, SXF_SETMASTER)
+			CONQ A 0 A_SpawnItemEx("FriendlyGhostSkullCube", 0, 0, 32, 0, 0, 0, 240, SXF_SETMASTER)
+			Goto Idle
+			
+		Death:
+			"####" "#" 0 A_KillChildren
+			"####" "##################" 2 A_FadeOut(0.05)
+			Stop
+	}
+}
+
+ACTOR FriendlyGhostSkullCube : SkullCube {
 	Translation "0:255=[131,85,25]:[236,152,43]"
 	RenderStyle Translucent
 	Alpha 0.5

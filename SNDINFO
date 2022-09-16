@@ -173,6 +173,16 @@ misc/nothing DSEMPTY
 misc/heal HEALEFF
 misc/sanctuary SANCTU
 imp/attack2 IMPATK2
+pickups/greenarmor dsgarmu
+pickups/bluearmor dsbarmu
+pickups/redarmor dsrarmu
+powerups/blurp getinvi
+powerups/soulsphere getsoul
+powerups/ragesphere getrage
+powerups/megasphere getmega
+powerups/soulsphereex getsoulx
+powerups/megasphereex getmegax
+pickups/invulnerable dsinvul
 
 
 //Slide Kicks
