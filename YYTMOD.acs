@@ -80,11 +80,6 @@ script "yytmod_mensajesalida" DEATH
     }
 }
 
-script 2 (int value)
-{
-    SetActorProperty(0,APROP_Damage,value);
-}
-
 // Player Information Script
 script 331 (void) NET CLIENTSIDE {
     Log(s:"Current player Number: ", i:PlayerNumber());
@@ -299,6 +294,14 @@ script "getPlayerNumberFromTID" (int ptid) {
             break;
         }
     }
+}
+
+script "getDamage" (void) {
+    SetResultValue(GetActorProperty(0, APROP_Damage));
+}
+
+script "setDamage" (int value) {
+    SetActorProperty(0, APROP_Damage, value);
 }
 
 //Hago estas dos funciones porque los jumps de decorate son una cagada
@@ -1070,7 +1073,7 @@ script "isTargetFullyHealed" (void) {
             int spawnHealth;
             if (GetActorProperty(0, APROP_SpawnHealth) == 0) spawnHealth = 100;
             else spawnHealth = GetActorProperty(0, APROP_SpawnHealth);
-            
+
             if ((ClassifyActor(0) & ACTOR_PLAYER) && GetActorProperty(0, APROP_Health) < spawnHealth) {
                 Thing_ChangeTID(ttid, 0);
                 SetResultValue(0);
@@ -2127,7 +2130,7 @@ script "addTearBoost" (int boostType, int bonus) {
         ACS_NamedExecuteAlways("sendToClient", 0, pnum, boostType, TEARS_STATS_BY_PLAYER[pnum][boostType]);
     }
 
-    if (GetUserVariable(0, "user_isaac_hands_is_active")) ACS_NamedExecuteAlways("showStats", 0, 1);
+    if (GetUserVariable(0, "user_isaac_hands_is_active")) ACS_NamedExecuteAlways("updateStats", 0, boostType, bonus);
 }
 
 script "setTearStats" (void) {
@@ -2401,15 +2404,29 @@ script "showPowerups" (int displayFlag) CLIENTSIDE {
 script "showStats" (int displayFlag) CLIENTSIDE {
     int pnum = PlayerNumber();
     int idFrom = DISPLAYABLE_POWERUP_MAX+1;
+    SetHudSize(640, 480, 0);
+    SetFont("BIGFONT");
     for (int i=0; i<TEAR_STATS; i++) {
         if (displayFlag) {
             str stat = StrRight(TEARS_STATS_TABLE[i], StrLen(TEARS_STATS_TABLE[i])-1);
             if (i == 4 || i == 6) { stat = StrLeft(stat, StrLen(stat)-6); }
-            SetFont("BIGFONT");
-            HudMessage(s:stat, s:": ", i:TEARS_STATS_BY_PLAYER[pnum][i]; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP, idFrom+i, CR_ORANGE, 0.007, FixedDiv((i << 16) + 1.0 , 60.0) + 0.74, 0);
+            stat = StrParam(s:stat, s:": ", i:TEARS_STATS_BY_PLAYER[pnum][i]);
+            HudMessage(s:stat; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP|HUDMSG_ALPHA, idFrom+i, CR_WHITE, 60.0 - StrLen(stat), FixedMul((i << 16) + 1.0 , 18.0) + 100.0, 0, 0.5);
         }
         else HudMessage(s:""; HUDMSG_PLAIN, idFrom+i, 0, 0, 0, 1);
     }
+}
+
+script "updateStats" (int type, int bonus) CLIENTSIDE {
+    int idFrom = DISPLAYABLE_POWERUP_MAX+1;
+    SetHudSize(640, 480, 0);
+    SetFont("BIGFONT");
+    if (bonus > 0)
+        HudMessage(s:"+", i:bonus; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP|HUDMSG_FADEINOUT, idFrom+TEAR_STATS+type, CR_GREEN, 75.0, FixedMul((type << 16) + 1.0 , 18.0) + 100.0, 5.0, 0.5, 3.0);
+    else
+        HudMessage(i:bonus; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP|HUDMSG_FADEINOUT, idFrom+TEAR_STATS+type, CR_RED, 75.0, FixedMul((type << 16) + 1.0 , 18.0) + 100.0, 5.0, 0.5, 3.0);
+
+    ACS_NamedExecuteAlways("showStats", 0, 1);
 }
 
 script "checkForNoGiverInInventory" (int option) {

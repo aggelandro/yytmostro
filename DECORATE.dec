@@ -728,12 +728,12 @@ ACTOR Agge : UniversalPlayer
 	Player.StartItem "CryoGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
   Player.WeaponSlot 1, Chainsaw2, AxeShield
-  Player.WeaponSlot 2, Marduk, NoisyCricket
-  Player.WeaponSlot 3, TacticShotgun, AggeSSG
-  Player.WeaponSlot 4, Falneitz, IsaacHands, BlackIsaacHands, OrangeIsaacHands, GreenIsaacHands, BrimstoneHands
-  Player.WeaponSlot 5, DualZanzibart, Motumbo
-  Player.WeaponSlot 6, Dagon, AggeFlamethrower
-	Player.WeaponSlot 7, Adramalech, EterealShocker
+  Player.WeaponSlot 2, NoisyCricket, Marduk
+  Player.WeaponSlot 3, TacticalShotgun, AggeSSG
+  Player.WeaponSlot 4, IsaacHands, BlackIsaacHands, OrangeIsaacHands, GreenIsaacHands, BrimstoneHands, Falneitz
+  Player.WeaponSlot 5, Motumbo, DualZanzibart
+  Player.WeaponSlot 6, AggeFlamethrower, Dagon
+	Player.WeaponSlot 7, EterealShocker, Adramalech
   Player.WeaponSlot 8, OkuuCannon
 	var int user_charge_state;
 	var int user_isaac_hands_is_active;
@@ -758,7 +758,7 @@ ACTOR Ron : UniversalPlayer
 	Player.WeaponSlot 0, HitscanFixer
   Player.WeaponSlot 1, RonWrench, Chainsaw2
   Player.WeaponSlot 2, Marduk, RonPistol
-  Player.WeaponSlot 3, Shotgun2, RonSSG
+  Player.WeaponSlot 3, Shotgun2, PKDoubleShotguns
   Player.WeaponSlot 4, Falneitz, Chaingun2
   Player.WeaponSlot 5, RocketLauncher2, DualZanzibart
   Player.WeaponSlot 6, Dagon, RonPL
@@ -827,7 +827,7 @@ ACTOR Terro : UniversalPlayer
 	Player.WeaponSlot 2, Marduk, TerroPistol
 	Player.WeaponSlot 5, DualZanzibart, RocketLauncher2
 	Player.WeaponSlot 4, Falneitz, ContraWeapon
-	Player.WeaponSlot 3, TerroShotgun, PKDoubleShotguns
+	Player.WeaponSlot 3, TerroShotgun, RonSSG
 	Player.WeaponSlot 6, Dagon, Dogs
 	Player.WeaponSlot 7, Adramalech, BFG9001
 	var int user_dogs_switch_cooldown;
@@ -868,8 +868,9 @@ ACTOR ShotgunSpawner : CustomInventory replaces Shotgun
 			// TNT1 A 0 A_SpawnItemEX("ShotgunSpawner")
 			Fail
 		PickupAgge:
-			TNT1 A 0 A_JumpIfInventory("TacticShotgun",1,"Spawn")
-			TNT1 A 0 A_GiveInventory("TacticShotgun",1)
+			TNT1 A 0 A_JumpIfInventory("TacticalShotgun",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("TacticalShotgun",1)
+			TNT1 A 0 A_GiveInventory("AggeSGShellsLeft", 7)
 			TNT1 A 0 A_PlaySound("misc/w_pkup")
 			// TNT1 A 0 A_SpawnItemEX("ShotgunSpawner")
 			Fail
@@ -926,7 +927,16 @@ ACTOR ChainGunSpawner : CustomInventory replaces ChainGun
 			Fail
 	}
 }
-ACTOR RocketLauncher2 : RocketLauncher{}
+ACTOR RocketLauncher2 : RocketLauncher {
+	States {
+		Fire:
+			MISG B 8 A_GunFlash
+			MISG B 12 A_FireCustomMissile("Rocket2", 0 , 1)
+			MISG B 0 A_ReFire
+			Goto Ready
+	}
+}
+ACTOR Rocket2 : Rocket { Damage 15 Speed 17 }
 ACTOR RocketSpawner : CustomInventory replaces RocketLauncher
 {
 	Scale 0.5
@@ -1017,15 +1027,15 @@ ACTOR SSGSpawner : CustomInventory replaces SuperShotgun
 			// TNT1 A 0 A_SpawnItemEx("SSGSpawner")
 			Fail
 		PickupRon:
-			TNT1 A 0 A_JumpIfInventory("RonSSG",1,"Spawn")
-			TNT1 A 0 A_GiveInventory("RonSSG",1)
-			TNT1 A 0 A_PlaySound("misc/w_pkup")
-			Fail
-		PickupTerro:
 			TNT1 A 0 A_JumpIfInventory("PKDoubleShotguns",1,"Spawn")
 			TNT1 A 0 A_GiveInventory("PKDoubleShotguns",1)
 			TNT1 A 0 A_GiveInventory("ClipDoubleLeft",2)
 			TNT1 A 0 A_GiveInventory("ClipDoubleRight",2)
+			TNT1 A 0 A_PlaySound("misc/w_pkup")
+			Fail
+		PickupTerro:
+			TNT1 A 0 A_JumpIfInventory("RonSSG",1,"Spawn")
+			TNT1 A 0 A_GiveInventory("RonSSG",1)
 			TNT1 A 0 A_PlaySound("misc/w_pkup")
 			Fail
 	}
