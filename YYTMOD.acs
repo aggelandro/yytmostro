@@ -2130,7 +2130,7 @@ script "addTearBoost" (int boostType, int bonus) {
         ACS_NamedExecuteAlways("sendToClient", 0, pnum, boostType, TEARS_STATS_BY_PLAYER[pnum][boostType]);
     }
 
-    if (GetUserVariable(0, "user_isaac_hands_is_active")) ACS_NamedExecuteAlways("updateStats", 0, boostType, bonus);
+    ACS_NamedExecuteAlways("updateStats", 0, boostType, bonus);
 }
 
 script "setTearStats" (void) {
@@ -2138,7 +2138,7 @@ script "setTearStats" (void) {
     int pnum = ACS_NamedExecuteWithResult("getPlayerNumberFromTID", ptid);
     ACS_NamedExecuteAlways("setRadius", 0, TEARS_STATS_BY_PLAYER[pnum][0]);
     ACS_NamedExecuteAlways("setHeight", 0, TEARS_STATS_BY_PLAYER[pnum][1]);
-    ACS_NamedExecuteAlways("setDamage", 0, TEARS_STATS_BY_PLAYER[pnum][2], ptid);
+    ACS_NamedExecuteAlways("setTearDamage", 0, TEARS_STATS_BY_PLAYER[pnum][2], ptid);
     ACS_NamedExecuteAlways("setRange", 0, TEARS_STATS_BY_PLAYER[pnum][3], ptid);
     ACS_NamedExecuteAlways("setSpeed", 0, TEARS_STATS_BY_PLAYER[pnum][4], ptid);
     ACS_NamedExecuteAlways("setScale", 0, TEARS_STATS_BY_PLAYER[pnum][5]);
@@ -2271,7 +2271,7 @@ script "setHeight" (int hgt) {
     SetActorProperty(0, APROP_Height, hgt << 16);
 }
 
-script "setDamage" (int damage, int ptid) {
+script "setTearDamage" (int damage, int ptid) {
     damage = applyGiversToDamage(damage, ptid);
     SetActorProperty(0, APROP_Damage, damage);
 }
@@ -2394,26 +2394,26 @@ script "showPowerups" (int displayFlag) CLIENTSIDE {
             if (CheckInventory(StrLeft(SV_DISPLAYABLE_POWERUPS[i-1], StrLen(SV_DISPLAYABLE_POWERUPS[i-1])-6)) == 1)
                 HudMessage(s:"A"; HUDMSG_PLAIN, i, 0, FixedDiv(i << 16, 65.0), 0.05, 0);
             else HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA, i, 0, FixedDiv(i << 16, 65.0), 0.05, 0, 0.25);
+
+            // Capaz poner una cvar para dejar elegir si verlo siempre o no?
+            ACS_NamedExecuteAlways("showStats", 0, 1);
         }
         else HudMessage(s:""; HUDMSG_PLAIN, i, 0, 0, 0, 1);
     }
-
-    ACS_NamedExecuteAlways("showStats", 0, displayFlag);
 }
 
-script "showStats" (int displayFlag) CLIENTSIDE {
+script "showStats" (int onlyUpdate) CLIENTSIDE {
     int pnum = PlayerNumber();
     int idFrom = DISPLAYABLE_POWERUP_MAX+1;
     SetHudSize(640, 480, 0);
-    SetFont("BIGFONT");
     for (int i=0; i<TEAR_STATS; i++) {
-        if (displayFlag) {
-            str stat = StrRight(TEARS_STATS_TABLE[i], StrLen(TEARS_STATS_TABLE[i])-1);
-            if (i == 4 || i == 6) { stat = StrLeft(stat, StrLen(stat)-6); }
-            stat = StrParam(s:stat, s:": ", i:TEARS_STATS_BY_PLAYER[pnum][i]);
-            HudMessage(s:stat; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP|HUDMSG_ALPHA, idFrom+i, CR_WHITE, 60.0 - StrLen(stat), FixedMul((i << 16) + 1.0 , 18.0) + 100.0, 0, 0.5);
+        if (!onlyUpdate) {
+            SetFont(StrParam(s:"HUDSTAT", i:i));
+            HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA, idFrom+i, 0, -50.0, FixedMul((i << 16) + 1.0 , 18.0) + 100.0, 0, 0.5);
         }
-        else HudMessage(s:""; HUDMSG_PLAIN, idFrom+i, 0, 0, 0, 1);
+        str stat = StrParam(s:" ", i:TEARS_STATS_BY_PLAYER[pnum][i]);
+        SetFont("BIGFONT");
+        HudMessage(s:stat; HUDMSG_PLAIN|HUDMSG_ALPHA, idFrom+i+TEAR_STATS, CR_WHITE, -35.0 + (StrLen(stat) << 16) * 2, FixedMul((i << 16) + 1.0 , 18.0) + 100.0, 0, 0.5);
     }
 }
 
@@ -2421,10 +2421,15 @@ script "updateStats" (int type, int bonus) CLIENTSIDE {
     int idFrom = DISPLAYABLE_POWERUP_MAX+1;
     SetHudSize(640, 480, 0);
     SetFont("BIGFONT");
-    if (bonus > 0)
-        HudMessage(s:"+", i:bonus; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP|HUDMSG_FADEINOUT, idFrom+TEAR_STATS+type, CR_GREEN, 75.0, FixedMul((type << 16) + 1.0 , 18.0) + 100.0, 5.0, 0.5, 3.0);
-    else
-        HudMessage(i:bonus; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP|HUDMSG_FADEINOUT, idFrom+TEAR_STATS+type, CR_RED, 75.0, FixedMul((type << 16) + 1.0 , 18.0) + 100.0, 5.0, 0.5, 3.0);
+    str bonusStr;
+    if (bonus > 0) {
+        bonusStr = StrParam(s:"+", i:bonus);
+        HudMessage(s:"+", i:bonus; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP|HUDMSG_FADEINOUT, idFrom+TEAR_STATS*2+type, CR_GREEN, -15.0 + (StrLen(bonusStr) << 16) * 7, FixedMul((type << 16) + 1.0 , 18.0) + 100.0, 5.0, 0.5, 3.0);
+    }
+    else {
+        bonusStr = StrParam(i:bonus);
+        HudMessage(i:bonus; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP|HUDMSG_FADEINOUT, idFrom+TEAR_STATS*2+type, CR_RED, -15.0 + (StrLen(bonusStr) << 16) * 7, FixedMul((type << 16) + 1.0 , 18.0) + 100.0, 5.0, 0.5, 3.0);
+    }
 
     ACS_NamedExecuteAlways("showStats", 0, 1);
 }
@@ -2714,10 +2719,6 @@ script "dealBackstabDamage" (int damage) {
     ACS_NamedExecuteAlways("applyEffect", 0, 6);
 }
 
-script "setIsaacHandsSelected" (int isOn) {
-    SetUserVariable(0, "user_isaac_hands_is_active", isOn);
-}
-
 script "isParasiteProjectile" (void) {
     SetResultValue(CheckActorClass(0, "ParasiteTearProjectile")
                 || CheckActorClass(0, "ParasiteFearTearProjectile")
@@ -2869,7 +2870,7 @@ script "setIpecacStats" (void) {
     int pnum = ACS_NamedExecuteWithResult("getPlayerNumberFromTID", ptid);
     ACS_NamedExecuteAlways("setRadius", 0, TEARS_STATS_BY_PLAYER[pnum][0]);
     ACS_NamedExecuteAlways("setHeight", 0, TEARS_STATS_BY_PLAYER[pnum][1]);
-    ACS_NamedExecuteAlways("setDamage", 0, TEARS_STATS_BY_PLAYER[pnum][2], ptid);
+    ACS_NamedExecuteAlways("setTearDamage", 0, TEARS_STATS_BY_PLAYER[pnum][2], ptid);
     ACS_NamedExecuteAlways("setGravity", 0, TEARS_STATS_BY_PLAYER[pnum][3], ptid);
     ACS_NamedExecuteAlways("setSpeed", 0, TEARS_STATS_BY_PLAYER[pnum][4], ptid);
     ACS_NamedExecuteAlways("setScale", 0, TEARS_STATS_BY_PLAYER[pnum][5]);

@@ -736,7 +736,6 @@ ACTOR Agge : UniversalPlayer
 	Player.WeaponSlot 7, EterealShocker, Adramalech
   Player.WeaponSlot 8, OkuuCannon
 	var int user_charge_state;
-	var int user_isaac_hands_is_active;
 	var int user_isaac_hands_laser_from_behind;
 	var int user_player_light_tid;
 	var int user_jam_chance;
@@ -917,6 +916,7 @@ ACTOR ChainGunSpawner : CustomInventory replaces ChainGun
 			TNT1 A 0 A_JumpIfInventory("GreenIsaacHands",1,"Spawn")
 			TNT1 A 0 A_JumpIfInventory("BrimstoneHands",1,"Spawn")
 			TNT1 A 0 A_GiveInventory("IsaacHands",1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showStats", 0)
 			TNT1 A 0 A_PlaySound("misc/w_pkup")
 			// TNT1 A 0 A_SpawnItemEX("ShotgunSpawner")
 			Fail

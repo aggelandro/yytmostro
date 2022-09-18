@@ -13,7 +13,6 @@ ACTOR IsaacHands : WeaponWithCryoGrenadeOption {
 
 		Ready:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 1)
-			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 1)
 			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, "MLReadyLoop")
 			CFLM A -1 A_Jump(256, "ReadyLoop")
 		  Wait
@@ -33,7 +32,6 @@ ACTOR IsaacHands : WeaponWithCryoGrenadeOption {
 		Deselect:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
 			TNT1 A 0 ACS_NamedExecuteWithResult("stopMusic")
-			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 0)
 			CFLM A -1 A_Jump(256, "DeselectLoop")
 		  Wait
 
@@ -344,7 +342,6 @@ ACTOR BlackIsaacHands : IsaacHands {
 	States {
 		Ready:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 1)
-			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 1)
 			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, "MLReadyLoop")
 			CFLB A -1 A_Jump(256, "ReadyLoop")
 		  Wait
@@ -358,7 +355,6 @@ ACTOR BlackIsaacHands : IsaacHands {
 		Deselect:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
 			TNT1 A 0 ACS_NamedExecuteWithResult("stopMusic")
-			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 0)
 			CFLB A -1 A_Jump(256, "DeselectLoop")
 		  Wait
 			
@@ -633,7 +629,6 @@ ACTOR OrangeIsaacHands : IsaacHands {
 	States {
 		Ready:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 1)
-			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 1)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayerLight", 1)
 			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, "MLReadyLoop")
 			CFLO A -1 A_Jump(256, "ReadyLoop")
@@ -648,7 +643,6 @@ ACTOR OrangeIsaacHands : IsaacHands {
 		Deselect:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
 			TNT1 A 0 ACS_NamedExecuteWithResult("stopMusic")
-			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 0)
 			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayerLight", 0)
 			CFLO A -1 A_Jump(256, "DeselectLoop")
 		  Wait
@@ -924,7 +918,6 @@ ACTOR GreenIsaacHands : IsaacHands {
 	States {
 		Ready:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 1)
-			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 1)
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 39), 2) //OFFSET
 			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayerLight", 1)
 			TNT1 A 0 A_JumpIfInventory("MonstrosLungGiver", 1, "MLReadyLoop")
@@ -940,7 +933,6 @@ ACTOR GreenIsaacHands : IsaacHands {
 		Deselect:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
 			TNT1 A 0 ACS_NamedExecuteWithResult("stopMusic")
-			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 0)
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 39), 2) //OFFSET
 			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayerLight", 0)
 			CFLG A -1 A_Jump(256, "DeselectLoop")
@@ -1217,7 +1209,6 @@ ACTOR BrimstoneHands : IsaacHands {
 	States {
 		Ready:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 1)
-			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 1)
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 39), 2) //OFFSET
 			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayerLight", 1)
 			CLID A -1 A_Jump(256, "ReadyLoop")
@@ -1230,7 +1221,6 @@ ACTOR BrimstoneHands : IsaacHands {
 		Deselect:
 		  TNT1 A 0 ACS_NamedExecuteWithResult("showPowerups", 0)
 			TNT1 A 0 ACS_NamedExecuteWithResult("stopMusic")
-			TNT1 A 0 ACS_NamedExecuteWithResult("setIsaacHandsSelected", 0)
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("checkForNoGiverInInventory", 39), 2) //OFFSET
 			TNT1 A 0 ACS_NamedExecuteWithResult("setPlayerLight", 0)
 			CLID A -1 A_Jump(256, "DeselectLoop")
