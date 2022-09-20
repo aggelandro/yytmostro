@@ -195,7 +195,7 @@ ACTOR Diablo : BaronOfHell2 {
 		Death: 
 			PYLD R 7 A_KillChildren
 			PYLD S 6 A_Scream
-			PYLD T 5 A_Fall
+			PYLD T 5
 			TNT1 AAAA 0 A_CustomMissile("SmokeBigExplosion", Random(30,60), 0, random(0,360), 2, random(0,360))
 			PYLD UVWXYZ 4 Bright A_SpawnItemEx("OrangeParticleSpawner", Random(10,-10), Random(10,-10), Random(30,60), 0, 0, 0, 0, 128)
 			TNT1 A 0 A_NoBlocking

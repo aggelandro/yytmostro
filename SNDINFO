@@ -201,8 +201,10 @@ TNT/Throw			TNTTOSS
 TNT/Fuse			TNTFUSE
 TNT/Explode			NAPALMEX
 Napalm/Explode		NAPALMEX
+TNT/Explode2	DSEXPBRL
 TNT/Zip				ZIPCLS
 TNT/Match			P1CH_FL8
+TNT/Pickup		PICKWEAP
 
 //pistola afanada de realm667
 weapons/boltfire	BOLTFIRE

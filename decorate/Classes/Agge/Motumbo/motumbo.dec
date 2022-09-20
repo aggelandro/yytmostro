@@ -55,7 +55,7 @@ ACTOR WaskaProjectile {
   Scale 1.5
 	Gravity 0.7
   Projectile
-  +MTHRUSPECIES
+  //+MTHRUSPECIES
   -NOGRAVITY
 	+BRIGHT
   
@@ -159,7 +159,7 @@ ACTOR WaskaRain {
   Mass 10
 	Gravity 12
 	+DONTSPLASH
-	+MTHRUSPECIES
+	//+MTHRUSPECIES
 	+BRIGHT
 	+MISSILE
 	

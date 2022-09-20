@@ -6,6 +6,7 @@
 #define DISPLAYABLE_POWERUP_MAX 43
 #define TEAR_STATS 7
 #define TEMPORAL_POWERUPS 11
+#define TRANSFERIBLE_POWERUPS 14
 
 //HPBar
 #define FULL_HUD_WIDTH 800
@@ -53,12 +54,17 @@ str SV_DRAWABLE_DOGS_ICON_A[5] = {
 };
 
 str SV_DRAWABLE_DOGS_ICON_B[5] = {
-    "DSHOTB1", "DSHOTB2", "DSHOTB3", "DSHOTB4", "DSHOTA5"
+    "DSHOTB1", "DSHOTB2", "DSHOTB3", "DSHOTB4", "DSHOTB5"
 };
 
 str SV_TEMPORAL_POWERUPS[TEMPORAL_POWERUPS] = {
     "RubberCementGiver", "SacredHeartGiver", "SpoonBenderGiver", "TheParasiteGiver", "CompoundFractureGiver", "MonstrosLungGiver", "BrimstoneGiver",
     "FireMindGiver", "IpecacGiver", "UranusGiver", "OcularRiftGiver"
+};
+
+str SV_TRANSFERIBLE_POWERUPS[TRANSFERIBLE_POWERUPS] = {
+    "LostContactGiver", "TheCommonColdGiver", "DarkMatterGiver", "MomsContactsGiver", "ALumpOfCoalGiver", "Infestation2Giver",
+    "PiscesGiver", "8InchNailsGiver", "TheParasiteGiver", "RubberCementGiver", "FireMindGiver", "IpecacGiver", "UranusGiver", "OcularRiftGiver"
 };
 
 script "yytmod_mensajesalida" DEATH
@@ -190,8 +196,9 @@ script 335 ENTER {
         else {
             TakeInventory("BlackIsaacHands", 1);
             if (!CheckInventory("IsaacHands"))
-                if (CheckInventory("FireMindGiver") || CheckInventory("IpecacGiver") || CheckInventory("BrimstoneGiver"))
+                if (CheckInventory("FireMindGiver") || CheckInventory("IpecacGiver") || CheckInventory("BrimstoneGiver")) {
                     GiveInventory("IsaacHands", 1);
+                }
         }
 
         for (int i; i<TEMPORAL_POWERUPS; i++) {
@@ -206,7 +213,11 @@ script 335 ENTER {
                 GiveInventory(powerup, 1);
             }
         }
-                
+
+        Delay(35);
+        if (CheckInventory("BlackIsaacHands") || CheckInventory("IsaacHands"))
+            ACS_NamedExecuteAlways("showStats", 0, 0);
+        
         while (true) {
             if (ENERGY_SHIELD_RELOAD) {
                 GiveInventory("EnergyShieldAmmo",1);
@@ -246,6 +257,9 @@ script 336 DEATH {
             TakeInventory("BrimstoneHands", 1);
             if (!CheckInventory("IsaacHands")) GiveInventory("IsaacHands", 1);
         }
+
+        if (CheckInventory("BlackIsaacHands") || CheckInventory("IsaacHands"))
+            ACS_NamedExecuteAlways("showStats", 0, 0);
 
         for (int i=0; i<DISPLAYABLE_POWERUP_MAX; i++) {
             TakeInventory(StrLeft(SV_DISPLAYABLE_POWERUPS[i], StrLen(SV_DISPLAYABLE_POWERUPS[i])-6), 1);
@@ -322,39 +336,16 @@ script "checkForNoAmmoInPointerInventory" (int choice) {
     }
 }
 
-script "loadChargedAttack" (int fullyCharged, int stopAtTimeLimit, int playFeedbackSound) {
+script "loadChargedAttack" (int fullyCharged, int stopAtTimeLimit, int playFeedbackSound, int checkAltFire) {
     SetUserVariable(0, "user_charge_state", 0);
     int progressFactor = 40.0 / fullyCharged;
     int chargedTime, progressC;
+    str scriptName;
+    if (checkAltFire) scriptName = "isPressingAltFire";
+    else scriptName = "isPressingFire";
     ACS_NamedExecuteWithResult("displayChargeBar", 1);
 
-    while (ACS_NamedExecuteWithResult("isPressingFire")) {
-        progressC = (progressFactor * chargedTime) >> 16;
-        ACS_NamedExecuteWithResult("showProgressChargeBar", progressC);
-
-        if (chargedTime < fullyCharged) chargedTime++;
-        else {
-            if (playFeedbackSound) {
-                PlaySound(0, "agge/charged", CHAN_AUTO);
-                playFeedbackSound = 0;
-            }
-            if (stopAtTimeLimit) break;
-        }
-        Delay(1);
-    }
-
-    ACS_NamedExecuteWithResult("displayChargeBar", 0);
-    if (chargedTime == fullyCharged) SetUserVariable(0, "user_charge_state", 1);
-    else SetUserVariable(0, "user_charge_state", 2);
-}
-
-script "loadChargedAltAttack" (int fullyCharged, int stopAtTimeLimit, int playFeedbackSound) {
-    SetUserVariable(0, "user_charge_state", 0);
-    int progressFactor = 40.0 / fullyCharged;
-    int chargedTime, progressC;
-    ACS_NamedExecuteWithResult("displayChargeBar", 1);
-
-    while (ACS_NamedExecuteWithResult("isPressingAltFire")) {
+    while (ACS_NamedExecuteWithResult(scriptName)) {
         progressC = (progressFactor * chargedTime) >> 16;
         ACS_NamedExecuteWithResult("showProgressChargeBar", progressC);
 
@@ -992,31 +983,33 @@ function int fdistance (int tid1, int tid2) {
 script "setChildrenStats" (int ctid) {
     int masterDmg = GetActorProperty(0, APROP_Damage);
     SetUserVariable(ctid, "user_explosion_damage", masterDmg);
-    if (CheckActorInventory(GetActorProperty(0, APROP_TargetTID), "IpecacGiver")) {
-        if (CheckActorClass(0, "IsaacEffectPuff") ||
-            CheckActorClass(0, "PiercingDamageDealer") ||
-            CheckActorClass(0, "BrimstoneBeam")) {
-            int ptid = GetActorProperty(0, APROP_TargetTID);
-            if (!ptid) {
-                int ttid = UniqueTID();
-                Thing_ChangeTID(0, ttid);
-                SetActivator(0, AAPTR_TARGET);
-                ptid = GetActorProperty(0, APROP_MasterTID);
+    int utid = UniqueTID();
+    Thing_ChangeTID(0, utid);
+    if (SetActivator(0, AAPTR_TARGET)) {
+        if (CheckInventory("IpecacGiver")) {
+            int masterFMFlag = CheckInventory("FireMindGiver");
+            SetUserVariable(ctid, "user_fire_flag", masterFMFlag);
+            int masterExplRange = GetUserVariable(utid, "user_explosion_range");
+            SetUserVariable(ctid, "user_explosion_range", masterExplRange);
+
+            if (CheckActorClass(utid, "IsaacEffectPuff") ||
+                CheckActorClass(utid, "PiercingDamageDealer") ||
+                CheckActorClass(utid, "BrimstoneBeam")) {
+                int ptid = ActivatorTID();
                 if (!ptid) {
-                    SetActivator(0, AAPTR_MASTER);
-                    ptid = GetActorProperty(0, APROP_TargetTID);
+                    ptid = GetActorProperty(0, APROP_MasterTID);
+                    if (!ptid) {
+                        SetActivator(0, AAPTR_MASTER);
+                        ptid = GetActorProperty(0, APROP_TargetTID);
+                    }
                 }
-                SetActivator(ttid);
-                Thing_ChangeTID(ttid, 0);
+                int pnum = ACS_NamedExecuteWithResult("getPlayerNumberFromTID", ptid); 
+                SetActivator(utid);
+                ACS_NamedExecuteAlways("setExplosionRange", 0, TEARS_STATS_BY_PLAYER[pnum][5]);
             }
-            int pnum = ACS_NamedExecuteWithResult("getPlayerNumberFromTID", ptid); 
-            ACS_NamedExecuteAlways("setExplosionRange", 0, TEARS_STATS_BY_PLAYER[pnum][5]);
         }
-        int masterFMFlag = CheckActorInventory(GetActorProperty(0, APROP_TargetTID), "FireMindGiver");
-        SetUserVariable(ctid, "user_fire_flag", masterFMFlag);
-        int masterExplRange = GetUserVariable(0, "user_explosion_range");
-        SetUserVariable(ctid, "user_explosion_range", masterExplRange);
     }
+    Thing_ChangeTID(utid, 0);
 }
 
 script "setPlayerLight" (int isOn) {
@@ -1897,6 +1890,39 @@ script "adramalech_reviveMonsterSoul" (void) {
     Spawn(actorName, spawnX, spawnY, spawnZ);
 }
 
+script "dynamite_loadDistanceAttack" (int fullyCharged, int checkAltFire) {
+    SetUserVariable(0, "user_dynamite_throw_power", 0);
+    int progressFactor = 40.0 / fullyCharged;
+    int chargedTime, progressC;
+    ACS_NamedExecuteWithResult("displayChargeBar", 1);
+    str scriptName;
+    if (checkAltFire) scriptName = "isPressingAltFire";
+    else scriptName = "isPressingFire";
+
+    while (ACS_NamedExecuteWithResult(scriptName)) {
+        progressC = (progressFactor * chargedTime) >> 16;
+        ACS_NamedExecuteWithResult("showProgressChargeBar", progressC);
+
+        if (chargedTime < fullyCharged) chargedTime++;
+        Delay(1);
+    }
+
+    ACS_NamedExecuteWithResult("displayChargeBar", 0);
+    SetUserVariable(0, "user_dynamite_throw_power", chargedTime);
+}
+
+script "dynamite_getThrowPower" (void) {
+    SetResultValue(GetUserVariable(0, "user_dynamite_throw_power"));
+}
+
+script "dynamite_getThrowPowerFromPlayer" (void) {
+    if (SetActivator(0, AAPTR_TARGET)) {
+        SetResultValue(GetUserVariable(0, "user_dynamite_throw_power"));
+        terminate;
+    }
+    SetResultValue(0);
+}
+
 
 
 
@@ -2396,7 +2422,7 @@ script "showPowerups" (int displayFlag) CLIENTSIDE {
             else HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA, i, 0, FixedDiv(i << 16, 65.0), 0.05, 0, 0.25);
 
             // Capaz poner una cvar para dejar elegir si verlo siempre o no?
-            ACS_NamedExecuteAlways("showStats", 0, 1);
+            //ACS_NamedExecuteAlways("showStats", 0, 1);
         }
         else HudMessage(s:""; HUDMSG_PLAIN, i, 0, 0, 0, 1);
     }
@@ -2850,14 +2876,11 @@ script "transferMasterEffectsInventory" (void) {
         SetPointer(AAPTR_MASTER, ptid);
         Thing_ChangeTID(utid, 0);
     }
-    
-    int effectsPowerups[14] = {"LostContactGiver", "TheCommonColdGiver", "DarkMatterGiver",
-                                "MomsContactsGiver", "ALumpOfCoalGiver", "Infestation2Giver",
-                                "PiscesGiver", "8InchNailsGiver", "TheParasiteGiver", "RubberCementGiver",
-                                "FireMindGiver", "IpecacGiver", "UranusGiver", "OcularRiftGiver"};
 
-    for (int i=0; i<14; i++) {
-        if (CheckActorInventory(ptid, effectsPowerups[i])) GiveInventory(effectsPowerups[i], 1);
+    for (int i=0; i<TRANSFERIBLE_POWERUPS; i++) {
+        if (CheckActorInventory(ptid, SV_TRANSFERIBLE_POWERUPS[i])) {
+            GiveInventory(SV_TRANSFERIBLE_POWERUPS[i], 1);
+        }
     }
 }
 
@@ -2878,8 +2901,9 @@ script "setIpecacStats" (void) {
 }
 
 script "setGravity" (int gravity) {
-    gravity = 0.5 - (FixedMul(0.1, FixedDiv(gravity << 16, 35.0)));
-    SetActorProperty(0, APROP_Gravity, gravity);
+    //gravity = 0.5 - (FixedMul(0.1, FixedDiv(gravity << 16, 35.0)));
+    // La velocidad sola regula el rango, por el momento el gravity permanecerá igual
+    SetActorProperty(0, APROP_Gravity, 0.5);
 }
 
 script "setExplosionRange" (int range) {
