@@ -24,7 +24,9 @@ ACTOR Armncubus : Fatso2 {
 	DropItem "IsaacItemsTier2HighChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "IsaacItemsTier3LowChanceSpawner"
-	DropItem "ContraItemMancubusSpawner"
+	DropItem "ContraSpawner1"
+	DropItem "CrusherGunToken", 48
+	DropItem "LaserGunToken", 48
 	DropItem "DualZanzibart", 128
 	DropItem "Dagon", 32
 	DropItem "DemonAmmoBox", 224

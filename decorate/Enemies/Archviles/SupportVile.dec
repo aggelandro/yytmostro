@@ -8,6 +8,7 @@ ACTOR Archevil : Archvile2 {
   DeathSound "archevil/death"
 	ActiveSound ""
 	DropItem "DemonAmmo", 120
+	DropItem "PrototypeGunToken", 48
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "IsaacItemsTier1LowChanceSpawner"

@@ -8,9 +8,9 @@ Actor Dozer : ChaingunGuyMod {
 	Dropitem "Chaingun"
 	Dropitem "Clip"
 	DropItem "IsaacItemsTier1HighChanceSpawner"
-	DropItem "HomingGunToken", 10
 	DropItem "HandGrenadeAmmo", 20
 	DropItem "CryoGrenadeAmmo", 20
+	DropItem "HomingGunToken", 48
 	DropItem "Marduk", 5
 	var int user_gun_height;
 	var int user_original_pitch;

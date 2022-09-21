@@ -19,7 +19,7 @@ ACTOR Diablo : BaronOfHell2 {
 	DropItem "IsaacItemsTier2MidChanceSpawner"
 	DropItem "IsaacItemsTier3MidChanceSpawner"
 	DropItem "IsaacItemsTier3MidChanceSpawner"
-	DropItem "CrusherGunToken", 128
+	DropItem "ContraSpawner1"
 	DropItem "UniqueWeaponSpawner", 16
 	DropItem "Adramalech", 16
 	DropItem "DemonAmmoBox", 192

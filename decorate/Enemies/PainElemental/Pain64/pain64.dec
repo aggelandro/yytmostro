@@ -11,6 +11,7 @@ ACTOR Pain64 : PainElemental2 {
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier2HighChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
+	DropItem "FlamethrowerGunToken", 48
 	+BRIGHT
 	
 	States {

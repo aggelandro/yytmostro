@@ -6,8 +6,8 @@ ACTOR RocketSpiderMastermind : SpiderMastermind2
 	DropItem "IsaacItemsTier2HighChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "IsaacItemsTier3HighChanceSpawner"
-	DropItem "PrototypeGunToken", 128
 	DropItem "DemonAmmoBox", 80
+	DropItem "ContraSpawner2"
 	
   States
   {

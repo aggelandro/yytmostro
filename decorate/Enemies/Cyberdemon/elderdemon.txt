@@ -22,15 +22,15 @@ ACTOR ElderDemon : Cyberdemon2 {
 	+AVOIDMELEE
 	+NOTELEFRAG
 	+NOTIMEFREEZE
+	DropItem "ContraSpawner2"
 	DropItem "IsaacItemsTier3Spawner"
 	DropItem "IsaacItemsTier3Spawner"
 	DropItem "IsaacItemsTier3LowChanceSpawner"
 	DropItem "IsaacItemsTier3LowChanceSpawner"
 	DropItem "IsaacItemsTier3LowChanceSpawner"
 	DropItem "IsaacItemsTier3LowChanceSpawner"
-	DropItem "PrototypeGunToken"
 	DropItem "UniqueWeaponSpawner"
-	DropItem "MegaSphere"
+	DropItem "MegaSphereEX"
 	DropItem "DualZanzibart", 128
 	DropItem "Adramalech"
 	DropItem "DemonAmmoBox"

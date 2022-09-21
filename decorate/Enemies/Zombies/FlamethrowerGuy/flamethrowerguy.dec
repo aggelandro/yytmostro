@@ -13,11 +13,11 @@ ACTOR FlamethrowerGuy : AbstractYYTZombie {
 	Dropitem "Chaingun"
 	Dropitem "Clip"
 	DropItem "IsaacItemsTier1HighChanceSpawner"
-	DropItem "HomingGunToken", 15
 	DropItem "HandGrenadeAmmo", 10
 	DropItem "CryoGrenadeAmmo", 10
 	DropItem "ChainsawSpawner", 32
 	DropItem "DemonAmmo", 48
+	DropItem "HomingGunToken", 48
 	
 	States {
 		SpawnLoop:

@@ -13,7 +13,7 @@ ACTOR HellCommander : Cyberdemon2 {
 	DropItem "IsaacItemsTier3MidChanceSpawner"
 	DropItem "IsaacItemsTier3LowChanceSpawner"
 	DropItem "IsaacItemsTier3LowChanceSpawner"
-	DropItem "PrototypeGunToken", 192
+	DropItem "ContraSpawner2"
 	DropItem "UniqueWeaponSpawner", 48
 	DropItem "Adramalech", 16
 	DropItem "DemonAmmoBox", 162

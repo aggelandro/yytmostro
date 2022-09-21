@@ -8,6 +8,7 @@ ACTOR SpiderMadnessmind : SpiderMastermind2 {
 	DropItem "Falneitz", 144
 	DropItem "Dagon", 80
 	DropItem "DemonAmmoBox", 128
+	DropItem "ContraSpawner2"
 	var int user_attack;
 	var int user_cannon_height;
 	var int user_original_pitch;

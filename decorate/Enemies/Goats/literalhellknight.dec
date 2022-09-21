@@ -12,7 +12,7 @@ ACTOR LiteralHellKnight : HellKnight2 {
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
-	DropItem "CrusherGunToken", 45
+	DropItem "HomingGunToken", 48
 	+FLOORCLIP
 	
 	States {

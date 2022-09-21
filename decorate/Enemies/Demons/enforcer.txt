@@ -12,7 +12,6 @@ ACTOR Enforcer : Pinky2 {
 	Obituary "%o got pium pium by an Enforcer"
 	+NOFEAR
 	DropItem "IsaacItemsTier1MidChanceSpawner"
-	DropItem "ContraItemPinkySpawner"
 	DropItem "DemonAmmo", 64
 	DropItem "Marduk", 24
 	var int user_calm;

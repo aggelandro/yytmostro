@@ -5,7 +5,7 @@ ACTOR BounceTron : Arachnotron2
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
-	DropItem "LaserGunToken", 64
+	DropItem "FlamethrowerGunToken", 48
 	States
 	{
 	Missile:

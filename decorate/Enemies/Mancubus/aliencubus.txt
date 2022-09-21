@@ -6,7 +6,7 @@ ACTOR Aliencubus : Fatso2 {
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
-	DropItem "ContraItemMancubusSpawner"
+	DropItem "SpreadGunToken", 48
 	+QUICKTORETALIATE
 	
 	States {

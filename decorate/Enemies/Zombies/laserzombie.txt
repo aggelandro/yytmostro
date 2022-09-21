@@ -11,7 +11,6 @@ ACTOR LaserZombie : AbstractYYTZombie {
   DropItem "Clip"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier1MidChanceSpawner"
-	DropItem "CrusherGunToken", 1
 	DropItem "HandGrenadeAmmo", 20
 	DropItem "CryoGrenadeAmmo", 20
 	DropItem "ChainsawSpawner", 32

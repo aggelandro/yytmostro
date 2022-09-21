@@ -10,6 +10,7 @@ ACTOR Cryocubus : Cyberdemon2
   ActiveSound "fatso/active"
   Obituary "%o was frozen by the Cryocubus."
 	DropItem "DemonAmmoBox", 192
+	DropItem "ContraSpawner2"
 	DropItem "Marduk"
 	DropItem "Dagon"
   DropItem "UniqueWeaponSpawner"
@@ -19,7 +20,6 @@ ACTOR Cryocubus : Cyberdemon2
 	DropItem "IsaacItemsTier2HighChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "IsaacItemsTier3HighChanceSpawner"
-	DropItem "PrototypeGunToken"
   var int user_isfiring;
 	
 	+MISSILEEVENMORE

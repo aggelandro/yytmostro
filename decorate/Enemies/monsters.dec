@@ -122,7 +122,6 @@ ACTOR ShotgunGuyMod : AbstractYYTZombie {
   DropItem "Shotgun"
 	DropItem "Shell"
 	DropItem "IsaacItemsTier1MidChanceSpawner"
-	DropItem "SpreadGunToken", 10
 	DropItem "HandGrenadeAmmo", 20
 	DropItem "CryoGrenadeAmmo", 20
 	
@@ -205,9 +204,9 @@ ACTOR ChaingunGuyMod : AbstractYYTZombie {
   Dropitem "Chaingun"
 	Dropitem "Clip"
 	DropItem "IsaacItemsTier1HighChanceSpawner"
-	DropItem "HomingGunToken", 10
 	DropItem "HandGrenadeAmmo", 20
 	DropItem "CryoGrenadeAmmo", 20
+	DropItem "HomingGunToken", 48
 	
   States {
 		SpawnLoop:
@@ -289,7 +288,6 @@ ACTOR ZombieMan2 : AbstractYYTZombie {
   Obituary "$OB_ZOMBIE"
   DropItem "Clip"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
-	DropItem "CrusherGunToken", 1
 	DropItem "HandGrenadeAmmo", 20
 	DropItem "CryoGrenadeAmmo", 20
 	
@@ -375,7 +373,6 @@ ACTOR DoomImp2 : YYTMonster {
   HitObituary "$OB_IMPHIT"
   Obituary "$OB_IMP"
 	DropItem "IsaacItemsTier1MidChanceSpawner"
-	DropItem "FlamethrowerGunToken", 10
 	
   States {
 		SpawnLoop:
@@ -480,7 +477,6 @@ ACTOR Pinky2 : YYTMonster {
   ActiveSound "demon/active"
   Obituary "$OB_DEMONHIT" // "%o was bit by a demon."
 	DropItem "IsaacItemsTier1MidChanceSpawner"
-	DropItem "ContraItemPinkySpawner"
 	
   States {
 		SpawnLoop:
@@ -562,6 +558,7 @@ ACTOR Cacodemon2 : YYTMonster {
   BloodColor "00 00 CD"
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
+	DropItem "FlamethrowerGunToken", 48
 	
   States {
 		SpawnLoop:
@@ -640,7 +637,7 @@ ACTOR Revenant2 : YYTMonster {
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
-	DropItem "HomingGunToken", 64
+	DropItem "SpreadGunToken", 48
 	
   States {
 		SpawnLoop:
@@ -716,7 +713,7 @@ ACTOR Arachnotron2 : YYTMonster
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
-	DropItem "LaserGunToken", 64
+	DropItem "FlamethrowerGunToken", 48
   States {
 		SpawnLoop:
 			BSPI AB 10 A_Look
@@ -828,11 +825,11 @@ ACTOR Fatso2 : YYTMonster
   DeathSound "fatso/death"
   ActiveSound "fatso/active"
   Obituary "$OB_FATSO"
+	DropItem "SpreadGunToken", 48
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
-	DropItem "ContraItemMancubusSpawner"
 	
   States {
 		SpawnLoop:
@@ -909,6 +906,7 @@ ACTOR PainElemental2 : YYTMonster
   ActiveSound "pain/active"
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "IsaacItemsTier2HighChanceSpawner"
+	DropItem "FlamethrowerGunToken", 48
   States
   {
   SpawnLoop:
@@ -961,6 +959,7 @@ ACTOR LostSoul2 : YYTMonster
   ActiveSound "skull/active"
   RenderStyle SoulTrans
   Obituary "$OB_SKULL" // "%o was spooked by a lost soul."
+	DropItem "HomingGunToken", 6
   States
   {
   SpawnLoop:
@@ -1008,11 +1007,11 @@ ACTOR BaronOfHell2 : YYTMonster
   Obituary "$OB_BARON"
   HitObituary "$OB_BARONHIT"
   BloodColor "00 64 00"
+	DropItem "SpreadGunToken", 48
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "IsaacItemsTier2HighChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
-	DropItem "CrusherGunToken", 64
 	
   States {
 		SpawnLoop:
@@ -1088,7 +1087,7 @@ ACTOR HellKnight2 : BaronOfHell2 {
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
-	DropItem "CrusherGunToken", 24
+	DropItem "HomingGunToken", 48
 	
   States {
 		SpawnLoop:
@@ -1169,6 +1168,7 @@ ACTOR Archvile2 : YYTMonster {
   ActiveSound "vile/active"
   MeleeSound "vile/stop"
   Obituary "$OB_VILE"
+	DropItem "PrototypeGunToken", 48
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
 	DropItem "IsaacItemsTier3LowChanceSpawner"
@@ -1253,13 +1253,13 @@ ACTOR Cyberdemon2 : YYTMonster
   DeathSound "cyber/death"
   ActiveSound "cyber/active"
   Obituary "$OB_CYBORG"
+	DropItem "ContraSpawner2"
 	DropItem "IsaacItemsTier1Spawner"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier2HighChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "IsaacItemsTier3HighChanceSpawner"
-	DropItem "PrototypeGunToken", 128
   States
   {
   SpawnLoop:
@@ -1333,13 +1333,13 @@ ACTOR SpiderMastermind2 : YYTMonster {
   DeathSound "spider/death"
   ActiveSound "spider/active"
   Obituary "$OB_SPIDER"
+	DropItem "ContraSpawner2"
 	DropItem "IsaacItemsTier1Spawner"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier2HighChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "IsaacItemsTier3HighChanceSpawner"
-	DropItem "PrototypeGunToken", 128
 	
   States {
 		SpawnLoop:

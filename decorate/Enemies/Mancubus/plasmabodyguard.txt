@@ -10,9 +10,9 @@ ACTOR PlasmaBodyguard : Fatso2 {
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
-	DropItem "ContraItemMancubusSpawner"
 	DropItem "DemonAmmoBox", 20
 	DropItem "Marduk", 32
+	DropItem "SpreadGunToken", 48
 	
 	States {
 		SpawnLoop:

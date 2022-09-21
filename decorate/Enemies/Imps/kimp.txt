@@ -7,7 +7,6 @@ ACTOR Kimp : DoomImp2 {
 	AttackSound "kimp/attack"
 	Obituary "%o was electrocuted by a Kimp."
 	DropItem "IsaacItemsTier1MidChanceSpawner"
-	DropItem "FlamethrowerGunToken", 10
 	DropItem "DemonAmmo", 10
 	
 	States {

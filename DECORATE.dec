@@ -531,15 +531,18 @@ ACTOR IsaacItemsTier3HighChanceSpawner : RandomSpawner {
 
 
 // CONTRA SPAWNERS //
-ACTOR ContraItemMancubusSpawner : RandomSpawner {	
-	DropItem "SpreadGunToken", 64, 50
-	DropItem "FlamethrowerGunToken", 64, 50
+ACTOR ContraSpawner1 : RandomSpawner {
+	DropItem "CrusherGunToken", 48, 50
+	DropItem "LaserGunToken", 48, 50
 }
 
-ACTOR ContraItemPinkySpawner : RandomSpawner {
-	DropItem "LaserGunToken", 24, 50
-	DropItem "FlamethrowerGunToken", 24, 50
+ACTOR ContraSpawner2 : RandomSpawner {
+	DropItem "CrusherGunToken", 48, 33
+	DropItem "LaserGunToken", 48, 33
+	DropItem "PrototypeGunToken", 48, 33
 }
+
+
 
 ACTOR IsItAlive : LucianoID{}
 ACTOR Lucianeto : DoomPlayer

@@ -10,7 +10,7 @@ ACTOR Warachnotron : Arachnotron2 {
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
-	DropItem "LaserGunToken", 64
+	DropItem "FlamethrowerGunToken", 48
 	DropItem "Marduk", 48
 	+MISSILEMORE
 	var int user_shield_on;

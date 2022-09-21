@@ -25,6 +25,7 @@ ACTOR SpookyVile : Archvile2
 	-SOLID
 	Obituary "%o was killed by a spooky archvile."
 	DropItem "DemonAmmo", 80
+	DropItem "PrototypeGunToken", 48
 	DropItem "Falneitz", 12
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"

@@ -10,7 +10,7 @@ ACTOR FlameCyber : Cyberdemon2
 	DropItem "IsaacItemsTier3LowChanceSpawner"
 	DropItem "IsaacItemsTier3LowChanceSpawner"
 	DropItem "IsaacItemsTier3MidChanceSpawner"
-	DropItem "PrototypeGunToken", 192
+	DropItem "ContraSpawner2"
 	DropItem "UniqueWeaponSpawner", 32
 	DropItem "Dagon", 32
 	DropItem "DemonAmmoBox", 132

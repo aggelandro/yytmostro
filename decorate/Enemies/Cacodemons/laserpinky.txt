@@ -11,6 +11,7 @@ ACTOR Brimgoyle : Cacodemon2 {
 	ActiveSound "demon/active"
 	Obituary "%o was disintegrated by a brimgoyle."
 	DropItem "DemonAmmo", 64
+	DropItem "FlamethrowerGunToken", 48
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "IsaacItemsTier2MidChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"

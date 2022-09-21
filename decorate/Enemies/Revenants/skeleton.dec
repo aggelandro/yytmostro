@@ -11,8 +11,8 @@ ACTOR Skeleton : Revenant2 {
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
-	DropItem "HomingGunToken", 64
 	DropItem "DemonAmmo", 32
+	DropItem "SpreadGunToken", 48
 	+ALWAYSFAST
 	-MISSILEMORE
 	

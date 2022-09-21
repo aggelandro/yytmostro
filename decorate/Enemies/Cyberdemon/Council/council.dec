@@ -18,6 +18,7 @@ ACTOR CouncilOfTheSeven : YYTMonster
 	DropItem "Adramalech"
 	DropItem "Dagon"
 	DropItem "DemonAmmoBox"
+	DropItem "ContraSpawner2"
 	States
 	{
 	SpawnLoop:

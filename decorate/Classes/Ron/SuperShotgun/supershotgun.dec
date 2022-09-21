@@ -1,4 +1,4 @@
-ACTOR RonSSG : Weapon
+ACTOR RonSSG : YYTWeapon
 {
   Weapon.AmmoUse 2
 	Weapon.AmmoUse2 2
