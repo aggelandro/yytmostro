@@ -17,6 +17,7 @@
 #include "decorate/Misc/Weapons/Falneitz/falneitz.dec"
 #include "decorate/Misc/Weapons/Marduk/marduk.dec"
 #include "decorate/Misc/Weapons/Dagon/dagon.dec"
+#include "decorate/Misc/Weapons/Nergal/nergal.dec"
 #include "decorate/Misc/Weapons/WeaponWithThroweableOption/weaponwiththroweableoption.txt"
 
 //weapons from classes
@@ -730,7 +731,7 @@ ACTOR Agge : UniversalPlayer
 	Player.StartItem "HitscanFixer"
 	Player.StartItem "CryoGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
-  Player.WeaponSlot 1, Chainsaw2, AxeShield
+  Player.WeaponSlot 1, Chainsaw2, AxeShield, Nergal
   Player.WeaponSlot 2, NoisyCricket, Marduk
   Player.WeaponSlot 3, TacticalShotgun, AggeSSG
   Player.WeaponSlot 4, IsaacHands, BlackIsaacHands, OrangeIsaacHands, GreenIsaacHands, BrimstoneHands, Falneitz
@@ -759,7 +760,7 @@ ACTOR Ron : UniversalPlayer
 	Player.StartItem "HitscanFixer"
 	Player.StartItem "HandGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
-  Player.WeaponSlot 1, RonWrench, Chainsaw2
+  Player.WeaponSlot 1, RonWrench, Chainsaw2, Nergal
   Player.WeaponSlot 2, Marduk, RonPistol
   Player.WeaponSlot 3, Shotgun2, PKDoubleShotguns
   Player.WeaponSlot 4, Falneitz, Chaingun2
@@ -783,7 +784,7 @@ ACTOR zLayer : UniversalPlayer
 	Player.StartItem "HitscanFixer"
 	Player.StartItem "HandGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
-  Player.WeaponSlot 1, Fist, Chainsaw2
+  Player.WeaponSlot 1, Fist, Chainsaw2, Nergal
   Player.WeaponSlot 2, Marduk, zLayerPistol
   Player.WeaponSlot 3, Shotgun2, SuperShotgun2
   Player.WeaponSlot 4, Falneitz, zLayerCG
@@ -807,7 +808,7 @@ ACTOR Thanuris : UniversalPlayer
 	Player.StartItem "HitscanFixer"
 	Player.StartItem "HandGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
-	Player.Weaponslot 1, BaseballBat, Chainsaw2
+	Player.Weaponslot 1, BaseballBat, Chainsaw2, Nergal
 	Player.Weaponslot 2, Marduk, ThanuPistol
 	Player.Weaponslot 5, DualZanzibart, ThanuRL
 	Player.WeaponSlot 6, Dagon, ThanuPL
@@ -829,7 +830,7 @@ ACTOR Terro : UniversalPlayer
 	Player.StartItem "HitscanFixer"
 	Player.StartItem "HandGrenadeAmmo" 3
 	Player.WeaponSlot 0, HitscanFixer
-	Player.WeaponSlot 1, CastlevaniaWhip, TerroFist
+	Player.WeaponSlot 1, CastlevaniaWhip, TerroFist, Nergal
 	Player.WeaponSlot 2, Marduk, TerroPistol
 	Player.WeaponSlot 5, DualZanzibart, Dynamite
 	Player.WeaponSlot 4, Falneitz, ContraWeapon

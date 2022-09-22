@@ -300,6 +300,16 @@ weapons/demonballsee				DSPLASM2
 weapons/demonsoultake				SOULTAKE
 weapons/dagonmagic					DSMAGIC9
 weapons/dagonmagic2					DSMAGIC2
+Weapons/bigswing						WMELSWNG
+weapons/swinghit1						WMELHIT1
+weapons/swinghit2						WMELHIT2
+$random weapons/swinghit { weapons/swinghit1 weapons/swinghit2 }
+weapons/swingwall						WMELWALL
+weapons/batswing						EBATSWNG
+weapons/batcharge						EBATCHRG
+weapons/batlaunch						EBATLAUN
+weapons/batfire							EBATFIRE
+weapons/bathit							EBATHIT
 
 // Efecto de fuego en el piso choreado del complex
 $rolloff weapons/rocklx 600 1800

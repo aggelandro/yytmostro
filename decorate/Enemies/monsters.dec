@@ -837,6 +837,7 @@ ACTOR Fatso2 : YYTMonster
 			Loop
 			
 		See:
+			TNT1 A 0 A_GiveInventory("ZMancubusHelper", 1)
 			FATT AABBCCDDEEFF 4 A_Chase
 			Loop
 			
@@ -888,6 +889,30 @@ ACTOR Fatso2 : YYTMonster
 			FATT QPONMLK 5
 			Goto See
   }
+}
+actor ZMancubusHelper:CustomInventory
+{
+	States
+	{
+		Pickup:
+		TNT1 A 0 A_ChangeFlag("NOPAIN",0)
+		TNT1 A 0 A_JumpIfInventory("ZMancubusTimer",1,4)
+		TNT1 A 0 A_GiveInventory("BlueArmor")
+		TNT1 A 0 A_GiveInventory("ZMancubusBerserk")
+		TNT1 A 0 A_GiveInventory("ZMancubusTimer")
+		TNT1 A 0
+		stop
+	}
+}
+actor ZMancubusBerserk:PowerSpeed
+{
+	Powerup.Duration		-3
+	+INVENTORY.AUTOACTIVATE
+}
+actor ZMancubusTimer:PowerHighJump
+{
+	Powerup.Duration		-10
+	+INVENTORY.AUTOACTIVATE
 }
 ACTOR PainElemental2 : YYTMonster
 {

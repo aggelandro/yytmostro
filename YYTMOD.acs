@@ -692,12 +692,7 @@ script "applyEffect" (int option, int dur, int arg2) {
             SetPointer(AAPTR_TRACER, mtid);
             SetUserVariable(0, "user_se_monster_height", GetActorProperty(mtid, APROP_Height) >> 16);
             SetUserVariable(0, "user_se_monster_radius", GetActorProperty(mtid, APROP_Radius) >> 16);
-            SetActivator(mtid);
-            int currMul = GetActorProperty(0, APROP_DamageMultiplier);
-            //TODO: DamageMultiplier no funciona en Zandroshit
-            SetActorProperty(0, APROP_DamageMultiplier, currMul + 0.5);
             Delay(dur);
-            SetActorProperty(0, APROP_DamageMultiplier, currMul);
             Thing_ChangeTID(mtid, 0);
             TakeInventory("BuffSTRGiver", 1);
             SetActorState(ptid, "Death");
@@ -759,6 +754,16 @@ script "applyEffect" (int option, int dur, int arg2) {
                     Spawn("DemonSoulItem", GetActorX(0), GetActorY(0), GetActorZ(0));
                 }
             }
+        }; break;
+        case 15: {
+            // Buff de fuerza (parte 2)
+            int ttid = GetActorProperty(0, APROP_TargetTID);
+            if (ttid >= PLAYER_TID_START && ttid <= PLAYER_TID_START+PLAYER_MAX) terminate;
+            int originalDamage = GetActorProperty(0, APROP_Damage);
+            SetActorProperty(0, APROP_Damage, (1.25 * originalDamage) >> 16);
+            Delay(dur);
+            SetActorProperty(0, APROP_Damage, originalDamage);
+            TakeInventory("BuffSTR2Giver", 1);
         }; break;
     }
 }
