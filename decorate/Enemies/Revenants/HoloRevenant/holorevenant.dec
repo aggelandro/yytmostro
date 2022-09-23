@@ -55,9 +55,10 @@ ACTOR RevenantPunch : FastProjectile {
 	
 	States {
 		Spawn:
-			FSKL H 0
+			FSKL H 1
+			TNT1 A 0 ACS_NamedExecuteWithResult("YYT_projectileCheck")
 			FSKL H 3 A_SpawnItemEx("RevenantPunchTrail")
-			Loop
+			Goto Spawn+2
 			
 		XDeath:
 			TNT1 A 0 A_PlaySound("revenante/yija", CHAN_AUTO)

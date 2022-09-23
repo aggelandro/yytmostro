@@ -125,6 +125,7 @@ ACTOR BoneProj {
 	States {
 		Spawn:
 			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("homingAtNegativeZVelocity")
+			TNT1 A 0 ACS_NamedExecuteWithResult("YYT_projectileCheck")
 			Goto SpawnLoop
 	
 		SpawnLoop:

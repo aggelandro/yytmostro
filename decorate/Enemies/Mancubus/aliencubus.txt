@@ -78,8 +78,9 @@ ACTOR AlienFireBall {
 	
   States {
 		Spawn: 
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
 			BRBA AB 2 Bright A_SpawnItemEx("GFBallTrail", 0, 0, 0, 0, 0, 0, 0, 128)
-			Loop
+			Goto Spawn+1
 			
 		Death:
 			TNT1 A 0

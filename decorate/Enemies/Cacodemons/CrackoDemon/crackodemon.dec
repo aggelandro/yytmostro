@@ -106,7 +106,7 @@ Actor CrackodemonBall
 	Radius 8
 	Height 6
 	Speed 15
-	Damage (Random(5, 7))
+	Damage 6
 	PROJECTILE
 	RENDERSTYLE ADD
 	ALPHA 0.8
@@ -115,8 +115,9 @@ Actor CrackodemonBall
 	States
 	{
 	Spawn:
+		TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
 		BAL9 AAAABBBB 1 BRIGHT A_SpawnItemEx("CrackoBallTrail", 0, 0, 0, 0, 0, 0, 0, 128)
-		Loop
+		Goto Spawn+1
 	Death:
 		TNT1 A 0 A_SpawnItemEx("BlueParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
 		TNT1 AAA 0 A_CustomMissile("SmallBlueExplosion", 0, 0, random(0,360), 2, random(0,360))	
@@ -142,25 +143,26 @@ Actor CrackoBallTrail
     }
 }
 
-Actor Blusoul : CrackodemonBall
-{
-    Radius 12
-    Height 24
-    Speed 15
-    Damage 15
-    SeeSound "Blusoul/see"
-    DeathSound "Blusoul/death"
-    States
-    {
-    Spawn:
-       SKUD CCCCDDDD 1 BRIGHT A_SpawnItemEx("BlusoulTrail", 0, 0, 16, 0, 0, 0, 0, 128)
-       Loop
-    Death:
-       SKUD H 4 BRIGHT A_Mushroom("CrackodemonBall", 8)
-       SKUD I 4 BRIGHT A_Explode(10, 64)
-       SKUD JK 4 BRIGHT
-       stop
-    }
+Actor Blusoul : CrackodemonBall {
+	Radius 12
+	Height 24
+	Speed 15
+	Damage 15
+	SeeSound "Blusoul/see"
+	DeathSound "Blusoul/death"
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
+			SKUD CCCCDDDD 1 BRIGHT A_SpawnItemEx("BlusoulTrail", 0, 0, 16, 0, 0, 0, 0, 128)
+			Goto Spawn+1
+	
+		Death:
+			SKUD H 4 BRIGHT A_Mushroom("CrackodemonBall", 8)
+			SKUD I 4 BRIGHT A_Explode(10, 64)
+			SKUD JK 4 BRIGHT
+			stop
+	}
 }
 
 Actor BlusoulTrail

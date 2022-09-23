@@ -25,7 +25,7 @@ ACTOR Straldex : Pinky2 {
 		Melee:
 			TNT1 A 0 A_StopSound(CHAN_BODY)
 			SARG EF 8 Fast A_FaceTarget
-			SARG G 8 Fast A_SargAttack
+			SARG G 8 Fast A_CustomMeleeAttack((5 * random(1, 10))*user_attack_power/100, "straldex/attack")
 			Goto See
 			
 		Pain:

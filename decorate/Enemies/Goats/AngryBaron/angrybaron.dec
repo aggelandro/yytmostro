@@ -120,8 +120,9 @@ ACTOR Comet {
 	
 	States {
 		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
 			HCMT AAAABBBBCCCC 1 Bright A_SpawnItemEx("CometTrail",0,0,0,0,0,0,0,128)
-			Loop
+			Goto Spawn+1
 			
 		Death:
 			TNT1 A 0 Bright A_Explode(64, 102)
@@ -168,8 +169,9 @@ ACTOR CometDeath {
 ACTOR AngryBall : BaronBall {
 	States {
 		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
 			BAL7 AB 1 Bright A_SpawnItemEx("AngryBallTrail",0,0,0,0,0,0,0,128,0)
-			Loop
+			Goto Spawn+1
 			
 		Death:
 			TNT1 A 0

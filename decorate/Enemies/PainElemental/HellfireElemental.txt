@@ -151,10 +151,11 @@ ACTOR HFEBall {
 	
 	States {
 		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
 			TNT1 A 0 A_SpawnItemEx("HFEBallTrail",0,0,0,0,0,0,0,128) 
 			PBMB A 2 Bright	A_Tracer2
 			PBMB B 2 Bright A_SpawnItemEx("HFEBallTrail",0,0,0,0,0,0,0,128)
-			Loop
+			Goto Spawn+1
 		
 		Death:
 			TNT1 A 0
@@ -200,12 +201,14 @@ ACTOR HFEBallTrail {
 
 ACTOR HFEBreath : CyBaronFlamethrower { 
 	Scale 0.42
+	Damage 3
 	DamageType "FireR"
 	Species "Elemental"
 	
 	States {
 		Spawn:
-			FIR1 LKJIHGFEDCBA 3 Bright A_Explode(3,92)
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
+			FIR1 LKJIHGFEDCBA 3 Bright A_Explode(CallACS("getDamage"), 92)
 			FIR1 AAAA 1 Bright A_FadeOut(0.15)
 			Stop
 	}
@@ -246,10 +249,11 @@ ACTOR HFESuicide {
 	
 	States {
 		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
 			TNT1 A 0 A_SeekerMissile(10, 0)
 			INFP JJ 1 Bright A_SpawnItem("HFEFireSpawner", 0, 0, 0, 0)
 			TNT1 A 0 A_PlaySoundEx("hfelemental/suiciderush", "Voice", 1)
-			Loop
+			goto Spawn+1
 			
 		Death:
 			TNT1 A 0 A_Die

@@ -71,7 +71,7 @@ ACTOR AssaultPlasma : FastProjectile {
 	Radius 13
 	Height 8
 	Speed 25
-	Damage 10
+	Damage 8
 	Projectile
 	RenderStyle Add
 	Alpha 0.75
@@ -87,12 +87,14 @@ ACTOR AssaultPlasma : FastProjectile {
 	
 	States {
 		Spawn:
+			PLSM A 1 Bright
+			TNT1 A 0 ACS_NamedExecuteWithResult("YYT_projectileCheck")
 			PLSM ABAB 2 Bright
-			Loop
+			goto Spawn+2
 			
 		Death:
 			PLSX A 0 A_SpawnItem("ShotSmoke")
-			PLSX A 2 Bright A_Explode(10,40,0)
+			PLSX A 2 Bright A_Explode(8, 40, 0)
 			PLSX BCDEF 2 Bright
 			Stop
 	}

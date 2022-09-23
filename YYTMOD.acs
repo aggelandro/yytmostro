@@ -283,6 +283,8 @@ script 336 DEATH {
  
 script 337 RESPAWN {
     ACS_ExecuteAlways(338, 0);
+    if (CheckInventory("BlackIsaacHands") || CheckInventory("IsaacHands"))
+        ACS_NamedExecuteAlways("showStats", 0, 0);
 }
  
 script 338 (void) {
@@ -491,6 +493,7 @@ script "applyEffect" (int option, int dur, int arg2) {
         }; break;
         case 2: {
             // Araña aliada
+            if (CheckActorClass(0, "FriendlyMiniArachnotron")) terminate;
             while(ClassifyActor(0) & ACTOR_ALIVE) { Delay(1); }
             Spawn("FriendlyMiniArachnotron", GetActorX(0), GetActorY(0), GetActorZ(0));
         }; break;
@@ -690,9 +693,25 @@ script "applyEffect" (int option, int dur, int arg2) {
             Thing_ChangeTID(0, mtid);
             SetActivator(ptid);
             SetPointer(AAPTR_TRACER, mtid);
-            SetUserVariable(0, "user_se_monster_height", GetActorProperty(mtid, APROP_Height) >> 16);
+            int mHeight = GetActorProperty(mtid, APROP_Height) >> 16;
+            SetUserVariable(0, "user_se_monster_height", mHeight);
             SetUserVariable(0, "user_se_monster_radius", GetActorProperty(mtid, APROP_Radius) >> 16);
+            if (mHeight>56) {
+                SetActorProperty(0, APROP_ScaleX, 1.2);
+                SetActorProperty(0, APROP_ScaleY, 1.2);
+                if (mHeight>100) {
+                    SetActorProperty(0, APROP_ScaleX, 1.5);
+                    SetActorProperty(0, APROP_ScaleY, 1.5);
+                }
+            }
+            SetActivator(mtid);
+            int currMul = GetActorProperty(0, APROP_DamageMultiplier);
+            //DamageMultiplier no funciona en Zandroshit
+            //SetActorProperty(0, APROP_DamageMultiplier, currMul + 0.5);
+            SetUserVariable(0, "user_attack_power", 150);
             Delay(dur);
+            //SetActorProperty(0, APROP_DamageMultiplier, currMul);
+            SetUserVariable(0, "user_attack_power", 100);
             Thing_ChangeTID(mtid, 0);
             TakeInventory("BuffSTRGiver", 1);
             SetActorState(ptid, "Death");
@@ -754,16 +773,6 @@ script "applyEffect" (int option, int dur, int arg2) {
                     Spawn("DemonSoulItem", GetActorX(0), GetActorY(0), GetActorZ(0));
                 }
             }
-        }; break;
-        case 15: {
-            // Buff de fuerza (parte 2)
-            int ttid = GetActorProperty(0, APROP_TargetTID);
-            if (ttid >= PLAYER_TID_START && ttid <= PLAYER_TID_START+PLAYER_MAX) terminate;
-            int originalDamage = GetActorProperty(0, APROP_Damage);
-            SetActorProperty(0, APROP_Damage, (1.25 * originalDamage) >> 16);
-            Delay(dur);
-            SetActorProperty(0, APROP_Damage, originalDamage);
-            TakeInventory("BuffSTR2Giver", 1);
         }; break;
     }
 }
@@ -1195,6 +1204,11 @@ script "setActorSpeed" (int value, int tid) {
 script "transferHealthTo" (int tid) {
     int currHealth = GetActorProperty(0, APROP_Health);
     SetActorProperty(tid, APROP_Health, currHealth);
+}
+
+script "gendarme_transferUserVars" (int tid) {
+    SetUserVariable(tid, "user_max_health", GetUserVariable(0, "user_max_health"));
+    SetUserVariable(tid, "user_attack_power", GetUserVariable(0, "user_attack_power"));
 }
 
 script "setInvokedTo" (int tid) {
@@ -1928,6 +1942,26 @@ script "dynamite_getThrowPowerFromPlayer" (void) {
     SetResultValue(0);
 }
 
+script "YYT_projectileCheck" (void) {
+    int utid = UniqueTID();
+    Thing_ChangeTID(0, utid);
+    if (SetActivator(0, AAPTR_TARGET)) {
+        if (ClassifyActor(0) & ACTOR_PLAYER) {
+            Thing_ChangeTID(utid, 0);
+            terminate;
+        }
+
+        int attackPower = GetUserVariable(0, "user_attack_power");
+        if (attackPower != 100 && attackPower != 0) {
+            int bonus = (attackPower << 16) / 100;
+            int newDmg = multiplyValue(GetActorProperty(utid, APROP_Damage), bonus);
+            Log(i:GetActorProperty(utid, APROP_Damage), s:" VS ", i:newDmg);
+            SetActorProperty(utid, APROP_Damage, newDmg);
+        }
+    }
+    Thing_ChangeTID(utid, 0);
+}
+
 
 
 
@@ -2545,7 +2579,10 @@ script "activateTemporalPowerup" (int option) {
         }; break;
     }
 
-    Delay(5250);
+    for (int tics=0; tics<5250; tics++) {
+        if (ClassifyActor(0) & ACTOR_DEAD) terminate;
+        Delay(1);
+    }
 
     switch(option) {
         case 26: {

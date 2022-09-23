@@ -16,7 +16,7 @@ ACTOR SkullImpBall {
   Height 8
   Speed 10
   FastSpeed 20
-  Damage 5
+  Damage 4
   Projectile
   +RANDOMIZE
   RenderStyle Add
@@ -26,9 +26,10 @@ ACTOR SkullImpBall {
 	
   States {
 		Spawn:
-			TNT1 A 0 NoDelay A_PlaySound("imp/attack2", CHAN_AUTO, 0.25)
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
+			TNT1 A 0 A_PlaySound("imp/attack2", CHAN_AUTO, 0.25)
 			SHAN A 4 Bright
-			Goto Spawn+1
+			Goto Spawn+2
 			
 		Death:
 			BAL1 CDE 6 Bright

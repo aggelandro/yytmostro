@@ -821,7 +821,7 @@ ACTOR Thanuris : UniversalPlayer
 }
 ACTOR Terro : UniversalPlayer
 {
-	DamageFactor "Dynamite", 0.75
+	DamageFactor "Dynamite", 0.5
 	Player.DisplayName "Terro"
 	Player.StartItem "TerroPistol"
 	Player.StartItem "TerroFist"
@@ -936,16 +936,7 @@ ACTOR ChainGunSpawner : CustomInventory replaces ChainGun
 			Fail
 	}
 }
-ACTOR RocketLauncher2 : RocketLauncher {
-	States {
-		Fire:
-			MISG B 8 A_GunFlash
-			MISG B 12 A_FireCustomMissile("Rocket2", 0 , 1)
-			MISG B 0 A_ReFire
-			Goto Ready
-	}
-}
-ACTOR Rocket2 : Rocket { Damage 15 Speed 17 }
+ACTOR RocketLauncher2 : RocketLauncher {}
 ACTOR RocketSpawner : CustomInventory replaces RocketLauncher
 {
 	Scale 0.5

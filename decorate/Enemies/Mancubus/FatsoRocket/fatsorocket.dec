@@ -32,12 +32,12 @@ ACTOR FatsoRocket : Fatso2
   }
 }
 
-ACTOR MediumRocket : Rocket
+ACTOR MediumRocket : Rocket2
 {
 	Scale 0.5
 	Radius 5
 	Height 5
-	Damage (random(30,40))
+	Damage 35
 	-RANDOMIZE
 	States
 	{

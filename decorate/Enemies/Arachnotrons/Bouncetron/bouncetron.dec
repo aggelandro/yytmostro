@@ -16,7 +16,7 @@ ACTOR BounceTron : Arachnotron2
     	Goto Missile+1
 	}
 }
-ACTOR BouncyBall : ArachnotronPlasma
+ACTOR BouncyBall : ArachnotronPlasma2
 {
 	BounceType Doom
 	BounceCount 5

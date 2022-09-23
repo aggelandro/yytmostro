@@ -9,6 +9,7 @@ ACTOR YYTMonster
 	var int user_max_health; // Guarda el total de HP de un monstruo
 	var int user_spawn_tid; // Se usa para guardar el TID de cualquier spawn que haga el monstruo (de ser necesario)
 	var int user_burning_loop; // Para animaciones de muerte ardiendo
+	var int user_attack_power; // Representa bonus de daño al monstruo
 	
 	States 
 	{
@@ -16,6 +17,7 @@ ACTOR YYTMonster
 			// A veces genera warnings del lado del cliente, no se puede hacer mucho, es un bug de zandronum
 			TNT1 A 0 A_JumpIf(user_max_health>0, 2)
 			TNT1 A 0 A_SetUserVar("user_max_health", Health)
+			TNT1 A 0 A_SetUserVar("user_attack_power", 100)
 			TNT1 A -1 A_Jump (256, "SpawnLoop")
 			Wait
 			
@@ -391,12 +393,12 @@ ACTOR DoomImp2 : YYTMonster {
 		Melee:
 			TNT1 A 0 A_Jump(128, "MeleeFast")
 			TROO EF 8 A_FaceTarget
-			TROO G 6 A_CustomMeleeAttack(3 * random(1, 8), "imp/melee")
+			TROO G 6 A_CustomMeleeAttack((3 * random(1, 8))*user_attack_power/100, "imp/melee")
 			Goto See
 			
 		MeleeFast:
 			TROO EF 8 Fast A_FaceTarget
-			TROO G 6 Fast A_CustomMeleeAttack(3 * random(1, 8), "imp/melee")
+			TROO G 6 Fast A_CustomMeleeAttack((3 * random(1, 8))*user_attack_power/100, "imp/melee")
 			Goto See
 			
 		Missile:
@@ -461,6 +463,31 @@ ACTOR DoomImp2 : YYTMonster {
   }
 }
 
+ACTOR DoomImpBall2 : DoomImpBall replaces DoomImpBall {
+  Radius 6
+  Height 8
+  Speed 10
+  FastSpeed 20
+  Damage 3
+  Projectile
+  +RANDOMIZE
+  RenderStyle Add
+  Alpha 1
+  SeeSound "imp/attack"
+  DeathSound "imp/shotx"
+	
+  States {
+		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
+			BAL1 AB 4 Bright
+			Goto Spawn+1
+			
+		Death:
+			BAL1 CDE 6 Bright
+			Stop
+  }
+}
+
 ACTOR Pinky2 : YYTMonster {
   Health 150
   PainChance 180
@@ -489,7 +516,7 @@ ACTOR Pinky2 : YYTMonster {
 			
 		Melee:
 			SARG EF 8 Fast A_FaceTarget
-			SARG G 8 Fast A_SargAttack
+			SARG G 8 Fast A_CustomMeleeAttack((4 * random(1, 10))*user_attack_power/100, "demon/melee")
 			Goto See
 			
 		Pain:
@@ -571,7 +598,7 @@ ACTOR Cacodemon2 : YYTMonster {
 			
 		Melee:
 			HEAD BC 5 A_FaceTarget
-			HEAD D 5 Bright A_CustomMeleeAttack(10 * random(1, 6))
+			HEAD D 5 Bright A_CustomMeleeAttack((10 * random(1, 6))*user_attack_power/100)
 			Goto See
 			
 		Missile:
@@ -612,6 +639,32 @@ ACTOR Cacodemon2 : YYTMonster {
 			Goto See
 		}
 }
+
+ACTOR CacodemonBall2 : CacodemonBall replaces CacodemonBall {
+  Radius 6
+  Height 8
+  Speed 10
+  FastSpeed 20
+  Damage 5
+  Projectile
+  +RANDOMIZE
+  RenderStyle Add
+  Alpha 1
+  SeeSound "caco/attack"
+  DeathSound "caco/shotx"
+	
+  States {
+		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
+			BAL2 AB 4 Bright
+			Goto Spawn+1
+			
+		Death:
+			BAL2 CDE 6 Bright
+		 Stop
+  }
+}
+
 ACTOR Revenant2 : YYTMonster {
   Health 300
   Radius 20
@@ -652,13 +705,13 @@ ACTOR Revenant2 : YYTMonster {
 			SKEL G 0 A_FaceTarget
 			SKEL G 6 A_SkelWhoosh
 			SKEL H 6 A_FaceTarget
-			SKEL I 6 A_SkelFist
+			SKEL I 6 A_CustomMeleeAttack((6 * random(1, 10))*user_attack_power/100, "skeleton/melee")
 			Goto See
 			
 		Missile:
 			SKEL J 0 Bright A_FaceTarget
 			SKEL J 10 Bright A_FaceTarget
-			SKEL K 10 A_SkelMissile
+			SKEL K 10 A_CustomMissile("RevenantTracer", 58)
 			SKEL K 10 A_FaceTarget
 			Goto See
 			
@@ -694,6 +747,33 @@ ACTOR Revenant2 : YYTMonster {
 			Goto See
   }
 }
+
+ACTOR RevenantTracer2 : RevenantTracer replaces RevenantTracer {
+  Radius 11
+  Height 8
+  Speed 10
+  Damage 10
+  Projectile
+  +SEEKERMISSILE
+  +RANDOMIZE
+  SeeSound "skeleton/attack"
+  DeathSound "skeleton/tracex"
+  RenderStyle Add
+	
+  States {
+		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
+			FATB AB 2 Bright A_Tracer
+			Goto Spawn+1
+			
+		Death:
+			FBXP A 8 Bright
+			FBXP B 6 Bright
+			FBXP C 4 Bright
+			Stop
+  }
+}
+
 ACTOR Arachnotron2 : YYTMonster
 {
   Health 500
@@ -809,6 +889,31 @@ ACTOR Arachnotron2 : YYTMonster
 			Goto See+1
   }
 }
+
+ACTOR ArachnotronPlasma2 : ArachnotronPlasma replaces ArachnotronPlasma {
+  Radius 13
+  Height 8
+  Speed 25
+  Damage 5
+  Projectile
+  +RANDOMIZE
+  RenderStyle Add 
+  Alpha 0.75
+  SeeSound "baby/attack"
+  DeathSound "baby/shotx"
+	
+  States {
+		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
+			APLS AB 5 Bright
+			Goto Spawn+1
+			
+		Death:
+			APBX ABCDE 5 Bright
+			Stop
+  }
+}
+
 ACTOR Fatso2 : YYTMonster
 {
   Health 600
@@ -837,7 +942,6 @@ ACTOR Fatso2 : YYTMonster
 			Loop
 			
 		See:
-			TNT1 A 0 A_GiveInventory("ZMancubusHelper", 1)
 			FATT AABBCCDDEEFF 4 A_Chase
 			Loop
 			
@@ -890,30 +994,33 @@ ACTOR Fatso2 : YYTMonster
 			Goto See
   }
 }
-actor ZMancubusHelper:CustomInventory
-{
-	States
-	{
-		Pickup:
-		TNT1 A 0 A_ChangeFlag("NOPAIN",0)
-		TNT1 A 0 A_JumpIfInventory("ZMancubusTimer",1,4)
-		TNT1 A 0 A_GiveInventory("BlueArmor")
-		TNT1 A 0 A_GiveInventory("ZMancubusBerserk")
-		TNT1 A 0 A_GiveInventory("ZMancubusTimer")
-		TNT1 A 0
-		stop
-	}
+
+ACTOR FatShot2 : FatShot replaces FatShot {
+  Radius 6
+  Height 8
+  Speed 20
+  Damage 8
+  Projectile 
+  +RANDOMIZE
+  RenderStyle Add
+  Alpha 1
+  SeeSound "fatso/attack"
+  DeathSound "fatso/shotx"
+	
+  States {
+		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
+			MANF AB 4 Bright
+			Goto Spawn+1
+			
+		Death:
+			MISL B 8 Bright
+			MISL C 6 Bright
+			MISL D 4 Bright
+			Stop
+  }
 }
-actor ZMancubusBerserk:PowerSpeed
-{
-	Powerup.Duration		-3
-	+INVENTORY.AUTOACTIVATE
-}
-actor ZMancubusTimer:PowerHighJump
-{
-	Powerup.Duration		-10
-	+INVENTORY.AUTOACTIVATE
-}
+
 ACTOR PainElemental2 : YYTMonster
 {
   Health 400
@@ -1049,7 +1156,7 @@ ACTOR BaronOfHell2 : YYTMonster
 			
 		Melee:
 			BOSS EF 8 A_FaceTarget
-			BOSS G 8 A_CustomMeleeAttack(10 * random(1, 8), "baron/melee")
+			BOSS G 8 A_CustomMeleeAttack((10 * random(1, 8))*user_attack_power/100, "baron/melee")
 			Goto See
 			
 		Missile:
@@ -1098,6 +1205,33 @@ ACTOR BaronOfHell2 : YYTMonster
 			Goto See
   }
 }
+
+ACTOR NewBaronBall : BaronBall replaces BaronBall {
+	Radius 6
+  Height 16
+  Speed 15
+  FastSpeed 20
+  Damage 8
+  Projectile
+  +RANDOMIZE
+  RenderStyle Add
+  Alpha 1
+  SeeSound "baron/attack"
+  DeathSound "baron/shotx"
+  Decal "BaronScorch"
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
+			ABAX AB 4 BRIGHT
+			Goto Spawn+1
+			
+		Death:
+			ABAX CDEFG 3 BRIGHT
+			Stop
+	}
+}
+
 ACTOR HellKnight2 : BaronOfHell2 {
   Health 500
   BloodColor "00 64 00"
@@ -1125,7 +1259,7 @@ ACTOR HellKnight2 : BaronOfHell2 {
 			
 		Melee:
 			BOS2 EF 8 A_FaceTarget
-			BOS2 G 8 A_CustomMeleeAttack(10 * random(1, 8), "baron/melee")
+			BOS2 G 8 A_CustomMeleeAttack((10 * random(1, 8))*user_attack_power/100, "baron/melee")
 			Goto See
 			
 		Missile:
@@ -1212,7 +1346,7 @@ ACTOR Archvile2 : YYTMonster {
 			VILE G 10 Bright A_FaceTarget
 			VILE H 8 Bright A_VileTarget
 			VILE IJKLMN 8 Bright A_FaceTarget
-			VILE O 8 Bright A_VileAttack("vile/stop",70,20,70,1.0)
+			VILE O 8 Bright A_VileAttack("vile/stop", 70*user_attack_power/100, 20*user_attack_power/100, 70, 1.0)
 			VILE P 20 Bright
 			Goto See
 			
@@ -1325,6 +1459,34 @@ ACTOR Cyberdemon2 : YYTMonster
     Stop
   }
 }
+
+ACTOR Rocket2 : Rocket replaces Rocket {
+  Radius 11
+  Height 8
+  Speed 20
+  Damage 20
+  Projectile
+  +RANDOMIZE
+  +DEHEXPLOSION
+  +ROCKETTRAIL
+  SeeSound "weapons/rocklf"
+  DeathSound "weapons/rocklx"
+  Obituary "$OB_MPROCKET" // "%o rode %k's rocket."
+	
+  States {
+		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
+			MISL A 1 Bright
+			Goto Spawn+1
+			
+		Death:
+			MISL B 8 Bright A_Explode
+			MISL C 6 Bright
+			MISL D 4 Bright
+			Stop
+  }
+}
+
 ACTOR SpiderMastermind2 : YYTMonster {
   Health 3000
   Radius 128

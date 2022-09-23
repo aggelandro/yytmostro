@@ -41,8 +41,9 @@ ACTOR CyberFireBomb : Rocket {
 	
 	States {
 		Spawn:
-			BMIS A 1 NoDelay Bright
-			Loop
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
+			BMIS A 1 Bright
+			Goto Spawn+1
 		
 		Death:
 			MISL B 1 Bright A_Explode

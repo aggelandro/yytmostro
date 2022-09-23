@@ -40,26 +40,26 @@ ACTOR VayneAurelius : Revenant2
   }
 }
 
-Actor VayneBall : ArachnotronPlasma
+Actor VayneBall : ArachnotronPlasma2
 {
 	Translation "112:124=217:231"
 	SeeSound ""
 	Radius 6
 	Height 8
 	Speed 25
-	Damage (1)
+	Damage 1
 }
-Actor VayneBall2 : ArachnotronPlasma
+Actor VayneBall2 : ArachnotronPlasma2
 {
 	Translation "112:124=176:187"
 	Radius 6
 	Height 8
 	Speed 25
 	SeeSound ""
-	Damage (1)
+	Damage 1
 }
 
-Actor VayneBallS : ArachnotronPlasma
+Actor VayneBallS : ArachnotronPlasma2
 {
 	Translation "112:124=217:231"
 	SeeSound ""

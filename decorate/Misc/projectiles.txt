@@ -40,6 +40,7 @@ Actor BulletTracer : AbstractTracer
   Spawn:
    TRAC A 1 NoDelay BRIGHT
    TNT1 A 0 ThrustThingZ(0,random(-8, 8),0,1)
+	 TNT1 A 0 ACS_NamedExecuteWithResult("YYT_projectileCheck")
    TRAC A 1 BRIGHT
    Goto Idle	
   Idle:
@@ -51,9 +52,9 @@ Actor BulletTracer : AbstractTracer
  }
 }
 
-Actor ZombieTracer : BulletTracer { damage (random(1,5)*3) }
-Actor ShotgunnerTracer : BulletTracer { damage (random(1,5)*3) }
-Actor ChaingunnerTracer : BulletTracer { damage (random(1,5)*3) }
+Actor ZombieTracer : BulletTracer { damage 9 }
+Actor ShotgunnerTracer : BulletTracer { damage 9 }
+Actor ChaingunnerTracer : BulletTracer { damage 9 }
 Actor JZombieTracer : BulletTracer { damage 4 }
 Actor AggeSSGTracer : BulletTracer {}
 Actor TerrorPistolTracer : BulletTracer { damage (random(5,7)) }

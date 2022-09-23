@@ -120,9 +120,10 @@ Actor HellRocket : Rocket {
 	
   States {
 		Spawn:
-			TNT1 A 0 NoDelay Bright A_SpawnItemEx("HellRocketTrail")
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
+			TNT1 A 0 Bright A_SpawnItemEx("HellRocketTrail")
       MELF AB 2 Bright A_ChangeVelocity (0, random(-2, 2), 0, 1)
-      Loop
+      Goto Spawn+1
 			
     Death:
 			TNT1 A 0 A_SpawnItemEx("OrangeParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
@@ -172,9 +173,10 @@ Actor HellGrenade : Rocket {
 	
 	States {
 		Spawn: 
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
 			HBA3 ABC 3 Bright A_SpawnItemEx("RedPuff",0,0,0,0,0,0,0,8)
 			HBA3 A 0 Bright A_CountDown
-			Loop
+			Goto Spawn+1
 			
 		Death:
 			HBA3 D 0 A_NoGravity
@@ -208,7 +210,7 @@ ACTOR CommanderHellBall : BelphegorGreenPlasmaBall {
 	Scale 2.0
 	Height 18
 	Radius 11
-	Damage (Random(50, 80))
+	Damage 65
 	DeathSound "commander/explosion"
 	+SEEKERMISSILE
 	
@@ -225,6 +227,7 @@ ACTOR CommanderHellBall : BelphegorGreenPlasmaBall {
 			TNT1 A 0 A_JumpIfInventory("LoopFlag", 52, 1)
 			Goto Spawn+5
 			TNT1 A 0 A_PlaySound("commander/grenadefire", CHAN_BODY)
+			TNT1 A 0 ACS_NamedExecuteWithResult("YYT_projectileCheck")
 			Goto SpawnLoop
 	
 		SpawnLoop:

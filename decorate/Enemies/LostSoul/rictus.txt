@@ -107,8 +107,9 @@ ACTOR RictusBall {
 	
 	States {
 		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
 			RCST AB 1 Bright A_SpawnItemEx("RSoulBallTrail",0,0,0,0,0,0,0,128,0)
-			Loop
+			goto Spawn+1
 			
 		Death:
 			TNT1 A 0
@@ -163,8 +164,9 @@ ACTOR RictusSuicide {
 	
 	States {
 		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("YYT_projectileCheck")
 			RICT B 1 Bright A_SpawnItem("RictFireSpawner",0,0,0,0)
-			Loop
+			Goto Spawn+1
 			
 		Death:
 			TNT1 A 0 A_Die

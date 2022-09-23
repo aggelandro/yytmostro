@@ -80,7 +80,7 @@ ACTOR Archevil : Archvile2 {
 			TNT1 A 0 A_FadeTo(1, 1, FALSE)
 			TNT1 A 0 A_SetUserVar("user_hidden", 0)
 			BONL "[]" 10 Bright A_FaceTarget
-			TNT1 A 0 ACS_NamedExecuteWithResult("healTarget", random(-500, -250))
+			TNT1 A 0 ACS_NamedExecuteWithResult("healTarget", random(-500, -250)*user_attack_power/100)
 			BONL "]" 10 Bright A_FaceTarget
 			Goto SeeLoop
 			
