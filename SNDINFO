@@ -450,6 +450,7 @@ commander/grenadebnc	DSCASBAL
 commander/laugh				DSCALAU
 commander/attack			CYFNDATK
 commander/explosion		DSHELLEX
+commander/order				LBBSPT3
 
 //frostodemon
 frostcaco/helsit					dshelsit

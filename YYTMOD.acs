@@ -1963,6 +1963,20 @@ script "YYT_projectileCheck" (void) {
     Thing_ChangeTID(utid, 0);
 }
 
+script "commander_hateClosestPlayer" (void) {
+    int closestDist = fdistance(0, PLAYER_TID_START);
+    int ptid = PLAYER_TID_START;
+    int newDist;
+    for (int i=PLAYER_TID_START+1; i<PLAYER_TID_START+PLAYER_MAX; i++) {
+        newDist = fdistance(0, i);
+        if (newDist < closestDist) {
+            closestDist = newDist;
+            ptid = i;
+        }
+    }
+    Thing_Hate(0, ptid, 3);
+}
+
 
 
 
