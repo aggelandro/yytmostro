@@ -187,6 +187,86 @@ ACTOR ElectricSpark2 {
 	}
 }
 
+
+//POWER LINES
+ACTOR BluePowerLineSpawner {
+	+CLIENTSIDEONLY
+	+NOGRAVITY
+
+	States {
+		Spawn:
+			TNT1 A 1 NoDelay A_SpawnItemEx("BluePowerLine",random(12,-12),random(12,-12),0,0,0,2,0,128,0)
+			Stop
+	}
+}
+
+ACTOR GreenPowerLineSpawner : BluePowerLineSpawner {
+	States {
+		Spawn:
+			TNT1 A 1 NoDelay A_SpawnItemEx("GreenPowerLine",random(12,-12),random(12,-12),0,0,0,2,0,128,0) 
+			Stop
+	}
+}
+
+ACTOR RedPowerLineSpawner : BluePowerLineSpawner {
+	States {
+		Spawn:
+			TNT1 A 1 NoDelay A_SpawnItemEx("RedPowerLine",random(12,-12),random(12,-12),0,0,0,2,0,128,0) 
+			Stop
+	}
+}
+
+ACTOR BluePowerLine {
+	Speed 1
+	Radius 0
+	Height 0
+	Scale 0.28
+	Translation "80:111=196:207"
+	RenderStyle Add
+	Alpha 0.8
+	+MISSILE
+	+NOGRAVITY
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOTELEPORT
+	+DONTSPLASH
+	-SOLID
+	
+	States {
+		Spawn:
+			SPFX A 5 Bright
+			TNT1 A 0 A_Jump(128, "FadeOut2")
+			Goto Normal
+			
+		Normal:
+			SPFX AAAAAAAA 1 Bright A_FadeOut(0.05)
+			Stop
+			
+		FadeOut2:
+			SPFX AAAAAAAA 1 Bright A_FadeOut(0.075)
+			Stop
+	}
+}
+
+ACTOR GreenPowerLine : BluePowerLine {
+	Translation "80:111=112:127"
+
+	States {
+		Normal:
+			SPFX AAAA 1 Bright A_FadeOut(0.05)
+			Stop
+			
+		FadeOut2:
+			SPFX AAAA 1 Bright A_FadeOut(0.075)
+			Stop
+	}
+}
+
+ACTOR RedPowerLine : BluePowerLine { Translation "80:111=176:191" }
+
+
+
+
 ACTOR StatusEffect {
 	+NOGRAVITY
 	+NOINTERACTION
@@ -514,6 +594,34 @@ ACTOR TargetSpot : StatusEffect {
 			
 		Death:
 			TNT1 A 0
+			Stop
+	}
+}
+
+ACTOR MoralUpEffect : StatusEffect {
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay ACS_NamedExecuteWithResult("deathTimerNoMonster", 350)
+			TNT1 AAAA 0 A_SpawnItemEx("RedPowerLine2", random(12,-12), random(12,-12), 0, 0, 0, 5, 0, 128, 0) 
+			TNT1 A 1 A_Warp(AAPTR_TRACER, 0, 0, 0, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A 0 A_JumpIf(CallACS("isTracerDead"), "Death")
+			Loop
+	}
+}
+
+ACTOR RedPowerLine2 : RedPowerLine {
+	States {
+		Spawn:
+			SPFX A 5 Bright
+			TNT1 A 0 A_Jump(128, "FadeOut2")
+			Goto Normal
+			
+		Normal:
+			SPFX AAAAAAAA 1 Bright A_FadeOut(0.05)
+			Stop
+			
+		FadeOut2:
+			SPFX AAAAAAAA 1 Bright A_FadeOut(0.075)
 			Stop
 	}
 }

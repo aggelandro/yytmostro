@@ -1975,7 +1975,16 @@ script "commander_hateClosestPlayer" (void) {
             ptid = i;
         }
     }
+
     Thing_Hate(0, ptid, 3);
+    int ntid = UniqueTID();
+    int mtid = UniqueTID();
+    Thing_ChangeTID(0, mtid);
+    Spawn("MoralUpEffect", GetActorX(0), GetActorY(0), GetActorZ(0), ntid);
+    SetActivator(ntid);
+    SetPointer(AAPTR_TRACER, mtid);
+    Thing_ChangeTID(ntid, 0);
+    Thing_ChangeTID(mtid, 0);
 }
 
 
