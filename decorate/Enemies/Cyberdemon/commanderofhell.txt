@@ -223,7 +223,7 @@ ACTOR CommanderHellBall : BelphegorGreenPlasmaBall {
 	Scale 2.0
 	Height 18
 	Radius 11
-	Damage 65
+	Damage 50
 	DeathSound "commander/explosion"
 	+SEEKERMISSILE
 	

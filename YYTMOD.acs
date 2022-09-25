@@ -1932,6 +1932,10 @@ script "dynamite_loadDistanceAttack" (int fullyCharged, int checkAltFire) {
     SetUserVariable(0, "user_dynamite_throw_power", chargedTime);
 }
 
+script "dynamite_resetDistanceAttack" (void) {
+    SetUserVariable(0, "user_dynamite_throw_power", 0);
+}
+
 script "dynamite_getThrowPower" (void) {
     SetResultValue(GetUserVariable(0, "user_dynamite_throw_power"));
 }

@@ -42,13 +42,14 @@ ACTOR Dynamite : YYTWeapon {
 			Loop
 			
 		Ready:
+			TNT1 A 0 ACS_NamedExecuteWithResult("dynamite_resetDistanceAttack")
 			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			DYNR A 3 A_WeaponReady
 			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			DYNR B 3 A_WeaponReady
 			TNT1 A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 			DYNR C 3 A_WeaponReady
-			Loop
+			Goto Ready+1
 			
 		Fire:
 			DYNL AB 3
