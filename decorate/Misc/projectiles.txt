@@ -52,9 +52,9 @@ Actor BulletTracer : AbstractTracer
  }
 }
 
-Actor ZombieTracer : BulletTracer { damage 9 }
-Actor ShotgunnerTracer : BulletTracer { damage 9 }
-Actor ChaingunnerTracer : BulletTracer { damage 9 }
+Actor ZombieTracer : BulletTracer { damage 4 }
+Actor ShotgunnerTracer : BulletTracer { damage 4 }
+Actor ChaingunnerTracer : BulletTracer { damage 4 }
 Actor JZombieTracer : BulletTracer { damage 4 }
 Actor AggeSSGTracer : BulletTracer {}
 Actor TerrorPistolTracer : BulletTracer { damage (random(5,7)) }

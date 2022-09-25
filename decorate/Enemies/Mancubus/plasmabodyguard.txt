@@ -71,7 +71,7 @@ ACTOR AssaultPlasma : FastProjectile {
 	Radius 13
 	Height 8
 	Speed 25
-	Damage 8
+	Damage 5
 	Projectile
 	RenderStyle Add
 	Alpha 0.75
