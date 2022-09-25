@@ -208,7 +208,6 @@ ACTOR ChaingunGuyMod : AbstractYYTZombie {
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "HandGrenadeAmmo", 20
 	DropItem "CryoGrenadeAmmo", 20
-	DropItem "HomingGunToken", 48
 	
   States {
 		SpawnLoop:
@@ -585,7 +584,7 @@ ACTOR Cacodemon2 : YYTMonster {
   BloodColor "00 00 CD"
 	DropItem "IsaacItemsTier1HighChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
-	DropItem "FlamethrowerGunToken", 48
+	DropItem "ContraSpawner3"
 	
   States {
 		SpawnLoop:

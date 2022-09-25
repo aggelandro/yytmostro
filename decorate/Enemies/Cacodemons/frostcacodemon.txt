@@ -14,7 +14,7 @@ ACTOR Frostodemon : Cacodemon2 {
 	DeathSound "frostcaco/heldth"
 	ActiveSound "frostcaco/helact"
 	DropItem "DemonAmmoBox", 48
-	DropItem "FlamethrowerGunToken", 48
+	DropItem "ContraSpawner3"
 	DropItem "IsaacItemsTier2HighChanceSpawner"
 	DropItem "IsaacItemsTier2LowChanceSpawner"
 	DropItem "IsaacItemsTier3LowChanceSpawner"

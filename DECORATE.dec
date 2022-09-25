@@ -543,6 +543,11 @@ ACTOR ContraSpawner2 : RandomSpawner {
 	DropItem "PrototypeGunToken", 48, 33
 }
 
+ACTOR ContraSpawner3 : RandomSpawner {
+	DropItem "FlamethrowerGunToken", 48, 50
+	DropItem "HomingGunToken", 48, 50
+}
+
 
 
 ACTOR IsItAlive : LucianoID{}
