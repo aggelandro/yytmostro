@@ -1968,6 +1968,7 @@ script "commander_hateClosestPlayer" (void) {
     int ptid = PLAYER_TID_START;
     int newDist;
     for (int i=PLAYER_TID_START+1; i<PLAYER_TID_START+PLAYER_MAX; i++) {
+        if (!IsTIDUsed(i)) break;
         newDist = fdistance(0, i);
         if (newDist < closestDist) {
             closestDist = newDist;
