@@ -1991,6 +1991,16 @@ script "commander_hateClosestPlayer" (void) {
     Thing_ChangeTID(mtid, 0);
 }
 
+script "commander_runAttackOrderCooldown" (int tics) {
+    SetUserVariable(0, "user_order_cooldown", 1);
+    while (tics > 0) {
+        Delay(1);
+        if (ClassifyActor(0) & ACTOR_DEAD) break;
+        tics--;
+    }
+    SetUserVariable(0, "user_order_cooldown", 0);
+}
+
 
 
 
