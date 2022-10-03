@@ -86,6 +86,48 @@ ACTOR OkuuCannon : YYTWeapon {
 			TNT1 A 0 A_GiveInventory("FlashDone", 1)
 			Goto Ready
 			
+		AltFire:
+			TNT1 A 0 A_JumpIf(CallACS("meter") < 2, "NoMeter")
+			TNT1 A 0 A_TakeInventory("meter", 2)
+			TNT1 A 0 A_AlertMonsters
+			TNT1 A 0 ACS_NamedExecuteWithResult("setInvulnerable", 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("pausePlayer", 1)
+			TNT1 A 0 A_PlaySound("agge/okuualert", CHAN_WEAPON)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showCautionAnimation", 1)
+			OKUU B 5
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 6, 2131, height/2)
+			OKUU B 1 Offset(0,36)
+			OKUU B 1 Offset(0,41)
+			OKUU B 1 Offset(0,46)
+			OKUU B 1 Offset(0,51)
+			OKUU B 1 Offset(0,56)
+			OKUU B 1 Offset(0,61)
+			TNT1 A 0 A_Quake(1, 35, 0, 8, "none")
+			TNT1 A 0 A_PlaySound("agge/tokamakstart", CHAN_AUTO)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 5, 2125, height/2)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 7, 2125, height/2)
+			OKUU B 25 Offset(0,66)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showXAuraFor", 4, 2100, height/2)
+			TNT1 A 0 ACS_NamedExecuteWithResult("showDissolvingEffectInLastXSeconds", 2100, 350)
+			OKUU B 1 Offset(0,61)
+			OKUU BBBBBBBBBBB 1 A_Lower
+			TNT1 A 0 ACS_NamedExecuteWithResult("pausePlayer", 0)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setInvulnerable", 0)
+			Goto Active
+			
+		Active:
+			TNT1 A 0 A_PlaySound("agge/tokamakact", CHAN_6, 1.0, 1)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setDamageFactor", 50)
+			TNT1 A 0 A_GiveInventory("LoopFlag", 1)
+			TNT1 A 1 A_FireCustomMissile("TokamakDamager")
+			TNT1 A 0 A_JumpIfInventory("LoopFlag", 2088, 1)
+			Goto Active+2
+			TNT1 A 0 A_TakeInventory("LoopFlag", 2088)
+			TNT1 A 0 A_StopSound(CHAN_6)
+			TNT1 A 0 ACS_NamedExecuteWithResult("setDamageFactor", 100)
+			OKUU BBBBBBBBBBB 1 A_Raise
+			Goto Ready
+			
 		Flash:
 			OKUX A 2 Bright A_Light1
 			OKUX A 0 A_JumpIfInventory("FlashDone", 1, "LightDone")
@@ -139,6 +181,8 @@ ACTOR OkuuCannon : YYTWeapon {
   }
 }
 
+
+// SUB SUN
 ACTOR SubterraneanRisingSun {
 	Radius 96
 	Height 192
@@ -544,6 +588,300 @@ ACTOR ForceThrustZ : CustomInventory {
 			
 		Finish:
 			TNT1 A 0
+			Stop
+	}
+}
+
+
+// TOKAMAK
+ACTOR GoldenPowerLineSpawner : BluePowerLineSpawner {
+	var int user_z_offset;
+	
+	States {
+		Spawn:
+			TNT1 A Random(0, 3) NoDelay A_SpawnItemEx("GoldenPowerLine", 0, 0, 0, 0, 0, 2, 0, SXF_TRANSFERPOINTERS)
+			TNT1 A 0 A_Warp(AAPTR_TRACER, 0, 0, user_z_offset, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A Random(1, 6) A_SpawnItemEx("GoldenPowerLine2", 0, 0, 0, 0, 2, 2, 0, SXF_TRANSFERPOINTERS)
+			TNT1 A 0 A_Warp(AAPTR_TRACER, 0, 0, user_z_offset, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A Random(1, 6) A_SpawnItemEx("GoldenPowerLine3", 0, 0, 0, 0, 2, 0, 0, SXF_TRANSFERPOINTERS)
+			TNT1 A 0 A_Warp(AAPTR_TRACER, 0, 0, user_z_offset, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A Random(1, 6) A_SpawnItemEx("GoldenPowerLine4", 0, 0, 0, 0, 2, -2, 0, SXF_TRANSFERPOINTERS)
+			TNT1 A 0 A_Warp(AAPTR_TRACER, 0, 0, user_z_offset, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A Random(1, 6) A_SpawnItemEx("GoldenPowerLine5", 0, 0, 0, 0, 0, -2, 0, SXF_TRANSFERPOINTERS)
+			TNT1 A 0 A_Warp(AAPTR_TRACER, 0, 0, user_z_offset, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A Random(1, 6) A_SpawnItemEx("GoldenPowerLine6", 0, 0, 0, 0, -2, -2, 0, SXF_TRANSFERPOINTERS)
+			TNT1 A 0 A_Warp(AAPTR_TRACER, 0, 0, user_z_offset, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A Random(1, 6) A_SpawnItemEx("GoldenPowerLine7", 0, 0, 0, 0, -2, 0, 0, SXF_TRANSFERPOINTERS)
+			TNT1 A 0 A_Warp(AAPTR_TRACER, 0, 0, user_z_offset, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A Random(1, 6) A_SpawnItemEx("GoldenPowerLine8", 0, 0, 0, 0, -2, 2, 0, SXF_TRANSFERPOINTERS)
+			TNT1 A 0 A_Warp(AAPTR_TRACER, 0, 0, user_z_offset, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A 0 A_JumpIf(CallACS("isTracerDead"), "Death")
+			TNT1 A 5 A_Warp(AAPTR_TRACER, 0, 0, user_z_offset, 0, WARPF_NOCHECKPOSITION)
+			Loop
+			
+		Death:
+			TNT1 A 0
+			Stop
+	}
+}
+
+ACTOR GoldenPowerLine {
+	Speed 1
+	Radius 0
+	Height 0
+	Scale 0.28
+	RenderStyle Add
+	Alpha 0.5
+	+MISSILE
+	+NOGRAVITY
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOTELEPORT
+	+DONTSPLASH
+	-SOLID
+	
+	States {
+		Spawn:
+			GLPA A 5 Bright
+			TNT1 A 0 A_Jump(128, "FadeOut2")
+			Goto Normal
+			
+		Normal:
+			GLPA AAAAAAAAAAAAAAA 1 Bright A_FadeOut(0.05)
+			Stop
+			
+		FadeOut2:
+			GLPA AAAAAAAAAAAAAAA 1 Bright A_FadeOut(0.075)
+			Stop
+	}
+}
+
+ACTOR GoldenPowerLine2 : GoldenPowerLine {
+	States {
+		Spawn:
+			GLPA B 5 Bright
+			TNT1 A 0 A_Jump(128, "FadeOut2")
+			Goto Normal
+			
+		Normal:
+			GLPA BBBBBBBBBBBBBBB 1 Bright A_FadeOut(0.05)
+			Stop
+			
+		FadeOut2:
+			GLPA BBBBBBBBBBBBBBB 1 Bright A_FadeOut(0.075)
+			Stop
+	}
+}
+
+ACTOR GoldenPowerLine3 : GoldenPowerLine {	
+	States {
+		Spawn:
+			GLPA C 5 Bright
+			TNT1 A 0 A_Jump(128, "FadeOut2")
+			Goto Normal
+			
+		Normal:
+			GLPA CCCCCCCCCCCCCCC 1 Bright A_FadeOut(0.05)
+			Stop
+			
+		FadeOut2:
+			GLPA CCCCCCCCCCCCCCC 1 Bright A_FadeOut(0.075)
+			Stop
+	}
+}
+
+ACTOR GoldenPowerLine4 : GoldenPowerLine {	
+	States {
+		Spawn:
+			GLPA D 5 Bright
+			TNT1 A 0 A_Jump(128, "FadeOut2")
+			Goto Normal
+			
+		Normal:
+			GLPA DDDDDDDDDDDDDDD 1 Bright A_FadeOut(0.05)
+			Stop
+			
+		FadeOut2:
+			GLPA DDDDDDDDDDDDDDD 1 Bright A_FadeOut(0.075)
+			Stop
+	}
+}
+
+ACTOR GoldenPowerLine5 : GoldenPowerLine {	
+	States {
+		Spawn:
+			GLPA E 5 Bright
+			TNT1 A 0 A_Jump(128, "FadeOut2")
+			Goto Normal
+			
+		Normal:
+			GLPA EEEEEEEEEEEEEEE 1 Bright A_FadeOut(0.05)
+			Stop
+			
+		FadeOut2:
+			GLPA EEEEEEEEEEEEEEE 1 Bright A_FadeOut(0.075)
+			Stop
+	}
+}
+
+ACTOR GoldenPowerLine6 : GoldenPowerLine {	
+	States {
+		Spawn:
+			GLPA F 5 Bright
+			TNT1 A 0 A_Jump(128, "FadeOut2")
+			Goto Normal
+			
+		Normal:
+			GLPA FFFFFFFFFFFFFFF 1 Bright A_FadeOut(0.05)
+			Stop
+			
+		FadeOut2:
+			GLPA FFFFFFFFFFFFFFF 1 Bright A_FadeOut(0.075)
+			Stop
+	}
+}
+
+ACTOR GoldenPowerLine7 : GoldenPowerLine {	
+	States {
+		Spawn:
+			GLPA G 5 Bright
+			TNT1 A 0 A_Jump(128, "FadeOut2")
+			Goto Normal
+			
+		Normal:
+			GLPA GGGGGGGGGGGGGGG 1 Bright A_FadeOut(0.05)
+			Stop
+			
+		FadeOut2:
+			GLPA GGGGGGGGGGGGGGG 1 Bright A_FadeOut(0.075)
+			Stop
+	}
+}
+
+ACTOR GoldenPowerLine8 : GoldenPowerLine {	
+	States {
+		Spawn:
+			GLPA H 5 Bright
+			TNT1 A 0 A_Jump(128, "FadeOut2")
+			Goto Normal
+			
+		Normal:
+			GLPA HHHHHHHHHHHHHHH 1 Bright A_FadeOut(0.05)
+			Stop
+			
+		FadeOut2:
+			GLPA HHHHHHHHHHHHHHH 1 Bright A_FadeOut(0.075)
+			Stop
+	}
+}
+
+
+ACTOR GoldenFlare : BaseFlare {
+	Alpha 0.75
+	var int user_z_offset;
+	
+	States {
+		Spawn:
+			TOKA AABB 1 Bright A_Warp(AAPTR_TRACER, 0, 0, user_z_offset, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A 0 A_FadeOut(0.05)
+			TNT1 A 0 A_JumpIf(CallACS("getAlpha") <= 15, "Spawn2")
+			Loop
+			
+		Spawn2:
+			TOKA AABB 1 Bright A_Warp(AAPTR_TRACER, 0, 0, user_z_offset, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A 0 A_FadeIn(0.05)
+			TNT1 A 0 A_JumpIf(CallACS("getAlpha") >= 75, "Spawn")
+			Loop
+			
+		Death:
+			TOKA AABB 1 Bright A_Warp(AAPTR_TRACER, 0, 0, user_z_offset, 0, WARPF_NOCHECKPOSITION)
+			TNT1 A 0 A_FadeOut(0.05)
+			Loop
+	}
+}
+
+ACTOR GoldenFlare2 : BaseFlare {
+	Alpha 0.5
+	Scale 0.35
+	var int user_z_offset;
+	
+	States {
+		Spawn:
+			TOKA D 1 Bright A_Warp(AAPTR_TRACER, 0, 0, user_z_offset, 0, WARPF_NOCHECKPOSITION)
+			Loop
+			
+		Death:
+			TOKA D 1 Bright A_FadeOut(0.05)
+			TNT1 A 0 A_Warp(AAPTR_TRACER, 0, 0, user_z_offset, 0, WARPF_NOCHECKPOSITION)
+			Loop
+	}
+}
+
+ACTOR OrbitingElectronSpawner : BluePowerLineSpawner {
+	var int user_z_offset;
+	
+	States {
+		Spawn:
+			TNT1 A 0 NoDelay A_SpawnItemEx("OrbitingElectron1", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_TRANSFERPOINTERS)
+			TNT1 A 0 A_SpawnItemEx("OrbitingElectron2", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_TRANSFERPOINTERS)
+			TNT1 A 32
+			TNT1 A 0 A_Warp(AAPTR_TRACER, 0, 0, user_z_offset, 0, WARPF_NOCHECKPOSITION)
+			Loop
+			
+		Death:
+			TNT1 A 0 A_KillChildren
+			Stop
+	}
+}
+
+ACTOR OrbitingElectron1 : AbstractParticleSpawner {
+	RenderStyle Add
+	Alpha 0.75
+	Scale 0.3
+	
+	States {
+		Spawn:
+			ORED ABCDEFGHIJKLMNOP 2 NoDelay Bright A_Warp(AAPTR_TRACER, 0, 0, 28, 0, WARPF_NOCHECKPOSITION)
+			Stop
+			
+		Death:
+			TNT1 A 0
+			Stop
+	}
+}
+
+ACTOR OrbitingElectron2 : OrbitingElectron1 {
+	States {
+		Spawn:
+			OREI IJKLMNOPABCDEFGH 2 NoDelay Bright A_Warp(AAPTR_TRACER, 0, 0, 28, 0, WARPF_NOCHECKPOSITION)
+			Stop
+	}
+}
+
+ACTOR TokamakDamager {
+	Radius 10
+	Height 10
+	Projectile
+	DamageType "Tokamak"
+	+MTHRUSPECIES
+	+NODAMAGETHRUST
+	+BLOODLESSIMPACT
+	
+	States {
+		Spawn:
+		Death:
+			TNT1 A 0 NoDelay A_Explode(20, 32, XF_NOTMISSILE, 1, 32)
+			Stop
+	}
+}
+
+ACTOR TokamakHit : AbstractParticleSpawner {
+	RenderStyle Add
+	Scale 0.5
+	
+	States {
+		Spawn:
+			TOKH ABCDEFGHIJKLMNOPQRS 1 BRIGHT
 			Stop
 	}
 }

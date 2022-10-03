@@ -1256,11 +1256,16 @@ script "removeForceShieldFromTracer" (void) {
     }
 }
 
-script "showCautionAnimation" (void) CLIENTSIDE {
+script "showCautionAnimation" (int spell) CLIENTSIDE {
+    str spellName, spellFont;
+    switch(spell) {
+        case 0: { spellName="'Subterranean Sun'"; spellFont="SCARD000"; }; break;
+        case 1: { spellName="Control 'Self Tokamak'"; spellFont="SCARD001"; }; break;
+    }
     SetHudSize(640, 480, 0);
     SetFont("BIGFONT");
-    HudMessage(s:"'Subterranean Sun'"; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP|HUDMSG_FADEINOUT, 34, CR_ORANGE, 505.0, 390.0, 2.5, 1.5, 0.5);
-    SetFont("SCARD000");
+    HudMessage(s:spellName; HUDMSG_PLAIN|HUDMSG_NOTWITHFULLMAP|HUDMSG_FADEINOUT, 34, CR_ORANGE, 505.0, 390.0, 2.5, 1.5, 0.5);
+    SetFont(spellFont);
     HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEINOUT, 33, CR_ORANGE, 600.0, 435.0, 2.5, 1.5, 0.5);
     for (int i=0; i<6; i++) {
         SetFont("SPELL000");
@@ -1537,7 +1542,7 @@ script "damageActorBy" (int tid, int value) {
     Thing_Damage2(tid, value, "Friendly");
 }
 
-script "showXAuraFor" (int opt, int tics) {
+script "showXAuraFor" (int opt, int tics, int zoff) {
     int ttid = UniqueTID();
     int ptid;
     if (PlayerNumber() >= 0) ptid = ActivatorTID();
@@ -1547,9 +1552,25 @@ script "showXAuraFor" (int opt, int tics) {
     }
 
     switch(opt) {
-        case 1: { Spawn("FirePowerSmokeSpawner", GetActorX(0), GetActorY(0), GetActorZ(0), ttid); }; break;
-        case 2: { Spawn("RedPowerSmokeSpawner", GetActorX(0), GetActorY(0), GetActorZ(0), ttid); }; break;
-        case 3: { Spawn("GoldenPowerSmokeSpawner", GetActorX(0), GetActorY(0), GetActorZ(0), ttid); }; break;
+        case 1: { Spawn("FirePowerSmokeSpawner", GetActorX(0), GetActorY(0), GetActorZ(0)+zoff, ttid); }; break;
+        case 2: { Spawn("RedPowerSmokeSpawner", GetActorX(0), GetActorY(0), GetActorZ(0)+zoff, ttid); }; break;
+        case 3: { Spawn("GoldenPowerSmokeSpawner", GetActorX(0), GetActorY(0), GetActorZ(0)+zoff, ttid); }; break;
+        case 4: {
+            Spawn("GoldenPowerLineSpawner", GetActorX(0), GetActorY(0), GetActorZ(0)+zoff, ttid);
+            SetUserVariable(ttid, "user_z_offset", zoff);
+        }; break;
+        case 5: {
+            Spawn("GoldenFlare", GetActorX(0), GetActorY(0), GetActorZ(0)+zoff, ttid);
+            SetUserVariable(ttid, "user_z_offset", zoff);
+        }; break;
+        case 6: {
+            Spawn("GoldenFlare2", GetActorX(0), GetActorY(0), GetActorZ(0)+zoff, ttid);
+            SetUserVariable(ttid, "user_z_offset", zoff);
+        }; break;
+        case 7: {
+            Spawn("OrbitingElectronSpawner", GetActorX(0), GetActorY(0), GetActorZ(0)+zoff, ttid);
+            SetUserVariable(ttid, "user_z_offset", zoff);
+        }; break;
     }
 
     SetActivator(ttid);
@@ -2001,6 +2022,32 @@ script "commander_runAttackOrderCooldown" (int tics) {
     SetUserVariable(0, "user_order_cooldown", 0);
 }
 
+script "getAlpha" (void) {
+    int res = (GetActorProperty(0, APROP_Alpha) * 100) >> 16;
+    SetResultValue(res);
+}
+
+script "setDamageFactor" (int value) {
+    int valueF = (value << 16) / 100;
+    SetActorProperty(0, APROP_DamageFactor, valueF);
+}
+
+script "showDissolvingEffectInLastXSeconds" (int maxDuration, int lastDuration) CLIENTSIDE {
+    int waitTime = maxDuration - lastDuration;
+    for (int i=0; i<waitTime; i++) {
+        Delay(1);
+        if (ClassifyActor(0) & ACTOR_DEAD) terminate;
+    }
+
+    SetHudSize(640, 480, 0);
+    SetFont("SCARD001");
+    lastDuration = lastDuration / 35;
+    for (i=0; i<lastDuration; i++) {
+        HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_FADEINOUT, 35, CR_ORANGE, 600.0, 435.0, 0.0, 0.5, 0.5);
+        Delay(35);
+    }
+}
+
 
 
 
@@ -2049,7 +2096,7 @@ script "HPBar_HitTarget" (void) {
     }
 }
 
-script "HPBar_GetTarget" (int pn) {
+script "HPBar_GetTarget" (int pn) { 
     if ((pn >= 0) && (SetActivator(0,AAPTR_TRACER) == 1)) {
         // Esto cambiaria a una lista si en el futuro agregamos más
         if (CheckActorClass(0, "ElderDemon"))

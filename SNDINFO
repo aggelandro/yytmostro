@@ -37,6 +37,13 @@ agge/subsunactive SUBSUN01
 $random agge/subsunhit { agge/subsunhit1 agge/subsunhit2 }
 agge/subsunhit1	SSHIT01
 agge/subsunhit2	SSHIT02
+agge/tokamakhit	TOKAHIT
+agge/tokamakstart	TOKAACT
+$random agge/tokamakact	{ agge/tokamakact1 agge/tokamakact2 agge/tokamakact3 agge/tokamakact4 }
+agge/tokamakact1 TOKAACT1
+agge/tokamakact2 TOKAACT2
+agge/tokamakact3 TOKAACT3
+agge/tokamakact4 TOKAACT4
 agge/snap THANSNAP
 $random agge/cast { agge/cast1 agge/cast2 agge/cast3 }
 agge/cast1	ARCABST1

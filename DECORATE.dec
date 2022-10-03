@@ -642,6 +642,7 @@ ACTOR UniversalPlayer : DoomPlayer
 	DamageFactor "FireBF", 0
 	DamageFactor "PPoison", 0.2
 	DamageFactor "SubSun", 0
+	DamageFactor "Tokamak", 0
 	Player.ViewHeight 50.0
   Player.CrouchSprite "PLYC"
   Player.StartItem "Fist"

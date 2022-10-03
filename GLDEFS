@@ -462,10 +462,24 @@ Interval 2.0
 
 FlickerLight2 SubSunLight1 {
 Offset 0 0 0
-Color 0.15 0.04 0.0
+Color 0.95 0.599 0.0
 Size 768
 SecondarySize 1024
-Interval 2.0
+Interval 5
+}
+
+FlickerLight2 Tokamak1 {
+Color 0.95 0.599 0.0
+Size 48
+SecondarySize 64
+Interval 5
+}
+
+FlickerLight2 Tokamak2 {
+Color 0.95 0.599 0.0
+Size 16
+SecondarySize 32
+Interval 10
 }
 
 Object FireMindFire { Frame FLME { Light DropFlame1 } }
@@ -564,6 +578,10 @@ Object AxeFloorFire { Frame FFED { Light DropFlame1 } }
 Object EDFloorExplosion { Frame FFED { Light DropFlame1 } }
 Object EDFloorExplosion { Frame TNT1 { Light DropFlame1 } }
 Object EDEyeEffect { Frame EPEF { Light SubSunLight1 } }
+Object GoldenFlare { Frame TOKA { Light Tokamak1 } }
+Object GoldenFlare2 { Frame TOKA { Light Tokamak2 } }
+Object OrbitingElectron1 { Frame TOKA { Light Tokamak2 } }
+Object OrbitingElectron2 { Frame TOKA { Light Tokamak2 } }
 
 //Elder Demon
 FLICKERLIGHT BigTLegLight {

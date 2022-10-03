@@ -405,7 +405,7 @@ ACTOR BigInternalExplosion {
 	States {
 		Spawn:
 		Death:
-			TNT1 A 0 NoDelay A_Explode(64, 96)
+			TNT1 A 0 NoDelay A_Explode(64, 32)
 			TNT1 A 0 A_SpawnItemEx("OrangeParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
 			COMT D 3 A_SpawnItemEx("DiabloCometDeathGlow",0,0,0,0,0,0,0,128,0)
 			COMT E 3 A_SpawnItemEx("DiabloCometDeath",0,0,0,0,0,0,0,128,0)
