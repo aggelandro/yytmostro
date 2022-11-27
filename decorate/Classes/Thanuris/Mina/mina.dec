@@ -12,6 +12,7 @@ ACTOR ThanuRL : WeaponWithGrenadeOption
 	{
 	Ready:
 		MENA A 0 A_JumpIfInventory("ClassThroweableAction", 1, "GrenadeCheck")
+		BBAT A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
 		MENA A 1 A_WeaponReady
 		Loop
 	Deselect:
@@ -19,6 +20,7 @@ ACTOR ThanuRL : WeaponWithGrenadeOption
 		Loop
 	Select:
 		TNT1 A 0 A_TakeInventory("ClassThroweableAction", 1)
+		TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
 		MENA A 1 A_Raise
 		Loop
 	Fire:

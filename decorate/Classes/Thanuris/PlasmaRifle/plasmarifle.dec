@@ -1,4 +1,4 @@
-ACTOR ThanuPL : DoomWeapon
+ACTOR ThanuPL : YYTWeapon
 {
   Weapon.SelectionOrder 100
   Weapon.AmmoUse 5
@@ -9,12 +9,14 @@ ACTOR ThanuPL : DoomWeapon
   States
   {
   Ready:
+		BBAT A 0 A_JumpIfInventory("SlideKickAction", 1, "SlideKick")
     PLSG A 1 A_WeaponReady
     Loop
   Deselect:
     PLSG A 1 A_Lower
     Loop
   Select:
+		TNT1 A 0 A_TakeInventory("SlideKickAction", 1)
     PLSG A 1 A_Raise
     Loop
   Fire:
