@@ -230,6 +230,14 @@ script 335 ENTER {
     if (classNum == 1) {
         TakeInventory("CrusherCooldown", 3);
     }
+
+    if (classNum == 5) {
+        while (true) {
+            if (GetActorProperty(0, APROP_Health) > 50)
+                SetActorProperty(0, APROP_Health, 50);
+            Delay(1);
+        }
+    }
 }
  
 script 336 DEATH {
