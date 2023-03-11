@@ -810,6 +810,7 @@ script "applyEffectOnPlayer" (int option, int duration, int arg2, int arg3) {
                 SetPointer(AAPTR_TRACER, ptid);
                 SetUserVariable(0, "user_se_monster_height", GetActorProperty(ptid, APROP_Height) >> 16);
                 SetActivator(ptid);
+                //ACS_NamedExecuteWithResult("showEffectInHUD", 0);
 
                 for (i=0; i<arg2; i++) {
                     poisonDmg = Random(0, 1);
@@ -921,6 +922,19 @@ script "applyEffectOnPlayer" (int option, int duration, int arg2, int arg3) {
 script "showTranslation" (int option) CLIENTSIDE {
     Thing_SetTranslation(0, option);
 }
+
+/*script "showEffectInHUD" (int option) CLIENTSIDE {
+    str picName;
+    switch(option) {
+        case 0: {
+            picName = "POISON";
+        }; break;
+    }
+
+    SetHudSize(640, 480, 0);
+    SetFont(picName);
+    HudMessage(s:"A"; HUDMSG_PLAIN, 300, 0, -48.0, 30.0, 0);
+}*/
 
 script "deathTimer" (int tics) {
     Delay(tics);
@@ -1856,6 +1870,7 @@ script "player_resetUserOverloadChance" (void) {
 
 script "marduk_addParasite" (void) {
     if (SetActivator(0, AAPTR_TRACER)) {
+        if (PlayerNumber() != -1) terminate;
         if (CheckInventory("MardukParasiteCount") == 0) {
             int mtid = UniqueTID();
             int ptid = UniqueTID();
