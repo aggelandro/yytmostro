@@ -2056,6 +2056,25 @@ script "showDissolvingEffectInLastXSeconds" (int maxDuration, int lastDuration) 
     }
 }
 
+script "ammoPack_use" (void) {
+    // Uses ammo pack, if player is full of ammo return 0.
+    int isFull = GetAmmoCapacity("Clip")==CheckInventory("Clip") && GetAmmoCapacity("Cell")==CheckInventory("Cell") && 
+        GetAmmoCapacity("Shell")==CheckInventory("Shell") && GetAmmoCapacity("RocketAmmo")==CheckInventory("RocketAmmo") && 
+        GetAmmoCapacity("DemonAmmo")==CheckInventory("DemonAmmo") &&
+        (PlayerClass(PlayerNumber()) == 0 && GetAmmoCapacity("CryoGrenadeAmmo")==CheckInventory("CryoGrenadeAmmo") ||
+        PlayerClass(PlayerNumber()) != 0 && GetAmmoCapacity("HandGrenadeAmmo")==CheckInventory("HandGrenadeAmmo"));
+
+    if (isFull) { SetResultValue(0); terminate; }
+    GiveInventory("Clip", 20);
+    GiveInventory("Shell", 8);
+    GiveInventory("Cell", 20);
+    GiveInventory("RocketAmmo", 4);
+    GiveInventory("DemonAmmo", 20);
+    if (PlayerClass(PlayerNumber()) == 0) GiveInventory("CryoGrenadeAmmo", 1);
+    else GiveInventory("HandGrenadeAmmo", 1);
+    SetResultValue(1);
+}
+
 
 
 
@@ -2547,12 +2566,13 @@ script "getFireRateBoost" (void) {
 }
 
 script "showPowerups" (int displayFlag) CLIENTSIDE {
+    SetHudSize(960, 720, 0);
     for (int i=1; i<=DISPLAYABLE_POWERUP_MAX; i++) {
         if (displayFlag) {
             SetFont(StrRight(SV_DISPLAYABLE_POWERUPS[i-1], 6));
             if (CheckInventory(StrLeft(SV_DISPLAYABLE_POWERUPS[i-1], StrLen(SV_DISPLAYABLE_POWERUPS[i-1])-6)) == 1)
-                HudMessage(s:"A"; HUDMSG_PLAIN, i, 0, FixedDiv(i << 16, 65.0), 0.05, 0);
-            else HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA, i, 0, FixedDiv(i << 16, 65.0), 0.05, 0, 0.25);
+                HudMessage(s:"A"; HUDMSG_PLAIN, i, 0, FixedMul(i << 16, 22.0) - 90.0, 65.0, 0);
+            else HudMessage(s:"A"; HUDMSG_PLAIN|HUDMSG_ALPHA, i, 0, FixedMul(i << 16, 22.0) - 90.0, 65.0, 0, 0.25);
 
             // Capaz poner una cvar para dejar elegir si verlo siempre o no?
             //ACS_NamedExecuteAlways("showStats", 0, 1);

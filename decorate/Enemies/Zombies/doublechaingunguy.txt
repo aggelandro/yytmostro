@@ -1,5 +1,11 @@
 ACTOR DoubleChaingunGuy : ChaingunGuyMod {
 	Health 80
+	Dropitem "Chaingun"
+	Dropitem "Clip"
+	DropItem "IsaacItemsTier1HighChanceSpawner"
+	DropItem "HandGrenadeAmmo", 45
+	DropItem "CryoGrenadeAmmo", 45
+	DropItem "AmmoPack", 45
 	
 	States {
 		SpawnLoop:

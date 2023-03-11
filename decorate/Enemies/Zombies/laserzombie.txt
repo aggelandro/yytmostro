@@ -13,6 +13,7 @@ ACTOR LaserZombie : AbstractYYTZombie {
 	DropItem "IsaacItemsTier1MidChanceSpawner"
 	DropItem "HandGrenadeAmmo", 20
 	DropItem "CryoGrenadeAmmo", 20
+	DropItem "AmmoPack", 20
 	DropItem "ChainsawSpawner", 32
 	
   States {

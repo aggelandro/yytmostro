@@ -8,6 +8,7 @@ ACTOR Commando : ShotgunGuyMod {
 	DropItem "IsaacItemsTier1LowChanceSpawner"
 	DropItem "HandGrenadeAmmo", 20
 	DropItem "CryoGrenadeAmmo", 20
+	DropItem "AmmoPack", 20
 	
 	States {
 		Missile:

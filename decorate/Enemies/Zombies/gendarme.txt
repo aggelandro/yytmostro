@@ -1,5 +1,5 @@
 ACTOR Gendarme : ShotgunGuyMod {
-	Obituary "A %o lo balaceo el gendarme como a Maldonado."
+	Obituary "A %o lo mandaron a ahogarse como a Maldonado."
 	var int user_invoked;
 	
   States {

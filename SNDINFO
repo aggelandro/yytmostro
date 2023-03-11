@@ -351,6 +351,10 @@ SpiritActive            dsghapai
 SpiritAttack            dsghaatk
 SpiritDie               dsghadth
 
+//Ammo Satchel (complex)
+pickups/iammosatchel	DSASATPU
+ammosatchel/use				DSASATUS
+
 //ENEMIGOS
 
 $Random zombie/pistol { zombie/pistol1 zombie/pistol2 zombie/pistol3 }

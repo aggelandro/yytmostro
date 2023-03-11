@@ -1,5 +1,5 @@
 Actor Dozer : ChaingunGuyMod {
-	Health 200
+	Health 140
 	Painchance 40
 	Mass 150
 	Scale 1.1
@@ -8,8 +8,9 @@ Actor Dozer : ChaingunGuyMod {
 	Dropitem "Chaingun"
 	Dropitem "Clip"
 	DropItem "IsaacItemsTier1HighChanceSpawner"
-	DropItem "HandGrenadeAmmo", 20
-	DropItem "CryoGrenadeAmmo", 20
+	DropItem "HandGrenadeAmmo", 40
+	DropItem "CryoGrenadeAmmo", 40
+	DropItem "AmmoPack", 35
 	DropItem "Marduk", 5
 	var int user_gun_height;
 	var int user_original_pitch;
